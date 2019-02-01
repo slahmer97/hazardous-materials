@@ -2,6 +2,7 @@
 ### Projet Intégrateur L3S6, Groupe HM aka Hazardous Materials
 
 **Chef de projet** : HUYNH Jimmy
+
 Membres : 
 * KEPPEL Arnaud
 * KNAPP Liesse
