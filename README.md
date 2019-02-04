@@ -8,8 +8,8 @@ Membres :
 * KNAPP Liesse
 * KUSOGLU Garip
 * LAHMER Seyyid-Ahmed
-* LOPEZ 
-* MANSSOUR
+* LOPEZ Stéphane
+* MANSSOUR Nabil
 * MASSART Jules
 * MEYER Alexandre
 * MICHEL Julien
