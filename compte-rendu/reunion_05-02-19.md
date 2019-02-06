@@ -48,7 +48,7 @@ Shell | 3
 ## Règles
 
 > Après ces choix, nous avons un peu plus explicité les règles, les compétences, etc, que nous voulions inclure dans notre version de la bataille navale.
-> Une fois mise au propre elle seront disponible dans un autre document "regles.md".
+> Une fois mise au propre elle seront disponible dans un autre document "**regles.md**".
 
 
 # Deuxième partie
@@ -65,7 +65,7 @@ Shell | 3
 (Départ de Liesse)
 > Dans l'heure restante nous avons débatu de l'architechture orienté objet du jeu.
 > Nous avons donc dessiné les premières esquisse de diagramme de classe UML.
-> Une fois mis au propre et complété il sera disponible dans un autre document "diagramme_de_classe".
+> Une fois mis au propre et complété il sera disponible dans un autre document "**diagramme_de_classe**".
 
 ---
 
