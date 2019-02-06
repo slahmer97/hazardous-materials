@@ -1,4 +1,4 @@
-﻿# Première partie
+# Première partie
 
 ## Choix du jeu
 
@@ -21,18 +21,18 @@ Loup-Garou (carte) | 1
 
 > Ainsi que de nouvelle proposition :
 * Tarôt (carte)
-* Bang ! (carte)
+* Bang ! (carte)
 * 7 wonders (plateau)
 * Shadow Hunter (plateau)
 
-> Nous avons finalement choisi de baser notre projet sur une version de la [bataille navale](https://fr.wikipedia.org/wiki/Bataille_navale_(jeu)) qui nous serait propre avec du 2 contre 2 (voir plus), des compétences, un [gameplay asyncrone/asymétrique](#Lexique) ainsi qu'une nouvelle dimension au plateau de jeu.
+> Nous avons finalement choisi de baser notre projet sur une version de la [bataille navale](https://fr.wikipedia.org/wiki/Bataille_navale_(jeu)) qui nous serait propre avec du 2 contre 2 (voir plus), des compétences, un **gameplay asyncrone/asymétrique** (cf lexique) ainsi qu'une nouvelle dimension au plateau de jeu.
 
 ## Choix du langage
 
 (Arrivé d'Arnaud)
 > Synthèse des votes Discord :
 
-Langage | Voix
+Langage | Voix
 --|--
 C/C++ | 7
 Java | 7
@@ -56,7 +56,7 @@ Shell | 3
 ## Stratégie et organisation
 
 > Après une pause pour détendre nos cerveaux, il était tant de parler de nos stratégie d'approche de notre projet.
-> Pour git nous avons décidé de nous diriger vers un [branching model](#Lexique) de type "tronc stable, branche instable".
+> Pour git nous avons décidé de nous diriger vers un **branching model** (cf lexique) de type "tronc stable, branche instable".
 > Pour ce qui relève de l'implémentation, au vu de nos différences de connaissances/compétences dans les domaines qui toucheront ce projet nous avons décidé de faire des groupes de soutien/mise à niveau au sein des modules. Nous encouragerons aussi à programmer avec des membres de son module autant que possible, ce qui relève du "[pair programming](https://en.wikipedia.org/wiki/Pair_programming)".
 > Nous avons donc enchainé avec nos points forts et centres d'intérêts pour nous "assigner" à des modules. L'assignation sera évidemment souple au possible afin d'aplanir les charges de travail et augmenter notre performance humaine.
 
