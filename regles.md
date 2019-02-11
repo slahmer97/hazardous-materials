@@ -53,7 +53,7 @@
 > ? Lorsque le joueur a **touché** une unité, il peut **rejouer** un tire classique.
 > * une **compétence** : pour cela il faut :
 >     * que l'unité possédant la **compétence** ne soit pas encore **explosé**
->     * que la **compétence** de cette unité n'ai **pas encore été utilisé**
+>     * que la **compétence** de cette unité n'ait **pas encore été utilisé**
 
 #### /!\ Un joueur ne rejoue pas après avoir utiliser une compétence, même si celle-ci a touché ou coulé des unités !
 
