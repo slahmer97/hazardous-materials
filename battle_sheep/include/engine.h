@@ -11,9 +11,13 @@ class Engine
   public:
     //Constructor :
     /* Description : Create an engine.
-    Input : Engine's initial health point, name, if the engine is horizontal or not, x coordinate, y coordinate, skill name.
-    Output : An engine with equal initial and current health point, a directtion, a (x,y) location and a skill shot. */
-    Engine(int initial_health_point_a, std::string engine_name_a, bool horizontal_a, int x_location_a, int y_location_a, std::string skill_name_a);
+    Input : Engine's initial health point, name, if the engine is horizontal or
+            not, x coordinate, y coordinate, skill name.
+    Output : An engine with equal initial and current health point,
+             a directtion, a (x,y) location and a skill shot. */
+    Engine(int initial_health_point_a, std::string engine_name_a,
+           bool horizontal_a, int x_location_a, int y_location_a,
+           std::string skill_name_a);
 
     //Getters :
     int get_initial_health_point();
