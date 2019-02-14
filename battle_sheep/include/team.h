@@ -5,21 +5,17 @@
 
 class Team
 {
-/*Methods*/
-    public:
+    /*Methods*/
+  public:
     //Constructor :
     Team();
 
     //Getters :
 
-
     //Setters :
 
-
-/*Attributes*/
-    private:
-
-
+    /*Attributes*/
+  private:
 };
 
 #endif

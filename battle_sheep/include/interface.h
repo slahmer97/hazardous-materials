@@ -1,23 +1,21 @@
 #ifndef DEF_INTERFACE
 #define DEF_INTERFACE
 
+#include "grid_local.h"
+
 class Interface
 {
-/*Methods*/
-    public:
+    /*Methods*/
+  public:
     //Constructor :
     Interface();
 
     //Getters :
 
-
     //Setters :
 
-
-/*Attributes*/
-    private:
-
-
+    /*Attributes*/
+  private:
 };
 
 #endif

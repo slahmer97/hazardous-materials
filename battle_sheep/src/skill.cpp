@@ -2,6 +2,6 @@
 
 using namespace std;
 
-Skill::Skill(){
-    
+Skill::Skill()
+{
 }

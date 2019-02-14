@@ -1,14 +1,12 @@
-#ifndef DEF_SKILL
-#define DEF_SKILL
+#ifndef DEF_GRID_LOCAL
+#define DEF_GRID_LOCAL
 
-#include "grid_server.h"
-
-class Skill
+class GridLocal
 {
     /*Methods*/
   public:
     //Constructor :
-    Skill();
+    GridLocal();
 
     //Getters :
 

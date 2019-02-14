@@ -1,23 +1,22 @@
 #ifndef DEF_NETWORK
 #define DEF_NETWORK
 
+#include "game.h"
+#include "hub.h"
+
 class Network
 {
-/*Methods*/
-    public:
+    /*Methods*/
+  public:
     //Constructor :
     Network();
 
     //Getters :
 
-
     //Setters :
 
-
-/*Attributes*/
-    private:
-
-
+    /*Attributes*/
+  private:
 };
 
 #endif

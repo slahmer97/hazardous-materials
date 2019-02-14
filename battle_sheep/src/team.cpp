@@ -2,6 +2,6 @@
 
 using namespace std;
 
-Team::Team(){
-    
+Team::Team()
+{
 }

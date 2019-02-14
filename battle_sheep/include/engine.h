@@ -5,21 +5,17 @@
 
 class Engine
 {
-/*Methods*/
-    public:
+    /*Methods*/
+  public:
     //Constructor :
     Engine();
 
     //Getters :
 
-
     //Setters :
 
-
-/*Attributes*/
-    private:
-
-
+    /*Attributes*/
+  private:
 };
 
 #endif

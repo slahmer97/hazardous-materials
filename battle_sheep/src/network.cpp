@@ -2,6 +2,6 @@
 
 using namespace std;
 
-Network::Network(){
-    
+Network::Network()
+{
 }
