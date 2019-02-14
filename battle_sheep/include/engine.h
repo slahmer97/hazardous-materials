@@ -17,7 +17,7 @@ class Engine
              a directtion, a (x,y) location and a skill shot. */
     Engine(int initial_health_point_a, std::string engine_name_a,
            bool horizontal_a, int x_location_a, int y_location_a,
-           std::string skill_name_a);
+           Skill *engine_skill_a);
 
     //Getters :
     int get_initial_health_point();
@@ -45,11 +45,12 @@ class Engine
     int take_a_hit();
 
     /* Description : Use engine_skill.
-    Input : None.
-    Output : - 0 if worked but missed;
-             - 1 if worked but successful;
-             - (-1) if you cannot use it. */
-    int skill_shot();
+    Input : (x,y) where skill begin and (x,y) where it end.
+    Output : - 0 missed;
+             - 1 successful;
+             - (-1) cannot use it. */
+    int skill_shot(int x_starting_location, int y_starting_location,
+                   int x_ending_location, int y_ending_location);
 
     /*Attributes*/
   private:
