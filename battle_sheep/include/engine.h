@@ -2,7 +2,6 @@
 #define DEF_ENGINE
 
 #include <string>
-#include "game.h"
 #include "skill.h"
 
 class Engine
@@ -12,9 +11,9 @@ class Engine
     //Constructor :
     /* Description : Create an engine.
     Input : Engine's initial health point, name, if the engine is horizontal or
-            not, x coordinate, y coordinate, skill name.
+            not, grid to find it, x coordinate, y coordinate, skill name.
     Output : An engine with equal initial and current health point,
-             a directtion, a (x,y) location and a skill shot. */
+             a directtion, a grid, a (x,y) location and a skill shot. */
     Engine(int initial_health_point_a, std::string engine_name_a,
            bool horizontal_a, int x_location_a, int y_location_a,
            Skill *engine_skill_a);
@@ -45,12 +44,11 @@ class Engine
     int take_a_hit();
 
     /* Description : Use engine_skill.
-    Input : (x,y) where skill begin and (x,y) where it end.
+    Input : None.
     Output : - 0 missed;
              - 1 successful;
              - (-1) cannot use it. */
-    int skill_shot(int x_starting_location, int y_starting_location,
-                   int x_ending_location, int y_ending_location);
+    int skill_shot();
 
     /*Attributes*/
   private:
@@ -58,6 +56,7 @@ class Engine
     int current_health_point;
     std::string engine_name;
     bool horizontal;
+    int grid_number;
     int x_location;
     int y_location;
     Skill *engine_skill;

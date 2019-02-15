@@ -1,15 +1,12 @@
-#ifndef DEF_GRID_SERVER
-#define DEF_GRID_SERVER
+#ifndef DEF_CLIENT
+#define DEF_CLIENT
 
-#include "engine.h"
-#include "square.h"
-
-class GridServer
+class Client
 {
     /*Methods*/
   public:
     //Constructor :
-    GridServer();
+    Client();
 
     //Getters :
 

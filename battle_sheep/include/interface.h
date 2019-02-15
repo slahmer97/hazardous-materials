@@ -1,7 +1,7 @@
 #ifndef DEF_INTERFACE
 #define DEF_INTERFACE
 
-#include "grid_local.h"
+#include "client.h"
 
 class Interface
 {

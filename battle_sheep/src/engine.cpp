@@ -20,5 +20,5 @@ int Engine::take_a_hit()
 
 int Engine::skill_shot()
 {
-    engine_skill->use();
+    return engine_skill->use();
 }

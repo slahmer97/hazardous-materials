@@ -1,7 +1,8 @@
 #ifndef DEF_SKILL
 #define DEF_SKILL
 
-#include "grid_server.h"
+#include "square.h"
+#include "server.h"
 
 class Skill
 {
