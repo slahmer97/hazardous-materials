@@ -50,6 +50,21 @@ class Engine
              - (-1) cannot use it. */
     int skill_shot();
 
+    /* Description :
+    Input :
+    Output : . */
+    int move_engine(bool reading_direction, int movement_value);
+
+    /* Description :
+    Input :
+    Output : . */
+    int rotate_engine(bool clockwise);
+
+    /* Description :
+    Input :
+    Output : . */
+    int normal_shot(Square *destination_grid[10][10], int x_location, int y_location);
+
     /*Attributes*/
   private:
     int initial_health_point;
@@ -60,6 +75,7 @@ class Engine
     int x_location;
     int y_location;
     Skill *engine_skill;
+    Square *engine_grid;
 };
 
 #endif

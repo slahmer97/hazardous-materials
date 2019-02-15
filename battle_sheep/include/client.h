@@ -1,6 +1,8 @@
 #ifndef DEF_CLIENT
 #define DEF_CLIENT
 
+#include "square.h"
+
 class Client
 {
     /*Methods*/

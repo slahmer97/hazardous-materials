@@ -27,6 +27,7 @@ class Hub
                          int y_starting_location, int x_endind_location,
                          int y_ending_location);
 
+    
     /*Attributes*/
   private:
     Square *square_tab[4][10][10];

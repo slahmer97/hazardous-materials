@@ -2,7 +2,6 @@
 #define DEF_SKILL
 
 #include "square.h"
-#include "server.h"
 
 class Skill
 {
@@ -20,6 +19,9 @@ class Skill
     void set_used(bool used_a);
 
     //Others :
+    /* Description :
+    Input :
+    Output : . */
     virtual int use() = 0;
 
     /*Attributes*/
