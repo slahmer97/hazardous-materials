@@ -36,7 +36,7 @@ class Engine
     void set_x_location(int x_location_a);
     void set_y_location(int y_location_a);
     void set_engine_skill(Skill *engine_skill_a);
-    void set_engine_grid(Square *engine_grid);
+    void set_engine_grid(Square *engine_grid_a);
 
     //Others :
 
@@ -46,11 +46,14 @@ class Engine
     int take_a_hit();
 
     /* Description : Use engine_skill.
-    Input : None.
+    Input : Square pointer [10][10], (x,y) location of the begining and ending
+            of the skill.
     Output : - 0 missed;
              - 1 successful;
              - (-1) cannot use it. */
-    int skill_shot();
+    int skill_shot(Square *grid[10][10], int x_starting_location,
+                   int y_starting_location, int x_endind_location,
+                   int y_ending_location);
 
     /* Description : Move the engine.
     Input : The direction and the number of square moved.

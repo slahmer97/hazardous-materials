@@ -23,6 +23,8 @@ int Engine::skill_shot()
     return engine_skill->use();
 }
 
+void move_engine(bool reading_direction, int movement_value);
+
 // Getters :
 int Engine::get_initial_health_point()
 {
@@ -51,6 +53,10 @@ int Engine::get_y_location()
 Skill *Engine::get_engine_skill()
 {
     return engine_skill;
+}
+Square *Engine::get_engine_grid()
+{
+    return engine_grid;
 }
 
 // Setters :
@@ -81,4 +87,7 @@ void Engine::set_y_location(int y_location_a)
 void Engine::set_engine_skill(Skill *engine_skill_a)
 {
     engine_skill = engine_skill_a;
+}
+void Engine::set_engine_grid(Square *engine_grid_a)
+{
 }
