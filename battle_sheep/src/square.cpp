@@ -4,4 +4,10 @@ using namespace std;
 
 Square::Square(){
 
+  /* Attributes */
+
+
+
+  /* Methods */
+
 };
