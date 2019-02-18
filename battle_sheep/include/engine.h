@@ -6,7 +6,9 @@
 
 class Engine
 {
-    /*Methods*/
+    /*
+    Methods
+    */
   public:
     //Constructor :
     /* Description : Create an engine.
