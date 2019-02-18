@@ -18,7 +18,14 @@ class Square
 
     /*Attributes*/
   private:
+
     Engine *engine_here;
+    int depth;
+    char hazard; //climate changes (c : cold, t : tempest, n : none ... ?)
+
+
+
+
 };
 
 #endif
