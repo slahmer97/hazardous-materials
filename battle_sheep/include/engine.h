@@ -6,9 +6,7 @@
 
 class Engine
 {
-    /*
-    Methods
-    */
+    /*Methods*/
   public:
     //Constructor :
     /* Description : Create an engine.
@@ -28,6 +26,7 @@ class Engine
     int get_x_location();
     int get_y_location();
     Skill *get_engine_skill();
+    Square *get_engine_grid();
 
     //Setters :
     void set_initial_health_point(int initial_health_point_a);
@@ -37,6 +36,7 @@ class Engine
     void set_x_location(int x_location_a);
     void set_y_location(int y_location_a);
     void set_engine_skill(Skill *engine_skill_a);
+    void set_engine_grid(Square *engine_grid);
 
     //Others :
 
@@ -52,20 +52,22 @@ class Engine
              - (-1) cannot use it. */
     int skill_shot();
 
-    /* Description :
-    Input :
-    Output : . */
-    int move_engine(bool reading_direction, int movement_value);
+    /* Description : Move the engine.
+    Input : The direction and the number of square moved.
+    Output : None. */
+    void move_engine(bool reading_direction, int movement_value);
 
     /* Description :
-    Input :
-    Output : . */
-    int rotate_engine(bool clockwise);
+    Input : The direction of the rotation.
+    Output : None. */
+    void rotate_engine(bool clockwise);
 
-    /* Description :
-    Input :
-    Output : . */
-    int normal_shot(Square *destination_grid[10][10], int x_location, int y_location);
+    /* Description : Damage a location.
+    Input : The square that is focus.
+    Output : - 0 nothing damaged;
+             - 1 something damaged but still alive;
+             - 2 something damaged and drawn.*/
+    int normal_shot(Square *destination_grid);
 
     /*Attributes*/
   private:
