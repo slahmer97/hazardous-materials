@@ -6,7 +6,7 @@
 class Square
 {
     /*Methods*/
-  public:c
+  public:
     //Constructor :
     Square();
 
