@@ -1,5 +1,5 @@
-#ifndef DEF_SQUARE
-#define DEF_SQUARE
+#ifndef SQUARE
+#define SQUARE
 
 #include "engine.h"
 
@@ -7,27 +7,23 @@ class Engine;
 
 class Square
 {
-    /*Methods*/
-  public:
-    //Constructor :
-    Square();
+public:
 
-    //Getters :
-    Engine *get_engine_here();
-    int get_depth();
-    char get_hazard();
+Square();
 
-    //Setters :
-    void set_engine_here(Engine *engine_here_a);
-    void set_depth(int nv);
-    void set_hazard(char nv);
+Engine *get_engine_here();
+int get_depth();
+char get_hazard();
 
-    /*Attributes*/
-  private:
+void set_engine_here(Engine *engine_here_a);
+void set_depth(int nv);
+void set_hazard(char nv);
 
-    Engine *engine_here;
-    int depth;
-    char hazard; //climate changes (c : cold, t : tempest, n : none ... ?)
+private:
+
+Engine *engine_here;
+int depth;
+char hazard;     //climate changes (c : cold, t : tempest, n : none ... ?)
 
 };
 
