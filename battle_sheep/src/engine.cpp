@@ -98,4 +98,24 @@ void Engine::set_engine_skill(Skill *engine_skill_a)
 }
 void Engine::set_engine_grid(Square *engine_grid_a)
 {
+    engine_grid=engine_grid_a;
+}
+
+void Engine::set_engine_on_grid(Square *engine_on_grid_a[10][10])
+{
+    if(horizontal)
+    {
+        for(int i=x_location; i<(x_location+initial_health_point);i++)
+        {
+            engine_on_grid_a[i][y_location]=engine_grid;
+        }
+    }
+    else
+    {
+        for(int i=y_location; i<(y_location+initial_health_point);i++)
+        {
+            engine_on_grid_a[x_location][i]=engine_grid;
+        }
+    }
+    
 }

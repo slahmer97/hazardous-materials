@@ -41,6 +41,7 @@ class Engine
     void set_y_location(int y_location_a);
     void set_engine_skill(Skill *engine_skill_a);
     void set_engine_grid(Square *engine_grid_a);
+    void set_engine_on_grid(Square *engine_on_grid_a[10][10]);
 
     //Others :
 
