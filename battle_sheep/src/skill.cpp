@@ -25,6 +25,8 @@ void Skill::set_used(bool used_a)
 {
     used=used_a;
 }
+
+//Methodes de Skill
 int Skill::skill_normal_shot(Square *grid[2][10][10], int x, int y, int which_grid, bool scaning, bool IEM)
 {
     if(!(scaning)&& !(IEM))
@@ -313,6 +315,7 @@ int Skill::skill_first_to_drawn(Square *grid[2][10][10], int x_starting_location
     return res;
 }
 
+//Methode use de chaque skill
 int Skill_porte_avion::use(Square *grid[2][10][10], int x_starting_location,
                int y_starting_location, int x_ending_location,
                int y_ending_location)
