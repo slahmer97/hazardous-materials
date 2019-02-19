@@ -3,6 +3,10 @@
 
 #include <string>
 #include "skill.h"
+#include "square.h"
+
+class Skill;
+class Square;
 
 class Engine
 {
