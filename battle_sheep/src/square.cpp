@@ -53,7 +53,7 @@ void Square::set_hazard(char nv)
 }
 
 
-int main()
+/*int main()
 {
         Square* s1 = new Square();
 
@@ -70,4 +70,4 @@ int main()
         cout << "Running fine" << '\n';
 
         delete(s1);
-}
+} */
