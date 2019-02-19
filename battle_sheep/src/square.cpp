@@ -34,7 +34,10 @@ char Square::get_hazard()
 
 void Square::set_depth(int nv) //nv = newvalue or nouveau
 {
-        depth = nv;
+        if(nv >= 0 && nv <= 10) //standard range values
+                depth = nv;
+        else
+                nv = 1; //default value
 }
 
 void Square::set_hazard(char nv)
@@ -47,20 +50,26 @@ void Square::set_hazard(char nv)
         case 'w': hazard = 'w'; //wind
                 break;
         case 't': hazard = 't'; //thunder
+                break;
 
         default: hazard = 'n'; //nothing found -> neutral
+                break;
         }
+
 }
 
 
 /*int main()
-{
+   {
         Square* s1 = new Square();
 
         cout << s1->get_depth() << '\n';
         cout << s1->get_hazard() << '\n';
 
         s1->set_depth(52);
+        cout << s1->get_depth() << '\n';
+
+        s1->set_depth(10);
         cout << s1->get_depth() << '\n';
 
         s1->set_hazard('w');
@@ -70,4 +79,4 @@ void Square::set_hazard(char nv)
         cout << "Running fine" << '\n';
 
         delete(s1);
-} */
+   } */
