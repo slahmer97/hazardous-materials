@@ -18,9 +18,17 @@ int Engine::take_a_hit()
     return (--current_health_point);
 }
 
-int Engine::skill_shot()
+int Engine::skill_shot(Square *grid[2][10][10], int x_starting_location,
+                       int y_starting_location, int x_endind_location,
+                       int y_ending_location)
 {
-    return engine_skill->use();
+    return engine_skill->use(grid,x_starting_location,y_starting_location,
+                             x_endind_location,y_ending_location);
+}
+
+int Engine::normal_shot(Square *grid[2][10][10], int x, int y, int which_grid)
+{
+    return engine_skill->skill_normal_shot(grid, x, y, which_grid);
 }
 
 void move_engine(bool reading_direction, int movement_value);

@@ -8,39 +8,163 @@ class Skill
     /*Methods*/
   public:
     //Constructor :
-    Skill(bool unlimited_a, bool used_a, int x_a, int y_a, int a_a, int b_a);
+    Skill(bool unlimited_a, bool used_a);
 
     //Getters :
     bool is_unlimited();
     bool is_used();
-    int get_x_location();
-    int get_y_location();
-    int get_a_location();
-    int get_b_location();
-
+    
     //Setters :
     void set_unlimited(bool unlimited_a);
     void set_used(bool used_a);
-    void set_x_location(int x_a);
-    void set_y_location(int y_a);
-    void set_a_location(int a_a);
-    void set_b_location(int b_a);
 
     //Others :
-    /* Description :
-    Input :
-    Output : . */
-    virtual int use() = 0;
+
+    /*
+    Input : (x,y) location to test
+    Output : boolean if it's out of range or not;
+    */
+    bool out_of_range(int x, int y);
+
+    /*
+    Description: a normal shot
+    Input : Square pointer [2][10][10], (x,y) location of the shot.
+    Output : - 0 missed;
+             - 1 successful;
+             - 2 successful and drawn
+             - (-1) cannot use it.
+    */
+    int skill_normal_shot(Square *grid[2][10][10], int x, int y, int which_grid);
+    /*
+    Description: two sub function for horizontal and vertical shot.
+    Input : Square pointer [2][10][10], (x,y) location of the begining and ending
+            of the skill.
+    Output : - 0 missed;
+             - 1 successful;
+             - 2 or higher successful and drawn 1up for each drawn engine
+             - (-1) cannot use it.
+    */
+    int skill_vertical_shot(Square *grid[2][10][10], int x, int y_starting,
+                                    int y_ending, int which_grid);
+    int skill_horizontal_shot(Square *grid[2][10][10], int y, int x_starting,
+                                    int x_ending, int which_grid);
+    /*
+    Description: Generique function for each skill.
+    Input : Square pointer [2][10][10], (x,y) location of the begining and ending
+            of the skill.
+    Output : - 0 missed;
+             - 1 successful;
+             - 2 or higher successful and drawn 1up for each drawn engine
+             - (-1) cannot use it.
+    */
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location) = 0;
 
     /*Attributes*/
   protected:
     bool unlimited;
     bool used;
-    int x;
-    int y;
-    int a;
-    int b;
-    Square *destination_grid[10][10];
+};
+
+class Skill_porte_avion: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_croiseur: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_contre_torpilleur: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_cuirasse: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_torpilleur: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_bombardier: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_intercepteur: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_brouilleur: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_patrouille: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
+};
+
+class Skill_reconnaissance: public Skill
+{
+  public:
+    virtual int use(Square *grid[2][10][10], int x_starting_location,
+                 int y_starting_location, int x_endind_location,
+                 int y_ending_location);
+
+
 };
 
 #endif

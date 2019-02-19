@@ -46,12 +46,13 @@ class Engine
     int take_a_hit();
 
     /* Description : Use engine_skill.
-    Input : Square pointer [10][10], (x,y) location of the begining and ending
+    Input : Square pointer [2][10][10], (x,y) location of the begining and ending
             of the skill.
     Output : - 0 missed;
              - 1 successful;
+             - 2 or higher successful and drawn 1up for each drawn engine
              - (-1) cannot use it. */
-    int skill_shot(Square *grid[10][10], int x_starting_location,
+    int skill_shot(Square *grid[2][10][10], int x_starting_location,
                    int y_starting_location, int x_endind_location,
                    int y_ending_location);
 
@@ -70,7 +71,7 @@ class Engine
     Output : - 0 nothing damaged;
              - 1 something damaged but still alive;
              - 2 something damaged and drawn.*/
-    int normal_shot(Square *destination_grid);
+    int normal_shot(Square *grid[2][10][10], int x, int y, int which_grid);
 
     /*Attributes*/
   private:
