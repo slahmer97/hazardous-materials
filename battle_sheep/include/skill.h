@@ -3,6 +3,8 @@
 
 #include "square.h"
 
+class Square;
+
 class Skill
 {
     /*Methods*/

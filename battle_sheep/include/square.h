@@ -3,6 +3,8 @@
 
 #include "engine.h"
 
+class Engine;
+
 class Square
 {
     /*Methods*/
