@@ -26,9 +26,9 @@ int Engine::skill_shot(Square *grid[2][10][10], int x_starting_location,
                              x_endind_location,y_ending_location);
 }
 
-int Engine::normal_shot(Square *grid[2][10][10], int x, int y, int which_grid)
+int Engine::normal_shot(Square *grid[2][10][10], int x, int y, int which_grid, bool scaning, bool IEM)
 {
-    return engine_skill->skill_normal_shot(grid, x, y, which_grid);
+    return engine_skill->skill_normal_shot(grid, x, y, which_grid,false,false);
 }
 
 void move_engine(bool reading_direction, int movement_value);

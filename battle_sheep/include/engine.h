@@ -71,7 +71,7 @@ class Engine
     Output : - 0 nothing damaged;
              - 1 something damaged but still alive;
              - 2 something damaged and drawn.*/
-    int normal_shot(Square *grid[2][10][10], int x, int y, int which_grid);
+    int normal_shot(Square *grid[2][10][10], int x, int y, int which_grid, bool scaning, bool IEM);
 
     /*Attributes*/
   private:

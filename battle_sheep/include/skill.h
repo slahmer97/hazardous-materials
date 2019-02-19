@@ -34,9 +34,9 @@ class Skill
              - 2 successful and drawn
              - (-1) cannot use it.
     */
-    int skill_normal_shot(Square *grid[2][10][10], int x, int y, int which_grid);
+    int skill_normal_shot(Square *grid[2][10][10], int x, int y, int which_grid, bool scaning, bool IEM);
     /*
-    Description: two sub function for horizontal and vertical shot.
+    Description: n sub function.
     Input : Square pointer [2][10][10], (x,y) location of the begining and ending
             of the skill.
     Output : - 0 missed;
@@ -45,9 +45,21 @@ class Skill
              - (-1) cannot use it.
     */
     int skill_vertical_shot(Square *grid[2][10][10], int x, int y_starting,
-                                    int y_ending, int which_grid);
+                            int y_ending, int which_grid, bool scaning, bool IEM);
     int skill_horizontal_shot(Square *grid[2][10][10], int y, int x_starting,
-                                    int x_ending, int which_grid);
+                              int x_ending, int which_grid, bool scaning, bool IEM);
+    int skill_line_shot(Square *grid[2][10][10], int x_starting_location,
+                        int y_starting_location, int x_ending_location,
+                        int y_ending_location, int which_grid, bool scaning, bool IEM);
+    int skill_rectangular_shot(Square *grid[2][10][10], int x_starting_location,
+                               int y_starting_location, int x_ending_location,
+                               int y_ending_location, int which_grid, bool scaning, bool IEM);
+    int skill_cross_shot(Square *grid[2][10][10], int x_starting_location,
+                         int y_starting_location, int x_ending_location,
+                         int y_ending_location, int which_grid, bool scaning, bool IEM);
+    int skill_first_to_drawn(Square *grid[2][10][10], int x_starting_location,
+                             int y_starting_location, int x_ending_location,
+                             int y_ending_location, int which_grid, bool scaning, bool IEM);
     /*
     Description: Generique function for each skill.
     Input : Square pointer [2][10][10], (x,y) location of the begining and ending
