@@ -35,16 +35,16 @@ void Skill::set_used(bool used_a)
 
 //Methodes de Skill
 
-int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, bool damage, bool IEM)
+int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage, bool IEM)
 {
     if(x<0 || x>9 || y<0 || y>9)
     {
         return -1;
     }
 
-    Engine *square=grid[x][y]->get_engine_here();
+    Engine *engine=grid[x][y]->get_engine_here();
 
-    if(square==NULL)
+    if(engine==NULL)
     {
         return 0;
     }
@@ -52,11 +52,14 @@ int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, bool damage, bo
     {
         if(damage)
         {
-            square->take_a_hit();
+            for(int i=0; i<damage; i++)
+            {
+              engine->take_a_hit();
+            }
         }
         if (IEM)
         {
-            square->get_engine_skill()->set_used(true);
+            engine->get_engine_skill()->set_used(true);
         }
         return 1;
     }
@@ -64,7 +67,7 @@ int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, bool damage, bo
 
 
 int Skill::skill_vertical_shot(Square *grid[10][10], int x, int y_starting,
-                               int y_ending, bool damage, bool IEM)
+                               int y_ending, int damage, bool IEM)
 {
     
     int res=0;
@@ -102,7 +105,7 @@ int Skill::skill_vertical_shot(Square *grid[10][10], int x, int y_starting,
 
 
 int Skill::skill_horizontal_shot(Square *grid[10][10], int y, int x_starting,
-                                 int x_ending, bool damage, bool IEM)
+                                 int x_ending, int damage, bool IEM)
 {
     
     int res=0;
@@ -142,7 +145,7 @@ int Skill::skill_horizontal_shot(Square *grid[10][10], int y, int x_starting,
 
 int Skill::skill_line_shot(Square *grid[10][10], int x_starting_location,
                            int y_starting_location, int x_ending_location,
-                           int y_ending_location, bool damage, bool IEM)
+                           int y_ending_location, int damage, bool IEM)
 {
 
     if(x_starting_location==x_ending_location)
@@ -165,7 +168,7 @@ int Skill::skill_line_shot(Square *grid[10][10], int x_starting_location,
 
 int Skill::skill_rectangular_shot(Square *grid[10][10], int x_starting_location,
                                   int y_starting_location, int x_ending_location,
-                                  int y_ending_location, bool damage, bool IEM)
+                                  int y_ending_location, int damage, bool IEM)
 {
 
     int res=0;
@@ -206,7 +209,7 @@ int Skill::skill_rectangular_shot(Square *grid[10][10], int x_starting_location,
 
 int Skill::skill_cross_shot(Square *grid[10][10], int x_starting_location,
                             int y_starting_location, int x_ending_location,
-                            int y_ending_location,bool damage, bool IEM)
+                            int y_ending_location,int damage, bool IEM)
 {
 
     int res=0;
@@ -271,7 +274,7 @@ int Skill::skill_cross_shot(Square *grid[10][10], int x_starting_location,
 
 int Skill::skill_first_to_drawn(Square *grid[10][10], int x_starting_location,
                                 int y_starting_location, int x_ending_location,
-                                int y_ending_location, bool damage, bool IEM)
+                                int y_ending_location, int damage, bool IEM)
 {
 
     int res=0;
@@ -358,7 +361,7 @@ int Skill::skill_first_to_drawn(Square *grid[10][10], int x_starting_location,
 
 int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
                            int y_starting_location, int x_ending_location,
-                           int y_ending_location, int player)
+                           int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -381,14 +384,14 @@ int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
     
     return skill_line_shot(grid[which_gride],x_starting_location,
                            y_starting_location,x_ending_location,
-                           y_ending_location,true,false);
+                           y_ending_location,damage,false);
 
 }
 
 
 int Skill_croiseur::use(Square *grid[4][10][10], int x_starting_location,
                         int y_starting_location, int x_ending_location,
-                        int y_ending_location, int player)
+                        int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -411,14 +414,14 @@ int Skill_croiseur::use(Square *grid[4][10][10], int x_starting_location,
 
     return skill_line_shot(grid[which_gride],x_starting_location,
                            y_starting_location,x_ending_location,
-                           y_ending_location,true,false);
+                           y_ending_location,damage,false);
 
 }
 
 
 int Skill_contre_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
                                  int y_starting_location, int x_ending_location,
-                                 int y_ending_location, int player)
+                                 int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -441,14 +444,14 @@ int Skill_contre_torpilleur::use(Square *grid[4][10][10], int x_starting_locatio
 
     return skill_rectangular_shot(grid[which_gride],x_starting_location,
                                   y_starting_location,x_ending_location,
-                                  y_ending_location,true,false);
+                                  y_ending_location,damage,false);
 
 }
 
 
 int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
                         int y_starting_location, int x_ending_location,
-                        int y_ending_location, int player)
+                        int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -471,14 +474,14 @@ int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
 
     return skill_cross_shot(grid[which_gride],x_starting_location,
                             y_starting_location,x_ending_location,
-                            y_ending_location,true,false);
+                            y_ending_location,damage,false);
 
 }
 
 
 int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int x_ending_location,
-                          int y_ending_location, int player)
+                          int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -501,14 +504,14 @@ int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
 
     return skill_first_to_drawn(grid[which_gride],x_starting_location,
                                 y_starting_location,x_ending_location,
-                                y_ending_location,true,false);
+                                y_ending_location,damage,false);
 
 }
 
 
 int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int x_ending_location,
-                          int y_ending_location, int player)
+                          int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -539,11 +542,11 @@ int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
 
     res=skill_rectangular_shot(grid[which_gride],x_starting_location,
                                y_starting_location,x_ending_location,
-                               y_ending_location,true,false);
+                               y_ending_location,damage,false);
 
     restemp=skill_rectangular_shot(grid[which_gride2],x_starting_location,
                                    y_starting_location,x_ending_location,
-                                   y_ending_location,true,false);
+                                   y_ending_location,damage,false);
 
     if(restemp>=0 && res>=0)
     {
@@ -560,7 +563,7 @@ int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
 
 int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
                             int y_starting_location, int x_ending_location,
-                            int y_ending_location, int player)
+                            int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -592,11 +595,11 @@ int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
 
     res=skill_line_shot(grid[which_gride],x_starting_location,
                         y_starting_location,x_ending_location,
-                        y_ending_location,true,false);
+                        y_ending_location,damage,false);
 
     restemp=skill_line_shot(grid[which_gride2],x_starting_location,
                             y_starting_location,x_ending_location,
-                            y_ending_location,true,false);
+                            y_ending_location,damage,false);
     
     if(restemp>=0 && res>=0)
     {
@@ -613,7 +616,7 @@ int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
 
 int Skill_brouilleur::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int x_ending_location,
-                          int y_ending_location, int player)
+                          int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -636,14 +639,14 @@ int Skill_brouilleur::use(Square *grid[4][10][10], int x_starting_location,
 
     return skill_rectangular_shot(grid[which_gride],x_starting_location,
                                   y_starting_location,x_ending_location,
-                                  y_ending_location,false,true);
+                                  y_ending_location,damage,true);
 
 }
 
 
 int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int x_ending_location,
-                          int y_ending_location, int player)
+                          int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -672,11 +675,11 @@ int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
     int restemp=0;
     res=skill_rectangular_shot(grid[which_gride],x_starting_location,
                                y_starting_location,x_ending_location,
-                               y_ending_location,false,false);
+                               y_ending_location,damage,false);
 
     restemp=skill_rectangular_shot(grid[which_gride2],x_starting_location,
                                 y_starting_location,x_ending_location,
-                                y_ending_location,false,false);
+                                y_ending_location,damage,false);
     
     if(restemp>=0 && res>=0)
     {
@@ -692,7 +695,7 @@ int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
 
 int Skill_reconnaissance::use(Square *grid[4][10][10], int x_starting_location,
                               int y_starting_location, int x_ending_location,
-                              int y_ending_location, int player)
+                              int y_ending_location, int player, int damage)
 {
 
     if(is_used())
@@ -715,6 +718,6 @@ int Skill_reconnaissance::use(Square *grid[4][10][10], int x_starting_location,
 
     return skill_first_to_drawn(grid[which_gride],x_starting_location,
                                 y_starting_location,x_ending_location,
-                                y_ending_location,true,false);
+                                y_ending_location,damage,false);
 
 }
