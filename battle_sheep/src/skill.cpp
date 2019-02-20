@@ -355,12 +355,12 @@ int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
     if (horizontal)
     {
         return skill_horizontal_shot(grid[which_gride], y_starting_location, x_starting_location,
-                                     x_starting_location + 2, true, false);
+                                     x_starting_location + 2, 1, false);
     }
     else
     {
         return skill_vertical_shot(grid[which_gride], x_starting_location, y_starting_location,
-                                   y_starting_location + 2, true, false);
+                                   y_starting_location + 2, 1, false);
     }
 }
 
@@ -392,12 +392,12 @@ int Skill_croiseur::use(Square *grid[4][10][10], int x_starting_location,
     if (horizontal)
     {
         return skill_horizontal_shot(grid[which_gride], y_starting_location, x_starting_location,
-                                     x_starting_location + 2, true, false);
+                                     x_starting_location + 2, 1, false);
     }
     else
     {
         return skill_vertical_shot(grid[which_gride], x_starting_location, y_starting_location,
-                                   y_starting_location + 2, true, false);
+                                   y_starting_location + 2, 1, false);
     }
 }
 
@@ -428,7 +428,7 @@ int Skill_contre_torpilleur::use(Square *grid[4][10][10], int x_starting_locatio
 
     return skill_rectangular_shot(grid[which_gride], x_starting_location,
                                   y_starting_location, x_starting_location + 1,
-                                  y_starting_location + 1, true, false);
+                                  y_starting_location + 1, 1, false);
 }
 
 int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
@@ -458,7 +458,7 @@ int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
 
     return skill_cross_shot(grid[which_gride], x_starting_location,
                             y_starting_location, x_starting_location + 1,
-                            y_starting_location, true, false);
+                            y_starting_location, 1, false);
 }
 
 int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
@@ -492,13 +492,13 @@ int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, 9,
-                                        y_starting_location, true, false);
+                                        y_starting_location, 1, false);
         }
         if (x_starting_location == 9)
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, 0,
-                                        y_starting_location, true, false);
+                                        y_starting_location, 1, false);
         }
         else
         {
@@ -511,13 +511,13 @@ int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, x_starting_location,
-                                        9, true, false);
+                                        9, 1, false);
         }
         if (y_starting_location == 9)
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, x_starting_location,
-                                        0, true, false);
+                                        0, 1, false);
         }
         else
         {
@@ -561,11 +561,11 @@ int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
 
     res = skill_rectangular_shot(grid[which_gride], x_starting_location,
                                  y_starting_location, x_starting_location + 2,
-                                 y_starting_location + 2, true, false);
+                                 y_starting_location + 2, 1, false);
 
     restemp = skill_rectangular_shot(grid[which_gride2], x_starting_location,
                                      y_starting_location, x_starting_location + 2,
-                                     y_starting_location + 2, true, false);
+                                     y_starting_location + 2, 1, false);
 
     res = max(restemp, res);
 
@@ -608,16 +608,16 @@ int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
     if (horizontal)
     {
         res = skill_horizontal_shot(grid[which_gride], y_starting_location, x_starting_location,
-                                    x_starting_location + 2, true, false);
+                                    x_starting_location + 2, 1, false);
         restemp = skill_horizontal_shot(grid[which_gride2], y_starting_location, x_starting_location,
-                                        x_starting_location + 2, true, false);
+                                        x_starting_location + 2, 1, false);
     }
     else
     {
         res = skill_vertical_shot(grid[which_gride], x_starting_location, y_starting_location,
-                                  y_starting_location + 2, true, false);
+                                  y_starting_location + 2, 1, false);
         restemp = skill_vertical_shot(grid[which_gride2], x_starting_location, y_starting_location,
-                                      y_starting_location + 2, true, false);
+                                      y_starting_location + 2, 1, false);
     }
 
     res = max(restemp, res);
@@ -652,7 +652,7 @@ int Skill_brouilleur::use(Square *grid[4][10][10], int x_starting_location,
 
     return skill_rectangular_shot(grid[which_gride], x_starting_location,
                                   y_starting_location, x_starting_location + 1,
-                                  y_starting_location + 1, false, true);
+                                  y_starting_location + 1, 0, true);
 }
 
 int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
@@ -688,11 +688,11 @@ int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
     int restemp = 0;
     res = skill_rectangular_shot(grid[which_gride], x_starting_location,
                                  y_starting_location, x_starting_location + 2,
-                                 y_starting_location + 2, false, false);
+                                 y_starting_location + 2, 0, false);
 
     restemp = skill_rectangular_shot(grid[which_gride2], x_starting_location,
                                      y_starting_location, x_starting_location + 2,
-                                     y_starting_location + 2, false, false);
+                                     y_starting_location + 2, 0, false);
 
     if (restemp >= 0 && res >= 0)
     {
@@ -737,13 +737,13 @@ int Skill_reconnaissance::use(Square *grid[4][10][10], int x_starting_location,
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, 9,
-                                        y_starting_location, true, false);
+                                        y_starting_location, 1, false);
         }
         if (x_starting_location == 9)
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, 0,
-                                        y_starting_location, true, false);
+                                        y_starting_location, 1, false);
         }
         else
         {
@@ -756,13 +756,13 @@ int Skill_reconnaissance::use(Square *grid[4][10][10], int x_starting_location,
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, x_starting_location,
-                                        9, true, false);
+                                        9, 1, false);
         }
         if (y_starting_location == 9)
         {
             return skill_first_to_drawn(grid[which_gride], x_starting_location,
                                         y_starting_location, x_starting_location,
-                                        0, true, false);
+                                        0, 1, false);
         }
         else
         {
