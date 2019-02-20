@@ -362,10 +362,6 @@ int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
         return skill_vertical_shot(grid[which_gride], x_starting_location, y_starting_location,
                                    y_starting_location + 2, true, false);
     }
-
-    return skill_line_shot(grid[which_gride], x_starting_location,
-                           y_starting_location, x_ending_location,
-                           y_ending_location, true, false);
 }
 
 int Skill_croiseur::use(Square *grid[4][10][10], int x_starting_location,
@@ -608,10 +604,6 @@ int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
     int res = 0;
 
     int restemp = 0;
-
-    res = skill_line_shot(grid[which_gride], x_starting_location,
-                          y_starting_location, x_ending_location,
-                          y_ending_location, true, false);
 
     if (horizontal)
     {
