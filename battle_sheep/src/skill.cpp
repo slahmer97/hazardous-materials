@@ -340,7 +340,7 @@ int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
                            int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -380,7 +380,7 @@ int Skill_croiseur::use(Square *grid[4][10][10], int x_starting_location,
                         int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -419,7 +419,7 @@ int Skill_contre_torpilleur::use(Square *grid[4][10][10], int x_starting_locatio
                                  int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -451,7 +451,7 @@ int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
                         int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -483,7 +483,7 @@ int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -549,7 +549,7 @@ int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -596,7 +596,7 @@ int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
                             int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -651,7 +651,7 @@ int Skill_brouilleur::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -683,7 +683,7 @@ int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
@@ -735,7 +735,7 @@ int Skill_reconnaissance::use(Square *grid[4][10][10], int x_starting_location,
                               int y_starting_location, int player, bool horizontal)
 {
 
-    if(is_used()&&(!(is_unlimited())))
+    if(is_used())
     {
         return -1;
     }
