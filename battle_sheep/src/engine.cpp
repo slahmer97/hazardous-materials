@@ -28,16 +28,31 @@ int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
 void Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)
 {
     put_or_remove_engine_on_grid(grid, false);
+    int *location = (horizontal ? &x_location : &y_location);
+    *location += (reading_direction ? movement_value : (-movement_value));
+    // Si ca marche pas j'ai l'ancienne version
+    /*
     if (horizontal)
     {
+        x_location = x_location +
+                     (reading_direction ? movement_value : (-movement_value));
     }
     else
     {
+        y_location = y_location +
+                     (reading_direction ? movement_value : (-movement_value));
     }
+    */
+    put_or_remove_engine_on_grid(grid, true);
 }
 
 void Engine::rotate_engine(Square *grid[10][10], bool clockwise)
 {
+    put_or_remove_engine_on_grid(grid, false);
+
+    horizontal = !horizontal;
+
+    put_or_remove_engine_on_grid(grid, true);
 }
 
 int Engine::normal_shot(Square *grid[10][10], int x_location, int y_location)
