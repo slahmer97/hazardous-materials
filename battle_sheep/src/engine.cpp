@@ -31,6 +31,9 @@ void Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
     if (horizontal)
     {
     }
+    else
+    {
+    }
 }
 
 void Engine::rotate_engine(Square *grid[10][10], bool clockwise)
