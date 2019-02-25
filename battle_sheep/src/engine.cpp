@@ -46,9 +46,17 @@ void Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
     put_or_remove_engine_on_grid(grid, true);
 }
 
-void Engine::rotate_engine(Square *grid[10][10], bool clockwise)
+void Engine::rotate_engine(Square *grid[10][10], bool clockwise,
+                           int node_distance)
 {
     put_or_remove_engine_on_grid(grid, false);
+
+    int normal_add = node_distance * (horizontal ? 1 : (-1));
+    int spec_add = (initial_health_point - 1 - node_distance) *
+                   (horizontal ? 1 : (-1));
+
+    x_location += ((!horizontal && clockwise) ? spec_add : normal_add);
+    y_location += ((horizontal && !clockwise) ? spec_add : normal_add);
 
     horizontal = !horizontal;
 

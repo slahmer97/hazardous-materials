@@ -67,7 +67,8 @@ class Engine
     /* Description :
     Input : The grid and direction of the rotation.
     Output : None. */
-    void rotate_engine(Square *grid[10][10], bool clockwise);
+    void Engine::rotate_engine(Square *grid[10][10], bool clockwise,
+                               int node_distance);
 
     /* Description : Damage a location.
     Input : The square that is focus.
