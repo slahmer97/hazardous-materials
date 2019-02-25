@@ -8,6 +8,12 @@ Skill::Skill(bool unlimited_a, bool used_a)
 {
 }
 
+Skill::Skill()
+{
+    unlimited=false;
+    used=false;
+}
+
 bool Skill::is_unlimited()
 {
     return unlimited;

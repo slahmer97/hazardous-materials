@@ -11,7 +11,8 @@ class Skill
   public:
     //Constructor :
     Skill(bool unlimited_a, bool used_a);
-
+    Skill();
+    
     //Getters :
     bool is_unlimited();
     bool is_used();
