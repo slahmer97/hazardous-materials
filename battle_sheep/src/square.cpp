@@ -12,10 +12,10 @@ Square::Square()
         hazard = 'n'; //n for neutral
 }
 
-/*Engine *get_engine_here()
-   {
-   cout << "Meh" << '\n';
-   } */
+Engine *Square::get_engine_here()
+{
+	return this->engine_here;
+}
 
 int Square::get_depth()
 {
@@ -27,10 +27,10 @@ char Square::get_hazard()
         return hazard;
 }
 
-/*void set_engine_here(Engine *engine_here_a)
-   {
-    cout << "Meh" << '\n';
-   } */
+void Square::set_engine_here(Engine *engine_here_a)
+{
+	this->engine_here = engine_here_a;
+}
 
 void Square::set_depth(int nv) //nv = newvalue or nouveau
 {
