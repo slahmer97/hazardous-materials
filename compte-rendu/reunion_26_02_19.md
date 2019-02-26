@@ -18,5 +18,5 @@ Création de la fonction rotation pour corriger ce problème.
 
 ###
 
-Retard sur lé developpement du noyau.
+Retard sur le développement du noyau.
 Acheminement du développement du noyau, termine de corriger les dernières fonctions, le principal problème étant la mobilité des bateaux, comme le fait que bateau tourne en tournant change de grille, il se retrouve à moitié sur la grille de son équipier, ou le fait que certaines positions ne sont pas atteignables alors qu'elle le devrait, et que certaines non atteignables le sont.
