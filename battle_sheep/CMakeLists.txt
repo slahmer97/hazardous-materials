@@ -26,3 +26,5 @@ add_executable(server src/server.cpp include/server.h ${SHARED_SOURCES} )
 
 add_executable(client src/client.cpp include/client.h ${SHARED_SOURCES} )
 
+add_executable(testing src/main_tmp.cpp ${SHARED_SOURCES} )
+
