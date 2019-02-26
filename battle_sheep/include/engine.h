@@ -82,6 +82,14 @@ class Engine
     Output : None. */
     void put_or_remove_engine_on_grid(Square *grid[10][10], bool put);
 
+    //Others :
+    /* Description : Check that all the squares around a segment are ok.
+    Input : a grid number to "fire" it, (x,y) where skill begin and (x,y) where
+            it end.
+    Output : - true, there is something around;
+             - false, nothing is around. */
+    bool Engine::proximity_check(Square *grid[10][10]);
+
     /*Attributes*/
   private:
     int initial_health_point;
