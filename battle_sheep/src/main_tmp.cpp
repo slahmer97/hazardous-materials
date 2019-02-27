@@ -33,41 +33,43 @@ int players_companions(int p)
     return -1;
 }
 
+void print_one_line_gride(Square *grid[10][10], int i)
+{
+    for(int j=0; j<10; j++)
+    {
+        cout << "|";
+        if(grid[j][i]->get_engine_here()==NULL)
+        {
+            cout << "    ";
+        }
+        else
+        {
+            cout << grid[j][i]->get_engine_here()->get_engine_name()
+            << "_"
+            << grid[j][i]->get_engine_here()->get_current_health_point();
+        }
+    }
+}
+
+
 void print_grid(int player, Square *grid[10][10], Square *grid2[10][10])
 {
     cout << "player :" << player << '\n';
     for(int i=9; i>=0; i--)
     {
-        cout << "-------------------------------          -------------------------------" << '\n';
-        for(int j=0; j<10; j++)
-        {
-            cout << "|";
-            if(grid[j][i]->get_engine_here()==NULL)
-            {
-                cout << "   ";
-            }
-            else
-            {
-                cout << grid[j][i]->get_engine_here()->get_engine_name();
-            }
-        }
-        cout << "|          ";
-        for(int j=0; j<10; j++)
-        {
-            cout << "|";
-            if(grid2[j][i]->get_engine_here()==NULL)
-            {
-                cout << "  ";
-            }
-            else
-            {
-                cout << grid2[j][i]->get_engine_here()->get_engine_name();
-            }
-        }
+        cout << "---------------------------------------------------   ---------------------------------------------------" << '\n';
+        
+        print_one_line_gride(grid,i);
+        
+        cout << "|   ";
+        
+        print_one_line_gride(grid2,i);
+        
         cout << "|";
+        
         cout << '\n';
     }
-    cout << "-------------------------------          -------------------------------" << '\n';
+    cout << "---------------------------------------------------   ---------------------------------------------------" << '\n';
 }
 
 int main()
