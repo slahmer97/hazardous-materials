@@ -68,7 +68,7 @@ class Engine
     Input : The grid and direction of the rotation.
     Output : None. */
     void rotate_engine(Square *grid[10][10], bool clockwise,
-                               int node_distance);
+                       int node_distance);
 
     /* Description : Damage a location.
     Input : The square that is focus.
@@ -80,7 +80,7 @@ class Engine
     /* Description : Put or remove this engine of the grid.
     Input : A bool to know if we must put it or remove it.
     Output : None. */
-    void put_or_remove_engine_on_grid(Square *grid[10][10], bool put);
+    bool put_or_remove_engine_on_grid(Square *grid[10][10], bool put);
 
     //Others :
     /* Description : Check that all the squares around a segment are ok.

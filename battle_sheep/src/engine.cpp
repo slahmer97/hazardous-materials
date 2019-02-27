@@ -11,6 +11,10 @@ Engine::Engine(int initial_health_point_a, string engine_name_a,
       x_location(x_location_a), y_location(y_location_a),
       engine_skill(engine_skill_a)
 {
+    x_location = (x_location < 0 ? 0 : x_location);
+    x_location = (x_location > 9 ? 9 : x_location);
+    y_location = (y_location < 0 ? 0 : y_location);
+    y_location = (y_location > 9 ? 9 : y_location);
 }
 
 int Engine::take_a_hit()
@@ -68,14 +72,22 @@ int Engine::normal_shot(Square *grid[10][10], int x_location, int y_location)
     return engine_skill->skill_normal_shot(grid, x_location, y_location, 1, false);
 }
 
-void Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
+bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
 {
-    Engine *pointer = (put ? this : NULL);
-    int location = (horizontal ? x_location : y_location);
-    for (int i = location; i < (location + initial_health_point); i++)
+    if (proximity_check(grid))
     {
-        grid[(horizontal ? i : x_location)][(horizontal ? y_location : 1)]
-            ->set_engine_here(pointer);
+        Engine *pointer = (put ? this : NULL);
+        int location = (horizontal ? x_location : y_location);
+        for (int i = location; i < (location + initial_health_point); i++)
+        {
+            grid[(horizontal ? i : x_location)][(horizontal ? y_location : 1)]
+                ->set_engine_here(pointer);
+        }
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
@@ -87,8 +99,12 @@ bool Engine::proximity_check(Square *grid[10][10])
     int y_max = y_location + 1;
 
     x_min = (x_min < 0 ? 0 : x_min);
+    x_min = (x_min > 9 ? 9 : x_min);
+    x_max = (x_max < 0 ? 0 : x_max);
     x_max = (x_max > 9 ? 9 : x_max);
     y_min = (y_min < 0 ? 0 : y_min);
+    y_min = (y_min > 9 ? 0 : y_min);
+    y_max = (y_max < 0 ? 0 : y_max);
     y_max = (y_max > 9 ? 9 : y_max);
 
     for (int i = x_min; i < x_max; i++)
