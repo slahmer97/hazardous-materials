@@ -82,20 +82,20 @@ void Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
 bool Engine::proximity_check(Square *grid[10][10])
 {
     int x_min = x_location - 1;
-    int x_max = x_location + 1 + ((initial_health_point - 1) * (horizontal?1:0));
-    int y_min = y_location - 1 - ((initial_health_point -1) * (horizontal?0:1));
+    int x_max = x_location + 1 + ((initial_health_point - 1) * (horizontal ? 1 : 0));
+    int y_min = y_location - 1 - ((initial_health_point - 1) * (horizontal ? 0 : 1));
     int y_max = y_location + 1;
 
-    if(x_min < 0 || x_min > 10 || x_max < 0 || x_max > 10 || y_min < 0 || y_min > 10 || y_max < 0 || y_max > 10)
-    {
-        return false;
-    }
+    x_min = (x_min < 0 ? 0 : x_min);
+    x_max = (x_max > 9 ? 9 : x_max);
+    y_min = (y_min < 0 ? 0 : y_min);
+    y_max = (y_max > 9 ? 9 : y_max);
 
-    for(int i = x_min; i < x_max; i++)
+    for (int i = x_min; i < x_max; i++)
     {
-        for(int j = y_min; j < y_max; j++)
+        for (int j = y_min; j < y_max; j++)
         {
-            if(grid[i][j]->get_engine_here()!= NULL)
+            if (grid[i][j]->get_engine_here() != NULL)
             {
                 return false;
             }
