@@ -108,12 +108,10 @@ void print_one_line_gride(Square *grid[10][10], int i, bool hide)
 }
 
 
-void print_grid(string engine_name, int player, int your_health, int openant_health,
+void print_grid(string engine_name, int openant_health,
                 Square *grid[10][10], Square *grid2[10][10], bool hide)
 {
     cout << "player : " << player;
-    if(!((your_health==0)&&(openant_health==0)))
-        cout << " your health : " << your_health << " openants health : " << openant_health;
     
     cout << '\n';
 
@@ -182,7 +180,7 @@ int main()
 
             int health=engine_health(i,j);
 
-            print_grid(engines_names[((player%2)*5)+j],player+1,0,0,grid[player],grid[player_comp],false);
+            print_grid(engines_names[((player%2)*5)+j],player+1,grid[player],grid[player_comp],false);
 
             cin >> horizontal >> x >> y;
 
@@ -192,7 +190,7 @@ int main()
                 delete(all_engines[(player*5)+j]);
                 std::system("clear");
 
-                print_grid(engines_names[((player%2)*5)+j],player+1,0,0,grid[player],grid[player_comp],false);
+                print_grid(engines_names[((player%2)*5)+j],player+1,grid[player],grid[player_comp],false);
                 cout << "Le " << engines_names[((player%2)*5)+j] << " a été mal placé !" << '\n';
                 cin >> horizontal >> x >> y;
                 
@@ -200,7 +198,7 @@ int main()
             }
         }
         std::system("clear");
-        print_grid("",player+1,0,0,grid[player],grid[player_comp],false);
+        print_grid("",player+1,grid[player],grid[player_comp],false);
         cout << "passer le tour ?" << '\n';
         cin >> x;
     }
@@ -244,15 +242,16 @@ int main()
             }
             std::system("clear");
             if(player==0)
-                print_grid("",player+1,0,0,grid[2],grid[3],true);
+                print_grid("",player+1,grid[2],grid[3],true);
             if(player==1)
-                print_grid("",player+1,0,0,grid[3],grid[2],true);
+                print_grid("",player+1,grid[3],grid[2],true);
             if(player==2)
-                print_grid("",player+1,0,0,grid[0],grid[1],true);
+                print_grid("",player+1,grid[0],grid[1],true);
             if(player==3)
-                print_grid("",player+1,0,0,grid[1],grid[0],true);
-
-            print_grid("",player+1,yhealth,ohealth,grid[player],grid[companion],false);
+                print_grid("",player+1,grid[1],grid[0],true);
+            cout << " your health : " << your_health << " openants health : " << openant_health << '\n';
+            
+            print_grid("",player+1,grid[player],grid[companion],false);
 
             cout << "quel machine utilser ? (0=tire normal, 1-5 du 1er placé au dernier)" << '\n';
             
@@ -389,16 +388,16 @@ int main()
             }
             std::system("clear");
             if(player==0)
-                print_grid("",player+1,0,0,grid[2],grid[3],true);
+                print_grid("",player+1,grid[2],grid[3],true);
             if(player==1)
-                print_grid("",player+1,0,0,grid[3],grid[2],true);
+                print_grid("",player+1,grid[3],grid[2],true);
             if(player==2)
-                print_grid("",player+1,0,0,grid[0],grid[1],true);
+                print_grid("",player+1,grid[0],grid[1],true);
             if(player==3)
-                print_grid("",player+1,0,0,grid[1],grid[0],true);
+                print_grid("",player+1,grid[1],grid[0],true);
 
-
-            print_grid("",player+1,yhealth,ohealth,grid[player],grid[companion],false);
+            cout << " your health : " << your_health << " openants health : " << openant_health << '\n';
+            print_grid("",player+1,grid[player],grid[companion],false);
 
             cout << "passer le tour ?" << '\n';
             cin >> x;
