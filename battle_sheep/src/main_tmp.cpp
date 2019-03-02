@@ -263,21 +263,20 @@ int main()
                 cout << "sur qui tirer ? où tirer ?" << '\n';
 
                 cin >> target_player >> x >> y;
+                while(target_player>4 || target_player<1)
+                {
+                    cout << "sur qui tirer ? où tirer ?" << '\n';
+                    cout << "pas un joueur!" << '\n';
 
+                    cin >> target_player >> x >> y;
+                    
+                }
                 affichage = all_engines[(player*5)]->normal_shot(grid[target_player-1],x,y);
                 while(affichage!=0)
                 {
                     if(affichage == -1)
                     {
-                        i = ( ( (i-1 % 4) + 4) % 4 );
-
                         cout << "en dehors de la grille" << '\n';
-                        cout << "continuer ?" << '\n';
-                        cin >> x;
-                    }
-                    else if(affichage==0)
-                    {
-                        cout << "rien n'est touché :(" << '\n';
                         cout << "continuer ?" << '\n';
                         cin >> x;
                     }
@@ -288,6 +287,12 @@ int main()
                         cout << "continuer ?" << '\n';
                         cin >> x;
                     }
+                }
+                else if(affichage==0)
+                {
+                    cout << "rien n'est touché :(" << '\n';
+                    cout << "continuer ?" << '\n';
+                    cin >> x;
                 }
                 
             }
@@ -305,7 +310,7 @@ int main()
 
                     cin >> x >> y;
 
-                    affichage = all_engines[(player*5)+ship]->skill_shot(grid,x,y);
+                    affichage = all_engines[(player*5)+ship-1]->skill_shot(grid,x,y);
                     
                     if(affichage == -1)
                     {
@@ -337,7 +342,7 @@ int main()
                     
                     cin >> direction >> mvmt;
                     
-                    while(!(all_engines[(player*5)+ship]->move_engine(grid[player],direction,mvmt)))
+                    while(!(all_engines[(player*5)+ship-1]->move_engine(grid[player],direction,mvmt)))
                     {
                         cout << "direction (:bool) ? point de mouvement ?" << '\n';
                         cout << "déplacement impossible !" << '\n';
