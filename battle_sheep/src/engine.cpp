@@ -110,13 +110,13 @@ bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
 
 bool Engine::proximity_check(Square *grid[10][10])
 {
-    if(x_location < 0 || (x_location+(horizontal ? initial_health_point : 0)) > 9 ||
-       y_location < 0 || (y_location+(horizontal ? 0 : initial_health_point)) > 9 )
+    if(x_location < 0 || (x_location+(horizontal ? (initial_health_point-1) : 0)) > 9 ||
+       y_location < 0 || (y_location+(horizontal ? 0 : (initial_health_point-1)) > 9 ))
         return false;
     int x_min = x_location - 1;
-    int x_max = x_location + 1 + ((initial_health_point) * (horizontal ? 1 : 0));
+    int x_max = x_location + 1 + ((initial_health_point-1) * (horizontal ? 1 : 0));
     int y_min = y_location - 1;
-    int y_max = y_location + 1 + ((initial_health_point) * (horizontal ? 0 : 1));
+    int y_max = y_location + 1 + ((initial_health_point-1) * (horizontal ? 0 : 1));
 
     x_min = (x_min < 0 ? 0 : x_min);
     x_min = (x_min > 9 ? 9 : x_min);
@@ -126,7 +126,7 @@ bool Engine::proximity_check(Square *grid[10][10])
     y_min = (y_min > 9 ? 9 : y_min);
     y_max = (y_max < 0 ? 0 : y_max);
     y_max = (y_max > 9 ? 9 : y_max);
-    
+
     for (int i = x_min; i < x_max+1; i++)
     {
         for (int j = y_min; j < y_max+1; j++)
