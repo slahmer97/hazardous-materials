@@ -47,7 +47,7 @@ class Engine
     /* Description : Lower current_health_point by one.
     Input : None.
     Output : current_health_point. */
-    int take_a_hit(Square *grid[10][10]);
+    int take_a_hit();
 
     /* Description : Use engine_skill.
     Input : Square pointer [4][10][10], (x,y) location of the begining and 

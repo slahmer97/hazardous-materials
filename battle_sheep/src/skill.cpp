@@ -57,7 +57,7 @@ int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage, boo
         {
             for (int i = 0; i < damage; i++)
             {
-                engine->take_a_hit(grid);
+                engine->take_a_hit();
             }
         }
         if (IEM)
