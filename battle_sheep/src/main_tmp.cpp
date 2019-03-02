@@ -377,15 +377,33 @@ int main()
                 }
 
             }
-            int health_team1=0;
-            int health_team2=0;
+            int yhealth=0;
+            int ohealth=0;
             for(int j=0;j<10;j++)
             {
-                health_team1+=all_engines[j]->get_current_health_point();
-            }
-            for(int j=0;j<10;j++)
-            {
-                health_team2+=all_engines[10+j]->get_current_health_point();
+                if(player<2)
+                {
+                    if(j<10)
+                    {
+                        yhealth+=all_engines[j]->get_current_health_point();
+                    }
+                    else
+                    {
+                        ohealth+=all_engines[j]->get_current_health_point();
+                    }
+                    
+                }
+                else
+                {
+                    if(j<10)
+                    {
+                        ohealth+=all_engines[j]->get_current_health_point();
+                    }
+                    else
+                    {
+                        yhealth+=all_engines[j]->get_current_health_point();
+                    }
+                }
             }
             if( (health_team1<1) || (health_team2<1) )
             {
