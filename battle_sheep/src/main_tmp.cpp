@@ -260,7 +260,6 @@ int main()
             if(ship==0)
             {
                 int target_player;
-                while()
                 cout << "sur qui tirer ? où tirer ?" << '\n';
 
                 cin >> target_player >> x >> y;
