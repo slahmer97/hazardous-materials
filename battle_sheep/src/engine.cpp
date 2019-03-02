@@ -8,13 +8,20 @@ Engine::Engine(int initial_health_point_a, string engine_name_a,
     : initial_health_point(initial_health_point_a),
       current_health_point(initial_health_point_a),
       engine_name(engine_name_a), horizontal(horizontal_a),
-      x_location(x_location_a), y_location(y_location_a),
       engine_skill(engine_skill_a)
 {
-    x_location = (x_location < 0 ? 0 : x_location);
-    x_location = (x_location > 9 ? 9 : x_location);
-    y_location = (y_location < 0 ? 0 : y_location);
-    y_location = (y_location > 9 ? 9 : y_location);
+    x_location = (x_location_a < 0 ? 0 : x_location_a);
+    y_location = (y_location_a > 9 ? 9 : y_location_a);
+    if ((x_location_a + ((initial_health_point_a - 1) *
+                         (horizontal ? 1 : 0))) > 9)
+    {
+        x_location = 9 - ((initial_health_point_a - 1) * (horizontal ? 1 : 0));
+    }
+    if (((y_location_a - ((initial_health_point_a - 1) *
+                          (horizontal ? 0 : 1))) < 0))
+    {
+        y_location = 0 + ((initial_health_point_a - 1) * (horizontal ? 0 : 1));
+    }
 }
 
 int Engine::take_a_hit()
