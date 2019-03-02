@@ -88,7 +88,7 @@ class Engine
             it end.
     Output : - true, there is something around;
              - false, nothing is around. */
-    bool Engine::proximity_check(Square *grid[10][10]);
+    bool proximity_check(Square *grid[10][10]);
 
     /*Attributes*/
   private:

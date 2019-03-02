@@ -6,10 +6,11 @@
 
 using namespace std;
 
-Square::Square()
+Square::Square() // no arguments
 {
         depth = 1;
         hazard = 'n'; //n for neutral
+        engine_here = NULL;
 }
 
 Engine *Square::get_engine_here()
@@ -29,7 +30,7 @@ char Square::get_hazard()
 
 void Square::set_engine_here(Engine *engine_here_a)
 {
-	this->engine_here = engine_here_a;
+        this->engine_here = engine_here_a;
 }
 
 void Square::set_depth(int nv) //nv = newvalue or nouveau
@@ -58,10 +59,17 @@ void Square::set_hazard(char nv)
 
 }
 
+void Square::get_infos()
+{
+        cout << "depth : " << get_depth() << '\n';
+        cout << "hazard : " << get_hazard() << '\n';
+        //cout << "engine : " << get_engine_here() << '\n';
+}
 
-/*int main()
-   {
-        Square* s1 = new Square();
+/*
+int main()
+{
+        Square *s1 = new Square();
 
         cout << s1->get_depth() << '\n';
         cout << s1->get_hazard() << '\n';
@@ -79,4 +87,5 @@ void Square::set_hazard(char nv)
         cout << "Running fine" << '\n';
 
         delete(s1);
-   } */
+}
+*/
