@@ -1,4 +1,7 @@
 #include "../include/engine.h"
+#include <iostream>
+
+#include <string>
 
 using namespace std;
 
@@ -8,20 +11,9 @@ Engine::Engine(int initial_health_point_a, string engine_name_a,
     : initial_health_point(initial_health_point_a),
       current_health_point(initial_health_point_a),
       engine_name(engine_name_a), horizontal(horizontal_a),
-      engine_skill(engine_skill_a)
+      engine_skill(engine_skill_a),
+      x_location(x_location_a),y_location(y_location_a)
 {
-    x_location = (x_location_a < 0 ? 0 : x_location_a);
-    y_location = (y_location_a > 9 ? 9 : y_location_a);
-    if ((x_location_a + ((initial_health_point_a - 1) *
-                         (horizontal ? 1 : 0))) > 9)
-    {
-        x_location = 9 - ((initial_health_point_a - 1) * (horizontal ? 1 : 0));
-    }
-    if (((y_location_a - ((initial_health_point_a - 1) *
-                          (horizontal ? 0 : 1))) < 0))
-    {
-        y_location = 0 + ((initial_health_point_a - 1) * (horizontal ? 0 : 1));
-    }
 }
 
 int Engine::take_a_hit()
@@ -105,7 +97,7 @@ bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
         int location = (horizontal ? x_location : y_location);
         for (int i = location; i < (location + initial_health_point); i++)
         {
-            grid[(horizontal ? i : x_location)][(horizontal ? y_location : 1)]
+            grid[(horizontal ? i : x_location)][(horizontal ? y_location : i)]
                 ->set_engine_here(pointer);
         }
         return true;
@@ -118,23 +110,26 @@ bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
 
 bool Engine::proximity_check(Square *grid[10][10])
 {
+    if(x_location < 0 || (x_location+(horizontal ? initial_health_point : 0)) > 9 ||
+       y_location < 0 || (y_location+(horizontal ? 0 : initial_health_point)) > 9 )
+        return false;
     int x_min = x_location - 1;
-    int x_max = x_location + 1 + ((initial_health_point - 1) * (horizontal ? 1 : 0));
-    int y_min = y_location - 1 - ((initial_health_point - 1) * (horizontal ? 0 : 1));
-    int y_max = y_location + 1;
+    int x_max = x_location + 1 + ((initial_health_point) * (horizontal ? 1 : 0));
+    int y_min = y_location - 1;
+    int y_max = y_location + 1 + ((initial_health_point) * (horizontal ? 0 : 1));
 
     x_min = (x_min < 0 ? 0 : x_min);
     x_min = (x_min > 9 ? 9 : x_min);
     x_max = (x_max < 0 ? 0 : x_max);
     x_max = (x_max > 9 ? 9 : x_max);
     y_min = (y_min < 0 ? 0 : y_min);
-    y_min = (y_min > 9 ? 0 : y_min);
+    y_min = (y_min > 9 ? 9 : y_min);
     y_max = (y_max < 0 ? 0 : y_max);
     y_max = (y_max > 9 ? 9 : y_max);
-
-    for (int i = x_min; i < x_max; i++)
+    
+    for (int i = x_min; i < x_max+1; i++)
     {
-        for (int j = y_min; j < y_max; j++)
+        for (int j = y_min; j < y_max+1; j++)
         {
             if (grid[i][j]->get_engine_here() != NULL)
             {

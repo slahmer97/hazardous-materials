@@ -416,7 +416,14 @@ int main()
                     
                     cin >> direction >> mvmt;
                     
-                    all_engines[(player*5)+ship]->move_engine(grid[player],direction,mvmt);
+                    while(!(all_engines[(player*5)+ship]->move_engine(grid[player],direction,mvmt)))
+                    {
+                        cout << "direction (:bool) ? point de mouvement ?" << '\n';
+                        cout << "l'engine sort du tableau !" << '\n';
+
+                        cin >> direction >> mvmt;
+
+                    }
 
                 }
 
