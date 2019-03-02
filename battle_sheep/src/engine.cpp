@@ -21,7 +21,7 @@ int Engine::take_a_hit()
     if(current_health_point>0)
         return (--current_health_point);
     else
-        return 0
+        return 0;
 
 }
 
