@@ -13,22 +13,9 @@ Square::Square() // no arguments
         engine_here = NULL;
 }
 
-<<<<<<< HEAD
-/*Square::Square(Engine engine_here_nv, int depth_nv, char hazard_nv)
-{
-        depth = set_depth(depth_nv);
-        hazard = set_hazard(hazard_nv); //n for neutral
-        engine_here = set_engine_here(engine_here_nv);
-} */
-
-Engine *Square::get_engine_here()
-{
-        return engine_here;
-=======
 Engine *Square::get_engine_here()
 {
 	return this->engine_here;
->>>>>>> 0267d62401ca5d5524dffdf43e5f8ae06f060f3e
 }
 
 int Square::get_depth()
@@ -43,12 +30,7 @@ char Square::get_hazard()
 
 void Square::set_engine_here(Engine *engine_here_a)
 {
-<<<<<<< HEAD
-        if (engine_here_a != NULL)
-                engine_here = engine_here_a;
-=======
-	this->engine_here = engine_here_a;
->>>>>>> 0267d62401ca5d5524dffdf43e5f8ae06f060f3e
+        this->engine_here = engine_here_a;
 }
 
 void Square::set_depth(int nv) //nv = newvalue or nouveau
@@ -84,7 +66,7 @@ void Square::get_infos()
         //cout << "engine : " << get_engine_here() << '\n';
 }
 
-
+/*
 int main()
 {
         Square *s1 = new Square();
@@ -106,3 +88,4 @@ int main()
 
         delete(s1);
 }
+*/
