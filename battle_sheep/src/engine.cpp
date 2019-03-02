@@ -20,7 +20,7 @@ int Engine::take_a_hit(Square *grid[10][10])
 {
     return (--current_health_point);
     if(current_health_point==0)
-        put_or_remove_engine_on_grid(grid,false)
+        put_or_remove_engine_on_grid(grid,false);
 
 }
 
