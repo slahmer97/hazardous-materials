@@ -288,7 +288,7 @@ int main()
                         cin >> x;
                     }
                 }
-                else if(affichage==0)
+                if(affichage==0)
                 {
                     cout << "rien n'est touché :(" << '\n';
                     cout << "continuer ?" << '\n';
