@@ -62,12 +62,12 @@ class Engine
     /* Description : Move the engine.
     Input : The grid and direction and the number of square moved.
     Output : None. */
-    void move_engine(Square *grid[10][10], bool reading_direction, int movement_value);
+    bool move_engine(Square *grid[10][10], bool reading_direction, int movement_value);
 
     /* Description :
     Input : The grid and direction of the rotation.
     Output : None. */
-    void rotate_engine(Square *grid[10][10], bool clockwise,
+    bool rotate_engine(Square *grid[10][10], bool clockwise,
                        int node_distance);
 
     /* Description : Damage a location.

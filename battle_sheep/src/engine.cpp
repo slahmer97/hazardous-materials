@@ -36,7 +36,7 @@ int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
                              engine_grid_number, horizontal);
 }
 
-void Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)
+bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)
 {
     put_or_remove_engine_on_grid(grid, false);
     int *location = (horizontal ? &x_location : &y_location);
@@ -54,10 +54,17 @@ void Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
                      (reading_direction ? movement_value : (-movement_value));
     }
     */
-    put_or_remove_engine_on_grid(grid, true);
+    if (!put_or_remove_engine_on_grid(grid, true))
+    {
+        *location -= (reading_direction ? movement_value : (-movement_value));
+        put_or_remove_engine_on_grid(grid, true);
+
+        return false;
+    }
+    return true;
 }
 
-void Engine::rotate_engine(Square *grid[10][10], bool clockwise,
+bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
                            int node_distance)
 {
     put_or_remove_engine_on_grid(grid, false);
@@ -71,7 +78,18 @@ void Engine::rotate_engine(Square *grid[10][10], bool clockwise,
 
     horizontal = !horizontal;
 
-    put_or_remove_engine_on_grid(grid, true);
+    if (!put_or_remove_engine_on_grid(grid, true))
+    {
+        horizontal = !horizontal;
+
+        x_location -= ((!horizontal && clockwise) ? spec_add : normal_add);
+        y_location -= ((horizontal && !clockwise) ? spec_add : normal_add);
+
+        put_or_remove_engine_on_grid(grid, true);
+
+        return false;
+    }
+    return true;
 }
 
 int Engine::normal_shot(Square *grid[10][10], int x_location, int y_location)
