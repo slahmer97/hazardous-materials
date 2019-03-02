@@ -11,6 +11,10 @@ Engine::Engine(int initial_health_point_a, string engine_name_a,
       x_location(x_location_a), y_location(y_location_a),
       engine_skill(engine_skill_a)
 {
+    x_location = (x_location < 0 ? 0 : x_location);
+    x_location = (x_location > 9 ? 9 : x_location);
+    y_location = (y_location < 0 ? 0 : y_location);
+    y_location = (y_location > 9 ? 9 : y_location);
 }
 
 int Engine::take_a_hit()
@@ -18,20 +22,103 @@ int Engine::take_a_hit()
     return (--current_health_point);
 }
 
-int Engine::skill_shot(Square *grid[2][10][10], int x_starting_location,
-                       int y_starting_location, int x_endind_location,
-                       int y_ending_location)
+int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
+                       int y_starting_location)
 {
-    return engine_skill->use(grid,x_starting_location,y_starting_location,
-                             x_endind_location,y_ending_location);
+    return engine_skill->use(grid, x_starting_location, y_starting_location,
+                             engine_grid_number, horizontal);
 }
 
-int Engine::normal_shot(Square *grid[2][10][10], int x, int y, int which_grid, bool scaning, bool IEM)
+void Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)
 {
-    return engine_skill->skill_normal_shot(grid, x, y, which_grid,false,false);
+    put_or_remove_engine_on_grid(grid, false);
+    int *location = (horizontal ? &x_location : &y_location);
+    *location += (reading_direction ? movement_value : (-movement_value));
+    // Si ca marche pas j'ai l'ancienne version
+    /*
+    if (horizontal)
+    {
+        x_location = x_location +
+                     (reading_direction ? movement_value : (-movement_value));
+    }
+    else
+    {
+        y_location = y_location +
+                     (reading_direction ? movement_value : (-movement_value));
+    }
+    */
+    put_or_remove_engine_on_grid(grid, true);
 }
 
-void move_engine(bool reading_direction, int movement_value);
+void Engine::rotate_engine(Square *grid[10][10], bool clockwise,
+                           int node_distance)
+{
+    put_or_remove_engine_on_grid(grid, false);
+
+    int normal_add = node_distance * (horizontal ? 1 : (-1));
+    int spec_add = (initial_health_point - 1 - node_distance) *
+                   (horizontal ? 1 : (-1));
+
+    x_location += ((!horizontal && clockwise) ? spec_add : normal_add);
+    y_location += ((horizontal && !clockwise) ? spec_add : normal_add);
+
+    horizontal = !horizontal;
+
+    put_or_remove_engine_on_grid(grid, true);
+}
+
+int Engine::normal_shot(Square *grid[10][10], int x_location, int y_location)
+{
+    return engine_skill->skill_normal_shot(grid, x_location, y_location, 1, false);
+}
+
+bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
+{
+    if (proximity_check(grid))
+    {
+        Engine *pointer = (put ? this : NULL);
+        int location = (horizontal ? x_location : y_location);
+        for (int i = location; i < (location + initial_health_point); i++)
+        {
+            grid[(horizontal ? i : x_location)][(horizontal ? y_location : 1)]
+                ->set_engine_here(pointer);
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Engine::proximity_check(Square *grid[10][10])
+{
+    int x_min = x_location - 1;
+    int x_max = x_location + 1 + ((initial_health_point - 1) * (horizontal ? 1 : 0));
+    int y_min = y_location - 1 - ((initial_health_point - 1) * (horizontal ? 0 : 1));
+    int y_max = y_location + 1;
+
+    x_min = (x_min < 0 ? 0 : x_min);
+    x_min = (x_min > 9 ? 9 : x_min);
+    x_max = (x_max < 0 ? 0 : x_max);
+    x_max = (x_max > 9 ? 9 : x_max);
+    y_min = (y_min < 0 ? 0 : y_min);
+    y_min = (y_min > 9 ? 0 : y_min);
+    y_max = (y_max < 0 ? 0 : y_max);
+    y_max = (y_max > 9 ? 9 : y_max);
+
+    for (int i = x_min; i < x_max; i++)
+    {
+        for (int j = y_min; j < y_max; j++)
+        {
+            if (grid[i][j]->get_engine_here() != NULL)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
 // Getters :
 int Engine::get_initial_health_point()
@@ -62,9 +149,9 @@ Skill *Engine::get_engine_skill()
 {
     return engine_skill;
 }
-Square *Engine::get_engine_grid()
+int Engine::get_engine_grid_number()
 {
-    return engine_grid;
+    return engine_grid_number;
 }
 
 // Setters :
@@ -96,6 +183,7 @@ void Engine::set_engine_skill(Skill *engine_skill_a)
 {
     engine_skill = engine_skill_a;
 }
-void Engine::set_engine_grid(Square *engine_grid_a)
+void Engine::set_engine_grid_number(int engine_grid_number_a)
 {
+    engine_grid_number = engine_grid_number_a;
 }
