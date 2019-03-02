@@ -9,7 +9,7 @@ using namespace std;
 
 int playing_player(int p)
 {
-    switch(p)
+    switch(p) {
     case 0:
         return 0;
     case 1:
@@ -20,11 +20,12 @@ int playing_player(int p)
         return 3;
     default :
         return -1;
+}
 }
 
 int players_companions(int p)
 {
-    switch(p)
+    switch(p) {
     case 0:
         return 1;
     case 1:
@@ -36,11 +37,12 @@ int players_companions(int p)
     default :
         return -1;
 }
+}
 int engine_health(int i, int j)
 {
-    if(i<2)
-    {
+    if(i<2) {
         switch(j)
+{
         case 0:
             return 5;
         case 1:
@@ -53,10 +55,11 @@ int engine_health(int i, int j)
             return 2;
         default :
             return -1;
+}
     }
     else
     {
-        switch(j)
+        switch(j) {
         case 0:
             return 4;
         case 1:
@@ -71,6 +74,7 @@ int engine_health(int i, int j)
             return -1;
     }
     return -1;
+}
 }
 void print_one_line_gride(Square *grid[10][10], int i)
 {
@@ -322,7 +326,7 @@ int main()
                 
             }
             //std::system("clear");
-            switch(player)
+            switch(player) {
             case 0:
                 print_grid("",player,0,0,grid[2],grid[3]);
             case 1:
@@ -333,6 +337,7 @@ int main()
                 print_grid("",player,0,0,grid[1],grid[0]);
             default :
                 return -1;
+}
 
             print_grid("",player+1,yhealth,ohealth,grid[player],grid[companion]);
 
