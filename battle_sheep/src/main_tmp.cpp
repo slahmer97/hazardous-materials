@@ -405,7 +405,7 @@ int main()
                     }
                 }
             }
-            if( (health_team1<1) || (health_team2<1) )
+            if( (ohealth<1) || (yhealth<1) )
             {
                 cout << "game over" << '\n';
                 notgameover=false;
