@@ -140,6 +140,50 @@ bool Engine::proximity_check(Square *grid[10][10])
     return true;
 }
 
+/* SI BESOIN VERSION DE PROXIMITY_CHECK POUR LE CONTROLER DU SERVER AFIN DE 
+VERIFIER SI LA CREATION SERA CORRECT
+bool proximity_check(Square *grid[10][10], int x, int y, bool horizontal,
+int hp)
+{
+    int new_x = (x < 0 ? 0 : x);
+    int new_y = (y > 9 ? 9 : y);
+    if ((x + ((hp - 1) * (horizontal ? 1 : 0))) > 9)
+    {
+        new_x = 9 - ((hp - 1) * (horizontal ? 1 : 0));
+    }
+    if (((y - ((hp - 1) * (horizontal ? 0 : 1))) < 0))
+    {
+        new_y = 0 + ((hp - 1) * (horizontal ? 0 : 1));
+    }
+
+    int x_min = new_x - 1;
+    int x_max = new_x + 1 + ((hp - 1) * (horizontal ? 1 : 0));
+    int y_min = new_y - 1 - ((hp - 1) * (horizontal ? 0 : 1));
+    int y_max = new_y + 1;
+
+    x_min = (x_min < 0 ? 0 : x_min);
+    x_min = (x_min > 9 ? 9 : x_min);
+    x_max = (x_max < 0 ? 0 : x_max);
+    x_max = (x_max > 9 ? 9 : x_max);
+    y_min = (y_min < 0 ? 0 : y_min);
+    y_min = (y_min > 9 ? 0 : y_min);
+    y_max = (y_max < 0 ? 0 : y_max);
+    y_max = (y_max > 9 ? 9 : y_max);
+
+    for (int i = x_min; i < x_max; i++)
+    {
+        for (int j = y_min; j < y_max; j++)
+        {
+            if (grid[i][j]->get_engine_here() != NULL)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+*/
+
 // Getters :
 int Engine::get_initial_health_point()
 {
