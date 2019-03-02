@@ -16,9 +16,12 @@ Engine::Engine(int initial_health_point_a, string engine_name_a,
 {
 }
 
-int Engine::take_a_hit()
+int Engine::take_a_hit(Square *grid[10][10])
 {
     return (--current_health_point);
+    if(current_health_point==0)
+        put_or_remove_engine_on_grid(grid,false)
+
 }
 
 int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,

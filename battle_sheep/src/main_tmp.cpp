@@ -389,6 +389,7 @@ int main()
             }
             if( (health_team1<1) || (health_team2<1) )
             {
+                cout << "game over" << '\n';
                 notgameover=false;
                 break;
             }
