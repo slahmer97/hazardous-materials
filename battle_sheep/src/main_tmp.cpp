@@ -146,11 +146,6 @@ int main()
     bool horizontal, notgameover=true;
     int x,y;
     Square* grid[4][10][10];
-    Square* grid2[4][10][10];
-    for(int i=0; i<4; i++)
-        for(int j=0; j<10; j++)
-            for(int k=0; k<10; k++)
-                grid[i][j][k]=new Square();
 
     for(int i=0; i<4; i++)
         for(int j=0; j<10; j++)
@@ -266,34 +261,35 @@ int main()
             if(ship==0)
             {
                 int target_player;
-                
+                while()
                 cout << "sur qui tirer ? où tirer ?" << '\n';
 
                 cin >> target_player >> x >> y;
 
                 affichage = all_engines[(player*5)]->normal_shot(grid[target_player-1],x,y);
+                while(affichage!=0)
+                {
+                    if(affichage == -1)
+                    {
+                        i = ( ( (i-1 % 4) + 4) % 4 );
 
-                if(affichage == -1)
-                {
-                    i = ( ( (i-1 % 4) + 4) % 4 );
-
-                    cout << "en dehors de la grille" << '\n';
-                    cout << "continuer ?" << '\n';
-                    cin >> x;
-                }
-                else if(affichage==0)
-                {
-                    cout << "rien n'est touché :(" << '\n';
-                    cout << "continuer ?" << '\n';
-                    cin >> x;
-                }
-                else
-                {
-                    i = ( ( (i-1 % 4) + 4) % 4 );
-                    
-                    cout << "touché ! :)" << '\n';
-                    cout << "continuer ?" << '\n';
-                    cin >> x;
+                        cout << "en dehors de la grille" << '\n';
+                        cout << "continuer ?" << '\n';
+                        cin >> x;
+                    }
+                    else if(affichage==0)
+                    {
+                        cout << "rien n'est touché :(" << '\n';
+                        cout << "continuer ?" << '\n';
+                        cin >> x;
+                    }
+                    else
+                    {
+                        
+                        cout << "touché ! :)" << '\n';
+                        cout << "continuer ?" << '\n';
+                        cin >> x;
+                    }
                 }
                 
             }
@@ -312,11 +308,9 @@ int main()
                     cin >> x >> y;
 
                     affichage = all_engines[(player*5)+ship]->skill_shot(grid,x,y);
-
+                    
                     if(affichage == -1)
                     {
-                        i = ( ( (i-1 % 4) + 4) % 4 );
-
                         cout << "en dehors de la grille" << '\n';
                         cout << "continuer ?" << '\n';
                         cin >> x;
@@ -329,7 +323,6 @@ int main()
                     }
                     else
                     {
-                        i = ( ( (i-1 % 4) + 4) % 4 );
                         
                         cout << "touché ! :)" << '\n';
                         cout << "continuer ?" << '\n';
