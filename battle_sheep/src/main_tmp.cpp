@@ -76,8 +76,9 @@ int engine_health(int i, int j)
     return -1;
 }
 }
-void print_one_line_gride(Square *grid[10][10], int i)
+void print_one_line_gride(Square *grid[10][10], int i, bool hide)
 {
+    cout << i << " ";
     for(int j=0; j<10; j++)
     {
         cout << "|";
@@ -87,37 +88,55 @@ void print_one_line_gride(Square *grid[10][10], int i)
         }
         else
         {
-            cout << grid[j][i]->get_engine_here()->get_engine_name()
-            << "_"
-            << grid[j][i]->get_engine_here()->get_current_health_point();
+            if(!(hide))
+            {
+                cout << grid[j][i]->get_engine_here()->get_engine_name()
+                << "_"
+                << grid[j][i]->get_engine_here()->get_current_health_point();
+            }
+            else if(grid[j][i]->get_engine_here()->get_current_health_point()==0)
+            {
+                cout << " XX ";
+            }
+            else
+            {
+                cout << "    ";
+            }
+            
         }
     }
 }
 
 
 void print_grid(string engine_name, int player, int your_health, int openant_health,
-                Square *grid[10][10], Square *grid2[10][10])
+                Square *grid[10][10], Square *grid2[10][10], bool hide)
 {
     cout << "player : " << player;
     if(!((your_health==0)&&(openant_health==0)))
         cout << " your health : " << your_health << " openants health : " << openant_health;
     
     cout << '\n';
+
+    cout << "    0    1    2    3    4    5    6    7    8    9         0    1    2    3    4    5    6    7    8    9" << '\n';
+    
     for(int i=9; i>=0; i--)
     {
-        cout << "---------------------------------------------------   ---------------------------------------------------" << '\n';
+        cout << "  ---------------------------------------------------   ---------------------------------------------------" << '\n';
         
-        print_one_line_gride(grid,i);
+        print_one_line_gride(grid,i,hide);
         
-        cout << "|   ";
+        cout << "| ";
         
-        print_one_line_gride(grid2,i);
+        print_one_line_gride(grid2,i,hide);
         
         cout << "|";
         
-        cout << '\n';
+        cout << " " << i << '\n';
     }
-    cout << "---------------------------------------------------   ---------------------------------------------------" << '\n';
+    cout << "  ---------------------------------------------------   ---------------------------------------------------" << '\n';
+    
+    cout << "    0    1    2    3    4    5    6    7    8    9         0    1    2    3    4    5    6    7    8    9" << '\n';
+    
     if(engine_name.compare("") != 0)
         cout << "Où mettre le " << engine_name << " ? (bool horizontal, int x, int y)" << '\n';
 }
@@ -127,6 +146,11 @@ int main()
     bool horizontal, notgameover=true;
     int x,y;
     Square* grid[4][10][10];
+    Square* grid2[4][10][10];
+    for(int i=0; i<4; i++)
+        for(int j=0; j<10; j++)
+            for(int k=0; k<10; k++)
+                grid[i][j][k]=new Square();
 
     for(int i=0; i<4; i++)
         for(int j=0; j<10; j++)
@@ -156,143 +180,41 @@ int main()
     for(int i=0; i<4; i++)
     {
         int player=playing_player(i);
-        int player_comp=players_companions(i);
+        int player_comp=players_companions(player);
         for(int j=0; j<5; j++)
         {
-            //std::system("clear");
+            std::system("clear");
 
             int health=engine_health(i,j);
 
-            print_grid(engines_names[(i*5)+j],player+1,0,0,grid[player],grid[player_comp]);
+            print_grid(engines_names[((player%2)*5)+j],player+1,0,0,grid[player],grid[player_comp],false);
 
             cin >> horizontal >> x >> y;
 
-            all_engines[(player*5)+j]=new Engine(health,engines_short_names[((5*player)+j)%10],horizontal,x,y,all_skill[(player*5)+j]);
-            while(!(all_engines[(i*5)+j]->put_or_remove_engine_on_grid(grid[player],true)))
+            all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j]);
+            while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true)))
             {
-                delete(all_engines[(i*5)+j]);
+                delete(all_engines[(player*5)+j]);
+                std::system("clear");
 
-                print_grid(engines_names[((i*5)+j)%10],player+1,0,0,grid[player],grid[player_comp]);
-                cout << "Le " << engines_names[((player*5)+j)%10] << " a été mal placé !" << '\n';
+                print_grid(engines_names[((player%2)*5)+j],player+1,0,0,grid[player],grid[player_comp],false);
+                cout << "Le " << engines_names[((player%2)*5)+j] << " a été mal placé !" << '\n';
                 cin >> horizontal >> x >> y;
                 
-                all_engines[(i*5)+j]=new Engine(health,engines_short_names[((5*i)+j)%10],horizontal,x,y,all_skill[(i*5)+j]);
+                all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j]);
             }
         }
+        std::system("clear");
+        print_grid("",player+1,0,0,grid[player],grid[player_comp],false);
+        cout << "passer le tour ?" << '\n';
+        cin >> x;
     }
-    /*for(int i=0;i<2;i++)
-    {
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[i*2],grid[(i*2)+1]);
-        
-        
-        cin >> horizontal >> x >> y;
-        
-        all_engines[0+(i*5)]=new Engine(5,"pa",horizontal,x,y,new Skill_porte_avion());
-        all_engines[0+(i*5)]->put_or_remove_engine_on_grid(grid[i*2],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[i*2],grid[(i*2)+1]);
-        
-        cout << "où mettre le croiseur ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[1+(i*5)]=new Engine(4,"cr",horizontal,x,y,new Skill_croiseur());
-        all_engines[1+(i*5)]->put_or_remove_engine_on_grid(grid[i*2],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[i*2],grid[(i*2)+1]);
-        
-        cout << "où mettre le contre torpilleur ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[2+(i*5)]=new Engine(3,"ct",horizontal,x,y,new Skill_contre_torpilleur());
-        all_engines[2+(i*5)]->put_or_remove_engine_on_grid(grid[i*2],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[i*2],grid[(i*2)+1]);
-        
-        cout << "où mettre le cuirasse ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[3+(i*5)]=new Engine(2,"cu",horizontal,x,y,new Skill_cuirasse());
-        all_engines[3+(i*5)]->put_or_remove_engine_on_grid(grid[i*2],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[i*2],grid[(i*2)+1]);
-        
-        cout << "où mettre le torpilleur ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[4+(i*5)]=new Engine(2,"to",horizontal,x,y,new Skill_torpilleur());
-        all_engines[4+(i*5)]->put_or_remove_engine_on_grid(grid[i*2],true);
-    
-    }
-
-    for(int i=0;i<2;i++)
-    {
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[(i*2)+1],grid[i*2]);
-        
-        cout << "où mettre le bombardier? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[10+(i*5)]=new Engine(4,"bo",horizontal,x,y,new Skill_bombardier());
-        all_engines[10+(i*5)]->put_or_remove_engine_on_grid(grid[(i*2)+1],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[(i*2)+1],grid[i*2]);
-        
-        cout << "où mettre le intercepteur ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[11+(i*5)]=new Engine(3,"in",horizontal,x,y,new Skill_intercepteur());
-        all_engines[11+(i*5)]->put_or_remove_engine_on_grid(grid[(i*2)+1],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[(i*2)+1],grid[i*2]);
-        
-        cout << "où mettre le brouilleur ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[12+(i*5)]=new Engine(3,"br",horizontal,x,y,new Skill_brouilleur());
-        all_engines[12+(i*5)]->put_or_remove_engine_on_grid(grid[(i*2)+1],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[(i*2)+1],grid[i*2]);
-        
-        cout << "où mettre le patrouille ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[13+(i*5)]=new Engine(2,"pl",horizontal,x,y,new Skill_patrouille());
-        all_engines[13+(i*5)]->put_or_remove_engine_on_grid(grid[(i*2)+1],true);
-
-        //std::system("clear");
-
-        print_grid((i*2)+1,grid[(i*2)+1],grid[i*2]);
-        
-        cout << "où mettre le reconnaissance ? (bool horizontal, int x, int y)" << '\n';
-        cin >> horizontal >> x >> y;
-        
-        all_engines[14+(i*5)]=new Engine(2,"re",horizontal,x,y,new Skill_reconnaissance());
-        all_engines[14+(i*5)]->put_or_remove_engine_on_grid(grid[(i*2)+1],true);
-    
-    }*/
 
     while(notgameover)
     {
         for(int i=0;i<4;i++)
         {
-            int ship,x,y;
+            int ship;
             int affichage;
             int player=playing_player(i);
             int companion=players_companions(player);
@@ -325,21 +247,17 @@ int main()
                 }
                 
             }
-            //std::system("clear");
-            switch(player) {
-            case 0:
-                print_grid("",player,0,0,grid[2],grid[3]);
-            case 1:
-                print_grid("",player,0,0,grid[3],grid[2]);
-            case 2:
-                print_grid("",player,0,0,grid[0],grid[1]);
-            case 3:
-                print_grid("",player,0,0,grid[1],grid[0]);
-            default :
-                return -1;
-}
+            std::system("clear");
+            if(player==0)
+                print_grid("",player+1,0,0,grid[2],grid[3],true);
+            if(player==1)
+                print_grid("",player+1,0,0,grid[3],grid[2],true);
+            if(player==2)
+                print_grid("",player+1,0,0,grid[0],grid[1],true);
+            if(player==3)
+                print_grid("",player+1,0,0,grid[1],grid[0],true);
 
-            print_grid("",player+1,yhealth,ohealth,grid[player],grid[companion]);
+            print_grid("",player+1,yhealth,ohealth,grid[player],grid[companion],false);
 
             cout << "quel machine utilser ? (0=tire normal, 1-5 du 1er placé au dernier)" << '\n';
             
@@ -357,19 +275,25 @@ int main()
 
                 if(affichage == -1)
                 {
-                    i = ( ( (i-- % 4) + 4) % 4 );
+                    i = ( ( (i-1 % 4) + 4) % 4 );
 
                     cout << "en dehors de la grille" << '\n';
+                    cout << "continuer ?" << '\n';
+                    cin >> x;
                 }
                 else if(affichage==0)
                 {
                     cout << "rien n'est touché :(" << '\n';
+                    cout << "continuer ?" << '\n';
+                    cin >> x;
                 }
                 else
                 {
-                    i = ( ( (i-- % 4) + 4) % 4 );
+                    i = ( ( (i-1 % 4) + 4) % 4 );
                     
                     cout << "touché ! :)" << '\n';
+                    cout << "continuer ?" << '\n';
+                    cin >> x;
                 }
                 
             }
@@ -391,19 +315,25 @@ int main()
 
                     if(affichage == -1)
                     {
-                        i = ( ( (i-- % 4) + 4) % 4 );
+                        i = ( ( (i-1 % 4) + 4) % 4 );
 
                         cout << "en dehors de la grille" << '\n';
+                        cout << "continuer ?" << '\n';
+                        cin >> x;
                     }
                     else if(affichage==0)
                     {
                         cout << "rien n'est touché :(" << '\n';
+                        cout << "continuer ?" << '\n';
+                        cin >> x;
                     }
                     else
                     {
-                        i = ( ( (i-- % 4) + 4) % 4 );
+                        i = ( ( (i-1 % 4) + 4) % 4 );
                         
                         cout << "touché ! :)" << '\n';
+                        cout << "continuer ?" << '\n';
+                        cin >> x;
                     }
                 }
 
@@ -419,7 +349,7 @@ int main()
                     while(!(all_engines[(player*5)+ship]->move_engine(grid[player],direction,mvmt)))
                     {
                         cout << "direction (:bool) ? point de mouvement ?" << '\n';
-                        cout << "l'engine sort du tableau !" << '\n';
+                        cout << "déplacement impossible !" << '\n';
 
                         cin >> direction >> mvmt;
 
@@ -436,7 +366,15 @@ int main()
                     
                     cin >> direction >> mvmt;
                     
-                    all_engines[(player*5)+ship]->rotate_engine(grid[player],direction,mvmt-1);
+                    while(!(all_engines[(player*5)+ship]->rotate_engine(grid[player],direction,mvmt-1)))
+                    {
+                    
+                    cout << "direction horraire ou pas (:bool) ? où sur le bateau ? (:1 à taille du bateau)" << '\n';
+                    cout << "déplacement impossible !" << '\n';
+
+                    
+                    cin >> direction >> mvmt;
+                    }
                     
                 }
 
@@ -445,17 +383,32 @@ int main()
             int health_team2=0;
             for(int j=0;j<10;j++)
             {
-                health_team1=all_engines[i]->get_current_health_point();
+                health_team1+=all_engines[i]->get_current_health_point();
             }
             for(int j=0;j<10;j++)
             {
-                health_team2=all_engines[10+i]->get_current_health_point();
+                health_team2+=all_engines[10+i]->get_current_health_point();
             }
             if( (health_team1<1) || (health_team2<1) )
             {
                 notgameover=false;
                 break;
             }
+            std::system("clear");
+            if(player==0)
+                print_grid("",player+1,0,0,grid[2],grid[3],true);
+            if(player==1)
+                print_grid("",player+1,0,0,grid[3],grid[2],true);
+            if(player==2)
+                print_grid("",player+1,0,0,grid[0],grid[1],true);
+            if(player==3)
+                print_grid("",player+1,0,0,grid[1],grid[0],true);
+
+
+            print_grid("",player+1,yhealth,ohealth,grid[player],grid[companion],false);
+
+            cout << "passer le tour ?" << '\n';
+            cin >> x;
         }
     }
     for(int i=0; i<20; i++)
