@@ -381,11 +381,11 @@ int main()
             int health_team2=0;
             for(int j=0;j<10;j++)
             {
-                health_team1+=all_engines[i]->get_current_health_point();
+                health_team1+=all_engines[j]->get_current_health_point();
             }
             for(int j=0;j<10;j++)
             {
-                health_team2+=all_engines[10+i]->get_current_health_point();
+                health_team2+=all_engines[10+j]->get_current_health_point();
             }
             if( (health_team1<1) || (health_team2<1) )
             {
