@@ -108,7 +108,7 @@ void print_one_line_gride(Square *grid[10][10], int i, bool hide)
 }
 
 
-void print_grid(string engine_name, int openant_health,
+void print_grid(string engine_name,int player,
                 Square *grid[10][10], Square *grid2[10][10], bool hide)
 {
     cout << "player : " << player;
@@ -249,7 +249,7 @@ int main()
                 print_grid("",player+1,grid[0],grid[1],true);
             if(player==3)
                 print_grid("",player+1,grid[1],grid[0],true);
-            cout << " your health : " << your_health << " openants health : " << openant_health << '\n';
+            cout << " your health : " << yhealth << " openants health : " << ohealth << '\n';
             
             print_grid("",player+1,grid[player],grid[companion],false);
 
@@ -396,7 +396,7 @@ int main()
             if(player==3)
                 print_grid("",player+1,grid[1],grid[0],true);
 
-            cout << " your health : " << your_health << " openants health : " << openant_health << '\n';
+            cout << " your health : " << yhealth << " openants health : " << ohealth << '\n';
             print_grid("",player+1,grid[player],grid[companion],false);
 
             cout << "passer le tour ?" << '\n';
