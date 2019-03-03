@@ -20,7 +20,7 @@ class Engine
              a directtion, a grid, a (x,y) location and a skill shot. */
     Engine(int initial_health_point_a, std::string engine_name_a,
            bool horizontal_a, int x_location_a, int y_location_a,
-           Skill *engine_skill_a);
+           Skill *engine_skill_a, int engine_grid_number);
 
     //Getters :
     int get_initial_health_point();

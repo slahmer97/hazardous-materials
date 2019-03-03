@@ -7,12 +7,12 @@ using namespace std;
 
 Engine::Engine(int initial_health_point_a, string engine_name_a,
                bool horizontal_a, int x_location_a, int y_location_a,
-               Skill *engine_skill_a)
+               Skill *engine_skill_a, int grid_number_a)
     : initial_health_point(initial_health_point_a),
       current_health_point(initial_health_point_a),
       engine_name(engine_name_a), horizontal(horizontal_a),
       engine_skill(engine_skill_a),
-      x_location(x_location_a),y_location(y_location_a)
+      x_location(x_location_a),y_location(y_location_a),grid_number(grid_number_a)
 {
 }
 
@@ -48,7 +48,7 @@ bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
         y_location = y_location +
                      (reading_direction ? movement_value : (-movement_value));
     }
-    if (!put_or_remove_engine_on_grid(grid, true))
+    if (!(put_or_remove_engine_on_grid(grid, true)))
     {
         if (horizontal)
         {
@@ -103,7 +103,7 @@ int Engine::normal_shot(Square *grid[10][10], int x_location, int y_location)
 
 bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
 {
-    if (proximity_check(grid))
+    if (proximity_check(grid)|| !(put))
     {
         Engine *pointer = (put ? this : NULL);
         int location = (horizontal ? x_location : y_location);
@@ -124,7 +124,10 @@ bool Engine::proximity_check(Square *grid[10][10])
 {
     if(x_location < 0 || (x_location+(horizontal ? (initial_health_point-1) : 0)) > 9 ||
        y_location < 0 || (y_location+(horizontal ? 0 : (initial_health_point-1)) > 9 ))
-        return false;
+        {
+            cout << "hors du plateau !" << '\n';
+            return false;
+        }
     int x_min = x_location - 1;
     int x_max = x_location + 1 + ((initial_health_point-1) * (horizontal ? 1 : 0));
     int y_min = y_location - 1;
@@ -145,6 +148,7 @@ bool Engine::proximity_check(Square *grid[10][10])
         {
             if (grid[i][j]->get_engine_here() != NULL)
             {
+                cout << "il y a un autre bateau !" << '\n';
                 return false;
             }
         }

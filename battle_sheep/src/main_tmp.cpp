@@ -184,7 +184,7 @@ int main()
 
             cin >> horizontal >> x >> y;
 
-            all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j]);
+            all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j],player);
             while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true)))
             {
                 delete(all_engines[(player*5)+j]);
@@ -194,7 +194,7 @@ int main()
                 cout << "Le " << engines_names[((player%2)*5)+j] << " a été mal placé !" << '\n';
                 cin >> horizontal >> x >> y;
                 
-                all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j]);
+                all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j],player);
             }
         }
         std::system("clear");
@@ -370,7 +370,7 @@ int main()
                     
                     cin >> direction >> mvmt;
                     
-                    while(!(all_engines[(player*5)+ship]->rotate_engine(grid[player],direction,mvmt-1)))
+                    while(!(all_engines[(player*5)+ship-1]->rotate_engine(grid[player],direction,mvmt-1)))
                     {
                     
                     cout << "direction horraire ou pas (:bool) ? où sur le bateau ? (:1 à taille du bateau)" << '\n';
