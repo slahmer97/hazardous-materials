@@ -77,8 +77,41 @@ bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
 bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
                            int node_distance)
 {
+    if (node_distance>=initial_health_point)
+    {
+        cout << "position pas sur le bateau" << '\n';
+        return false;
+    }
+    
     put_or_remove_engine_on_grid(grid, false);
-
+    if(horizontal)
+    {
+        if(clockwise)
+        {
+            x_location = x_location + node_distance;
+            y_location = y_location - (initial_health_point-1);
+        }
+        else
+        {
+            x_location = x_location + node_distance;
+        }
+    }
+    else
+    {
+        if(clockwise)
+        {
+            y_location = y_location + node_distance;
+        }
+        else
+        {
+            y_location = y_location + node_distance;
+            x_location = x_location - (initial_health_point-1);
+        }
+        
+    }
+    
+    horizontal = !horizontal;
+    /*
     int normal_add = node_distance * (horizontal ? 1 : (-1));
     int spec_add = (initial_health_point - 1 - node_distance) *
                    (horizontal ? 1 : (-1));
@@ -87,14 +120,41 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
     y_location += ((horizontal && !clockwise) ? spec_add : normal_add);
 
     horizontal = !horizontal;
-
+    */
     if (!put_or_remove_engine_on_grid(grid, true))
     {
+        if(horizontal)
+        {
+            if(clockwise)
+            {
+                x_location = x_location - node_distance;
+                y_location = y_location + (initial_health_point-1);
+            }
+            else
+            {
+                x_location = x_location - node_distance;
+            }
+        }
+        else
+        {
+            if(clockwise)
+            {
+                y_location = y_location - node_distance;
+            }
+            else
+            {
+                y_location = y_location - node_distance;
+                x_location = x_location + (initial_health_point-1);
+            }
+            
+        }
+        horizontal = !horizontal;
+        /*
         horizontal = !horizontal;
 
         x_location -= ((!horizontal && clockwise) ? spec_add : normal_add);
         y_location -= ((horizontal && !clockwise) ? spec_add : normal_add);
-
+        */
         put_or_remove_engine_on_grid(grid, true);
 
         return false;
