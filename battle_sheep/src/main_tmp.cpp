@@ -48,11 +48,11 @@ int engine_pm(int i, int j)
         case 1:
             return 3;
         case 2:
-            return 4;
+            return 3;
         case 3:
-            return 5;
+            return 4;
         case 4:
-            return 5;
+            return 4;
         default :
             return -1;
         }
@@ -65,11 +65,11 @@ int engine_pm(int i, int j)
         case 1:
             return 3;
         case 2:
-            return 3;
+            return 4;
         case 3:
-            return 4;
+            return 5;
         case 4:
-            return 4;
+            return 5;
         default :
             return -1;
         }
