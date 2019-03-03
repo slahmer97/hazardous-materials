@@ -89,23 +89,26 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
         if(clockwise)
         {
             x_location = x_location + node_distance;
-            y_location = y_location - (initial_health_point-1);
+            y_location = y_location - (initial_health_point-1) + node_distance;
+            
         }
         else
         {
             x_location = x_location + node_distance;
+            y_location = y_location - node_distance;
         }
     }
     else
     {
         if(clockwise)
         {
+            x_location = x_location - node_distance;
             y_location = y_location + node_distance;
         }
         else
         {
             y_location = y_location + node_distance;
-            x_location = x_location - (initial_health_point-1);
+            x_location = x_location - (initial_health_point-1) + node_distance;
         }
         
     }
@@ -123,32 +126,32 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
     */
     if (!put_or_remove_engine_on_grid(grid, true))
     {
+        horizontal = !horizontal;
         if(horizontal)
         {
             if(clockwise)
             {
-                x_location = x_location - node_distance;
+                x_location = x_location + node_distance;
                 y_location = y_location + (initial_health_point-1);
             }
             else
             {
-                x_location = x_location - node_distance;
+                x_location = x_location + node_distance;
             }
         }
         else
         {
             if(clockwise)
             {
-                y_location = y_location - node_distance;
+                y_location = y_location + node_distance;
             }
             else
             {
-                y_location = y_location - node_distance;
+                y_location = y_location + node_distance;
                 x_location = x_location + (initial_health_point-1);
             }
             
         }
-        horizontal = !horizontal;
         /*
         horizontal = !horizontal;
 
