@@ -1,4 +1,8 @@
 #include "../include/skill.h"
+#include <iostream>
+
+#include <string>
+
 
 using namespace std;
 
@@ -59,6 +63,8 @@ int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage, boo
             {
                 engine->take_a_hit();
             }
+            if(grid[x][y]->get_engine_here()->get_current_health_point()==0)
+            cout << "coulé !" << '\n';
         }
         if (IEM)
         {
