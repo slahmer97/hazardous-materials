@@ -377,8 +377,8 @@ int main()
                 }
 
             }
-            int yhealth=0;
-            int ohealth=0;
+            yhealth=0;
+            ohealth=0;
             for(int j=0;j<10;j++)
             {
                 if(player<2)
