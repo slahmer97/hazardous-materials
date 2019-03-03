@@ -26,10 +26,10 @@ int Engine::take_a_hit()
 }
 
 int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
-                       int y_starting_location)
+                       int y_starting_location, bool horiz)
 {
     return engine_skill->use(grid, x_starting_location, y_starting_location,
-                             engine_grid_number, horizontal);
+                             engine_grid_number, horiz);
 }
 
 bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)

@@ -376,7 +376,7 @@ int Skill_croiseur::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -413,7 +413,7 @@ int Skill_contre_torpilleur::use(Square *grid[4][10][10], int x_starting_locatio
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -443,7 +443,7 @@ int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -473,7 +473,7 @@ int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -538,7 +538,7 @@ int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -584,7 +584,7 @@ int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -637,7 +637,7 @@ int Skill_brouilleur::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -667,7 +667,7 @@ int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))
@@ -718,7 +718,7 @@ int Skill_reconnaissance::use(Square *grid[4][10][10], int x_starting_location,
 
     if (is_used())
     {
-        return -1;
+        return -2;
     }
 
     if (!(is_unlimited()))

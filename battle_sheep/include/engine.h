@@ -57,7 +57,7 @@ class Engine
              - 2 or higher successful and drawn 1up for each drawn engine
              - (-1) cannot use it. */
     int skill_shot(Square *grid[4][10][10], int x_starting_location,
-                   int y_starting_location);
+                   int y_starting_location, bool horiz);
 
     /* Description : Move the engine.
     Input : The grid and direction and the number of square moved.

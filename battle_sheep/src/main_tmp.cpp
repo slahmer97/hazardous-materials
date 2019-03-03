@@ -308,11 +308,17 @@ int main()
                 
                 if(tirer==0)
                 {
-                    cout << "où tirer ?" << '\n';
+                    cout << "direction (:bool) ? où tirer ?" << '\n';
 
-                    cin >> x >> y;
+                    cin >> horizontal >> x >> y;
 
-                    affichage = all_engines[(player*5)+ship-1]->skill_shot(grid,x,y);
+                    affichage = all_engines[(player*5)+ship-1]->skill_shot(grid,x,y,horizontal);
+                    if(affichage == -2)
+                    {
+                        cout << "Skill désactivé !" << '\n';
+                        cout << "continuer ?" << '\n';
+                        cin >> x;
+                    }
                     
                     if(affichage == -1)
                     {
