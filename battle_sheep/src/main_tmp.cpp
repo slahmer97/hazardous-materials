@@ -36,13 +36,50 @@ int players_companions(int p)
         return 2;
     default :
         return -1;
+    }
 }
+int engine_pm(int i, int j)
+{
+    if(i<2) {
+        switch(j)
+        {
+        case 0:
+            return 2;
+        case 1:
+            return 3;
+        case 2:
+            return 4;
+        case 3:
+            return 5;
+        case 4:
+            return 5;
+        default :
+            return -1;
+        }
+    }
+    else
+    {
+        switch(j) {
+        case 0:
+            return 2;
+        case 1:
+            return 3;
+        case 2:
+            return 3;
+        case 3:
+            return 4;
+        case 4:
+            return 4;
+        default :
+            return -1;
+        }
+    return -1;
 }
 int engine_health(int i, int j)
 {
     if(i<2) {
         switch(j)
-{
+        {
         case 0:
             return 5;
         case 1:
@@ -55,7 +92,7 @@ int engine_health(int i, int j)
             return 2;
         default :
             return -1;
-}
+        }
     }
     else
     {
@@ -72,7 +109,7 @@ int engine_health(int i, int j)
             return 2;
         default :
             return -1;
-    }
+        }
     return -1;
 }
 }
@@ -179,12 +216,13 @@ int main()
             std::system("clear");
 
             int health=engine_health(i,j);
-
+            int pm=engine_pm(i,j);
             print_grid(engines_names[((player%2)*5)+j],player+1,grid[player],grid[player_comp],false);
 
             cin >> horizontal >> x >> y;
 
-            all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j],player);
+            all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,
+                                                 x,y,all_skill[(player*5)+j],player,pm);
             while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true)))
             {
                 delete(all_engines[(player*5)+j]);
@@ -194,7 +232,8 @@ int main()
                 cout << "Le " << engines_names[((player%2)*5)+j] << " a été mal placé !" << '\n';
                 cin >> horizontal >> x >> y;
                 
-                all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,x,y,all_skill[(player*5)+j],player);
+                all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,
+                                                     x,y,all_skill[(player*5)+j],player,pm);
             }
         }
         std::system("clear");
