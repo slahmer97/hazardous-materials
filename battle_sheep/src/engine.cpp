@@ -34,6 +34,11 @@ int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
 
 bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)
 {
+    if(movement_value>initial_health_point)
+    {
+        cout << "pas assez de pm !" << '\n';
+        return false;
+    }
     put_or_remove_engine_on_grid(grid, false);
     /*int *location = (horizontal ? &x_location : &y_location);
     *location += (reading_direction ? movement_value : (-movement_value));*/
