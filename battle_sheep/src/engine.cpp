@@ -7,7 +7,7 @@ using namespace std;
 
 Engine::Engine(int initial_health_point_a, string engine_name_a,
                bool horizontal_a, int x_location_a, int y_location_a,
-               Skill *engine_skill_a, int grid_number_a,int movement_point_a)
+               Skill *engine_skill_a, int engine_grid_number_a,int movement_point_a)
     : initial_health_point(initial_health_point_a),
       current_health_point(initial_health_point_a),
       engine_name(engine_name_a), horizontal(horizontal_a),

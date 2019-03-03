@@ -73,6 +73,7 @@ int engine_pm(int i, int j)
         default :
             return -1;
         }
+    }
     return -1;
 }
 int engine_health(int i, int j)
