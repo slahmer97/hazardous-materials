@@ -379,7 +379,7 @@ int main()
             }
             yhealth=0;
             ohealth=0;
-            for(int j=0;j<10;j++)
+            for(int j=0;j<20;j++)
             {
                 if(player<2)
                 {
