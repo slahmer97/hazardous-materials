@@ -9,37 +9,20 @@ using namespace std;
 
 int playing_player(int p)
 {
-    switch (p)
-    {
-    case 0:
-        return 0;
-    case 1:
-        return 2;
-    case 2:
-        return 1;
-    case 3:
-        return 3;
-    default:
-        return -1;
-    }
+    return ((p == 0 || p == 3) ? p : 3 - p);
 }
 
 int players_companions(int p)
 {
-    switch (p)
+    //First teammate, so return the second
+    if (p == 0 || p == 2)
     {
-    case 0:
-        return 1;
-    case 1:
-        return 0;
-    case 2:
-        return 3;
-    case 3:
-        return 2;
-    default:
-        return -1;
+        return p + 1;
     }
+    //Second teammate, so return the first
+    return p - 1;
 }
+
 int engine_pm(int i, int j)
 {
     if (i < 2)
