@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 using namespace std;
 
 Skill::Skill(bool unlimited_a, bool used_a)
@@ -14,9 +13,11 @@ Skill::Skill(bool unlimited_a, bool used_a)
 
 Skill::Skill()
 {
-    unlimited=false;
-    used=false;
+    unlimited = false;
+    used = false;
 }
+
+//Getters :
 
 bool Skill::is_unlimited()
 {
@@ -42,7 +43,8 @@ void Skill::set_used(bool used_a)
 
 //Methodes de Skill
 
-int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage, bool IEM)
+int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage,
+                             bool IEM)
 {
     if (x < 0 || x > 9 || y < 0 || y > 9)
     {
@@ -63,8 +65,8 @@ int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage, boo
             {
                 engine->take_a_hit();
             }
-            if(grid[x][y]->get_engine_here()->get_current_health_point()==0)
-            cout << "coulé !" << '\n';
+            if (grid[x][y]->get_engine_here()->get_current_health_point() == 0)
+                cout << "coulé !" << '\n';
         }
         if (IEM)
         {

@@ -15,7 +15,7 @@ Square::Square() // no arguments
 
 Engine *Square::get_engine_here()
 {
-	return this->engine_here;
+        return this->engine_here;
 }
 
 int Square::get_depth()
@@ -35,7 +35,7 @@ void Square::set_engine_here(Engine *engine_here_a)
 
 void Square::set_depth(int nv) //nv = newvalue or nouveau
 {
-        if(nv >= 0 && nv <= 10) //standard range values
+        if (nv >= 0 && nv <= 10) //standard range values
                 depth = nv;
         else
                 nv = 1; //default value
@@ -43,20 +43,25 @@ void Square::set_depth(int nv) //nv = newvalue or nouveau
 
 void Square::set_hazard(char nv)
 {
-        switch(nv) {
-        case 'n': hazard = 'n'; //neutral
+        switch (nv)
+        {
+        case 'n':
+                hazard = 'n'; //neutral
                 break;
-        case 'c': hazard = 'c'; //cold
+        case 'c':
+                hazard = 'c'; //cold
                 break;
-        case 'w': hazard = 'w'; //wind
+        case 'w':
+                hazard = 'w'; //wind
                 break;
-        case 't': hazard = 't'; //thunder
+        case 't':
+                hazard = 't'; //thunder
                 break;
 
-        default: hazard = 'n'; //nothing found -> neutral
+        default:
+                hazard = 'n'; //nothing found -> neutral
                 break;
         }
-
 }
 
 void Square::get_infos()
