@@ -307,10 +307,9 @@ int main()
                 }
                 else
                 {
-					cout << "touché ! :)" << '\n';
-                    cout << "sur qui tirer ? où tirer ?" << '\n';
-
-                    cin >> target_player >> x >> y;
+		    cout << "touché ! :)" << '\n';
+                    cout << "continuer ?" << '\n';
+                    cin >> x;
                 }
                 
                 if (affichage == 0)
