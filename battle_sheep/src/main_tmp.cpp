@@ -108,7 +108,7 @@ void print_one_line_gride(Square *grid[10][10], int i, bool hide)
     cout << i << " ";
     for (int j = 0; j < 10; j++)
     {
-        cout << "|";
+        cout << "│";
         if (grid[j][i]->get_engine_here() == NULL)
         {
             cout << "    ";
@@ -144,19 +144,19 @@ void print_grid(string engine_name, int player,
 
     for (int i = 9; i >= 0; i--)
     {
-        cout << "  ---------------------------------------------------   ---------------------------------------------------" << '\n';
+        cout << "  ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼   ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼" << '\n';
 
         print_one_line_gride(grid, i, hide);
 
-        cout << "| ";
+        cout << "│ ";
 
         print_one_line_gride(grid2, i, hide);
 
-        cout << "|";
+        cout << "│";
 
         cout << " " << i << '\n';
     }
-    cout << "  ---------------------------------------------------   ---------------------------------------------------" << '\n';
+    cout << "  ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼   ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼" << '\n';
 
     cout << "    0    1    2    3    4    5    6    7    8    9         0    1    2    3    4    5    6    7    8    9" << '\n';
 
@@ -296,24 +296,23 @@ int main()
                     cin >> target_player >> x >> y;
                 }
                 
-                while (affichage = all_engines[(player * 5)]->normal_shot(grid[target_player - 1], x, y) != 0)
+                affichage = all_engines[(player * 5)]->normal_shot(grid[target_player - 1], x, y);
+                
+                if (affichage == -1)
                 {
-                    if (affichage == -1)
-                    {
-                        cout << "en dehors de la grille" << '\n';
-                        cout << "sur qui tirer ? où tirer ?" << '\n';
+                    cout << "en dehors de la grille" << '\n';
+                    cout << "sur qui tirer ? où tirer ?" << '\n';
 
-                        cin >> target_player >> x >> y;
-                    }
-                    else
-                    {
-
-                        cout << "touché ! :)" << '\n';
-                        cout << "sur qui tirer ? où tirer ?" << '\n';
-
-                        cin >> target_player >> x >> y;
-                    }
+					cin >> target_player >> x >> y;
                 }
+                else
+                {
+					cout << "touché ! :)" << '\n';
+                    cout << "sur qui tirer ? où tirer ?" << '\n';
+
+                    cin >> target_player >> x >> y;
+                }
+                
                 if (affichage == 0)
                 {
                     cout << "rien n'est touché :(" << '\n';

@@ -239,7 +239,7 @@ bool Engine::proximity_check(Square *grid[10][10])
     {
         for (int j = y_min; j < y_max + 1; j++)
         {
-            if ((grid[i][j]->get_engine_here() != NULL)||(!(grid[i][j]->get_engine_death())))
+            if ((grid[i][j]->get_engine_here() != NULL)/*||(!(grid[i][j]->get_engine_death()))*/)
             {
                 cout << "il y a un autre bateau !" << '\n';
                 return false;
