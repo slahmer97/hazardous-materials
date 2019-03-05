@@ -1,21 +1,25 @@
 #ifndef DEF_INTERFACE
 #define DEF_INTERFACE
 
-#include "client.h"
+#include <SFML/Graphics.hpp>
+
 
 class Interface
 {
-    /*Methods*/
-  public:
-    //Constructor :
-    Interface();
+	/*Methods*/
+	public:
+		//Constructor :
+		Interface();
+	
+		void start();
 
-    //Getters :
+		//Getters :
 
-    //Setters :
+		//Setters :
 
-    /*Attributes*/
-  private:
+		/*Attributes*/
+	private:
+		sf::RenderWindow window;
 };
 
 #endif

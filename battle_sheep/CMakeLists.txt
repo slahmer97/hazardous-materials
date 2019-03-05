@@ -34,7 +34,7 @@ target_link_libraries(server ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 # We compile the client only if sfml was found
 include_directories(${SFML_INCLUDE_DIR})
-add_executable(client src/client.cpp include/client.h ${SHARED_SOURCES} )
+add_executable(client src/client.cpp ${SHARED_SOURCES} )
 target_link_libraries(client ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 
