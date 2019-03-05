@@ -109,7 +109,7 @@ void print_one_line_gride(Square *grid[10][10], int i, bool hide)
     for (int j = 0; j < 10; j++)
     {
         cout << "│";
-        if (grid[j][i]->get_engine_here() == NULL)
+        if (grid[j][i]->get_engine_here() == nullptr)
         {
             cout << "    ";
         }
@@ -121,7 +121,7 @@ void print_one_line_gride(Square *grid[10][10], int i, bool hide)
                      << "_"
                      << grid[j][i]->get_engine_here()->get_current_health_point();
             }
-            else if (grid[j][i]->get_engine_here()->get_current_health_point() == 0)
+            else if (grid[j][i]->get_engine_here()->get_current_health_point()==0)
             {
                 cout << " XX ";
             }
@@ -211,7 +211,7 @@ int main()
 
             all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,
                                                  x,y,all_skill[(player*5)+j],player,pm);
-            while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true, false)))
+            while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true)))
             {
                 delete (all_engines[(player * 5) + j]);
                 std::system("clear");
@@ -305,9 +305,8 @@ int main()
 
 					cin >> target_player >> x >> y;
                 }
-                else
+                if (affichage == 1)
                 {
-		    cout << "touché ! :)" << '\n';
                     cout << "continuer ?" << '\n';
                     cin >> x;
                 }

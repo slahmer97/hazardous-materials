@@ -80,7 +80,7 @@ class Engine
     /* Description : Put or remove this engine of the grid.
     Input : A bool to know if we must put it or remove it.
     Output : None. */
-    bool put_or_remove_engine_on_grid(Square *grid[10][10], bool put, bool dead);
+    bool put_or_remove_engine_on_grid(Square *grid[10][10], bool put);
 
     //Others :
     /* Description : Check that all the squares around a segment are ok.

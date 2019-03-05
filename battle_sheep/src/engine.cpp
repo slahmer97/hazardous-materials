@@ -21,15 +21,17 @@ int Engine::take_a_hit(Square *grid[10][10])
 {
     if (current_health_point > 0)
 	{
-        return (--current_health_point);
+		if(current_health_point > 1)
+        cout << "touché ! :)" << '\n';
+        --current_health_point;
     }
-    else
+    if (current_health_point == 0)
     {
         cout << "touché ! :)" << '\n';
         cout << "coulé !!!" << '\n';
-        put_or_remove_engine_on_grid(grid, false, true);
         return 0;
     }
+    return current_health_point;
 
 }
 
@@ -57,7 +59,7 @@ bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
         cout << "pas assez de pm !" << '\n';
         return false;
     }
-    put_or_remove_engine_on_grid(grid, false, false);
+    put_or_remove_engine_on_grid(grid, false);
     int *location = (horizontal ? &x_location : &y_location);
     *location += (reading_direction ? movement_value : (-movement_value));
     // Si ca marche pas j'ai l'ancienne version
@@ -71,7 +73,7 @@ bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
         y_location = y_location +
                      (reading_direction ? movement_value : (-movement_value));
     }*/
-    if (!(put_or_remove_engine_on_grid(grid, true, false)))
+    if (!(put_or_remove_engine_on_grid(grid, true)))
     {
         /*if (horizontal)
         {
@@ -84,7 +86,7 @@ bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
                         (reading_direction ? movement_value : (-movement_value));
         }*/
         *location -= (reading_direction ? movement_value : (-movement_value));
-        put_or_remove_engine_on_grid(grid, true, false);
+        put_or_remove_engine_on_grid(grid, true);
 
         return false;
     }
@@ -105,7 +107,7 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
         return false;
     }
     
-    put_or_remove_engine_on_grid(grid, false, false);
+    put_or_remove_engine_on_grid(grid, false);
     if(horizontal)
     {
         if (clockwise)
@@ -144,7 +146,7 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
 
     horizontal = !horizontal;
     */
-    if (!put_or_remove_engine_on_grid(grid, true, false))
+    if (!put_or_remove_engine_on_grid(grid, true))
     {
         horizontal = !horizontal;
         if (horizontal)
@@ -177,7 +179,7 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
         x_location -= ((!horizontal && clockwise) ? spec_add : normal_add);
         y_location -= ((horizontal && !clockwise) ? spec_add : normal_add);
         */
-        put_or_remove_engine_on_grid(grid, true, false);
+        put_or_remove_engine_on_grid(grid, true);
 
         return false;
     }
@@ -189,21 +191,16 @@ int Engine::normal_shot(Square *grid[10][10], int x_location, int y_location)
     return engine_skill->skill_normal_shot(grid, x_location, y_location, 1, false);
 }
 
-bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put, bool dead)
+bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put)
 {
-    if (proximity_check(grid) || !(put))
+    if ( !(put) || proximity_check(grid) )
     {
-        Engine *pointer = (put ? this : NULL);
+        Engine *pointer = (put ? this : nullptr);
         int location = (horizontal ? x_location : y_location);
         for (int i = location; i < (location + initial_health_point); i++)
         {
             grid[(horizontal ? i : x_location)][(horizontal ? y_location : i)]
                 ->set_engine_here(pointer);
-            if(dead)
-            {
-                grid[(horizontal ? i : x_location)][(horizontal ? y_location : i)]
-                ->set_engine_death(true);
-            }
         }
         return true;
     }
