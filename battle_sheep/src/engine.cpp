@@ -7,21 +7,25 @@ using namespace std;
 
 Engine::Engine(int initial_health_point_a, string engine_name_a,
                bool horizontal_a, int x_location_a, int y_location_a,
-               Skill *engine_skill_a, int engine_grid_number_a,int movement_point_a)
+               Skill *engine_skill_a, int engine_grid_number_a, int movement_point_a)
     : initial_health_point(initial_health_point_a),
       current_health_point(initial_health_point_a),
       engine_name(engine_name_a), horizontal(horizontal_a),
       engine_skill(engine_skill_a),
-      x_location(x_location_a),y_location(y_location_a),
-      engine_grid_number(engine_grid_number_a),movement_point(movement_point_a)
+      x_location(x_location_a), y_location(y_location_a),
+      engine_grid_number(engine_grid_number_a), movement_point(movement_point_a)
 {
 }
 
 int Engine::take_a_hit(Square *grid[10][10])
 {
+<<<<<<< HEAD
     if(current_health_point>0)
     {
         cout << "touché ! :)" << '\n';
+=======
+    if (current_health_point > 0)
+>>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
         return (--current_health_point);
     }
     else
@@ -30,8 +34,11 @@ int Engine::take_a_hit(Square *grid[10][10])
         cout << "coulé !!!" << '\n';
         put_or_remove_engine_on_grid(grid, false, true);
         return 0;
+<<<<<<< HEAD
     }
 
+=======
+>>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
 }
 
 int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
@@ -48,12 +55,16 @@ int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
 
 bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)
 {
+<<<<<<< HEAD
     if(current_health_point==0)
     {
         cout << "engine mort !" << '\n';
         return false;
     }
     if(movement_value>movement_point)
+=======
+    if (movement_value > movement_point)
+>>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
     {
         cout << "pas assez de pm !" << '\n';
         return false;
@@ -95,25 +106,34 @@ bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
 bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
                            int node_distance)
 {
+<<<<<<< HEAD
     if(current_health_point==0)
     {
         cout << "engine mort !" << '\n';
         return false;
     }
     if (node_distance>=initial_health_point)
+=======
+    if (node_distance >= initial_health_point)
+>>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
     {
         cout << "position pas sur le bateau" << '\n';
         return false;
     }
+<<<<<<< HEAD
     
     put_or_remove_engine_on_grid(grid, false, false);
     if(horizontal)
+=======
+
+    put_or_remove_engine_on_grid(grid, false);
+    if (horizontal)
+>>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
     {
-        if(clockwise)
+        if (clockwise)
         {
             x_location = x_location + node_distance;
-            y_location = y_location - (initial_health_point-1) + node_distance;
-            
+            y_location = y_location - (initial_health_point - 1) + node_distance;
         }
         else
         {
@@ -123,7 +143,7 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
     }
     else
     {
-        if(clockwise)
+        if (clockwise)
         {
             x_location = x_location - node_distance;
             y_location = y_location + node_distance;
@@ -131,11 +151,10 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
         else
         {
             y_location = y_location + node_distance;
-            x_location = x_location - (initial_health_point-1) + node_distance;
+            x_location = x_location - (initial_health_point - 1) + node_distance;
         }
-        
     }
-    
+
     horizontal = !horizontal;
     /*
     int normal_add = node_distance * (horizontal ? 1 : (-1));
@@ -150,12 +169,12 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
     if (!put_or_remove_engine_on_grid(grid, true, false))
     {
         horizontal = !horizontal;
-        if(horizontal)
+        if (horizontal)
         {
-            if(clockwise)
+            if (clockwise)
             {
                 x_location = x_location + node_distance;
-                y_location = y_location + (initial_health_point-1);
+                y_location = y_location + (initial_health_point - 1);
             }
             else
             {
@@ -164,16 +183,15 @@ bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
         }
         else
         {
-            if(clockwise)
+            if (clockwise)
             {
                 y_location = y_location + node_distance;
             }
             else
             {
                 y_location = y_location + node_distance;
-                x_location = x_location + (initial_health_point-1);
+                x_location = x_location + (initial_health_point - 1);
             }
-            
         }
         /*
         horizontal = !horizontal;
@@ -195,7 +213,7 @@ int Engine::normal_shot(Square *grid[10][10], int x_location, int y_location)
 
 bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put, bool dead)
 {
-    if (proximity_check(grid)|| !(put))
+    if (proximity_check(grid) || !(put))
     {
         Engine *pointer = (put ? this : NULL);
         int location = (horizontal ? x_location : y_location);
@@ -219,16 +237,16 @@ bool Engine::put_or_remove_engine_on_grid(Square *grid[10][10], bool put, bool d
 
 bool Engine::proximity_check(Square *grid[10][10])
 {
-    if(x_location < 0 || (x_location+(horizontal ? (initial_health_point-1) : 0)) > 9 ||
-       y_location < 0 || (y_location+(horizontal ? 0 : (initial_health_point-1)) > 9 ))
-        {
-            cout << "hors du plateau !" << '\n';
-            return false;
-        }
+    if (x_location < 0 || (x_location + (horizontal ? (initial_health_point - 1) : 0)) > 9 ||
+        y_location < 0 || (y_location + (horizontal ? 0 : (initial_health_point - 1)) > 9))
+    {
+        cout << "hors du plateau !" << '\n';
+        return false;
+    }
     int x_min = x_location - 1;
-    int x_max = x_location + 1 + ((initial_health_point-1) * (horizontal ? 1 : 0));
+    int x_max = x_location + 1 + ((initial_health_point - 1) * (horizontal ? 1 : 0));
     int y_min = y_location - 1;
-    int y_max = y_location + 1 + ((initial_health_point-1) * (horizontal ? 0 : 1));
+    int y_max = y_location + 1 + ((initial_health_point - 1) * (horizontal ? 0 : 1));
 
     x_min = (x_min < 0 ? 0 : x_min);
     x_min = (x_min > 9 ? 9 : x_min);
@@ -239,9 +257,9 @@ bool Engine::proximity_check(Square *grid[10][10])
     y_max = (y_max < 0 ? 0 : y_max);
     y_max = (y_max > 9 ? 9 : y_max);
 
-    for (int i = x_min; i < x_max+1; i++)
+    for (int i = x_min; i < x_max + 1; i++)
     {
-        for (int j = y_min; j < y_max+1; j++)
+        for (int j = y_min; j < y_max + 1; j++)
         {
             if ((grid[i][j]->get_engine_here() != NULL)||(!(grid[i][j]->get_engine_death())))
             {
