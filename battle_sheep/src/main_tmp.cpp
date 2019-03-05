@@ -121,11 +121,7 @@ void print_one_line_gride(Square *grid[10][10], int i, bool hide)
                      << "_"
                      << grid[j][i]->get_engine_here()->get_current_health_point();
             }
-<<<<<<< HEAD
-            else if(grid[j][i]->get_engine_death())
-=======
             else if (grid[j][i]->get_engine_here()->get_current_health_point() == 0)
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
             {
                 cout << " XX ";
             }
@@ -213,15 +209,9 @@ int main()
 
             cin >> horizontal >> x >> y;
 
-<<<<<<< HEAD
             all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,
                                                  x,y,all_skill[(player*5)+j],player,pm);
             while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true, false)))
-=======
-            all_engines[(player * 5) + j] = new Engine(health, engines_short_names[((player % 2) * 5) + j], horizontal,
-                                                       x, y, all_skill[(player * 5) + j], player, pm);
-            while (!(all_engines[(player * 5) + j]->put_or_remove_engine_on_grid(grid[player], true)))
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
             {
                 delete (all_engines[(player * 5) + j]);
                 std::system("clear");
@@ -305,13 +295,8 @@ int main()
 
                     cin >> target_player >> x >> y;
                 }
-<<<<<<< HEAD
                 
-                while((affichage = all_engines[(player*5)]->normal_shot(grid[target_player-1],x,y))!=0)
-=======
-
                 while (affichage = all_engines[(player * 5)]->normal_shot(grid[target_player - 1], x, y) != 0)
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
                 {
                     if (affichage == -1)
                     {
@@ -322,11 +307,8 @@ int main()
                     }
                     else
                     {
-<<<<<<< HEAD
-=======
 
                         cout << "touché ! :)" << '\n';
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
                         cout << "sur qui tirer ? où tirer ?" << '\n';
 
                         cin >> target_player >> x >> y;
@@ -421,7 +403,6 @@ int main()
 
                     while (!(all_engines[(player * 5) + ship - 1]->rotate_engine(grid[player], direction, mvmt - 1)))
                     {
-<<<<<<< HEAD
                     
                         cout << "déplacement impossible !" << '\n';
 
@@ -436,12 +417,6 @@ int main()
 
                         cout << "direction horraire ou pas (:bool) ? où sur le bateau ? (:1 à taille du bateau)" << '\n';
                         
-=======
-
-                        cout << "direction horraire ou pas (:bool) ? où sur le bateau ? (:1 à taille du bateau)" << '\n';
-                        cout << "déplacement impossible !" << '\n';
-
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
                         cin >> direction >> mvmt;
                     }
                 }

@@ -65,11 +65,8 @@ int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage,
             {
                 engine->take_a_hit(grid);
             }
-<<<<<<< HEAD
-=======
             if (grid[x][y]->get_engine_here()->get_current_health_point() == 0)
                 cout << "coulé !" << '\n';
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
         }
         if (IEM)
         {
