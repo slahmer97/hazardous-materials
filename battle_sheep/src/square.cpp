@@ -11,11 +11,16 @@ Square::Square() // no arguments
         depth = 1;
         hazard = 'n'; //n for neutral
         engine_here = NULL;
+        engine_dead = false;
 }
 
 Engine *Square::get_engine_here()
 {
 	return this->engine_here;
+}
+bool Square::get_engine_death()
+{
+	return this->engine_dead;
 }
 
 int Square::get_depth()
@@ -31,6 +36,11 @@ char Square::get_hazard()
 void Square::set_engine_here(Engine *engine_here_a)
 {
         this->engine_here = engine_here_a;
+}
+
+void Square::set_engine_death(bool engine_dead_a)
+{
+        this->engine_dead = engine_dead_a;
 }
 
 void Square::set_depth(int nv) //nv = newvalue or nouveau

@@ -132,7 +132,7 @@ void print_one_line_gride(Square *grid[10][10], int i, bool hide)
                 << "_"
                 << grid[j][i]->get_engine_here()->get_current_health_point();
             }
-            else if(grid[j][i]->get_engine_here()->get_current_health_point()==0)
+            else if(grid[j][i]->get_engine_death())
             {
                 cout << " XX ";
             }
@@ -224,7 +224,7 @@ int main()
 
             all_engines[(player*5)+j]=new Engine(health,engines_short_names[((player%2)*5)+j],horizontal,
                                                  x,y,all_skill[(player*5)+j],player,pm);
-            while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true)))
+            while(!(all_engines[(player*5)+j]->put_or_remove_engine_on_grid(grid[player],true, false)))
             {
                 delete(all_engines[(player*5)+j]);
                 std::system("clear");
@@ -312,7 +312,7 @@ int main()
                     
                 }
                 
-                while(affichage = all_engines[(player*5)]->normal_shot(grid[target_player-1],x,y)!=0)
+                while((affichage = all_engines[(player*5)]->normal_shot(grid[target_player-1],x,y))!=0)
                 {
                     if(affichage == -1)
                     {
@@ -323,8 +323,6 @@ int main()
                     }
                     else
                     {
-                        
-                        cout << "touché ! :)" << '\n';
                         cout << "sur qui tirer ? où tirer ?" << '\n';
 
                         cin >> target_player >> x >> y;
@@ -392,8 +390,18 @@ int main()
                     
                     while(!(all_engines[(player*5)+ship-1]->move_engine(grid[player],direction,mvmt)))
                     {
-                        cout << "direction (:bool) ? point de mouvement ?" << '\n';
+
                         cout << "déplacement impossible !" << '\n';
+
+                        if(all_engines[(player*5)+ship-1]->get_current_health_point()==0)
+                        {
+                            cout << "engine mort !" << '\n';
+
+                            cin >> x;
+
+                            break;
+                        }
+                        cout << "direction (:bool) ? point de mouvement ?" << '\n';
 
                         cin >> direction >> mvmt;
 
@@ -413,11 +421,20 @@ int main()
                     while(!(all_engines[(player*5)+ship-1]->rotate_engine(grid[player],direction,mvmt-1)))
                     {
                     
-                    cout << "direction horraire ou pas (:bool) ? où sur le bateau ? (:1 à taille du bateau)" << '\n';
-                    cout << "déplacement impossible !" << '\n';
+                        cout << "déplacement impossible !" << '\n';
 
-                    
-                    cin >> direction >> mvmt;
+                        if(all_engines[(player*5)+ship-1]->get_current_health_point()==0)
+                        {
+                            cout << "engine mort !" << '\n';
+
+                            cin >> x;
+
+                            break;
+                        }
+
+                        cout << "direction horraire ou pas (:bool) ? où sur le bateau ? (:1 à taille du bateau)" << '\n';
+                        
+                        cin >> direction >> mvmt;
                     }
                     
                 }

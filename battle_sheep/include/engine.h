@@ -47,7 +47,7 @@ class Engine
     /* Description : Lower current_health_point by one.
     Input : None.
     Output : current_health_point. */
-    int take_a_hit();
+    int take_a_hit(Square *grid[10][10]);
 
     /* Description : Use engine_skill.
     Input : Square pointer [4][10][10], (x,y) location of the begining and 
@@ -80,7 +80,7 @@ class Engine
     /* Description : Put or remove this engine of the grid.
     Input : A bool to know if we must put it or remove it.
     Output : None. */
-    bool put_or_remove_engine_on_grid(Square *grid[10][10], bool put);
+    bool put_or_remove_engine_on_grid(Square *grid[10][10], bool put, bool dead);
 
     //Others :
     /* Description : Check that all the squares around a segment are ok.

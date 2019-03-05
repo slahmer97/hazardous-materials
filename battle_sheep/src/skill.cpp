@@ -61,10 +61,8 @@ int Skill::skill_normal_shot(Square *grid[10][10], int x, int y, int damage, boo
         {
             for (int i = 0; i < damage; i++)
             {
-                engine->take_a_hit();
+                engine->take_a_hit(grid);
             }
-            if(grid[x][y]->get_engine_here()->get_current_health_point()==0)
-            cout << "coulé !" << '\n';
         }
         if (IEM)
         {
@@ -336,10 +334,7 @@ int Skill::skill_first_to_drawn(Square *grid[10][10], int x_starting_location,
 
     return res;
 }
-
-//Methode use de chaque skill
-
-int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
+int Skill::use(Square *grid[4][10][10], int x_starting_location,
                            int y_starting_location, int player, bool horizontal)
 {
 
@@ -353,6 +348,13 @@ int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
         set_used(true);
     }
 
+
+}
+//Methode use de chaque skill
+
+int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
+                           int y_starting_location, int player, bool horizontal)
+{
     int which_gride;
 
     if (player < 2)
@@ -379,16 +381,6 @@ int Skill_porte_avion::use(Square *grid[4][10][10], int x_starting_location,
 int Skill_croiseur::use(Square *grid[4][10][10], int x_starting_location,
                         int y_starting_location, int player, bool horizontal)
 {
-
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
 
     int which_gride;
 
@@ -417,16 +409,6 @@ int Skill_contre_torpilleur::use(Square *grid[4][10][10], int x_starting_locatio
                                  int y_starting_location, int player, bool horizontal)
 {
 
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
-
     int which_gride;
 
     if (player < 2)
@@ -447,16 +429,6 @@ int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
                         int y_starting_location, int player, bool horizontal)
 {
 
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
-
     int which_gride;
 
     if (player < 2)
@@ -476,16 +448,6 @@ int Skill_cuirasse::use(Square *grid[4][10][10], int x_starting_location,
 int Skill_torpilleur::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
-
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
 
     int which_gride;
 
@@ -542,16 +504,6 @@ int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
 
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
-
     int which_gride;
 
     int which_gride2;
@@ -587,16 +539,6 @@ int Skill_bombardier::use(Square *grid[4][10][10], int x_starting_location,
 int Skill_intercepteur::use(Square *grid[4][10][10], int x_starting_location,
                             int y_starting_location, int player, bool horizontal)
 {
-
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
 
     int which_gride;
 
@@ -641,16 +583,6 @@ int Skill_brouilleur::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
 
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
-
     int which_gride;
 
     if (player < 2)
@@ -670,16 +602,6 @@ int Skill_brouilleur::use(Square *grid[4][10][10], int x_starting_location,
 int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
                           int y_starting_location, int player, bool horizontal)
 {
-
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
 
     int which_gride;
 
@@ -721,16 +643,6 @@ int Skill_patrouille::use(Square *grid[4][10][10], int x_starting_location,
 int Skill_reconnaissance::use(Square *grid[4][10][10], int x_starting_location,
                               int y_starting_location, int player, bool horizontal)
 {
-
-    if (is_used())
-    {
-        return -2;
-    }
-
-    if (!(is_unlimited()))
-    {
-        set_used(true);
-    }
 
     int which_gride;
 
