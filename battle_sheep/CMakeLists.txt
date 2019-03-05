@@ -2,6 +2,11 @@ cmake_minimum_required (VERSION 3.0)
 
 project (Battle_Sheep )
 
+# Directory containing the cmake sfml importer
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+
+# Looking for the sfml package
+find_package(SFML 2 COMPONENTS graphics)
 
 # Set version number
 set (VERSION_MAJOR 0)
@@ -21,10 +26,19 @@ set (
 # Header files
 include_directories(include)
 
-# The two executable files
+# The three executables files
+# The server
 add_executable(server src/server.cpp include/server.h ${SHARED_SOURCES} )
 
-add_executable(client src/client.cpp include/client.h ${SHARED_SOURCES} )
 
+# We compile the client only if sfml was found
+if(${SFML_FOUND})
+	add_executable(client src/client.cpp include/client.h ${SHARED_SOURCES} )
+	target_link_libraries(client sfml-graphics)
+endif()
+
+
+
+# The testing client
 add_executable(testing src/main_tmp.cpp ${SHARED_SOURCES} )
 
