@@ -6,7 +6,7 @@ project (Battle_Sheep )
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 # Looking for the sfml package
-find_package(SFML 2 COMPONENTS graphics)
+find_package(SFML 2 COMPONENTS network graphics window system REQUIRED)
 
 # Set version number
 set (VERSION_MAJOR 0)
@@ -29,16 +29,17 @@ include_directories(include)
 # The three executables files
 # The server
 add_executable(server src/server.cpp include/server.h ${SHARED_SOURCES} )
+target_link_libraries(server ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 
 # We compile the client only if sfml was found
-if(${SFML_FOUND})
-	add_executable(client src/client.cpp include/client.h ${SHARED_SOURCES} )
-	target_link_libraries(client sfml-graphics)
-endif()
+include_directories(${SFML_INCLUDE_DIR})
+add_executable(client src/client.cpp include/client.h ${SHARED_SOURCES} )
+target_link_libraries(client ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 
 
 # The testing client
 add_executable(testing src/main_tmp.cpp ${SHARED_SOURCES} )
+target_link_libraries(testing ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
