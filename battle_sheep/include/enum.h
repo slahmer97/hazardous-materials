@@ -1,3 +1,6 @@
+#ifndef DEF_ENUM
+#define DEF_ENUM
+
 enum SQUARE_TYPE
 {
     NONE,
@@ -36,3 +39,6 @@ enum SHOT_TYPE
     PATROUILE_SKILL,
     RECONNAISSANCE_SKILL
 };
+
+
+#endif
