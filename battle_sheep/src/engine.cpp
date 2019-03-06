@@ -19,13 +19,9 @@ Engine::Engine(int initial_health_point_a, string engine_name_a,
 
 int Engine::take_a_hit(Square *grid[10][10])
 {
-<<<<<<< HEAD
     if(current_health_point>0)
     {
         cout << "touché ! :)" << '\n';
-=======
-    if (current_health_point > 0)
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
         return (--current_health_point);
     }
     else
@@ -34,11 +30,8 @@ int Engine::take_a_hit(Square *grid[10][10])
         cout << "coulé !!!" << '\n';
         put_or_remove_engine_on_grid(grid, false, true);
         return 0;
-<<<<<<< HEAD
     }
 
-=======
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
 }
 
 int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
@@ -55,16 +48,12 @@ int Engine::skill_shot(Square *grid[4][10][10], int x_starting_location,
 
 bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movement_value)
 {
-<<<<<<< HEAD
     if(current_health_point==0)
     {
         cout << "engine mort !" << '\n';
         return false;
     }
     if(movement_value>movement_point)
-=======
-    if (movement_value > movement_point)
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
     {
         cout << "pas assez de pm !" << '\n';
         return false;
@@ -106,29 +95,19 @@ bool Engine::move_engine(Square *grid[10][10], bool reading_direction, int movem
 bool Engine::rotate_engine(Square *grid[10][10], bool clockwise,
                            int node_distance)
 {
-<<<<<<< HEAD
     if(current_health_point==0)
     {
         cout << "engine mort !" << '\n';
         return false;
     }
     if (node_distance>=initial_health_point)
-=======
-    if (node_distance >= initial_health_point)
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
     {
         cout << "position pas sur le bateau" << '\n';
         return false;
     }
-<<<<<<< HEAD
     
     put_or_remove_engine_on_grid(grid, false, false);
     if(horizontal)
-=======
-
-    put_or_remove_engine_on_grid(grid, false);
-    if (horizontal)
->>>>>>> 264ab77c08205f6936531c7187aa0f6e4138ba1d
     {
         if (clockwise)
         {
