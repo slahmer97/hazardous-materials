@@ -86,7 +86,7 @@ public:
 class Skill_reconnaissance: public Skill {
 public:
     virtual int use(Grid *grid, int x, int y, bool horizontal);
-}
+};
 
 
 
