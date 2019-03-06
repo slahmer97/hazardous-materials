@@ -5,8 +5,10 @@
 #include "FactorySkill.h"
 #include "grid.h"
 #include "enum.h"
-#include "Skill.h"
+
 class FactorySkill;
+class Grid;
+
 class Engine
 {
 
@@ -71,7 +73,7 @@ private:
   int m_movement_point;
   int m_x;
   int m_y;
-  FactorySkill m_engine_skill;
+  FactorySkill *m_engine_skill;
 };
 
 #endif

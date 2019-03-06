@@ -2,14 +2,16 @@
 #define DEF_GRID
 
 
-
+#include "engine.h"
 #include "enum.h"
 #include "square.h"
 
+class Engine;
+class Square;
 class Grid
 {
 private:
-  Square grid[10][10];
+  Square *grid[10][10];
   Square getSquare(int x, int y);
 
 public:
@@ -34,7 +36,7 @@ public:
 
   int first_to_drawn(int x, int y, bool horizontal, bool IEM, float damage = 1.f);
 
-  int proximity_check(int x, int y, Engine *);
+  int proximity_check(int x, int y, Engine *engine);
 
   std::string get_my_grid();
   std::string get_enemy_grid();

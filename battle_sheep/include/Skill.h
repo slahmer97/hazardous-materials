@@ -7,6 +7,8 @@
 
 #include "grid.h"
 
+class Grid;
+
 class Skill
 {
     virtual void use() = 0;

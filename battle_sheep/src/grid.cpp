@@ -1,7 +1,6 @@
-#include "grid.h"
+#include "../include/grid.h"
 
 Grid::Grid()
-    :
 {
     for (int i = 0; i <= 9; i++)
         for (int j = 0; j <= 9; j++)
@@ -42,18 +41,17 @@ int Grid::normal_shot(int x, int y, float dammage = 1.f)
         return -1;
     }
 
-    if (!(grid[x][y].get_square_type() == NONE && grid[x][y].get_square_type() == ENGINE_DEAD))
+    if (!(grid[x][y]->get_square_type() == NONE && grid[x][y]->get_square_type() == ENGINE_DEAD))
     {
-        engine.take_a_hit(dammage);
-        grid[x][y].decrease_health(dammage);
-        if (grid[x][y].get_health_pr() == 0)
+        grid[x][y]->get_engine()->take_a_hit(dammage);
+        grid[x][y]->decrease_health(dammage);
+        if (grid[x][y]->get_health_pr() == 0)
         {
-            grid[x][y].set_square_type(ENGINE_DEAD);
-            return 1;
+            grid[x][y]->set_square_type(ENGINE_DEAD);
         }
-        return 2;
+        return 1;
     }
-    return 0;
+    return -1;
 }
 
 int Grid::desactivate_square(int x, int y)
@@ -62,18 +60,13 @@ int Grid::desactivate_square(int x, int y)
     {
         return -1;
     }
-
-    if (grid[x][y].get_square_type() == ENGINE_WEAPON)
+    if(grid[x][y]->get_square_type()!=NONE)
     {
-        grid[x][y].set_square_type(ENGINE_WEAPON_DESACTIVATED);
+        grid[x][y]->desactivate_weapon();
+        grid[x][y]->desactivate_motor();
         return 1;
     }
-    if (grid[x][y].get_square_type() == ENGINE_MOTOR)
-    {
-        grid[x][y].set_square_type(ENGINE_MOTOR_DESACTIVATED);
-        return 1;
-    }
-    return 0;
+    return -1;
 }
 
 int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float dammage = 1.f)
@@ -81,31 +74,12 @@ int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float d
     int number_case_touch = 0;
     if (horizontal)
     {
-        for (int j = y; j <= y + length; j++)
-        {
-            if (IEM)
-            {
-                grid.desactivitae_square(x, j);
-            }
-            else
-            {
-                number_case_touch += grid.normal_shot(x, j);
-            }
-        }
+        horizontal_line_shot(x,y,length,IEM,dammage);
     }
     else
     {
-        for (int i = x; i <= x + length; i++)
-        {
-            if (IEM)
-            {
-                grid.desactivitae_square(i, y);
-            }
-            else
-            {
-                number_case_touch += grid.normal_shot(i, y);
-            }
-        }
+        vertical_line_shot(x,y,length,IEM,dammage);
+        
     }
     return number_case_touch;
 }
@@ -113,15 +87,16 @@ int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float d
 int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage = 1.f)
 {
     int number_case_touch = 0;
-    for (int i = x; i <= x + length; i++)
+
+    for (int i = x; i < x + length; i++)
     {
         if (IEM)
         {
-            grid.desactivitae_square(i, y);
+            number_case_touch+=desactivate_square(i,y);
         }
         else
         {
-            number_case_touch += grid.normal_shot(i, y);
+            number_case_touch += normal_shot(i,y, dammage);
         }
     }
     return number_case_touch;
@@ -130,15 +105,15 @@ int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage =
 int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float dammage = 1.f)
 {
     int number_case_touch = 0;
-    for (int j = y; j <= y + length; j++)
+    for (int i = y; i < y + length; i++)
     {
         if (IEM)
         {
-            grid.desactivitae_square(x, j);
+            number_case_touch+=desactivate_square(x , i);
         }
         else
         {
-            number_case_touch += grid.normal_shot(x, j);
+            number_case_touch += normal_shot(x, i,dammage);
         }
     }
     return number_case_touch;
@@ -149,7 +124,7 @@ int Grid::rectangular_shot(int x, int y, int large, int length, bool IEM, float 
     int number_case_touch = 0;
     for (int j = 0; j < large; j++)
     {
-        number_case_touch += grid.horizontal_line_shot(x, y + j, length, IEM, damage);
+        number_case_touch += horizontal_line_shot(x, y + j, length, IEM, damage);
     }
     return number_case_touch;
 }

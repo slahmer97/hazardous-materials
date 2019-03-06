@@ -102,9 +102,9 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
     }
     
 
-    //if(grid->check_putable(grid,new_x,new_y))
+    //if(grid->check_putable(m_size,new_x,new_y))
     {
-        //grid->remove_engine(grid, m_x, m_y);
+        //grid->remove_engine(m_size,m_x, m_y);
         grid->add_engine(this,new_x,new_y,m_engine_skill->get_engine_type());
         m_x=new_x;
         m_y=new_y;
@@ -146,9 +146,9 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
 
     m_horizontal = !m_horizontal;
 
-    //if(grid->check_putable(grid,new_x,new_y))
+    //if(grid->check_putable(m_size,new_x,new_y))
     {
-        //grid->remove_engine(grid, m_x, m_y);
+        //grid->remove_engine(m_size,m_x, m_y);
         grid->add_engine(this,new_x,new_y,m_engine_skill->get_engine_type());
         m_x=new_x;
         m_y=new_y;

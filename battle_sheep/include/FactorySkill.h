@@ -13,11 +13,11 @@ class FactorySkill {
         int m_points;
         ENGINE_TYPE m_engine_type;
     public:
-    FactoySkill();
+    FactorySkill();
     /*
      * Calling on this method will decrease the m_points by certain point...don't call it if you're not sure !
      */
-    Skill getSkill(SHOT_TYPE );
+    Skill *getSkill(SHOT_TYPE );
 
 };
 

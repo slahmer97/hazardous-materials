@@ -1,8 +1,6 @@
 //
 // Created by stevlulz on 3/6/19.
 //
-#include <square.h>
-
 #include "../include/square.h"
 
 
