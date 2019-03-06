@@ -29,7 +29,7 @@ public:
 
   int first_to_drawn(int x, int y, bool horizontal, bool IEM, float damage = 1.f);
 
-  int proximity_check(int x, int y);
+  int proximity_check(int x, int y, Engine *);
 
   std::string get_my_grid();
   std::string get_enemy_grid();
