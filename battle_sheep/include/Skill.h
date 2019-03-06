@@ -12,6 +12,8 @@
 class Grid;
 class Engine;
 
+class Grid;
+
 class Skill
 {
   private:
