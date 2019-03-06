@@ -2,7 +2,7 @@
 #define DEF_ENGINE
 
 #include <string>
-#include "skill.h"
+#include "FactorySkill.h"
 #include "grid.h"
 #include "enum.h"
 

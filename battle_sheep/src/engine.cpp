@@ -80,12 +80,12 @@ int Engine::normal_shot(Grid *grid, int x, int y)
 
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
-    m_engine_skill->getSkill();
+    return m_engine_skill->getSkill(type_of_shot)->use(grid, x, y, horizontal);
 }
 
 int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
-
+    return m_engine_skill->getSkill(type_of_shot)->use(grid1,grid2, x, y, horizontal);
 }
 int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 {
