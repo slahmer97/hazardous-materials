@@ -3,5 +3,14 @@
 //
 
 
+#include <FactorySkill.h>
+
 #include "FactorySkill.h"
 
+Skill FactoySkill::getSkill(SHOT_TYPE) {
+    return new ;
+}
+
+FactoySkill::FactoySkill(){
+
+}
