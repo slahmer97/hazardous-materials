@@ -38,7 +38,7 @@ public:
 
   std::string get_my_grid();
   std::string get_enemy_grid();
-}
+};
 
 
 #endif

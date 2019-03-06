@@ -28,6 +28,7 @@ public:
   void activate_motor();
   SQUARE_TYPE get_square_type();
 
+  void decrease_health(float);
   void set_engine(Engine *engine_a);
   void set_health_pr(float pr);
   void set_square_type(SQUARE_TYPE square_type);

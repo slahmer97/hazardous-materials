@@ -1,6 +1,6 @@
 #include "../include/engine.h"
 
-Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a, SkillFactory *engine_skill)
+Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a, FactorySkill *engine_skill)
 {
     m_size=size_a;
     m_horizontal=horizontal_a;
