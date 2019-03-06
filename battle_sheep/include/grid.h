@@ -16,7 +16,7 @@ public:
   Grid();
   ~Grid();
 
-  void add_engine(Engine *, int x, int y, ENGINE_TYPE);
+  void add_engine(Engine *engine, int x, int y, ENGINE_TYPE);
 
   int normal_shot(int x, int y, float dammage = 1.f);
 
