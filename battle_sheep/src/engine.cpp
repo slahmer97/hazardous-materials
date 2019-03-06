@@ -80,7 +80,7 @@ int Engine::normal_shot(Grid *grid, int x, int y)
 
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
-
+    m_engine_skill->getSkill();
 }
 
 int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
@@ -102,9 +102,9 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
     }
     
 
-    //if(grid->check_putable())
+    //if(grid->check_putable(grid,new_x,new_y))
     {
-        //grid->remove_engine();
+        //grid->remove_engine(grid, m_x, m_y);
         grid->add_engine(this,new_x,new_y,m_engine_skill->get_engine_type());
         m_x=new_x;
         m_y=new_y;
@@ -115,5 +115,44 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 
 int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
 {
-    
+    int new_x = m_x;
+    int new_y = m_y;
+    if (m_horizontal)
+    {
+        if (clockwise)
+        {
+            new_x +=node_distance;
+            new_y+= -(m_size - 1)+node_distance;
+        }
+        else
+        {
+            new_x+=node_distance;
+            new_y-=node_distance;
+        }
+    }
+    else
+    {
+        if (clockwise)
+        {
+            new_x-=node_distance;
+            new_y+=node_distance;
+        }
+        else
+        {
+            new_y+=node_distance;
+            new_x+=-(m_size - 1)+node_distance;
+        }
+    }
+
+    m_horizontal = !m_horizontal;
+
+    //if(grid->check_putable(grid,new_x,new_y))
+    {
+        //grid->remove_engine(grid, m_x, m_y);
+        grid->add_engine(this,new_x,new_y,m_engine_skill->get_engine_type());
+        m_x=new_x;
+        m_y=new_y;
+        return 1;
+    }
+    return -1;
 }
