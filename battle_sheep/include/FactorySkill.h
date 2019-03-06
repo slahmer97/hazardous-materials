@@ -7,7 +7,7 @@
 
 #include "enum.h"
 #include "Skill.h"
-class FactoySkill {
+class FactorySkill {
 
     private:
         int m_points;
