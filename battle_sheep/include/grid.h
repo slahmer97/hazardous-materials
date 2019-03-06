@@ -1,3 +1,8 @@
+#ifndef DEF_GRID
+#define DEF_GRID
+
+
+
 #include "enum.h"
 #include "square.h"
 
@@ -34,3 +39,6 @@ public:
   std::string get_my_grid();
   std::string get_enemy_grid();
 }
+
+
+#endif
