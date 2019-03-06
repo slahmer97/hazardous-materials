@@ -10,7 +10,7 @@ class Square;
 
 class Engine
 {
-    /*Methods*/
+
   public:
     //Constructor :
     /* Description : Create an engine.
@@ -18,12 +18,12 @@ class Engine
             not, grid to find it, x coordinate, y coordinate, skill name.
     Output : An engine with equal initial and current health point,
              a directtion, a grid, a (x,y) location and a skill shot. */
-    Engine(int initial_health_point_a, std::string engine_name_a,
+    Engine(int size_a, std::string engine_name_a,
            bool horizontal_a, int x_location_a, int y_location_a,
            Skill *engine_skill_a, int engine_grid_number, int movement_point);
 
     //Getters :
-    int get_initial_health_point();
+    int get_size();
     int get_current_health_point();
     std::string get_engine_name();
     bool is_horizontal();
@@ -33,7 +33,7 @@ class Engine
     int get_engine_grid_number();
 
     //Setters :
-    void set_initial_health_point(int initial_health_point_a);
+    void set_size(int size_a);
     void set_current_health_point(int current_health_point_a);
     void set_engine_name(std::string engine_name_a);
     void set_horizontal(bool horizontal_a);
@@ -42,7 +42,7 @@ class Engine
     void set_engine_skill(Skill *engine_skill_a);
     void set_engine_grid_number(int engine_grid_number_a);
 
-    //Others :
+    /*Methods*/
 
     /* Description : Lower current_health_point by one.
     Input : None.
@@ -80,7 +80,7 @@ class Engine
     /* Description : Put or remove this engine of the grid.
     Input : A bool to know if we must put it or remove it.
     Output : None. */
-    bool put_or_remove_engine_on_grid(Square *grid[10][10], bool put, bool dead);
+    bool put_or_remove_engine_on_grid(Square *grid[10][10], bool put);
 
     //Others :
     /* Description : Check that all the squares around a segment are ok.
@@ -92,7 +92,7 @@ class Engine
 
     /*Attributes*/
   private:
-    int initial_health_point;
+    int size;
     int current_health_point;
     std::string engine_name;
     bool horizontal;

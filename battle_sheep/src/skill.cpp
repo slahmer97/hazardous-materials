@@ -337,7 +337,7 @@ int Skill::skill_first_to_drawn(Square *grid[10][10], int x_starting_location,
     return res;
 }
 int Skill::use(Square *grid[4][10][10], int x_starting_location,
-                           int y_starting_location, int player, bool horizontal)
+               int y_starting_location, int player, bool horizontal)
 {
 
     if (is_used())
@@ -350,7 +350,7 @@ int Skill::use(Square *grid[4][10][10], int x_starting_location,
         set_used(true);
     }
 
-
+    
 }
 //Methode use de chaque skill
 

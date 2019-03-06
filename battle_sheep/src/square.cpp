@@ -10,7 +10,7 @@ Square::Square() // no arguments
 {
         depth = 1;
         hazard = 'n'; //n for neutral
-        engine_here = NULL;
+        engine_here = nullptr;
         engine_dead = false;
 }
 
