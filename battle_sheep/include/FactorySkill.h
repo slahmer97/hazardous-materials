@@ -6,7 +6,7 @@
 #define HAZARDOUS_FACTOYSKILL_H
 
 #include "enum.h"
-#include "skill.h"
+#include "Skill.h"
 class FactoySkill {
 
     private:
