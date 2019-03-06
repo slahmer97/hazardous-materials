@@ -19,7 +19,7 @@ public:
             not, grid to find it, x coordinate, y coordinate, skill name.
     Output : An engine with equal initial and current health point,
              a directtion, a grid, a (x,y) location and a skill shot. */
-  Engine(int size_a, bool horizontal_a, int x_a, int y_a, SkillFactory *m_engine_skill);
+  Engine(int size_a, bool horizontal_a, int x_a, int y_a, FactorySkill *m_engine_skill);
 
   //Getters :
   int get_size();
@@ -73,7 +73,7 @@ private:
   int m_movement_point;
   int m_x;
   int m_y;
-  SkillFactory *m_engine_skill;
+  FactorySkill *m_engine_skill;
 };
 
 #endif

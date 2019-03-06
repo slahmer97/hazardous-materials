@@ -7,7 +7,8 @@
 
 #include "grid.h"
 
-class Skill {
+class Skill
+{
     virtual void use() = 0;
 };
 
@@ -86,7 +87,7 @@ public:
 class Skill_reconnaissance: public Skill {
 public:
     virtual int use(Grid *grid, int x, int y, bool horizontal);
-}
+};
 
 
 
