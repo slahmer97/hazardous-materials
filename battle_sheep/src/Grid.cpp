@@ -48,7 +48,7 @@ void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
     }
 }
 
-int Grid::normal_shot(int x, int y, float dammage)
+int Grid::normal_shot(int x, int y, float damage)
 {
     if (x < 0 || x > 9 || y < 0 || y > 9)
     {
@@ -57,8 +57,8 @@ int Grid::normal_shot(int x, int y, float dammage)
 
     if (!(grid[x][y]->get_square_type() == NONE && grid[x][y]->get_square_type() == ENGINE_DEAD))
     {
-        grid[x][y]->get_engine()->take_a_hit(dammage);
-        grid[x][y]->decrease_health(dammage);
+        grid[x][y]->get_engine()->take_a_hit(damage);
+        grid[x][y]->decrease_health(damage);
         if (grid[x][y]->get_health_pr() == 0)
         {
             grid[x][y]->set_square_type(ENGINE_DEAD);
@@ -83,22 +83,22 @@ int Grid::desactivate_square(int x, int y)
     return -1;
 }
 
-int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float dammage)
+int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float damage)
 {
     int number_case_touch = 0;
     if (horizontal)
     {
-        horizontal_line_shot(x,y,length,IEM,dammage);
+        horizontal_line_shot(x,y,length,IEM,damage);
     }
     else
     {
-        vertical_line_shot(x,y,length,IEM,dammage);
+        vertical_line_shot(x,y,length,IEM,damage);
 
     }
     return number_case_touch;
 }
 
-int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage)
+int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float damage)
 {
     int number_case_touch = 0;
 
@@ -110,13 +110,13 @@ int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage)
         }
         else
         {
-            number_case_touch += normal_shot(x, i, dammage);
+            number_case_touch += normal_shot(x, i, damage);
         }
     }
     return number_case_touch;
 }
 
-int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float dammage)
+int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float damage)
 {
     int number_case_touch = 0;
     for (int i = x; i < x + length; i++)
@@ -127,7 +127,7 @@ int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float dammage
         }
         else
         {
-            number_case_touch += normal_shot(i, y, dammage);
+            number_case_touch += normal_shot(i, y, damage);
         }
     }
     return number_case_touch;
