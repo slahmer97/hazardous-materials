@@ -145,51 +145,28 @@ int Grid::first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM
 {
     int number_case_touch = 0;
     int i;
+    int v_i=(direction ? 1 : -1);
     if(horizontal){
-        if(direction){
-            if(IEM){
-                for(i=x; i<10 || !(number_case_touch+=desactivate_square(i,y)); i++ );
-                if(i<9){
-                    number_case_touch+=desactivate_square(i++,y);
-                }}
-            else{
-                for(i=x; i<10 || !(number_case_touch+=normal_shot(i,y,damage)); i++ );
-                if(i<9){
-                    number_case_touch+=normal_shot(i++,y,damage);
-                }}}
+        if(IEM){
+            for(i=x; (i<10 && i>-1) || !(number_case_touch+=desactivate_square(i,y)); i+=v_i );
+            if(i<9 && i>0){
+                number_case_touch+=desactivate_square(i+v_i,y);
+            }}
         else{
-            if(IEM){
-                for(i=x; i>-1 || !(number_case_touch+=desactivate_square(i,y)); i-- );
-                if(i>0){
-                    number_case_touch+=desactivate_square(i--,y);
-                }}
-            else{
-                for(i=x; i>-1 || !(number_case_touch+=normal_shot(i,y,damage)); i-- );
-                if(i>0){
-                    number_case_touch+=normal_shot(i--,y,damage);
-                }}}}
+            for(i=x; (i<10 && i>-1) || !(number_case_touch+=normal_shot(i,y,damage)); i+=v_i );
+            if(i<9 && i>0){
+                number_case_touch+=normal_shot(i+v_i,y,damage);
+            }}}
     else{
-        if(direction){
-            if(IEM){
-                for(i=y; i<10 || !(number_case_touch+=desactivate_square(x,i)); i++ );
-                if(i<9){
-                    number_case_touch+=desactivate_square(x,i++);
-                }}
-            else{
-                for(i=y; i<10 || !(number_case_touch+=normal_shot(x,i,damage)); i++ );
-                if(i<9){
-                    number_case_touch+=normal_shot(x,i++,damage);
-                }}}
+        if(IEM){
+            for(i=y; (i<10 && i>-1) || !(number_case_touch+=desactivate_square(x,i)); i+=v_i );
+            if(i<9 && i>0){
+                number_case_touch+=desactivate_square(x,i+v_i);
+            }}
         else{
-            if(IEM){
-                for(i=y; i>-1 || !(number_case_touch+=desactivate_square(x,i)); i-- );
-                if(i>0){
-                    number_case_touch+=desactivate_square(x,i--);
-                }}
-            else{
-                for(i=y; i>-1 || !(number_case_touch+=normal_shot(x,i,damage)); i-- );
-                if(i>0){
-                    number_case_touch+=normal_shot(x,i--,damage);
-                }}}}
+            for(i=y; (i<10 && i>-1) || !(number_case_touch+=normal_shot(x,i,damage)); i+=v_i );
+            if(i<9 && i>0){
+                number_case_touch+=normal_shot(x,i+v_i,damage);
+            }}}
     return number_case_touch;
 }
