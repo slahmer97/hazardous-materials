@@ -2,7 +2,7 @@
 // Created by stevlulz on 3/7/19.
 //
 
-#include "Grid.h"
+#include "../include/Grid.h"
 
 Grid::Grid()
 {
@@ -52,18 +52,7 @@ int Grid::normal_shot(int x, int y, float damage)
 {
     if (x < 0 || x > 9 || y < 0 || y > 9)
     {
-        return -1;
-    }
-
-    if (!(grid[x][y]->get_square_type() == NONE && grid[x][y]->get_square_type() == ENGINE_DEAD))
-    {
-        grid[x][y]->get_engine()->take_a_hit(damage);
-        grid[x][y]->decrease_health(damage);
-        if (grid[x][y]->get_health_pr() == 0)
-        {
-            grid[x][y]->set_square_type(ENGINE_DEAD);
-        }
-        return 1;
+        return 0;
     }
     return grid[x][y]->decrease_health(damage);
 }
@@ -72,7 +61,7 @@ int Grid::desactivate_square(int x, int y)
 {
     if (x < 0 || x > 9 || y < 0 || y > 9)
     {
-        return -1;
+        return 0;
     }
     if(grid[x][y]->get_square_type()!=NONE)
     {
@@ -80,7 +69,7 @@ int Grid::desactivate_square(int x, int y)
         grid[x][y]->desactivate_motor();
         return 1;
     }
-    return -1;
+    return 0;
 }
 
 int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float damage)
@@ -88,11 +77,11 @@ int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float d
     int number_case_touch = 0;
     if (horizontal)
     {
-        horizontal_line_shot(x,y,length,IEM,damage);
+        number_case_touch+=horizontal_line_shot(x,y,length,IEM,damage);
     }
     else
     {
-        vertical_line_shot(x,y,length,IEM,damage);
+        number_case_touch+=vertical_line_shot(x,y,length,IEM,damage);
 
     }
     return number_case_touch;
