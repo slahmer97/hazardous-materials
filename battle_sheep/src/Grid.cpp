@@ -145,14 +145,51 @@ int Grid::first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM
 {
     int number_case_touch = 0;
     int i;
-    if(horizontal)
-    {
-        i=x;
-        if(direction)
-        {
-            while( i<10 || !(number_case_touch+=normal_shot(i,y,damage)) )
-                i++;
-            number_case_touch+=normal_shot(i,y,damage);
-        }
-    }
+    if(horizontal){
+        if(direction){
+            if(IEM){
+                for(i=x; i<10 || !(number_case_touch+=desactivate_square(i,y)); i++ );
+                if(i<9){
+                    number_case_touch+=desactivate_square(i++,y);
+                }}
+            else{
+                for(i=x; i<10 || !(number_case_touch+=normal_shot(i,y,damage)); i++ );
+                if(i<9){
+                    number_case_touch+=normal_shot(i++,y,damage);
+                }}}
+        else{
+            if(IEM){
+                for(i=x; i>-1 || !(number_case_touch+=desactivate_square(i,y)); i-- );
+                if(i>0){
+                    number_case_touch+=desactivate_square(i--,y);
+                }}
+            else{
+                for(i=x; i>-1 || !(number_case_touch+=normal_shot(i,y,damage)); i-- );
+                if(i>0){
+                    number_case_touch+=normal_shot(i--,y,damage);
+                }}}}
+    else{
+        if(direction){
+            if(IEM){
+                for(i=y; i<10 || !(number_case_touch+=desactivate_square(x,i)); i++ );
+                if(i<9){
+                    number_case_touch+=desactivate_square(x,i++);
+                }}
+            else{
+                for(i=y; i<10 || !(number_case_touch+=normal_shot(x,i,damage)); i++ );
+                if(i<9){
+                    number_case_touch+=normal_shot(x,i++,damage);
+                }}}
+        else{
+            if(IEM){
+                for(i=y; i>-1 || !(number_case_touch+=desactivate_square(x,i)); i-- );
+                if(i>0){
+                    number_case_touch+=desactivate_square(x,i--);
+                }}
+            else{
+                for(i=y; i>-1 || !(number_case_touch+=normal_shot(x,i,damage)); i-- );
+                if(i>0){
+                    number_case_touch+=normal_shot(x,i--,damage);
+                }}}}
+    return number_case_touch;
 }
