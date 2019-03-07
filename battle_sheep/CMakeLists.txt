@@ -6,7 +6,6 @@ set (
         SHARED_SOURCES
         src/Square.cpp
         src/Engine.cpp
-        src/Grid.cpp
         src/Skill.cpp
         src/FactorySkill.cpp
 )

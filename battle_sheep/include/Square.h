@@ -25,7 +25,7 @@ public:
 
     void set_engine(Engine *m_engine);
 
-  
+
 
     /**
      * @brief get_engine is main function used to check if a square has an engine
