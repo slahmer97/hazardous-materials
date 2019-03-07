@@ -58,7 +58,13 @@ int Square::decrease_health(float _point) {
     if(m_engine == nullptr || m_square_type == SQUARE_TYPE::NONE)
         return 0;
 
-
+    m_engine->take_a_hit(_point);
+    if(m_health_pr > _point){
+        m_health_pr -=_point;
+    }
+    else{
+        m_health_pr = 0;
+    }
     return 1;
 }
 
