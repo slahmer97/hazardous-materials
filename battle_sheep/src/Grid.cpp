@@ -142,3 +142,13 @@ int Grid::rectangular_shot(int x, int y, int large, int length, bool IEM, float 
     }
     return number_case_touch;
 }
+
+int Grid::cross_shot(int x, int y, int length, bool IEM, float damage = 1.f)
+{
+  //length=number of case before/after the case x,y in each (4) direction(s)
+  int number_case_touch = 0;
+  number_case_touch+=horizontal_line_shot(x-length,y,2*legnth+1,IEM,damage);
+  number_case_touch+=vertical_line_shot(x,y-length,legnth,IEM,damage);
+  number_case_touch+=vertical_line_shot(x,y+1,legnth,IEM,damage);
+  return number_case_touch;
+}
