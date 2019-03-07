@@ -13,23 +13,33 @@ Grid::Grid()
 
 void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
 {
-    grid[x][y]->set_square_type(ENGINE_WEAPON);
+    int weapon = rand()%(engine->get_size());
+    int motor = weapon;
+    while(weapon==motor)
+    {
+        motor=rand()%(engine->get_size());
+    }
     //Horizontal
     if (engine->is_horizontal())
     {
-        grid[x + 1][y]->set_square_type(ENGINE_MOTOR);
-        for (int i = x + 2; i <= x + engine->get_size(); i++)
+
+        grid[x + weapon][y]->set_square_type(ENGINE_WEAPON);
+        grid[x + motor][y]->set_square_type(ENGINE_MOTOR);
+        for (int i = 0; i < engine->get_size(); i++)
         {
-            grid[i][y]->set_square_type(ENGINE_PART);
+            if((i!=weapon)&&(i!=motor))
+                grid[x + i][y]->set_square_type(ENGINE_PART);
         }
     }
     //Vertical
     else
     {
-        grid[x][y + 1]->set_square_type(ENGINE_MOTOR);
-        for (int j = y + 2; j <= y + engine->get_size(); j++)
+        grid[x][y + weapon]->set_square_type(ENGINE_WEAPON);
+        grid[x][y + motor]->set_square_type(ENGINE_MOTOR);
+        for (int j = 0; j < engine->get_size(); j++)
         {
-            grid[x][j]->set_square_type(ENGINE_PART);
+            if((j!=weapon)&&(j!=motor))
+                grid[x][y + j]->set_square_type(ENGINE_PART);
         }
     }
 }
@@ -88,15 +98,15 @@ int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage =
 {
     int number_case_touch = 0;
 
-    for (int i = x; i < x + length; i++)
+    for (int i = y; i < y + length; i++)
     {
         if (IEM)
         {
-            number_case_touch+=desactivate_square(i,y);
+            number_case_touch+=desactivate_square(x, i);
         }
         else
         {
-            number_case_touch += normal_shot(i,y, dammage);
+            number_case_touch += normal_shot(x, i, dammage);
         }
     }
     return number_case_touch;
@@ -105,15 +115,15 @@ int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage =
 int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float dammage = 1.f)
 {
     int number_case_touch = 0;
-    for (int i = y; i < y + length; i++)
+    for (int i = x; i < x + length; i++)
     {
         if (IEM)
         {
-            number_case_touch+=desactivate_square(x , i);
+            number_case_touch+=desactivate_square(i, y);
         }
         else
         {
-            number_case_touch += normal_shot(x, i,dammage);
+            number_case_touch += normal_shot(i, y, dammage);
         }
     }
     return number_case_touch;

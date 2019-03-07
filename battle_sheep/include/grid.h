@@ -1,7 +1,9 @@
 #ifndef DEF_GRID
 #define DEF_GRID
 
-
+#include <cstdlib>
+#include <ctime>
+srand(time(NULL));
 #include "engine.h"
 #include "enum.h"
 #include "square.h"
