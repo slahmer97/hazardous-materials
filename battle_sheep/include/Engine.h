@@ -68,6 +68,13 @@ public:
     // return 1 -> success, minus 1 not possible
 
     /*Attributes*/
+    void desactivate_motor();
+    void desactivate_weapon();
+    void activate_motor();
+    void activate_weapon();
+    void kill_weapon();
+    void kill_motor();
+
 private:
     int m_size;
     float m_current_health_point;
@@ -76,8 +83,8 @@ private:
     int m_x;
     int m_y;
     Skill *m_skill;
-    MOTOR_STATE m_motor;
-    WEAPON_STATE m_weapon;
+    MOTOR_STATE m_motor_state;
+    WEAPON_STATE m_weapon_state;
 };
 
 

@@ -52,7 +52,8 @@ void Square::set_square_type(SQUARE_TYPE square_type){
 
 //TODO check if this function can modify the engine health also
 int Square::decrease_health(float _point) {
-    if(m_engine == nullptr || m_square_type == SQUARE_TYPE::NONE)
+    if(m_engine == nullptr || m_square_type == SQUARE_TYPE::NONE || m_square_type == SQUARE_TYPE::ENGINE_PART_DEAD ||
+       m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DEAD || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DEAD )
         return 0;
 
     m_engine->take_a_hit(_point);
@@ -61,6 +62,16 @@ int Square::decrease_health(float _point) {
     }
     else{
         m_health_pr = 0;
+        if(m_square_type == SQUARE_TYPE::ENGINE_MOTOR || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED){
+            m_engine->kill_motor();
+            m_square_type = SQUARE_TYPE ::ENGINE_MOTOR_DEAD;
+        }
+        else if(m_square_type == SQUARE_TYPE::ENGINE_WEAPON || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED){
+            m_engine->kill_weapon();
+            m_square_type = SQUARE_TYPE::ENGINE_WEAPON_DEAD;
+        }else{
+            m_square_type = SQUARE_TYPE ::ENGINE_PART_DEAD;
+        }
     }
     return 1;
 }

@@ -1,6 +1,8 @@
 //
 // Created by stevlulz on 3/7/19.
 //
+#include <Engine.h>
+
 #include "../include/Engine.h"
 
 Engine::Engine() {
@@ -79,7 +81,7 @@ void Engine::set_grid(int grid_number_a)
 }
 */
 
-//Methodes
+//TODO
 float Engine::take_a_hit(float dammage)
 {
     m_current_health_point-=dammage;
@@ -170,4 +172,23 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
         return 1;
     }
     return -1;
+}
+
+void Engine::desactivate_motor() {
+    m_motor_state = MOTOR_STATE ::MOTOR_DESACTIVATED;
+}
+void Engine::desactivate_weapon() {
+    m_weapon_state = WEAPON_STATE::WEAPON_DESACTIVATED;
+}
+void Engine::activate_motor() {
+    m_motor_state = MOTOR_STATE::MOTOR;
+}
+void Engine::activate_weapon() {
+    m_weapon_state = WEAPON_STATE ::WEAPON;
+}
+void Engine::kill_weapon() {
+    m_weapon_state = WEAPON_STATE::WEAPON_DEAD;
+}
+void Engine::kill_motor() {
+    m_motor_state = MOTOR_STATE::MOTOR_DEAD;
 }
