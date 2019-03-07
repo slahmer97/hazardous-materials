@@ -23,10 +23,9 @@ private:
 public:
     Square();
 
-    Square(Engine *m_engine);
-    //Square(Engine engine_here_nv, int depth_nv, char hazard_nv);
+    void set_engine(Engine *m_engine);
 
-
+  
 
     /**
      * @brief get_engine is main function used to check if a square has an engine

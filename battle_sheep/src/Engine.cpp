@@ -5,30 +5,31 @@
 
 #include "../include/Engine.h"
 
-Engine::Engine() {
 
-}
-
-Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a)
-{
+Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a){
     m_size=size_a;
     m_horizontal=horizontal_a;
     m_x=x_a;
     m_y=y_a;
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
-    m_weapon_state=WEAPON;
 }
 
 
+Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a, ENGINE_TYPE engine_type):Engine(size_a,horizontal_a,x_a,y_a) {
+        m_skill = FactorySkill::getSkill(engine_type);
+        m_weapon_state = WEAPON_STATE::WEAPON;
+
+}
+
 
 void Engine::add_skill(ENGINE_TYPE engine_type,SHOT_TYPE shot_type){
-        m_skill = FactorySkill::getSkill(shot_type);
+        m_skill = FactorySkill::getSkill(shot_type,engine_type);
 }
 
 //Getters
 
-int Engine::get_size()
+float Engine::get_size()
 {
     return m_size;
 }

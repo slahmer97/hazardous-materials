@@ -21,10 +21,10 @@ public:
               not, grid to find it, x coordinate, y coordinate, skill name.
       Output : An engine with equal initial and current health point,
                a directtion, a grid, a (x,y) location and a skill shot. */
-    Engine();
     Engine(int size_a, bool horizontal_a, int x_a, int y_a);
+    Engine(int size_a, bool horizontal_a, int x_a, int y_a,ENGINE_TYPE engine_type);
     //Getters :
-    int get_size();
+    float get_size();
     int get_current_health_point();
     bool is_horizontal();
     int get_x();

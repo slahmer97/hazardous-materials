@@ -17,11 +17,11 @@ Grid::Grid()
 
 void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
 {
-    int weapon = rand()%(engine->get_size());
+    int weapon =1;//rand()%(engine->get_size());
     int motor = weapon;
     while(weapon==motor)
     {
-        motor=rand()%(engine->get_size());
+        //motor=rand()%(engine->get_size());
     }
     //Horizontal
     if (engine->is_horizontal())
@@ -151,23 +151,30 @@ int Grid::first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM
                 for(i=x; i<10 || !(number_case_touch+=desactivate_square(i,y)); i++ );
                 if(i<9){
                     number_case_touch+=desactivate_square(i++,y);
-                }}
+                }
+            }
             else{
                 for(i=x; i<10 || !(number_case_touch+=normal_shot(i,y,damage)); i++ );
                 if(i<9){
                     number_case_touch+=normal_shot(i++,y,damage);
-                }}}
+                }
+            }
+        }
         else{
             if(IEM){
                 for(i=x; i>-1 || !(number_case_touch+=desactivate_square(i,y)); i-- );
                 if(i>0){
                     number_case_touch+=desactivate_square(i--,y);
-                }}
+                }
+            }
             else{
                 for(i=x; i>-1 || !(number_case_touch+=normal_shot(i,y,damage)); i-- );
                 if(i>0){
                     number_case_touch+=normal_shot(i--,y,damage);
-                }}}}
+                }
+            }
+        }
+    }
     else{
         if(direction){
             if(IEM){

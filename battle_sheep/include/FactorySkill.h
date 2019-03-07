@@ -14,7 +14,7 @@ class FactorySkill {
 
 public:
     static Skill *getSkill(SHOT_TYPE,ENGINE_TYPE);
-    static Skill *getSkill(SHOT_TYPE);
+    static Skill *getSkill(ENGINE_TYPE);
 };
 
 
