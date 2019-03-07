@@ -1,5 +1,9 @@
-#ifndef DEF_ENUM
-#define DEF_ENUM
+//
+// Created by stevlulz on 3/7/19.
+//
+
+#ifndef TMP_PROJ_ENUM_H
+#define TMP_PROJ_ENUM_H
 
 enum SQUARE_TYPE
 {
@@ -41,4 +45,4 @@ enum SHOT_TYPE
 };
 
 
-#endif
+#endif //TMP_PROJ_ENUM_H

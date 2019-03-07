@@ -1,4 +1,8 @@
-#include "../include/grid.h"
+//
+// Created by stevlulz on 3/7/19.
+//
+
+#include "Grid.h"
 
 Grid::Grid()
 {
@@ -31,7 +35,7 @@ void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
                 grid[x + i][y]->set_square_type(ENGINE_PART);
         }
     }
-    //Vertical
+        //Vertical
     else
     {
         grid[x][y + weapon]->set_square_type(ENGINE_WEAPON);
@@ -44,7 +48,7 @@ void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
     }
 }
 
-int Grid::normal_shot(int x, int y, float dammage = 1.f)
+int Grid::normal_shot(int x, int y, float dammage)
 {
     if (x < 0 || x > 9 || y < 0 || y > 9)
     {
@@ -79,7 +83,7 @@ int Grid::desactivate_square(int x, int y)
     return -1;
 }
 
-int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float dammage = 1.f)
+int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float dammage)
 {
     int number_case_touch = 0;
     if (horizontal)
@@ -89,12 +93,12 @@ int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float d
     else
     {
         vertical_line_shot(x,y,length,IEM,dammage);
-        
+
     }
     return number_case_touch;
 }
 
-int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage = 1.f)
+int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage)
 {
     int number_case_touch = 0;
 
@@ -112,7 +116,7 @@ int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float dammage =
     return number_case_touch;
 }
 
-int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float dammage = 1.f)
+int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float dammage)
 {
     int number_case_touch = 0;
     for (int i = x; i < x + length; i++)
@@ -129,7 +133,7 @@ int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float dammage
     return number_case_touch;
 }
 
-int Grid::rectangular_shot(int x, int y, int large, int length, bool IEM, float damage = 1.f)
+int Grid::rectangular_shot(int x, int y, int large, int length, bool IEM, float damage)
 {
     int number_case_touch = 0;
     for (int j = 0; j < large; j++)

@@ -1,12 +1,22 @@
-#include "../include/engine.h"
+//
+// Created by stevlulz on 3/7/19.
+//
 
-Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a, FactorySkill *engine_skill)
+#include <Engine.h>
+
+#include "Engine.h"
+
+Engine::Engine() {
+
+}
+
+Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a,ENGINE_TYPE engine_type)
 {
     m_size=size_a;
     m_horizontal=horizontal_a;
     m_x=x_a;
     m_y=y_a;
-    m_engine_skill=engine_skill;
+    m_engine_skill= new FactorySkill(engine_type);
     m_current_health_point=size_a;
 }
 
@@ -66,7 +76,7 @@ void Engine::set_grid(int grid_number_a)
 */
 
 //Methodes
-int Engine::take_a_hit(float dammage)
+float Engine::take_a_hit(float dammage)
 {
     m_current_health_point-=dammage;
     return m_current_health_point;
@@ -85,7 +95,7 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
 
 int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
-    return m_engine_skill->getSkill(type_of_shot)->use(grid1,grid2, x, y, horizontal);
+    return ((Skill_bombardier*)m_engine_skill->getSkill(type_of_shot))->use(grid1,grid2, x, y, horizontal);
 }
 int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 {
@@ -100,12 +110,13 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
     {
         new_y+=( reading_direction ? movement_value : (-movement_value) );
     }
-    
+
 
     //if(grid->check_putable(m_size,new_x,new_y))
     {
         //grid->remove_engine(m_size,m_x, m_y);
         grid->add_engine(this,new_x,new_y,m_engine_skill->get_engine_type());
+
         m_x=new_x;
         m_y=new_y;
         return 1;

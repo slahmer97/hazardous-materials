@@ -1,17 +1,18 @@
 //
-// Created by stevlulz on 3/6/19.
+// Created by stevlulz on 3/7/19.
 //
 
-#ifndef HAZARDOUS_SKILL_H
-#define HAZARDOUS_SKILL_H
+#ifndef TMP_PROJ_SKILL_H
+#define TMP_PROJ_SKILL_H
 
-#include "grid.h"
+#include "Grid.h"
 
 class Grid;
-
+class Engine;
 class Skill
 {
-    virtual void use() = 0;
+public:
+    virtual int use(Grid* grid, int x,int y,bool horizontal) = 0;
 };
 
 
@@ -56,7 +57,9 @@ public:
 class Skill_bombardier: public Skill
 {
 public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid, int x,int y,bool horizontal) override = 0;
+    int use(Grid* grid1,Grid* grid2, int x,int y,bool horizontal);
+
 
 
 };
@@ -64,8 +67,8 @@ public:
 class Skill_intercepteur: public Skill
 {
 public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-
+    int use(Grid* grid, int x,int y,bool horizontal) override = 0;
+    int use(Grid* grid1,Grid* grid2, int x,int y,bool horizontal);
 
 };
 
@@ -94,4 +97,5 @@ public:
 
 
 
-#endif //HAZARDOUS_SKILL_H
+
+#endif //TMP_PROJ_SKILL_H
