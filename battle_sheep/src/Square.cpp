@@ -55,6 +55,15 @@ void Square::set_square_type(SQUARE_TYPE square_type){
 
 //TODO check if this function can modify the engine health also
 int Square::decrease_health(float _point) {
-    m_health_pr = (_point > m_health_pr)?0:m_health_pr-_point;
+    if(m_engine == nullptr || m_square_type == SQUARE_TYPE::NONE)
+        return 0;
+
+
+    return 1;
+}
+
+//TODO
+int Square::increase_health(float inc) {
+    return 0;
 }
 
