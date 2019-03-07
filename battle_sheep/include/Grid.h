@@ -41,7 +41,7 @@ public:
 
     int cross_shot(int x, int y, int length, bool IEM, float damage = 1.f);
 
-    int first_to_drawn(int x, int y, bool horizontal, bool IEM, float damage = 1.f);
+    int first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM, float damage = 1.f);
 
     int proximity_check(int x, int y, Engine *engine);
 

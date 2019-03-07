@@ -140,3 +140,19 @@ int Grid::cross_shot(int x, int y, int length, bool IEM, float damage)
   number_case_touch+=vertical_line_shot(x,y-length,2*length+1,IEM,damage);
   return number_case_touch;
 }
+
+int Grid::first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM, float damage )
+{
+    int number_case_touch = 0;
+    int i;
+    if(horizontal)
+    {
+        i=x;
+        if(direction)
+        {
+            while( i<10 || !(number_case_touch+=normal_shot(i,y,damage)) )
+                i++;
+            number_case_touch+=normal_shot(i,y,damage);
+        }
+    }
+}
