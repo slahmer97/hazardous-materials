@@ -1,11 +1,7 @@
 //
 // Created by stevlulz on 3/7/19.
 //
-
-
-#include <FactorySkill.h>
-
-#include "FactorySkill.h"
+#include "../include/FactorySkill.h"
 
 //TODO ====================================
 

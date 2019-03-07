@@ -2,11 +2,7 @@
 // Created by stevlulz on 3/7/19.
 //
 
-
-
-#include <Skill.h>
-
-#include "Skill.h"
+#include "../include/Skill.h"
 
 
 

@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Square.h"
-#include "Engine.h"
-#include "Grid.h"
-#include "Skill.h"
-#include "FactorySkill.h"
+#include "../include/Square.h"
+#include "../include/Engine.h"
+#include "../include/Grid.h"
+#include "../include/Skill.h"
+#include "../include/FactorySkill.h"
 int main() {
     Engine *e;
     e = new Engine(3,true,1,2);

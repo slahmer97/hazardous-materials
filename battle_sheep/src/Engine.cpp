@@ -1,10 +1,7 @@
 //
 // Created by stevlulz on 3/7/19.
 //
-
-#include <Engine.h>
-
-#include "Engine.h"
+#include "../include/Engine.h"
 
 Engine::Engine() {
 
@@ -17,6 +14,8 @@ Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a)
     m_x=x_a;
     m_y=y_a;
     m_current_health_point=size_a;
+    m_motor=MOTOR;
+    m_weapon=WEAPON;
 }
 
 

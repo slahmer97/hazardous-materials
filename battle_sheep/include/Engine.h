@@ -76,7 +76,8 @@ private:
     int m_x;
     int m_y;
     Skill *m_skill;
-
+    MOTOR_STATE m_motor;
+    WEAPON_STATE m_weapon;
 };
 
 
