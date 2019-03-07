@@ -62,7 +62,7 @@ Skill_contre_torpilleur::Skill_contre_torpilleur(ENGINE_TYPE engine_type) : Skil
 int Skill_contre_torpilleur::use(Grid *grid,int x, int y, bool horizontal) {
     return 0;
 }
-nt Skill_contre_torpilleur::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal) {
+int Skill_contre_torpilleur::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal) {
     std::cerr<<"Skill porte avion can't attack two grids in same time";
     std::exit(1);
 }
