@@ -192,3 +192,8 @@ void Engine::kill_weapon() {
 void Engine::kill_motor() {
     m_motor_state = MOTOR_STATE::MOTOR_DEAD;
 }
+
+float Engine::take_care(float care){
+    m_current_health_point+=care;
+    return m_current_health_point;
+}
