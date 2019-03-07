@@ -45,7 +45,7 @@ public:
       Input : None.
       Output : current_health_point. */
     float take_a_hit(float dammage);
-
+    float take_care(float care);
     //Do a normal shot
     int normal_shot(Grid *grid, int x, int y);
     //return 0 missing, -1 coodinate false, 1 successed
