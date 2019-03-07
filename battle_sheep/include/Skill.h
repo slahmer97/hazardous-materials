@@ -9,93 +9,108 @@
 
 class Grid;
 class Engine;
-class Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal) = 0;
+
+class Skill{
+    int m_points;
+    ENGINE_TYPE m_engine_type;
+    public:
+        Skill(ENGINE_TYPE);
+
+        virtual int use(Grid* grid, int x,int y,bool horizontal) = 0;
+        virtual int use(Grid* grid1, Grid* grid2,int x,int y,bool horizontal) = 0;
+
+    ENGINE_TYPE get_engine_type();
 };
 
 
-class Skill_porte_avion: public Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-};
-
-class Skill_croiseur: public Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-
-
-};
-
-class Skill_contre_torpilleur: public Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-
-
-};
-
-class Skill_cuirasse: public Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-
-
-};
-
-class Skill_torpilleur: public Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-
-
-};
-
-class Skill_bombardier: public Skill
-{
-public:
-    int use(Grid* grid, int x,int y,bool horizontal) override = 0;
-    int use(Grid* grid1,Grid* grid2, int x,int y,bool horizontal);
-
-
-
-};
-
-class Skill_intercepteur: public Skill
-{
-public:
-    int use(Grid* grid, int x,int y,bool horizontal) override = 0;
-    int use(Grid* grid1,Grid* grid2, int x,int y,bool horizontal);
-
-};
-
-class Skill_brouilleur: public Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-
-
-
-};
-
-class Skill_patrouille: public Skill
-{
-public:
-    virtual int use(Grid* grid, int x,int y,bool horizontal);
-
-
-};
-
-class Skill_reconnaissance: public Skill {
-public:
-    virtual int use(Grid *grid, int x, int y, bool horizontal);
+class Skill_porte_avion: public Skill{
+    public:
+        Skill_porte_avion();
+        Skill_porte_avion(ENGINE_TYPE);
+        int use(Grid* grid, int x,int y,bool horizontal);
+        int use(Grid* grid1, Grid* grid2,int x,int y,bool horizontal);
 };
 
 
 
+class Skill_croiseur: public Skill{
+public:
+    Skill_croiseur();
+    Skill_croiseur(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
 
+};
+
+class Skill_contre_torpilleur: public Skill{
+    public:
+        Skill_contre_torpilleur();
+        Skill_contre_torpilleur(ENGINE_TYPE);
+        int use(Grid* grid, int x,int y,bool horizontal);
+        int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+};
+
+class Skill_cuirasse: public Skill{
+public:
+    Skill_cuirasse();
+    Skill_cuirasse(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+
+
+};
+
+class Skill_torpilleur: public Skill{
+public:
+    Skill_torpilleur();
+    Skill_torpilleur(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+
+};
+
+class Skill_bombardier : public  Skill{
+public:
+    Skill_bombardier();
+    Skill_bombardier(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+};
+
+class Skill_intercepteur: public Skill{
+public:
+    Skill_intercepteur();
+    Skill_intercepteur(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+
+};
+
+class Skill_brouilleur: public Skill{
+public:
+    Skill_brouilleur();
+    Skill_brouilleur(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+};
+
+class Skill_patrouille: public Skill{
+public:
+    Skill_patrouille();
+    Skill_patrouille(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+
+
+};
+
+class Skill_reconnaissance: public Skill{
+public:
+    Skill_reconnaissance();
+    Skill_reconnaissance(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+
+};
 
 #endif //TMP_PROJ_SKILL_H

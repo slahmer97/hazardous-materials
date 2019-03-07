@@ -10,14 +10,19 @@ Engine::Engine() {
 
 }
 
-Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a,ENGINE_TYPE engine_type)
+Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a)
 {
     m_size=size_a;
     m_horizontal=horizontal_a;
     m_x=x_a;
     m_y=y_a;
-    m_engine_skill= new FactorySkill(engine_type);
     m_current_health_point=size_a;
+}
+
+
+
+void Engine::add_skill(ENGINE_TYPE engine_type,SHOT_TYPE shot_type){
+        m_skill = FactorySkill::getSkill(shot_type);
 }
 
 //Getters
@@ -90,12 +95,12 @@ int Engine::normal_shot(Grid *grid, int x, int y)
 
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
-    return m_engine_skill->getSkill(type_of_shot)->use(grid, x, y, horizontal);
+    return m_skill->use(grid, x, y, horizontal);
 }
 
 int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
-    return ((Skill_bombardier*)m_engine_skill->getSkill(type_of_shot))->use(grid1,grid2, x, y, horizontal);
+    return 0;//((Skill_bombardier*)m_engine_skill->getSkill(type_of_shot))->use(grid1,grid2, x, y, horizontal);
 }
 int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 {
@@ -115,7 +120,7 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
     //if(grid->check_putable(m_size,new_x,new_y))
     {
         //grid->remove_engine(m_size,m_x, m_y);
-        grid->add_engine(this,new_x,new_y,m_engine_skill->get_engine_type());
+        grid->add_engine(this,new_x,new_y,m_skill->get_engine_type());
 
         m_x=new_x;
         m_y=new_y;
@@ -160,7 +165,7 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
     //if(grid->check_putable(m_size,new_x,new_y))
     {
         //grid->remove_engine(m_size,m_x, m_y);
-        grid->add_engine(this,new_x,new_y,m_engine_skill->get_engine_type());
+        grid->add_engine(this,new_x,new_y,m_skill->get_engine_type());
         m_x=new_x;
         m_y=new_y;
         return 1;

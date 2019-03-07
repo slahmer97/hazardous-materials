@@ -11,7 +11,7 @@
 #include "FactorySkill.h"
 
 class Grid;
-class FactorySkill;
+class Skill;
 class Engine {
 
 public:
@@ -22,8 +22,7 @@ public:
       Output : An engine with equal initial and current health point,
                a directtion, a grid, a (x,y) location and a skill shot. */
     Engine();
-    Engine(int size_a, bool horizontal_a, int x_a, int y_a,ENGINE_TYPE engine_type);
-
+    Engine(int size_a, bool horizontal_a, int x_a, int y_a);
     //Getters :
     int get_size();
     int get_current_health_point();
@@ -39,7 +38,7 @@ public:
     void set_x(int x_a);
     void set_y(int y_a);
     //void set_grid(int grid_number_a);
-
+    void add_skill(ENGINE_TYPE engine_type,SHOT_TYPE shot_type);
     /*Methods*/
 
     /* Description : Lower current_health_point by a dammage.
@@ -76,7 +75,7 @@ private:
     int m_movement_point;
     int m_x;
     int m_y;
-    FactorySkill *m_engine_skill;
+    Skill *m_skill;
 
 };
 
