@@ -27,15 +27,15 @@ public:
 
     void add_engine(Engine *engine, int x, int y, ENGINE_TYPE);
 
-    int normal_shot(int x, int y, float dammage = 1.f);
+    int normal_shot(int x, int y, float damage = 1.f);
 
     int desactivate_square(int x, int y);
 
-    int line_shot(int x, int y, int length, bool IEM, bool horizontal, float dammage = 1.f);
+    int line_shot(int x, int y, int length, bool IEM, bool horizontal, float damage = 1.f);
 
-    int vertical_line_shot(int x, int y, int length, bool IEM, float dammage = 1.f);
+    int vertical_line_shot(int x, int y, int length, bool IEM, float damage = 1.f);
 
-    int horizontal_line_shot(int x, int y, int length, bool IEM, float dammage = 1.f);
+    int horizontal_line_shot(int x, int y, int length, bool IEM, float damage = 1.f);
 
     int rectangular_shot(int x, int y, int large, int length, bool IEM, float damage = 1.f);
 
