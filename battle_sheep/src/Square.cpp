@@ -2,6 +2,8 @@
 // Created by stevlulz on 3/7/19.
 //
 
+#include <Square.h>
+
 #include "../include/Square.h"
 
 
@@ -52,6 +54,7 @@ void Square::set_square_type(SQUARE_TYPE square_type){
 }
 
 //TODO check if this function can modify the engine health also
-void Square::decrease_health(float _point) {
+int Square::decrease_health(float _point) {
     m_health_pr = (_point > m_health_pr)?0:m_health_pr-_point;
 }
+
