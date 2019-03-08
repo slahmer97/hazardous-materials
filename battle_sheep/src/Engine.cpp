@@ -2,8 +2,6 @@
 // Created by stevlulz on 3/7/19.
 //
 
-#include <Engine.h>
-
 #include "../include/Engine.h"
 
 
@@ -117,7 +115,7 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
     }
 
 
-    //if(grid->check_putable(m_size,new_x,new_y))
+    //if(grid->check_putable(this))
     {
         //grid->remove_engine(m_size,m_x, m_y);
         grid->add_engine(this,m_horizontal,new_x,new_y);

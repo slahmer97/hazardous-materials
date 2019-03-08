@@ -25,7 +25,7 @@ public:
     Grid();
     ~Grid();
 
-    void add_engine(Engine *engine, bool horizontal, int x, int y);
+    int add_engine(Engine *engine, bool horizontal, int x, int y);
 
     int normal_shot(int x, int y, float damage = 1.f);
 

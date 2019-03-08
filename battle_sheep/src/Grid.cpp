@@ -1,8 +1,6 @@
 //
 // Created by stevlulz on 3/7/19.
 //
-
-#include <Grid.h>
 #include <iostream>
 #include "../include/Grid.h"
 
@@ -17,8 +15,24 @@ Grid::Grid()
 
 /*Methods*/
 
-void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
+int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
 {
+    
+    for(int i=0 ; i < engine->get_size() ; i++)
+    {
+        if(horizontal)
+        {
+            if(!(proximity_check(x+i, y, engine)))
+                return -1;
+        }
+        else
+        {
+            if(!(proximity_check(x, y+i, engine)))
+                return -1;
+        }
+        
+    }
+    
     engine->set_x(x);
     engine->set_y(y);
     engine->set_horizontal(horizontal);
@@ -40,7 +54,7 @@ void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
                 grid[x + i][y]->set_square_type(ENGINE_PART);
         }
     }
-        //Vertical
+    //Vertical
     else
     {
         grid[x][y + weapon]->set_square_type(ENGINE_WEAPON);
@@ -52,6 +66,7 @@ void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
                 grid[x][y + j]->set_square_type(ENGINE_PART);
         }
     }
+    return 1;
 }
 
 int Grid::normal_shot(int x, int y, float damage)
