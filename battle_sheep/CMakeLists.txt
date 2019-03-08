@@ -7,6 +7,7 @@ set (
         src/Square.cpp
         src/Engine.cpp
         src/Skill.cpp
+        src/Grid.cpp
         src/FactorySkill.cpp
 )
 
