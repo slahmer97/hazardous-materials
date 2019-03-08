@@ -5,17 +5,14 @@
 #include "../include/Engine.h"
 
 
-Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a){
+Engine::Engine(int size_a){
     m_size=size_a;
-    m_horizontal=horizontal_a;
-    m_x=x_a;
-    m_y=y_a;
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
 }
 
 
-Engine::Engine(int size_a, bool horizontal_a, int x_a, int y_a, ENGINE_TYPE engine_type):Engine(size_a,horizontal_a,x_a,y_a) {
+Engine::Engine(int size_a, ENGINE_TYPE engine_type):Engine(size_a) {
         m_skill = FactorySkill::getSkill(engine_type);
         m_weapon_state = WEAPON_STATE::WEAPON;
 
@@ -121,7 +118,7 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
     //if(grid->check_putable(m_size,new_x,new_y))
     {
         //grid->remove_engine(m_size,m_x, m_y);
-        grid->add_engine(this,new_x,new_y,m_skill->get_engine_type());
+        grid->add_engine(this,m_horizontal,new_x,new_y);
 
         m_x=new_x;
         m_y=new_y;
@@ -166,7 +163,7 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
     //if(grid->check_putable(m_size,new_x,new_y))
     {
         //grid->remove_engine(m_size,m_x, m_y);
-        grid->add_engine(this,new_x,new_y,m_skill->get_engine_type());
+        grid->add_engine(this,m_horizontal,new_x,new_y);
         m_x=new_x;
         m_y=new_y;
         return 1;

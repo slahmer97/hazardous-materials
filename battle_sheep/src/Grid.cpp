@@ -15,8 +15,11 @@ Grid::Grid()
 
 /*Methods*/
 
-void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
+void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
 {
+    engine->set_x(x);
+    engine->set_y(y);
+    engine->set_horizontal(horizontal);
     int weapon = rand()%(engine->get_size());
     int motor = weapon;
     while(weapon==motor)
@@ -24,13 +27,13 @@ void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
         motor=rand()%(engine->get_size());
     }
     //Horizontal
-    if (engine->is_horizontal())
+    if (horizontal)
     {
-
         grid[x + weapon][y]->set_square_type(ENGINE_WEAPON);
         grid[x + motor][y]->set_square_type(ENGINE_MOTOR);
         for (int i = 0; i < engine->get_size(); i++)
         {
+            grid[x + i][y]->set_engine(engine);
             if((i!=weapon)&&(i!=motor))
                 grid[x + i][y]->set_square_type(ENGINE_PART);
         }
@@ -42,6 +45,7 @@ void Grid::add_engine(Engine *engine, int x, int y, ENGINE_TYPE)
         grid[x][y + motor]->set_square_type(ENGINE_MOTOR);
         for (int j = 0; j < engine->get_size(); j++)
         {
+            grid[x][y + j]->set_engine(engine);
             if((j!=weapon)&&(j!=motor))
                 grid[x][y + j]->set_square_type(ENGINE_PART);
         }
@@ -170,3 +174,12 @@ int Grid::first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM
             }}}
     return number_case_touch;
 }
+
+int Grid::proximity_check(int x, int y, Engine *engine)
+{
+    int i;
+    int j;
+    if(x-1<0 || x+1>9)
+    for(i=x-1;i<(x+1);i++);
+}
+
