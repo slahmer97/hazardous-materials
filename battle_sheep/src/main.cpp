@@ -5,9 +5,9 @@
 #include "../include/Skill.h"
 #include "../include/FactorySkill.h"
 int main() {
-    Engine *e;
-    e = new Engine(3,true,1,2);
-    std::cout<<e->get_current_health_point();
+   Grid* grid = new Grid();
+    auto *e = new Engine(3,true,0,0,ENGINE_TYPE::PORTE_AVION);
+   grid->add_engine(e,0,0,PORTE_AVION);
 
     return 0;
 }
