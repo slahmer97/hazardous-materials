@@ -2,6 +2,8 @@
 // Created by stevlulz on 3/7/19.
 //
 
+#include <Engine.h>
+
 #include "../include/Engine.h"
 
 
@@ -193,4 +195,8 @@ void Engine::kill_motor() {
 float Engine::take_care(float care){
     m_current_health_point+=care;
     return m_current_health_point;
+}
+
+ENGINE_TYPE Engine::get_engine_type() {
+    return m_skill->get_engine_type();
 }

@@ -47,6 +47,9 @@ public:
 
     std::string get_my_grid();
     std::string get_enemy_grid();
+
+
+    void display();
 };
 
 #endif //TMP_PROJ_GRID_H
