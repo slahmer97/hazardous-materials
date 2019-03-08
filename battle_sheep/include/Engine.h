@@ -75,6 +75,9 @@ public:
     void kill_weapon();
     void kill_motor();
 
+    ENGINE_TYPE get_engine_type();
+
+
 private:
     int m_size;
     float m_current_health_point;

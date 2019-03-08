@@ -2,6 +2,8 @@
 // Created by stevlulz on 3/7/19.
 //
 
+#include <Grid.h>
+#include <iostream>
 #include "../include/Grid.h"
 
 Grid::Grid()
@@ -183,3 +185,65 @@ int Grid::proximity_check(int x, int y, Engine *engine)
     for(i=x-1;i<(x+1);i++);
 }
 
+void Grid::display() {
+
+
+}
+/*
+void print_one_line_gride(Grid*grid, int i, bool hide)
+{
+    std::cout << i << " ";
+    for (int j = 0; j < 10; j++)
+    {
+        std::cout << "│";
+        if (grid[j][i]->get_engine_here() == nullptr)
+        {
+            std::cout << "    ";
+        }
+        else
+        {
+            if (!(hide))
+            {
+                std:: cout << grid[j][i]->get_engine_here()->get_engine_name()
+                     << "_"
+                     << grid[j][i]->get_engine_here()->get_current_health_point();
+            }
+            else if (grid.->get_engine_here()->get_current_health_point()==0)
+            {
+                std::cout << " XX ";
+            }
+            else
+            {
+                cout << "    ";
+            }
+        }
+    }
+}
+
+void print_grid(std::string engine_name, int player,Grid*grid,bool hide)
+{
+    std::cout << "player : " << player;
+
+    std::cout << '\n';
+
+    std::cout << "    0    1    2    3    4    5    6    7    8    9        " << '\n';
+
+    for (int i = 9; i >= 0; i--)
+    {
+        std::cout << "  ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼ " << '\n';
+
+        print_one_line_gride(grid, i, hide);
+
+        std::cout << "│ ";
+
+        std::cout << " " << i << '\n';
+    }
+    std::cout << "  ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼  " << '\n';
+
+    std::cout << "    0    1    2    3    4    5    6    7    8    9     " << '\n';
+
+
+}
+
+
+*/
