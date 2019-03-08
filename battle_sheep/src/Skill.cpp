@@ -2,10 +2,12 @@
 // Created by stevlulz on 3/7/19.
 //
 
+#include <Skill.h>
+
 #include "../include/Skill.h"
 
 
-
+#define POINT_COST 50
 Skill::Skill(ENGINE_TYPE engine_type) {
     m_engine_type = engine_type;
     m_points = 100;
@@ -14,11 +16,27 @@ ENGINE_TYPE Skill::get_engine_type() {
     return m_engine_type;
 }
 
+void Skill::decrease_points(int dec) {
+    m_points =(m_points < dec)?0:m_points-dec;
+}
+
+void Skill::increase_points(int inc) {
+    m_points +=inc;
+}
+
+int Skill::get_points() {
+    return m_points;
+}
+
 
 Skill_porte_avion::Skill_porte_avion() : Skill(ENGINE_TYPE::PORTE_AVION){}
 Skill_porte_avion::Skill_porte_avion(ENGINE_TYPE engine_type) : Skill(engine_type){}
 int Skill_porte_avion::use(Grid *grid, int x, int y, bool horizontal) {
-    return 0;
+    if(get_points() < 50)
+        return -1;
+
+    decrease_points(50);
+    return  grid->line_shot(x,y,3, false,horizontal);
 }
 int Skill_porte_avion::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal){
     std::cerr<<"Skill porte avion can't attack two grids in same time";
@@ -32,8 +50,16 @@ int Skill_bombardier::use(Grid *grid, int x, int y, bool horizontal) {
     std::cerr<<"Skill porte avion can't attack two grids in same time";
     std::exit(1);
 }
-int Skill_bombardier::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal) {
-    return 0;
+int Skill_bombardier::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal){
+
+    if(get_points() < POINT_COST)
+        return -1;
+
+    decrease_points(POINT_COST);
+    int ret1 = grid1->rectangular_shot(x,y,3,3,false);
+    int ret2 = grid2->rectangular_shot(x,y,3,3,false);
+
+    return ret1+ret2;
 }
 
 
@@ -42,7 +68,12 @@ Skill_croiseur::Skill_croiseur() :Skill(ENGINE_TYPE::CROISEUR) {
 }
 Skill_croiseur::Skill_croiseur(ENGINE_TYPE engine_type) : Skill(engine_type){}
 int Skill_croiseur::use(Grid *grid, int x, int y, bool horizontal) {
-    return 0;
+    if(get_points() < POINT_COST)
+        return -1;
+
+    decrease_points(POINT_COST);
+    int ret = grid->line_shot(x,y,3, false,horizontal);
+    return ret;
 }
 int Skill_croiseur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal) {
     std::cerr<<"Skill porte avion can't attack two grids in same time";
@@ -56,7 +87,12 @@ Skill_contre_torpilleur::Skill_contre_torpilleur(ENGINE_TYPE engine_type) : Skil
 
 }
 int Skill_contre_torpilleur::use(Grid *grid,int x, int y, bool horizontal) {
-    return 0;
+    if(get_points() < POINT_COST)
+        return -1;
+
+    decrease_points(POINT_COST);
+    int ret = grid->rectangular_shot(x,y,2,2,false);
+    return ret;
 }
 int Skill_contre_torpilleur::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal) {
     std::cerr<<"Skill porte avion can't attack two grids in same time";
