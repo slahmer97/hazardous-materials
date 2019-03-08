@@ -24,8 +24,8 @@ public:
     Engine(int size_a, bool horizontal_a, int x_a, int y_a);
     Engine(int size_a, bool horizontal_a, int x_a, int y_a,ENGINE_TYPE engine_type);
     //Getters :
-    float get_size();
-    int get_current_health_point();
+    int get_size();
+    float get_current_health_point();
     bool is_horizontal();
     int get_x();
     int get_y();

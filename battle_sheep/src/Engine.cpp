@@ -1,7 +1,6 @@
 //
 // Created by stevlulz on 3/7/19.
 //
-#include <Engine.h>
 
 #include "../include/Engine.h"
 
@@ -29,12 +28,12 @@ void Engine::add_skill(ENGINE_TYPE engine_type,SHOT_TYPE shot_type){
 
 //Getters
 
-float Engine::get_size()
+int Engine::get_size()
 {
     return m_size;
 }
 
-int Engine::get_current_health_point()
+float Engine::get_current_health_point()
 {
     return m_current_health_point;
 }

@@ -97,7 +97,3 @@ int Square::increase_health(float care){
 
     return 1;
 }
-
-void Square::set_engine(Engine *m_engine) {
-    Square::m_engine = m_engine;
-}
