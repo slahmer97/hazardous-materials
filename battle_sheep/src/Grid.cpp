@@ -177,9 +177,32 @@ int Grid::first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM
 
 int Grid::proximity_check(int x, int y, Engine *engine)
 {
-    int i;
-    int j;
-    if(x-1<0 || x+1>9)
-    for(i=x-1;i<(x+1);i++);
+    if (x < 0 || x > 9 || y < 0 || y > 9)
+    {
+        return -1;
+    }
+
+    int i=x-1;
+    int j=y-1;
+    int i_end=x+1;
+    int j_end=y+1;
+
+    if(x-1<0)i=x;
+    if(x+1>9)i_end=x; 
+    if(y-1<0)j=y;
+    if(y+1>9)j_end=y;
+    
+    for(i;i<(i_end+1);i++)
+    {
+        for(j;j<(j_end+1);j++)
+        {
+            if(grid[i][j]->get_engine()!=nullptr || grid[i][j]->get_square_type()!=NONE)
+            {
+                if(grid[i][j]->get_engine()->get_engine_type()!=engine->get_engine_type())
+                    return -1;
+            }
+        }
+    }
+    return 1;
 }
 
