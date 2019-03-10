@@ -12,6 +12,9 @@
 
 class Grid;
 class Skill;
+
+srand(time(nullptr));
+
 class Engine {
 
 public:
@@ -25,6 +28,8 @@ public:
     bool is_horizontal();
     int get_x();
     int get_y();
+    int get_motor_place();
+    int get_weapon_place();
 
     //Setters :
     void set_horizontal(bool horizontal_a);
@@ -63,6 +68,8 @@ private:
     float m_current_health_point;
     bool m_horizontal;
     int m_movement_point;
+    int m_motor_place;
+    int m_weapon_place;
     int m_x;
     int m_y;
     Skill *m_skill;

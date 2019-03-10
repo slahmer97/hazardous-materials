@@ -15,10 +15,9 @@ Grid::Grid()
 
 /*Methods*/
 
-int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
+int Grid::check_putable(Engine *engine, bool horizontal, int size, int x, int y)
 {
-    
-    for(int i=0 ; i < engine->get_size() ; i++)
+    for(int i=0 ; i < size ; i++)
     {
         if(horizontal)
         {
@@ -30,43 +29,40 @@ int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
             if(!(proximity_check(x, y+i, engine)))
                 return -1;
         }
-        
     }
+    return 1;
+}
+
+void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
+{
     
     engine->set_x(x);
     engine->set_y(y);
     engine->set_horizontal(horizontal);
-    int weapon = rand()%(engine->get_size());
-    int motor = weapon;
-    while(weapon==motor)
-    {
-        motor=rand()%(engine->get_size());
-    }
     //Horizontal
     if (horizontal)
     {
-        grid[x + weapon][y]->set_square_type(ENGINE_WEAPON);
-        grid[x + motor][y]->set_square_type(ENGINE_MOTOR);
+        grid[x + engine->get_weapon_place()][y]->set_square_type(ENGINE_WEAPON);
+        grid[x + engine->get_motor_place()][y]->set_square_type(ENGINE_MOTOR);
         for (int i = 0; i < engine->get_size(); i++)
         {
             grid[x + i][y]->set_engine(engine);
-            if((i!=weapon)&&(i!=motor))
+            if((i!=engine->get_weapon_place())&&(i!=engine->get_motor_place()))
                 grid[x + i][y]->set_square_type(ENGINE_PART);
         }
     }
     //Vertical
     else
     {
-        grid[x][y + weapon]->set_square_type(ENGINE_WEAPON);
-        grid[x][y + motor]->set_square_type(ENGINE_MOTOR);
+        grid[x][y + engine->get_weapon_place()]->set_square_type(ENGINE_WEAPON);
+        grid[x][y + engine->get_motor_place()]->set_square_type(ENGINE_MOTOR);
         for (int j = 0; j < engine->get_size(); j++)
         {
             grid[x][y + j]->set_engine(engine);
-            if((j!=weapon)&&(j!=motor))
+            if((j!=engine->get_weapon_place())&&(j!=engine->get_motor_place()))
                 grid[x][y + j]->set_square_type(ENGINE_PART);
         }
     }
-    return 1;
 }
 
 int Grid::normal_shot(int x, int y, float damage)
