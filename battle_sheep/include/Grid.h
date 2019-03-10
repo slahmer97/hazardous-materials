@@ -47,6 +47,8 @@ public:
 
     int proximity_check(int x, int y, Engine *engine);
 
+    int check_one_position(int x, int y);
+
     std::string get_my_grid();
     std::string get_enemy_grid();
 
