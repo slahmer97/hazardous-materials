@@ -21,7 +21,6 @@ set (
 
 set (
 	CLIENT_ONLY_SOURCES
-	src/menu.cpp
 	src/interface.cpp
 	)
 
