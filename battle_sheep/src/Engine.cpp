@@ -114,20 +114,31 @@ float Engine::take_a_hit(float dammage)
 
 int Engine::normal_shot(Grid *grid, int x, int y)
 {
+    if(grid==nullptr)
+        return -100;
     return grid->normal_shot(x, y);
 }
 
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
+    if(grid==nullptr)
+        return -100;
     return m_skill->use(grid, x, y, horizontal);
 }
 
 int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
 {
+    if(grid1==nullptr)
+        return -100;
+    
+    if(grid2==nullptr)
+        return -100;
     return 0;//((Skill_bombardier*)m_engine_skill->getSkill(type_of_shot))->use(grid1,grid2, x, y, horizontal);
 }
 int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 {
+    if(grid==nullptr)
+        return -100;
     int new_x=m_x;
     int new_y=m_y;
 
@@ -153,6 +164,8 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 
 int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
 {
+    if(grid==nullptr)
+        return -100;
     int new_x = m_x;
     int new_y = m_y;
     if (m_horizontal)
