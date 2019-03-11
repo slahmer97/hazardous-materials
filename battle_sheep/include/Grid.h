@@ -59,7 +59,7 @@ public:
     std::string get_enemy_grid();
 
 
-    void display();
+    void display(int player);
 };
 
 #endif //TMP_PROJ_GRID_H

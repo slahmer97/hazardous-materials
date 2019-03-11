@@ -322,18 +322,19 @@ std::vector<std::vector<Square*>> Grid::radar_rectangular(int x, int y, int larg
     return bigresult;
 }
 
-void Grid::display() {
+void Grid::display(int player) {
 
+    print_grid(player,grid,false);
 
 }
-/*
-void print_one_line_gride(Grid*grid, int i, bool hide)
+
+void static print_one_line_gride(int i,Square *grid[10][10], bool hide)
 {
     std::cout << i << " ";
     for (int j = 0; j < 10; j++)
     {
         std::cout << "│";
-        if (grid[j][i]->get_engine_here() == nullptr)
+        if (grid[j][i]->get_engine() == nullptr)
         {
             std::cout << "    ";
         }
@@ -341,35 +342,43 @@ void print_one_line_gride(Grid*grid, int i, bool hide)
         {
             if (!(hide))
             {
-                std:: cout << grid[j][i]->get_engine_here()->get_engine_name()
+                std:: cout << grid[j][i]->get_engine()->get_size()
                      << "_"
-                     << grid[j][i]->get_engine_here()->get_current_health_point();
+                     << grid[j][i]->get_health_pr();
+                SQUARE_TYPE type = grid[j][i]->get_square_type();
+                if(type==ENGINE_MOTOR || type ==ENGINE_MOTOR_DEAD || type == ENGINE_MOTOR_DESACTIVATED)
+                    std:: cout << 'M';
+                if(type==ENGINE_WEAPON || type ==ENGINE_WEAPON_DEAD || type == ENGINE_WEAPON_DESACTIVATED)
+                    std:: cout << 'W';
+                if(type==ENGINE_PART || type ==ENGINE_PART_DEAD)
+                    std:: cout << 'P';
+
             }
-            else if (grid.->get_engine_here()->get_current_health_point()==0)
+            else if (grid[j][i]->get_engine()->get_current_health_point()==0.f)
             {
                 std::cout << " XX ";
             }
             else
             {
-                cout << "    ";
+                std::cout << "    ";
             }
         }
     }
 }
 
-void print_grid(std::string engine_name, int player,Grid*grid,bool hide)
+void static print_grid(int player,Square *grid[10][10], bool hide)
 {
     std::cout << "player : " << player;
 
     std::cout << '\n';
 
-    std::cout << "    0    1    2    3    4    5    6    7    8    9        " << '\n';
+    std::cout << "    0    1    2    3    4    5    6    7    8    9     " << '\n';
 
     for (int i = 9; i >= 0; i--)
     {
         std::cout << "  ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼ " << '\n';
 
-        print_one_line_gride(grid, i, hide);
+        print_one_line_gride(i, grid,  hide);
 
         std::cout << "│ ";
 
@@ -381,6 +390,3 @@ void print_grid(std::string engine_name, int player,Grid*grid,bool hide)
 
 
 }
-
-
-*/
