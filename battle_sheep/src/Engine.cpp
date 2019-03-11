@@ -3,13 +3,18 @@
 //
 
 #include "../include/Engine.h"
-
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 Engine::Engine(int size_a){
+
+    std::srand(std::time(nullptr));
     m_size=size_a;
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
     m_motor_place = rand()%(m_size);
+    m_is_on_grid=false;
 }
 
 
@@ -63,6 +68,11 @@ int Engine::get_weapon_place()
 {
  return m_weapon_place;
 }
+bool Engine::get_is_on_grid()
+{
+    return m_is_on_grid;
+}
+
 /*
 int Engine::get_grid()
 {
@@ -83,7 +93,10 @@ void Engine::set_y(int y_a)
 {
     m_y=y_a;
 }
-
+void Engine::set_is_on_grid(bool is_on_grid_a)
+{
+    m_is_on_grid=is_on_grid_a;
+}
 /*
 void Engine::set_grid(int grid_number_a)
 {
@@ -130,7 +143,7 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 
     if(grid->check_putable(this,m_horizontal,m_size,m_x, m_y))
     {
-        //grid->remove_engine(this);
+        grid->remove_engine(this);
         grid->add_engine(this,m_horizontal,new_x,new_y);
 
         return 1;
@@ -169,12 +182,10 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
         }
     }
 
-    m_horizontal = !m_horizontal;
-
-    if(grid->check_putable(this,m_horizontal,m_size,m_x, m_y))
+    if(grid->check_putable(this,!m_horizontal,m_size,m_x, m_y))
     {
-        //grid->remove_engine(m_size,m_x, m_y);
-        grid->add_engine(this,m_horizontal,new_x,new_y);
+        grid->remove_engine(this);
+        grid->add_engine(this,!m_horizontal,new_x,new_y);
         return 1;
     }
     return -1;

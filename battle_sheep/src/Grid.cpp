@@ -32,13 +32,48 @@ int Grid::check_putable(Engine *engine, bool horizontal, int size, int x, int y)
     }
     return 1;
 }
-
+void Grid::remove_engine(Engine *engine)
+{
+    for (int i = 0; i < engine->get_size(); i++)
+    {
+        //Horizontal
+        if (engine->is_horizontal())
+        {
+        
+            grid[engine->get_x() + i][engine->get_y()]->set_engine(nullptr);
+            grid[engine->get_x() + i][engine->get_y()]->set_square_type(NONE);
+        }
+        //Vertical
+        else
+        {    
+            grid[engine->get_x()][engine->get_y() + i]->set_engine(nullptr);
+            grid[engine->get_x()][engine->get_y() + i]->set_square_type(NONE);
+        }
+    }
+}
 void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
 {
-    
+    float engine_square_health[engine->get_size()]={0.f};
+    if(engine->get_is_on_grid())
+    {
+        for(int i=0; i<engine->get_size();i++)
+        {
+            if(engine->is_horizontal())
+            {
+                engine_square_health[i]=grid[engine->get_x() + i][engine->get_y()]->get_health_pr();
+                grid[engine->get_x() + i][engine->get_y()]->set_health_pr(0.f);
+            }
+            else
+            {
+                engine_square_health[i]=grid[engine->get_x()][engine->get_y() + i]->get_health_pr();
+                grid[engine->get_x()][engine->get_y() + i]->set_health_pr(0.f);
+            }
+        }
+    }
     engine->set_x(x);
     engine->set_y(y);
     engine->set_horizontal(horizontal);
+    engine->set_is_on_grid(true);
     //Horizontal
     if (horizontal)
     {
@@ -46,6 +81,7 @@ void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
         grid[x + engine->get_motor_place()][y]->set_square_type(ENGINE_MOTOR);
         for (int i = 0; i < engine->get_size(); i++)
         {
+            grid[x + i][y]->set_health_pr(engine_square_health[i]);
             grid[x + i][y]->set_engine(engine);
             if((i!=engine->get_weapon_place())&&(i!=engine->get_motor_place()))
                 grid[x + i][y]->set_square_type(ENGINE_PART);
@@ -58,6 +94,7 @@ void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
         grid[x][y + engine->get_motor_place()]->set_square_type(ENGINE_MOTOR);
         for (int j = 0; j < engine->get_size(); j++)
         {
+            grid[x][y + j]->set_health_pr(engine_square_health[j]);
             grid[x][y + j]->set_engine(engine);
             if((j!=engine->get_weapon_place())&&(j!=engine->get_motor_place()))
                 grid[x][y + j]->set_square_type(ENGINE_PART);

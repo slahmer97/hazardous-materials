@@ -5,10 +5,6 @@
 #ifndef TMP_PROJ_GRID_H
 #define TMP_PROJ_GRID_H
 
-#include <iostream>
-
-#include <cstdlib>
-#include <ctime>
 #include "Engine.h"
 #include "Square.h"
 #include "enum.h"
@@ -26,6 +22,8 @@ public:
     ~Grid();
 
     int check_putable(Engine *engine, bool horizontal, int size, int x, int y);
+
+    void remove_engine(Engine *engine);
 
     void add_engine(Engine *engine, bool horizontal, int x, int y);
 

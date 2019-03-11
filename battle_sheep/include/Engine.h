@@ -13,7 +13,6 @@
 class Grid;
 class Skill;
 
-srand(time(nullptr));
 
 class Engine {
 
@@ -30,11 +29,13 @@ public:
     int get_y();
     int get_motor_place();
     int get_weapon_place();
+    bool get_is_on_grid();
 
     //Setters :
     void set_horizontal(bool horizontal_a);
     void set_x(int x_a);
     void set_y(int y_a);
+    void set_is_on_grid(bool is_on_grid_a);
 
     void add_skill(ENGINE_TYPE engine_type,SHOT_TYPE shot_type);
 
@@ -72,6 +73,7 @@ private:
     int m_weapon_place;
     int m_x;
     int m_y;
+    bool m_is_on_grid;
     Skill *m_skill;
     MOTOR_STATE m_motor_state;
     WEAPON_STATE m_weapon_state;
