@@ -186,7 +186,7 @@ int Skill_patrouille::use(Grid *grid, int x, int y, bool horizontal) {
     std::exit(1);
 }
 int Skill_patrouille::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal) {
-    std::cerr<<"Skill porte avion can't attack two grids in same time";
+    std::cerr<<"Skill patrouille can't attack two grids in same time";
     std::exit(1);
 }
 
@@ -208,8 +208,8 @@ Skill_reconnaissance::Skill_reconnaissance(ENGINE_TYPE engine_type) : Skill(engi
 int Skill_reconnaissance::use(Grid *grid, int x, int y, bool horizontal) {
     if(get_points() < POINT_COST)
         return -1;
-    //int ret = grid->first_to_drawn(x,y,horizontal,false);
-    //return ret;
+    int ret = grid->first_to_drawn(x,y,horizontal,false);
+    return ret;
 }
 int Skill_reconnaissance::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal) {
     std::cerr<<"Skill porte avion can't attack two grids in same time";

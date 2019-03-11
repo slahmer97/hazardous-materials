@@ -349,12 +349,6 @@ std::vector<std::vector<Square*>> Grid::radar_rectangular(int x, int y, int larg
     return bigresult;
 }
 
-void Grid::display(int player) {
-
-    print_grid(player,grid,false);
-
-}
-
 void static print_one_line_gride(int i,Square *grid[10][10], bool hide)
 {
     std::cout << i << " ";
@@ -393,7 +387,7 @@ void static print_one_line_gride(int i,Square *grid[10][10], bool hide)
     }
 }
 
-void static print_grid(int player,Square *grid[10][10], bool hide)
+void static print_grid(int player, Square *grid[10][10], bool hide)
 {
     std::cout << "player : " << player;
 
@@ -417,3 +411,10 @@ void static print_grid(int player,Square *grid[10][10], bool hide)
 
 
 }
+
+void Grid::display(int player) {
+
+    print_grid(player,grid,false);
+
+}
+

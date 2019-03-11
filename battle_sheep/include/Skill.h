@@ -6,7 +6,9 @@
 #define TMP_PROJ_SKILL_H
 
 #include "Grid.h"
-
+#include <iostream>
+#include <vector>
+#include <Square.h>
 class Grid;
 class Engine;
 
