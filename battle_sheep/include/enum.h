@@ -5,6 +5,7 @@
 #ifndef TMP_PROJ_ENUM_H
 #define TMP_PROJ_ENUM_H
 
+#include <iostream>
 enum SQUARE_TYPE
 {
     NONE,
