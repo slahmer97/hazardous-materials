@@ -8,6 +8,7 @@
 #include "Engine.h"
 #include "Square.h"
 #include "enum.h"
+#include <vector>
 
 class Square;
 class Engine;
@@ -46,6 +47,13 @@ public:
     int proximity_check(int x, int y, Engine *engine);
 
     int check_one_position(int x, int y);
+
+    Square* radar_one_square(int x, int y);
+
+    std::vector<Square*> radar_horizontal(int x, int y, int length);
+
+    std::vector<std::vector<Square*>> radar_rectangular(int x, int y, int large, int length);
+
 
     std::string get_my_grid();
     std::string get_enemy_grid();

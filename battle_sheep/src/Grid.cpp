@@ -296,6 +296,32 @@ int Grid::proximity_check(int x, int y, Engine *engine)
     return 1;
 }
 
+Square* Grid::radar_one_square(int x, int y)
+{
+    return grid[x][y];
+}
+
+std::vector<Square*> Grid::radar_horizontal(int x, int y, int length)
+{
+    std::vector<Square*> result;
+    for(int i=0;i<length;i++)
+    {
+        result.push_back(radar_one_square(x+i,y));
+    }
+    return result;
+}
+
+std::vector<std::vector<Square*>> Grid::radar_rectangular(int x, int y, int large, int length)
+{
+    std::vector<std::vector<Square*>> bigresult;
+
+    for(int i=0;i<large;i++)
+    {
+        bigresult.push_back(radar_horizontal(x, y + i, length));
+    }
+    return bigresult;
+}
+
 void Grid::display() {
 
 
