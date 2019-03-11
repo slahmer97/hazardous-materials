@@ -31,6 +31,7 @@ public:
     int get_weapon_place();
     bool get_is_on_grid();
     MOTOR_STATE get_motor_state()const;
+    WEAPON_STATE get_weapon_state()const;
     //Setters :
     void set_horizontal(bool horizontal_a);
     void set_x(int x_a);

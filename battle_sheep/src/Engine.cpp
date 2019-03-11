@@ -2,7 +2,6 @@
 // Created by stevlulz on 3/7/19.
 //
 
-#include "../include/Engine.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -80,12 +79,7 @@ bool Engine::get_is_on_grid()
     return m_is_on_grid;
 }
 
-/*
-int Engine::get_grid()
-{
 
-}
-*/
 
 //Setters
 void Engine::set_horizontal(bool horizontal_a)
@@ -95,14 +89,26 @@ void Engine::set_horizontal(bool horizontal_a)
 void Engine::set_x(int x_a)
 {
     m_x = x_a;
+    if(m_x < 0 || m_x >9)
+        m_is_on_grid = false;
+    if(m_y < 10 && m_y >= 0)
+         m_is_on_grid = true;
 }
 void Engine::set_y(int y_a)
 {
     m_y=y_a;
+    if(m_y < 0 || m_y >9)
+        m_is_on_grid = false;
+
+    if(m_x < 10 && m_x >= 0)
+        m_is_on_grid = true;
 }
 void Engine::set_is_on_grid(bool is_on_grid_a)
 {
-    m_is_on_grid=is_on_grid_a;
+    if( m_x >= 0 && m_x < 10 && m_y < 10 && m_y >= 0)
+        m_is_on_grid=is_on_grid_a;
+    else
+        m_is_on_grid = false;
 }
 /*
 void Engine::set_grid(int grid_number_a)
@@ -268,4 +274,8 @@ ENGINE_TYPE Engine::get_engine_type() {
 
 MOTOR_STATE Engine::get_motor_state() const {
     return m_motor_state;
+}
+
+WEAPON_STATE Engine::get_weapon_state() const {
+    return m_weapon_state;
 }
