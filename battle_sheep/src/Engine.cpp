@@ -6,15 +6,22 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <Engine.h>
+
 
 Engine::Engine(int size_a){
 
-    std::srand(std::time(nullptr));
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    if(size_a < 1 || size_a > 5)
+        size_a = 3;
     m_size=size_a;
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
     m_motor_place = rand()%(m_size);
+    m_weapon_place = -1;
     m_is_on_grid=false;
+    m_x = -1;
+    m_y = -1;
 }
 
 
@@ -254,5 +261,11 @@ float Engine::take_care(float care){
 }
 
 ENGINE_TYPE Engine::get_engine_type() {
+    if(m_skill == nullptr)
+        return NOT_INTRODUCED;
     return m_skill->get_engine_type();
+}
+
+MOTOR_STATE Engine::get_motor_state() const {
+    return m_motor_state;
 }
