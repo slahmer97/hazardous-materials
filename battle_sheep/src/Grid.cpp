@@ -221,12 +221,39 @@ int Grid::cross_shot(int x, int y, int length, bool IEM, float damage)
     return number_case_touch;
 }
 
-int Grid::first_to_drawn(int x, int y, bool direction, bool horizontal, bool IEM, float damage )
+int Grid::first_to_drawn(int x, int y, bool horizontal, bool IEM, float damage )
 {
     if(!(check_one_position(x,y)))
     {
         return 0;
     }
+    bool direction;
+    if(horizontal){
+        if(x<5)
+        {
+            x=0;
+            direction=true;
+        }
+        else
+        {
+            x=9;
+            direction=false;
+        }
+    }
+    else
+    {
+        if(y<5)
+        {
+            y=0;
+            direction=true;
+        }
+        else
+        {
+            y=9;
+            direction=false;
+        }
+    }
+    
     int number_case_touch = 0;
     int i;
     int v_i=(direction ? 1 : -1);
@@ -384,7 +411,7 @@ void static print_grid(int player,Square *grid[10][10], bool hide)
 
         std::cout << " " << i << '\n';
     }
-    std::cout << "  ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼  " << '\n';
+    std::cout << "  ┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼ " << '\n';
 
     std::cout << "    0    1    2    3    4    5    6    7    8    9     " << '\n';
 
