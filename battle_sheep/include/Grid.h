@@ -23,9 +23,9 @@ public:
 
     int check_putable(Engine *engine, bool horizontal, int size, int x, int y);
 
-    void remove_engine(Engine *engine);
+    int remove_engine(Engine *engine);
 
-    void add_engine(Engine *engine, bool horizontal, int x, int y);
+    int add_engine(Engine *engine, bool horizontal, int x, int y);
 
     int normal_shot(int x, int y, float damage = 1.f);
 

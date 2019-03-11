@@ -32,8 +32,10 @@ int Grid::check_putable(Engine *engine, bool horizontal, int size, int x, int y)
     }
     return 1;
 }
-void Grid::remove_engine(Engine *engine)
+int Grid::remove_engine(Engine *engine)
 {
+    if(engine==nullptr)
+        return -100;
     for (int i = 0; i < engine->get_size(); i++)
     {
         //Horizontal
@@ -50,9 +52,12 @@ void Grid::remove_engine(Engine *engine)
             grid[engine->get_x()][engine->get_y() + i]->set_square_type(NONE);
         }
     }
+    return 1;
 }
-void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
+int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
 {
+    if(engine==nullptr)
+        return -100;
     float engine_square_health[engine->get_size()]={0.f};
     if(engine->get_is_on_grid())
     {
@@ -100,6 +105,7 @@ void Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
                 grid[x][y + j]->set_square_type(ENGINE_PART);
         }
     }
+    return 1;
 }
 
 int Grid::normal_shot(int x, int y, float damage)
@@ -260,6 +266,8 @@ int Grid::check_one_position(int x, int y)
 
 int Grid::proximity_check(int x, int y, Engine *engine)
 {
+    if(engine==nullptr)
+        return -100;
     if(!(check_one_position(x,y)))
     {
         return -1;
