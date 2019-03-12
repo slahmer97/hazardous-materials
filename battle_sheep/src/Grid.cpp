@@ -134,10 +134,6 @@ int Grid::desactivate_square(int x, int y)
 
 int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float damage)
 {
-    if(!(check_one_position(x,y)))
-    {
-        return 0;
-    }
     int number_case_touch = 0;
     if (horizontal)
     {
@@ -153,10 +149,6 @@ int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float d
 
 int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float damage)
 {
-    if(!(check_one_position(x,y)))
-    {
-        return 0;
-    }
     int number_case_touch = 0;
 
     for (int i = y; i < y + length; i++)
@@ -175,10 +167,6 @@ int Grid::vertical_line_shot(int x, int y, int length, bool IEM, float damage)
 
 int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float damage)
 {
-    if(!(check_one_position(x,y)))
-    {
-        return 0;
-    }
     int number_case_touch = 0;
     for (int i = x; i < x + length; i++)
     {
@@ -196,10 +184,6 @@ int Grid::horizontal_line_shot(int x, int y, int length, bool IEM, float damage)
 
 int Grid::rectangular_shot(int x, int y, int large, int length, bool IEM, float damage)
 {
-    if(!(check_one_position(x,y)))
-    {
-        return 0;
-    }
     int number_case_touch = 0;
     for (int j = 0; j < large; j++)
     {
@@ -210,10 +194,6 @@ int Grid::rectangular_shot(int x, int y, int large, int length, bool IEM, float 
 
 int Grid::cross_shot(int x, int y, int length, bool IEM, float damage)
 {
-    if(!(check_one_position(x,y)))
-    {
-        return 0;
-    }
     int number_case_touch = 0;
     number_case_touch+=horizontal_line_shot(x-length,y,2*length+1,IEM,damage);
     number_case_touch+=vertical_line_shot(x,y-length,length,IEM,damage);
@@ -223,10 +203,6 @@ int Grid::cross_shot(int x, int y, int length, bool IEM, float damage)
 
 int Grid::first_to_drawn(int x, int y, bool horizontal, bool IEM, float damage )
 {
-    if(!(check_one_position(x,y)))
-    {
-        return 0;
-    }
     bool direction;
     if(horizontal){
         if(x<5)
