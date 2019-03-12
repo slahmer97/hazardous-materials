@@ -14,9 +14,10 @@ Engine::Engine(int size_a){
     if(size_a < 1 || size_a > 5)
         size_a = 3;
     m_size=size_a;
+    m_movement_point=6-size_a;
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
-    m_motor_place = rand()%(m_size);
+    m_motor_place = 0;
     m_weapon_place = -1;
     m_is_on_grid=false;
     m_x = -1;
@@ -27,11 +28,7 @@ Engine::Engine(int size_a){
 Engine::Engine(int size_a, ENGINE_TYPE engine_type):Engine(size_a) {
         m_skill = FactorySkill::getSkill(engine_type);
         m_weapon_state = WEAPON_STATE::WEAPON;
-        m_weapon_place = m_motor_place;
-        while(m_weapon_place==m_motor_place)
-        {
-            m_weapon_place=rand()%(m_size);
-        }
+        m_weapon_place = m_size-1;
 
 }
 
@@ -120,7 +117,8 @@ void Engine::set_grid(int grid_number_a)
 //TODO
 float Engine::take_a_hit(float dammage)
 {
-    m_current_health_point-=dammage;
+    
+    m_current_health_point = (m_current_health_point < dammage ? 0.f : m_current_health_point-dammage);
     return m_current_health_point;
 }
 
@@ -177,6 +175,11 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 {
     if(grid==nullptr)
         return -100;
+    if(m_motor_state!=MOTOR)
+        return -1;
+    if(m_movement_point<movement_value)
+        return -1;
+
     int new_x=m_x;
     int new_y=m_y;
 
@@ -204,6 +207,10 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
 {
     if(grid==nullptr)
         return -100;
+    if(m_motor_state!=MOTOR)
+        return -1;
+    if(node_distance < 0 || node_distance > m_size-1)
+        return -1;
     int new_x = m_x;
     int new_y = m_y;
     if (m_horizontal)

@@ -33,10 +33,10 @@ int Skill::get_points() {
 Skill_porte_avion::Skill_porte_avion() : Skill(ENGINE_TYPE::PORTE_AVION){}
 Skill_porte_avion::Skill_porte_avion(ENGINE_TYPE engine_type) : Skill(engine_type){}
 int Skill_porte_avion::use(Grid *grid, int x, int y, bool horizontal) {
-    if(get_points() < 50)
+    if(get_points() < POINT_COST)
         return -1;
 
-    decrease_points(50);
+    decrease_points(POINT_COST);
     return  grid->line_shot(x,y,3, false,horizontal);
 }
 int Skill_porte_avion::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal){
