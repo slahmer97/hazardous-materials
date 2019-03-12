@@ -215,9 +215,9 @@ int Grid::cross_shot(int x, int y, int length, bool IEM, float damage)
         return 0;
     }
     int number_case_touch = 0;
-    grid[x][y]->increase_health(damage);
     number_case_touch+=horizontal_line_shot(x-length,y,2*length+1,IEM,damage);
-    number_case_touch+=vertical_line_shot(x,y-length,2*length+1,IEM,damage);
+    number_case_touch+=vertical_line_shot(x,y-length,length,IEM,damage);
+    number_case_touch+=vertical_line_shot(x,y+1,length,IEM,damage);
     return number_case_touch;
 }
 
