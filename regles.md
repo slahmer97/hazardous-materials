@@ -63,6 +63,13 @@
 > Lors du tour d'un joueur **éliminé**, son co-équipier encore dans la partie **joue une deuxième fois**.
 > La **dernière équipe** à avoir encore des **unités non coulé**, c’est à dire lorsque ses deux adversaires sont éliminés est déclarée vainqueur.
 
+#### Annonce aux joueurs adverses, le mouvement d'un de leur adversaire :
+> "A joué" : si le joueur a déplacé un bateau, ou a raté avec un tir normal, ou a utilisé un radar.
+> "Compétence" : la compétence utilisée (sauf radar).
+> "A touché" : si le joueur a touché une unité avec un tir (normal ou de compétence), l'endroit touché de ton bateau.
+> + "A coulé" : si le bateau est coulé, le bateau coulé.
+
+
 ## Unités (nom, taille, compétence)
 
 ### Les bateaux
