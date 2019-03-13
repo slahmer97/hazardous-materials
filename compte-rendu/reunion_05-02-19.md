@@ -70,8 +70,8 @@ Shell | 3
 ---
 
 ### Présences
-- [x] KEPPEL Arnaud (arrivé 30min en retard)
-- [x] KNAPP Liesse (parti 1h en avance)
+- [x] KEPPEL Arnaud
+- [x] KNAPP Liesse
 - [x] KUSOGLU Garip
 - [x] LAHMER Seyyid-Ahmed
 - [ ] LOPEZ Stéphane (toujours inconnu au bataillon)
@@ -79,7 +79,7 @@ Shell | 3
 - [x] MASSART Jules
 - [x] MEYER Alexandre
 - [x] MICHEL Julien
-- [ ] MICHELAT Maxime (a prévenu 5min avant la réunion de son absence)
+- [ ] MICHELAT Maxime (a prévenu de son absence)
 
 ### Lexique
 
