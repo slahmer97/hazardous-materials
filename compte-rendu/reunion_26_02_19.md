@@ -1,5 +1,5 @@
 ### Présences
-- [x] HUYNH Jimmy (retard 1h)
+- [x] HUYNH Jimmy
 - [] KEPPEL Arnaud
 - [x] KNAPP Liesse 
 - [x] KUSOGLU Garip
@@ -7,7 +7,7 @@
 - [x] MANSSOUR Nabil 
 - [x] MASSART Jules
 - [x] MEYER Alexandre
-- [x] MICHEL Julien (retard 20 min)
+- [x] MICHEL Julien
 - [x] MICHELAT Maxime
 
 
