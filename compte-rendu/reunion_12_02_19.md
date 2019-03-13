@@ -1,11 +1,10 @@
-
 ### Présences
-- [x] HUYNH Jimmy (arrivé 50 min en retard)
-- [x] KEPPEL Arnaud (arrivé 30 min en retard)
+- [x] HUYNH Jimmy
+- [x] KEPPEL Arnaud
 - [x] KNAPP Liesse 
-- [x] KUSOGLU Garip (arrivé 1h retard)
+- [x] KUSOGLU Garip
 - [x] LAHMER Seyyid-Ahmed
-- [x] MANSSOUR Nabil (arrivé 45 min en retard)
+- [x] MANSSOUR Nabil
 - [x] MASSART Jules
 - [ ] MEYER Alexandre (absent prévenu)
 - [x] MICHEL Julien
