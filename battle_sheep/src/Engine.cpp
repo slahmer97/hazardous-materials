@@ -10,7 +10,6 @@
 
 Engine::Engine(int size_a){
 
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
     if(size_a < 1 || size_a > 5)
         size_a = 3;
     m_size=size_a;
@@ -51,16 +50,22 @@ float Engine::get_current_health_point()
 
 bool Engine::is_horizontal()
 {
+    if(!(m_is_on_grid))
+        return -1;
     return m_horizontal;
 }
 
 int Engine::get_x()
 {
+    if(!(m_is_on_grid))
+        return -1;
     return m_x;
 }
 
 int Engine::get_y()
 {
+    if(!(m_is_on_grid))
+        return -1;
     return m_y;
 }
 int Engine::get_motor_place()
@@ -117,6 +122,8 @@ void Engine::set_grid(int grid_number_a)
 //TODO
 float Engine::take_a_hit(float dammage)
 {
+    if(!(m_is_on_grid))
+        return -1.0f;
     
     m_current_health_point = (m_current_health_point < dammage ? 0.f : m_current_health_point-dammage);
     return m_current_health_point;
@@ -127,6 +134,10 @@ int Engine::normal_shot(Grid *grid, int x, int y)
 {
     if(grid==nullptr)
         return -100;
+    if(!(m_is_on_grid))
+        return -1;
+    if(grid->get_engine_x_y(m_x,m_y)==this)
+        return -1;
     return grid->normal_shot(x, y);
 }
 
@@ -134,6 +145,10 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
 {
     if(grid==nullptr)
         return -100;
+    if(!(m_is_on_grid))
+        return -1;
+    if(grid->get_engine_x_y(m_x,m_y)==this)
+        return -1;
     switch (type_of_shot){
 
         case PORTE_AVION_SKILL:
@@ -159,6 +174,12 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
 {
     if(grid1==nullptr || grid2 == nullptr)
         return -100;
+    if(!(m_is_on_grid))
+        return -1;
+    if(grid1->get_engine_x_y(m_x,m_y)==this)
+        return -1;
+    if(grid2->get_engine_x_y(m_x,m_y)==this)
+        return -1;
     switch (type_of_shot){
         case BOMBARDIER_SKILL:
             return ((Skill_bombardier*)&m_skill)->use(grid1,grid2,x,y,horizontal);
@@ -175,6 +196,10 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
 {
     if(grid==nullptr)
         return -100;
+    if(!(m_is_on_grid))
+        return -1;
+    if(grid->get_engine_x_y(m_x,m_y)!=this)
+        return -1;
     if(m_motor_state!=MOTOR)
         return -1;
     if(m_movement_point<movement_value)
@@ -207,6 +232,10 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
 {
     if(grid==nullptr)
         return -100;
+    if(!(m_is_on_grid))
+        return -1;
+    if(grid->get_engine_x_y(m_x,m_y)!=this)
+        return -1;
     if(m_motor_state!=MOTOR)
         return -1;
     if(node_distance < 0 || node_distance > m_size-1)
@@ -269,7 +298,9 @@ void Engine::kill_motor() {
 }
 
 float Engine::take_care(float care){
-    m_current_health_point+=care;
+    if(!(m_is_on_grid))
+        return -1.0f;
+    m_current_health_point=(m_size < (m_current_health_point+care)? m_size : m_current_health_point+care) ;
     return m_current_health_point;
 }
 

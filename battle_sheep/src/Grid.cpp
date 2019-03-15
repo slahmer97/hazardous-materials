@@ -15,8 +15,18 @@ Grid::Grid()
 
 /*Methods*/
 
+Engine *Grid::get_engine_x_y(int x, int y)
+{
+    if(!(check_one_position(x,y)))
+    {
+        return nullptr;
+    }
+    return grid[x][y]->get_engine();
+}
 int Grid::check_putable(Engine *engine, bool horizontal, int size, int x, int y)
 {
+    if(engine==nullptr)
+        return -100;
     for(int i=0 ; i < size ; i++)
     {
         if(horizontal)
@@ -275,6 +285,23 @@ int Grid::proximity_check(int x, int y, Engine *engine)
     {
         return -1;
     }
+    if(grid[x][y]->get_engine()!=nullptr || grid[x][y]->get_square_type()!=NONE)
+    {
+        if(grid[x][y]->get_engine()->get_engine_type()!=engine->get_engine_type())
+            return -1;
+    }
+    return 1;
+}
+
+/*
+int Grid::proximity_check(int x, int y, Engine *engine)
+{
+    if(engine==nullptr)
+        return -100;
+    if(!(check_one_position(x,y)))
+    {
+        return -1;
+    }
     int i=x-1;
     int j=y-1;
     int i_end=x+1;
@@ -297,7 +324,7 @@ int Grid::proximity_check(int x, int y, Engine *engine)
         }
     }
     return 1;
-}
+}*/
 
 Square* Grid::radar_one_square(int x, int y)
 {

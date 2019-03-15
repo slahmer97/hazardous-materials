@@ -21,7 +21,9 @@ private:
 public:
     Grid();
     ~Grid();
-
+    
+    Engine *get_engine_x_y(int x, int y);
+    
     int check_putable(Engine *engine, bool horizontal, int size, int x, int y);
 
     int remove_engine(Engine *engine);
