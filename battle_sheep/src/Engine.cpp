@@ -17,7 +17,9 @@ Engine::Engine(int size_a){
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
     m_motor_place = 0;
+    //m_weapon_state = WEAPON;
     m_weapon_place = -1;
+    //m_shell_state = SHELL;
     m_is_on_grid=false;
     m_x = -1;
     m_y = -1;
@@ -28,7 +30,7 @@ Engine::Engine(int size_a, ENGINE_TYPE engine_type):Engine(size_a) {
         m_skill = FactorySkill::getSkill(engine_type);
         m_weapon_state = WEAPON_STATE::WEAPON;
         m_weapon_place = m_size-1;
-
+        
 }
 
 

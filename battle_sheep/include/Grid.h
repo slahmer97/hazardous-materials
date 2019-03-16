@@ -32,6 +32,11 @@ public:
 
     int normal_shot(int x, int y, float damage = 1.f);
 
+    /*
+    int incendiary_shot(int x, int y, float damage = 1.f);
+    int burn_square(int x, int y);
+    */
+
     int desactivate_square(int x, int y);
 
     int line_shot(int x, int y, int length, bool IEM, bool horizontal, float damage = 1.f);

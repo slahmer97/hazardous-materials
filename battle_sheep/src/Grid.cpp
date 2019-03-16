@@ -127,6 +127,18 @@ int Grid::normal_shot(int x, int y, float damage)
     return grid[x][y]->decrease_health(damage);
 }
 
+/*TODO
+int Grid::incendiary_shot(int x, int y, float damage)
+{
+    if(!(check_one_position(x,y)))
+    {
+        return 0;
+    }
+    grid[x][y]burn_square();
+    return grid[x][y]->decrease_health(damage);
+}
+*/
+
 int Grid::desactivate_square(int x, int y)
 {
     if(!(check_one_position(x,y)))

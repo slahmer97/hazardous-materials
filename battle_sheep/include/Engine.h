@@ -32,6 +32,7 @@ public:
     bool get_is_on_grid();
     MOTOR_STATE get_motor_state()const;
     WEAPON_STATE get_weapon_state()const;
+    //PART_STATE get_shell_state()const;
     //Setters :
     void set_horizontal(bool horizontal_a);
     void set_x(int x_a);
@@ -78,6 +79,9 @@ private:
     Skill *m_skill;
     MOTOR_STATE m_motor_state;
     WEAPON_STATE m_weapon_state;
+    /*
+    PART_STATE m_shell_state;
+    */
 };
 
 

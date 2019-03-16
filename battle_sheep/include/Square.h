@@ -75,7 +75,18 @@ public:
     */
     void activate_motor();
 
+    /**
+     * @brief burn_square() is main function used to burn the current square
+     * if the current square is already on fire it does nothing
+    */
+    void burn_square();
 
+    /**
+     * @brief burn_square() is main function used to perforate the current square
+     * if the current square is already perforated it does nothing
+    */
+   void perforate_square();
+    
 
     /**
      * @brief get_square_type() is main function used to get the state of current square or type of piece which is
