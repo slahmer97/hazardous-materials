@@ -42,6 +42,9 @@ if(${SFML_FOUND})
 	include_directories(${SFML_INCLUDE_DIR})
 	add_executable(client src/client.cpp ${CLIENT_ONLY_SOURCES} ${SHARED_SOURCES} )
 	target_link_libraries(client ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+else()
+	message("Compiling the client require the sfml library")
+	message("Check https://www.sfml-dev.org for more information")
 endif()
 
 
