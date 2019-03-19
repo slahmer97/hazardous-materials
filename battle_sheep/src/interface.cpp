@@ -22,7 +22,7 @@ void Interface::start() {
 			
 			//Then we pass any other to the current Menu
 			if(this->currentMenu != nullptr)
-				this->currentMenu->handleEvent(&event);
+				this->currentMenu->handleEvent(&window,&event);
 			
 		}
 		
@@ -45,4 +45,10 @@ void Interface::change_current_menu(Menu* newMenu){
 		delete this->currentMenu;
 	//Then set the new one
 	this->currentMenu = newMenu;
+}
+
+
+
+Interface::~Interface(){
+	delete this->currentMenu;
 }

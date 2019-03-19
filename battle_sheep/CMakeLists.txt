@@ -22,6 +22,7 @@ set (
 set (
 	CLIENT_ONLY_SOURCES
 	src/interface.cpp
+	src/button.cpp
 	)
 
 set (
