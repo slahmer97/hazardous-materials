@@ -9,6 +9,8 @@ set(
         src/Skill.cpp
         src/Grid.cpp
         src/FactorySkill.cpp
+        src/ServerMessage.cpp
+        src/ClientMessage.cpp
 )
 
 
@@ -18,8 +20,7 @@ add_executable(materials src/main.cpp  ${SHARED_SOURCES})
 
 set(
         TEST_SHARED
-        test/test1.cpp
-        src/ServerMessage.cpp include/ServerMessage.h src/ClientMessage.cpp include/ClientMessage.h)
+)
 enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} ${SHARED_SOURCES})

@@ -1,0 +1,22 @@
+//
+// Created by sidahmedlahmer on 3/19/19.
+//
+
+#ifndef HAZARDOUS_MATERIALS_SERVERMESSAGE_H
+#define HAZARDOUS_MATERIALS_SERVERMESSAGE_H
+
+namespace network{
+class ServerMessage {
+
+
+
+    enum SERVER_MESSAGE_TYPE{
+        KILL_PLAYER,GRIDS_ASSIGNEMENT,ERROR,CHAT_S,CURRENT_TURN,SCORE_BROADCAST
+    };
+
+};
+
+}
+
+
+#endif //HAZARDOUS_MATERIALS_SERVERMESSAGE_H
