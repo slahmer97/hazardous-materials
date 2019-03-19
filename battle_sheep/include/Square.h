@@ -21,8 +21,17 @@ private:
     //char hazard; //climate changes (c : cold, t : tempest, n : none ... ?)
 
 public:
+
+    /* Input : /
+     * Constructor of square
+     * Output : square pointer
+     */
     Square();
 
+    /* Input : pointer on Engine
+     * set the pointer of nan enginbe on this square
+     * Output : /
+     */
     void set_engine(Engine *m_engine);
 
 
