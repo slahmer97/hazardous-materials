@@ -18,7 +18,7 @@ Engine::Engine(int size_a){
     m_motor_state=MOTOR;
     m_motor_place = 0;
     //m_weapon_state = WEAPON;
-    m_weapon_place = -1;
+    m_weapon_place = m_size-1;
     //m_shell_state = SHELL;
     m_is_on_grid=false;
     m_x = -1;
