@@ -36,7 +36,6 @@ public:
     */
     int check_putable(Engine *engine, bool horizontal, int size, int x, int y);
 
-
     /* Input : Engine
     * Remove an engine of the grid
     * Output : 1 yes, -100 is not an engine
@@ -118,23 +117,41 @@ public:
     int check_one_position(int x, int y);
     
     /* Input : Engine, int x,y (position)
-    * Check if there is nothing at this position
-    * Output : 1 nothing, -1 something or -100 is not an engine
+    * Return the Square at this position(x,y)
+    * Ouput : Square
     */
-    int proximity_check(int x, int y, Engine *engine);
-
-
     Square* radar_one_square(int x, int y);
 
+
+    /* Input : int length, x,y (position)
+    *
+    * Output :
+    */
     std::vector<Square*> radar_horizontal(int x, int y, int length);
 
+    
+    /* Input : int large,length,  x,y (position)
+    *
+    * Output :
+    */
     std::vector<std::vector<Square*>> radar_rectangular(int x, int y, int large, int length);
 
-
+    /* Input : nothing
+    *
+    * Output :
+    */
     std::string get_my_grid();
+    
+    /* Input : nothing
+    *
+    * Output :
+    */
     std::string get_enemy_grid();
 
-
+    /* Input : int player
+    * Print grid of the player
+    * Output : nothing (print)
+    */
     void display(int player);
 };
 
