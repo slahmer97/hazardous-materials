@@ -64,10 +64,10 @@ void Button::draw(sf::RenderTarget* drawingBoard){
 	if(enabled){
 		if(pressed){
 			// darker blue
-			shape.setFillColor(sf::Color(0,255,0));
+			shape.setFillColor(sf::Color(0,0,255));
 		} else {
 			// blue
-			shape.setFillColor(sf::Color(128,255,128));
+			shape.setFillColor(sf::Color(128,128,255));
 		}
 	} else {
 		shape.setFillColor(sf::Color(100,100,100));
