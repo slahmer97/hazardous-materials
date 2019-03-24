@@ -7,6 +7,7 @@
 
 #include "enum.h"
 #include "ClientMessage.h"
+#include "Score.h"
 #include <sstream>
 #include <iostream>
 
@@ -21,14 +22,13 @@ public:
     };
     enum ERRORS{BLABLA};
 
-    ServerMessage();
     static std::string getKillPlayerMessage(unsigned char id_player_grid);
     static std::string getGridAssinementMessage(std::string username, unsigned char id_grid);
     static std::string getErrorMessage(ERRORS error,std::string clientMessage);//client message to be modified into CLIENT_MESSAGE_TYPE
     static std::string getChatMessage(std::string message,unsigned char id);
     static std::string getCurrentTurnMessage(unsigned char id);
-    static std::string getScoreBroadCastMessage(std::string score);
-    static network::ServerMessage* getServerMessage(std::string json_ServerMessage);
+    static std::string getScoreBroadCastMessage(Score);
+    static ServerMessage* getServerMessage(std::string json_ServerMessage);
 private:
     SERVER_MESSAGE_TYPE m_msg_type;
     unsigned char m_id;
@@ -36,9 +36,14 @@ private:
     std::string m_chat_msg;
     std::string m_username;
     ERRORS m_error_type;
-    std::string score;
+    Score m_score;
     ClientMessage::CLIENT_MESSAGE_TYPE error_message; //maybe remove later...
 public:
+    ServerMessage(Score m_score);
+
+    const Score &get_score() const;
+    void set_score(const Score &m_score);
+
     SERVER_MESSAGE_TYPE get_msg_type() const;
     void set_msg_type(SERVER_MESSAGE_TYPE m_msg_type);
     unsigned char get_id() const;

@@ -5,6 +5,7 @@
 #include <ServerMessage.h>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <vector>
 network::ServerMessage::SERVER_MESSAGE_TYPE network::ServerMessage::to_enum(std::string type) {
     if(type == "kill_player")
         return SERVER_MESSAGE_TYPE ::KILL_PLAYER;
@@ -31,6 +32,8 @@ std::string network::ServerMessage::to_string(network::ServerMessage::SERVER_MES
         return std::string("current_turn");
     else if(type == SERVER_MESSAGE_TYPE::SCORE_BROADCAST)
         return std::string("score_broadcast");
+
+    return std::string("none");//check later
 }
 std::string network::ServerMessage::getKillPlayerMessage(unsigned char id_player_grid) {
     boost::property_tree::ptree pt;
@@ -75,14 +78,14 @@ std::string network::ServerMessage::getCurrentTurnMessage(unsigned char id) {
 
     return buff.str();
 }
-std::string network::ServerMessage::getScoreBroadCastMessage(std::string score) {
+std::string network::ServerMessage::getScoreBroadCastMessage(Score score) {
     boost::property_tree::ptree pt,s1,s2,s3,s4,p;
     pt.put("msg_type",to_string(SCORE_BROADCAST));
 
-    s1.put("",1);
-    s2.put("",2);
-    s3.put("",0);
-    s4.put("",6);
+    s1.put("",score.get_s1());
+    s2.put("",score.get_s2());
+    s3.put("",score.get_s3());
+    s4.put("",score.get_s4());
     p.push_back(std::make_pair("",s1));
     p.push_back(std::make_pair("",s2));
     p.push_back(std::make_pair("",s3));
@@ -95,11 +98,11 @@ std::string network::ServerMessage::getScoreBroadCastMessage(std::string score) 
     return buff.str();}
 
 network::ServerMessage* network::ServerMessage::getServerMessage(std::string json_ServerMessage){
-    ServerMessage*serverMessage;
-    serverMessage = new ServerMessage();
+    network::ServerMessage*serverMessage;
+    serverMessage = new ServerMessage(Score(-1, -1, -1, -1));
     boost::property_tree::ptree ptree;
     std::istringstream is (json_ServerMessage);
-    boost::property_tree::read_json(is,ptree);
+    boost::property_tree::json_parser::read_json(is,ptree);
 
     std::string msg_type_tmp = ptree.get<std::string>("msg_type");
     SERVER_MESSAGE_TYPE msg_type = to_enum(msg_type_tmp);
@@ -120,7 +123,14 @@ network::ServerMessage* network::ServerMessage::getServerMessage(std::string jso
         std::string message = ptree.get<std::string>("message");
         serverMessage->set_chat_msg(message);
     }
-    //TODO continue..
+    else if(msg_type == SCORE_BROADCAST){
+        std::vector<int> sc(4);
+        int counter = 0;
+        for(auto& s : ptree.get_child("score"))
+            sc[counter++] = s.second.get_value<int>();
+        serverMessage->set_score(Score(sc[0],sc[1],sc[2],sc[3]));
+    }
+    //TODO continue.. GRID-MESSAGE,ERROR-MSG
 
     return serverMessage;
 }
@@ -155,3 +165,11 @@ const std::string &network::ServerMessage::get_username() const {
 void network::ServerMessage::set_username(const std::string &m_username) {
     ServerMessage::m_username = m_username;
 }
+const Score &network::ServerMessage::get_score() const {
+    return m_score;
+}
+void network::ServerMessage::set_score(const Score &m_score) {
+    ServerMessage::m_score = m_score;
+}
+
+network::ServerMessage::ServerMessage(Score m_score) : m_score(m_score) {}

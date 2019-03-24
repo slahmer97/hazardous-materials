@@ -11,6 +11,7 @@ set(
         src/FactorySkill.cpp
         src/ServerMessage.cpp
         src/ClientMessage.cpp
+        src/Score.cpp
 )
 
 

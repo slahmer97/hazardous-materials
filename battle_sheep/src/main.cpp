@@ -19,7 +19,12 @@ int main() {
 
     std::cout<<msg4 <<std::endl;
 
-    std::string msg5 = network::ServerMessage::getScoreBroadCastMessage("[1,2,3,4]");
+    Score score(1,2,3,4);
+    std::string msg5 = network::ServerMessage::getScoreBroadCastMessage(score);
     std::cout<< msg5<<std::endl;
+
+
+    network::ServerMessage::getServerMessage(msg5);
+
     return 0;
 }
