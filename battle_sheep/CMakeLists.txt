@@ -21,9 +21,17 @@ add_executable(materials src/main.cpp  ${SHARED_SOURCES})
 
 set(
         TEST_SHARED
+        test/src/engine_test.cpp
+        test/src/square_test.cpp
+        test/src/skill_test.cpp
+        test/src/grid_test.cpp
+        test/src/client_message_test.cpp
+        test/src/server_message_test.cpp
+        test/src/score_test.cpp
 )
+
 enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include)
 add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} ${SHARED_SOURCES})
 target_link_libraries(runUnitTests gtest gtest_main)
 add_test( runUnitTests runUnitTests )

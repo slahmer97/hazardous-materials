@@ -1,0 +1,8 @@
+//
+// Created by sidahmedlahmer on 3/24/19.
+//
+
+#ifndef HAZARDOUS_MATERIALS_SQUARE_TEST_H
+#define HAZARDOUS_MATERIALS_SQUARE_TEST_H
+
+#endif //HAZARDOUS_MATERIALS_SQUARE_TEST_H
