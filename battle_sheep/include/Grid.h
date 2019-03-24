@@ -152,6 +152,7 @@ public:
     * Print grid of the player
     * Output : nothing (print)
     */
+    int proximity_check(int x, int y, Engine *engine);
     void display(int player);
 };
 

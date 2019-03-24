@@ -1,13 +1,25 @@
 #include <iostream>
-#include "../include/Square.h"
-#include "../include/Engine.h"
-#include "../include/Grid.h"
-#include "../include/Skill.h"
-#include "../include/FactorySkill.h"
+#include <ServerMessage.h>
 int main() {
-   Grid* grid = new Grid();
-    auto *e = new Engine(3,ENGINE_TYPE::PORTE_AVION);
-   grid->add_engine(e,true,0,0);
 
+    std::string msg = network::ServerMessage::getKillPlayerMessage(20);
+    std::cout<<msg<<std::endl;
+
+    std::string msg2 = network::ServerMessage::getGridAssinementMessage("jimmy",4);
+
+    std::cout<<msg2<<std::endl;
+
+
+    std::string msg3 = network::ServerMessage::getChatMessage("Hello world",2);
+
+    std::cout<<msg3<<std::endl;
+
+
+    std::string msg4 = network::ServerMessage::getCurrentTurnMessage(2);
+
+    std::cout<<msg4 <<std::endl;
+
+    std::string msg5 = network::ServerMessage::getScoreBroadCastMessage("[1,2,3,4]");
+    std::cout<< msg5<<std::endl;
     return 0;
 }
