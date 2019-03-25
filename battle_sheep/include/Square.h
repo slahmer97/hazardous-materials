@@ -131,6 +131,8 @@ public:
      *         - (TODO other cases)
      */
     int decrease_health(float dec);
+    
+    
     int increase_health(float inc);
 
     void set_health_pr(float pr);

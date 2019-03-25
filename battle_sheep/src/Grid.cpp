@@ -142,17 +142,27 @@ int Grid::normal_shot(int x, int y, float damage)
     return grid[x][y]->decrease_health(damage);
 }
 
-/*TODO
+
 int Grid::incendiary_shot(int x, int y, float damage)
 {
     if(!(check_one_position(x,y)))
     {
         return 0;
     }
-    grid[x][y]burn_square();
+    grid[x][y]->burn_square();
     return grid[x][y]->decrease_health(damage);
 }
-*/
+
+int Grid::perforating_shot(int x, int y, float damage)
+{
+    if(!(check_one_position(x,y)))
+    {
+        return 0;
+    }
+    grid[x][y]->perforate_square();
+    return grid[x][y]->decrease_health(damage);
+}
+
 
 int Grid::desactivate_square(int x, int y)
 {
@@ -164,6 +174,34 @@ int Grid::desactivate_square(int x, int y)
     {
         grid[x][y]->desactivate_weapon();
         grid[x][y]->desactivate_motor();
+        return 1;
+    }
+    return 0;
+}
+
+int Grid::burn_square(int x, int y)
+{
+    if(!(check_one_position(x,y)))
+    {
+        return 0;
+    }
+    if(grid[x][y]->get_square_type()!=NONE)
+    {
+        grid[x][y]->burn_square();
+        return 1;
+    }
+    return 0;
+}
+
+int Grid::perforate_square(int x, int y)
+{
+    if(!(check_one_position(x,y)))
+    {
+        return 0;
+    }
+    if(grid[x][y]->get_square_type()!=NONE)
+    {
+        grid[x][y]->perforate_square();
         return 1;
     }
     return 0;
