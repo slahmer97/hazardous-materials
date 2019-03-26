@@ -14,6 +14,11 @@ Square::Square(){
 Engine *Square::get_engine(){
     return m_engine;
 }
+
+boolean squares_equals(Square S, Square T){
+    return (S->m_engine = T->m_engine && S->m_health_pr= T->m_health_pr && S->m_square_type =T.m_square_type);
+}
+
 float Square::get_health_pr(){
     return m_health_pr;
 }
