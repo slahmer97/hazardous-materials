@@ -10,7 +10,7 @@ int main() {
     std::cout<<msg2<<std::endl;
 
 
-    std::string msg3 = network::ServerMessage::getChatMessage("Hello world",2);
+    std::string msg3 = network::ServerMessage::getChatMessage("chat",2);
 
     std::cout<<msg3<<std::endl;
 

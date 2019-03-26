@@ -11,8 +11,8 @@ TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
     ASSERT_EQ(m_engine1->get_size(),3);
     ASSERT_EQ(m_engine1->get_current_health_point(),m_engine1->get_size());
     ASSERT_EQ(m_engine1->get_is_on_grid(),false);
-    ///ASSERT_EQ(m_engine1->get_motor_place(),-1);
-    ASSERT_EQ(m_engine1->get_weapon_place(),-1);
+    ASSERT_EQ(m_engine1->get_motor_place(),0);
+    ASSERT_EQ(m_engine1->get_weapon_place(),2);
     ASSERT_EQ(m_engine1->get_x(),-1);
     ASSERT_EQ(m_engine1->get_y(),-1);
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR);
@@ -22,8 +22,8 @@ TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
     ASSERT_EQ(m_engine2->get_size(),3);
     ASSERT_EQ(m_engine2->get_current_health_point(),m_engine1->get_size());
     ASSERT_EQ(m_engine2->get_is_on_grid(),false);
-    ////ASSERT_EQ(m_engine1->get_motor_place(),-1);
-    ASSERT_EQ(m_engine2->get_weapon_place(),-1);
+    ASSERT_EQ(m_engine1->get_motor_place(),0);
+    ASSERT_EQ(m_engine2->get_weapon_place(),2);
     ASSERT_EQ(m_engine2->get_x(),-1);
     ASSERT_EQ(m_engine2->get_y(),-1);
     ASSERT_EQ(m_engine2->get_motor_state(),MOTOR_STATE::MOTOR);
@@ -34,8 +34,8 @@ TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
     ASSERT_EQ(m_engine2->get_size(),3);
     ASSERT_EQ(m_engine2->get_current_health_point(),m_engine1->get_size());
     ASSERT_EQ(m_engine2->get_is_on_grid(),false);
-    ////ASSERT_EQ(m_engine1->get_motor_place(),-1);
-    ASSERT_EQ(m_engine2->get_weapon_place(),-1);
+    ASSERT_EQ(m_engine1->get_motor_place(),0);
+    ASSERT_EQ(m_engine2->get_weapon_place(),2);
     ASSERT_EQ(m_engine2->get_x(),-1);
     ASSERT_EQ(m_engine2->get_y(),-1);
     ASSERT_EQ(m_engine2->get_motor_state(),MOTOR_STATE::MOTOR);
@@ -44,9 +44,9 @@ TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
 TEST_F(EngineTest,ENGINE_Getter_Setters_TEST){
 
     m_engine1->set_horizontal(true);
-    ASSERT_EQ(m_engine1->is_horizontal(),true);
+    ASSERT_EQ(m_engine1->is_horizontal(),-1);
     m_engine1->set_horizontal(false);
-    ASSERT_EQ(m_engine1->is_horizontal(),false);
+    ASSERT_EQ(m_engine1->is_horizontal(),-1);
 
     ASSERT_EQ(m_engine1->get_is_on_grid(),false);
 
@@ -58,21 +58,28 @@ TEST_F(EngineTest,ENGINE_Getter_Setters_TEST){
 
     m_engine1->set_x(1);
 
-    ASSERT_EQ(m_engine1->get_x(),1);
+    ASSERT_EQ(m_engine1->get_x(),-1);
     ASSERT_EQ(m_engine1->get_is_on_grid(),false);
 
     m_engine1->set_is_on_grid(true);
     ASSERT_EQ(m_engine1->get_is_on_grid(), false);
 
+
     m_engine1->set_y(0);
 
     ASSERT_EQ(m_engine1->get_y(),0);
+    ASSERT_EQ(m_engine1->get_x(),1);
     ASSERT_EQ(m_engine1->get_is_on_grid(),true);
 
 
     m_engine1->set_is_on_grid(false);
     ASSERT_EQ(m_engine1->get_is_on_grid(), false);
 
+    m_engine1->set_horizontal(false);
+    ASSERT_EQ(m_engine1->is_horizontal(), -1);
+
+    m_engine1->set_horizontal(true);
+    ASSERT_EQ(m_engine1->is_horizontal(),-1);
 
 }
 TEST_F(EngineTest,ENGINE_ACTIVATE_DESACTIVATE_TEST){

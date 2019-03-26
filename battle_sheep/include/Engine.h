@@ -42,7 +42,7 @@ public:
      * get the orientation
      * Output : orientation
      */
-    bool is_horizontal();
+    int is_horizontal();
 
     /* Input : /
      * get the x position
