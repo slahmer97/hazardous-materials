@@ -4,6 +4,8 @@
 #include "../include/component.h"
 #include "../include/click_callback.h"
 #include <string>
+#include <stdlib.h>
+#include <iostream>
 
 /**
  * A simple class to use and create a button
@@ -29,8 +31,7 @@ class Button : Component {
 		 */
 		std::string text;
 		
-		//int[4] getGeometry();
-		
+
 		/**
 		 * Setter for the click handler
 		 */
@@ -59,6 +60,11 @@ class Button : Component {
 		 * Var containing the pressed of the button
 		 */
 		bool pressed = false;
+
+		/**
+		 * Var containing the font for the text of the button
+		 */
+		sf::Font font;
 };
 
 

@@ -2,9 +2,15 @@
 
 
 
+
 Button::Button(std::string text, int x, int y, int width, int height):
 	text(text), x(x), y(y), width(width), height(height){
-	//Nothing else to do
+	//We try to load the font
+	if(!font.loadFromFile("assets/font/LiberationMono-Regular.ttf")){
+		//We couldn't load the font
+		std::cerr<<"Couldn't load assets/font/LiberationMono-Regular.ttf"<<std::endl;
+		std::abort();
+	}
 
 }
 
@@ -58,9 +64,26 @@ void Button::handleEvent(sf::Window* window,sf::Event* event){
 
 void Button::draw(sf::RenderTarget* drawingBoard){
 	sf::RectangleShape shape;
+	//We correctly position the button
 	shape.setSize(sf::Vector2f(this->width, this->height));
 	shape.setPosition(this->x, this->y);
+	
+	//We setup the text with it's font
+	sf::Text text;
 
+	
+	text.setFont(font);
+	text.setString(this->text);
+	text.setCharacterSize(28);
+	text.setFillColor(sf::Color::White);
+	
+	//We correctly center the text
+	int text_width = (int)text.getLocalBounds().width;
+	int text_height= (int)text.getLocalBounds().height;
+	text.setPosition(this->x+this->width/2-text_width/2, this->y+this->height/2-text_height);
+	
+
+	//We set the color depending of the state of the button
 	if(enabled){
 		if(pressed){
 			// darker blue
@@ -74,6 +97,8 @@ void Button::draw(sf::RenderTarget* drawingBoard){
 	}
 	
 	drawingBoard->draw(shape);
+	drawingBoard->draw(text);
+
 
 }
 
