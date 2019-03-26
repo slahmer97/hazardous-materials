@@ -22,16 +22,10 @@ private:
 
 public:
 
-    /* Input : /
-     * Constructor of square
-     * Output : square pointer
-     */
+
     Square();
 
-    /* Input : pointer on Engine
-     * set the pointer of nan enginbe on this square
-     * Output : /
-     */
+
     void set_engine(Engine *m_engine);
 
 
@@ -44,6 +38,12 @@ public:
      */
     Engine *get_engine();
 
+
+    /* Input : 2 Squares
+     * return if 2 squares are equals
+     * Output : true they are equals, else false
+     */
+    boolean squares_equals(Square S, Square T);
 
     /**
      * @brief get_health_pr() is main function used to get the pourcetage of health of
