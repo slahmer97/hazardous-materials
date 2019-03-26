@@ -15,7 +15,7 @@ Engine *Square::get_engine(){
     return m_engine;
 }
 
-SQUARE_TYPE Squer::get_square_type(){
+SQUARE_TYPE Square::get_square_type(){
     return m_square_type;
 }
 
