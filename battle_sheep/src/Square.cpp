@@ -15,13 +15,19 @@ Engine *Square::get_engine(){
     return m_engine;
 }
 
-boolean squares_equals(Square S, Square T){
-    return (S->m_engine = T->m_engine && S->m_health_pr= T->m_health_pr && S->m_square_type =T.m_square_type);
+SQUARE_TYPE Squer::get_square_type(){
+    return m_square_type;
 }
+
 
 float Square::get_health_pr(){
     return m_health_pr;
 }
+
+bool Square::squares_equals(Square T){
+    return (m_health_pr == T->get_health_pr() && m_engin e== T->get_engine() && m_square_type == T->get_square_type());
+}
+
 void Square::desactivate_motor(){
     if(m_square_type == SQUARE_TYPE::ENGINE_MOTOR)
         m_square_type = SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED;
