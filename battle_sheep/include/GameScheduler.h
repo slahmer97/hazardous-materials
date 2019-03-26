@@ -1,7 +1,7 @@
 #ifndef HAZARDOUS_MATERIALS_CLIENTMESSAGE_H
 #ifndef HAZARDOUS_MATERIALS_CLIENTMESSAGE_H
 
-#include "Game.h"
+#include <Game.h>
 
 class GameScheduler {
 	public:
