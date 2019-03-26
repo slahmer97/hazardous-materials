@@ -36,10 +36,10 @@ void B_Switch::draw(sf::RenderTarget* drawingBoard){
         // Si aucune image en entrée
         sf::RectangleShape shape_l;
         sf::RectangleShape shape_r;
-        shape_l.setSize(sf::Vector2f(this->(width / 2), this->(height / 2));
+        shape_l.setSize(sf::Vector2f(this->width / 2, this->height / 2));
         shape_l.setPosition(this->x, this->y);
-        shape_r.setSize(sf::Vector2f(this->(width / 2), this->(height / 2));
-        shape_r.setPosition(this->(x + (width / 2)), this->(y + (height / 2)));
+        shape_r.setSize(sf::Vector2f(this->width / 2, this->height / 2));
+        shape_r.setPosition(this->x + (width / 2), this->y);
         if(enabled){
             if(left){
                 // bleu à gauche et gris à droite

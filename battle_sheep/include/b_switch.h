@@ -56,6 +56,11 @@
          * Var containing if the button is in left or right position
          */
          bool left = true;
+		
+		/**
+		 * String containing the location for the texture of the button
+		 */
+		std::string img;
  };
 
 #endif // B_SWITCH_H
