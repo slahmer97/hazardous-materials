@@ -3,11 +3,11 @@
 
 class Button;
 
-#include "../include/button.h"
+#include "../include/component.h"
 
 class ClickListener {
 	public:
-		virtual void on_click(Button* source) = 0;
+		virtual void on_click(Component* source) = 0;
 };
 
 
