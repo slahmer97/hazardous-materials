@@ -39,11 +39,12 @@ public:
     Engine *get_engine();
 
 
-    /* Input : 2 Squares
-     * return if 2 squares are equals
-     * Output : true they are equals, else false
-     */
-    bool squares_equals(Square T);
+   /* Input : /
+    * return the Square_type of the Square
+    * Output : m_square_type
+    */
+    SQUARE_TYPE get_square_type();
+
 
     /**
      * @brief get_health_pr() is main function used to get the pourcetage of health of
@@ -53,6 +54,12 @@ public:
      */
     float get_health_pr();
 
+
+    /* Input : 2 Squares
+     * return if 2 squares are equals
+     * Output : true they are equals, else false
+     */
+    bool squares_equals(Square T);
 
 
     /**
