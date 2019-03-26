@@ -42,6 +42,10 @@ if(${SFML_FOUND})
 	include_directories(${SFML_INCLUDE_DIR})
 	add_executable(client src/client.cpp ${CLIENT_ONLY_SOURCES} ${SHARED_SOURCES} )
 	target_link_libraries(client ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+	
+	# We copy the assets directory, containing the texture and font for the game
+	file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
 else()
 	message("Compiling the client require the sfml library")
 	message("Check https://www.sfml-dev.org for more information")
