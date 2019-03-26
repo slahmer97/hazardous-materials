@@ -119,4 +119,10 @@ public:
 
 };
 
+class Skill_incendiary: public Skill{
+    Skill_incendiary();
+    Skill_incendiary(ENGINE_TYPE);
+    int use(Grid* grid, int x,int y,bool horizontal);
+    int use(Grid* grid,Grid*grid2, int x,int y,bool horizontal);
+}
 #endif //TMP_PROJ_SKILL_H
