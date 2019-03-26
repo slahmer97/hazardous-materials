@@ -5,7 +5,6 @@
 #ifndef TMP_PROJ_SQUARE_H
 #define TMP_PROJ_SQUARE_H
 
-
 #include "Engine.h"
 #include "enum.h"
 
@@ -13,22 +12,17 @@ class Engine;
 class Square
 {
 
-private:
+  private:
     Engine *m_engine;
     SQUARE_TYPE m_square_type;
     float m_health_pr;
     //int depth;
     //char hazard; //climate changes (c : cold, t : tempest, n : none ... ?)
 
-public:
-
-
+  public:
     Square();
 
-
     void set_engine(Engine *m_engine);
-
-
 
     /**
      * @brief get_engine is main function used to check if a square has an engine
@@ -38,14 +32,6 @@ public:
      */
     Engine *get_engine();
 
-
-   /* Input : /
-    * return the Square_type of the Square
-    * Output : m_square_type
-    */
-    SQUARE_TYPE get_square_type();
-
-
     /**
      * @brief get_health_pr() is main function used to get the pourcetage of health of
      *        the engine's part residing on it
@@ -54,13 +40,11 @@ public:
      */
     float get_health_pr();
 
-
     /* Input : 2 Squares
      * return if 2 squares are equals
      * Output : true they are equals, else false
      */
-    bool squares_equals(Square T);
-
+    bool squares_equals(Square *T);
 
     /**
      * @brief desactivate_motor() is main function used to desactivate engine's motor which reside
@@ -68,22 +52,17 @@ public:
      */
     void desactivate_motor();
 
-
-
     /**
      * @brief desactivate_weapon() is main function used to desactivate engine's weapon which reside
      * on current square if the current square has an activated weapon of an engine, it desactivates it otherwise it does nothing
     */
     void desactivate_weapon();
 
-
-
     /**
      * @brief activate_weapon() is main function used to reasactivate engine's weapon which reside
      * on current square if the current square has a desactivated weapon of an engine, it reactivates it otherwise it does nothing
      */
     void activate_weapon();
-
 
     /**
      * @brief activate_weapon() is main function used to reasactivate engine's motor which reside
@@ -101,8 +80,7 @@ public:
      * @brief burn_square() is main function used to perforate the current square
      * if the current square is already perforated it does nothing
     */
-   void perforate_square();
-    
+    void perforate_square();
 
     /**
      * @brief get_square_type() is main function used to get the state of current square or type of piece which is
@@ -138,13 +116,10 @@ public:
      *         - (TODO other cases)
      */
     int decrease_health(float dec);
-    
-    
+
     int increase_health(float inc);
 
     void set_health_pr(float pr);
-
-
 
     /**
      * @brief set_square_type() this is main function that has permission to modify the current square's type
@@ -152,9 +127,6 @@ public:
      * @param square_type the value of current's square type
      */
     void set_square_type(SQUARE_TYPE square_type);
-
 };
-
-
 
 #endif //TMP_PROJ_SQUARE_H

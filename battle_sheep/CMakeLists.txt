@@ -33,5 +33,5 @@ set(
 enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include)
 add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} ${SHARED_SOURCES})
-target_link_libraries(runUnitTests gtest gtest_main)
+target_link_libraries(runUnitTests gtest gtest_main pthread)
 add_test( runUnitTests runUnitTests )
