@@ -39,6 +39,12 @@ public:
     Engine *get_engine();
 
 
+    /* Input : 2 Squares
+     * return if 2 squares are equals
+     * Output : true they are equals, else false
+     */
+    boolean squares_equals(Square S, Square T);
+
     /**
      * @brief get_health_pr() is main function used to get the pourcetage of health of
      *        the engine's part residing on it
@@ -125,6 +131,8 @@ public:
      *         - (TODO other cases)
      */
     int decrease_health(float dec);
+    
+    
     int increase_health(float inc);
 
     void set_health_pr(float pr);
