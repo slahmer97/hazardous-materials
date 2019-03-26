@@ -50,7 +50,7 @@ float Engine::get_current_health_point()
     return m_current_health_point;
 }
 
-bool Engine::is_horizontal()
+int Engine::is_horizontal()
 {
     if(!(m_is_on_grid))
         return -1;
@@ -114,12 +114,6 @@ void Engine::set_is_on_grid(bool is_on_grid_a)
     else
         m_is_on_grid = false;
 }
-/*
-void Engine::set_grid(int grid_number_a)
-{
-
-}
-*/
 
 //TODO
 float Engine::take_a_hit(float dammage)
@@ -132,8 +126,7 @@ float Engine::take_a_hit(float dammage)
 }
 
 
-int Engine::normal_shot(Grid *grid, int x, int y)
-{
+int Engine::normal_shot(Grid *grid, int x, int y){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
@@ -142,9 +135,7 @@ int Engine::normal_shot(Grid *grid, int x, int y)
         return -1;
     return grid->normal_shot(x, y);
 }
-
-int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
-{
+int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
@@ -172,8 +163,7 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
     }
 }
 
-int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, SHOT_TYPE type_of_shot)
-{
+int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, SHOT_TYPE type_of_shot){
     if(grid1==nullptr || grid2 == nullptr)
         return -100;
     if(!(m_is_on_grid))
@@ -194,8 +184,7 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
     }
 
 }
-int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
-{
+int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
@@ -230,8 +219,7 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value)
     return -1;
 }
 
-int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance)
-{
+int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
@@ -315,7 +303,6 @@ ENGINE_TYPE Engine::get_engine_type() {
 MOTOR_STATE Engine::get_motor_state() const {
     return m_motor_state;
 }
-
 WEAPON_STATE Engine::get_weapon_state() const {
     return m_weapon_state;
 }
