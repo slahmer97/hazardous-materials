@@ -43,7 +43,7 @@ public:
      * return if 2 squares are equals
      * Output : true they are equals, else false
      */
-    bool squares_equals(Square S, Square T);
+    bool squares_equals(Square T);
 
     /**
      * @brief get_health_pr() is main function used to get the pourcetage of health of
