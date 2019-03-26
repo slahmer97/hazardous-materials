@@ -1,6 +1,6 @@
 #include "../include/interface.h"
 
-Interface::Interface(): window(sf::VideoMode(200,200), "Battle Sheep") {
+Interface::Interface(): window(sf::VideoMode(800,400), "Battle Sheep") {
 	//Initialisation
 	//In the end here, there will be something like :
 	//this->change_current_menu(new MainMenu());
