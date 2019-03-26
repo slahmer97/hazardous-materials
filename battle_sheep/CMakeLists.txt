@@ -23,6 +23,7 @@ set (
 	CLIENT_ONLY_SOURCES
 	src/interface.cpp
 	src/button.cpp
+	src/game_menu.cpp
 	)
 
 set (
