@@ -11,29 +11,27 @@ void Player::sendMessage(std::string msg) {
      *out_message <<msg;
      m_connection->send(out_message);
 }
-
 Player::Player(std::shared_ptr<WssServer::Connection> conx) {
      m_connection = std::move(conx);
 }
-
 unsigned char Player::get_id() const {
      return m_id;
 }
-
 void Player::set_id(unsigned char m_id) {
      Player::m_id = m_id;
 }
-
 const std::string &Player::get_username() const {
      return m_username;
 }
-
 void Player::set_username(const std::string &m_username) {
      Player::m_username = m_username;
 }
 
-
-void
-Player::setM_connection(const std::shared_ptr<SimpleWeb::SocketServerBase<SimpleWeb::WSS>::Connection> &m_connection) {
-     Player::m_connection = m_connection;
+bool Player::equals(Player * player) {
+     return m_connection.get() == player->get_connection().get() ;
 }
+
+std::shared_ptr<WssServer::Connection> Player::get_connection() {
+     return m_connection;
+}
+

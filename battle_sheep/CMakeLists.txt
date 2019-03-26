@@ -57,6 +57,7 @@ set(
         src/Player.cpp
         src/Game.cpp
         src/GameScheduler.cpp
+        src/Team.cpp
 
 )
 
