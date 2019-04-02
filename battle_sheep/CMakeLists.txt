@@ -26,6 +26,7 @@ set (
 	src/game_menu.cpp
 	src/b_switch.cpp
 	src/textfield.cpp
+	src/display_grid.cpp
 	)
 
 set (
