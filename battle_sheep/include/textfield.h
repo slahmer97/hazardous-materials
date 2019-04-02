@@ -1,21 +1,23 @@
 #ifndef TEXT_FIELD_H
 #define TEXT_FIELD_H
 
+#include <iostream>
+
 #include "../include/component.h"
 #include "../include/click_callback.h"
 
 class TextField : Component {
 	public:
-		TextField(sf::String defaultText = "", sf::String prompt = "");
+		TextField(sf::String defaultText = "", sf::String prompt = "", int x = 0, int y = 0, int width = 0, int height = 0);
 
 		/**
 		 * Method to which all event are passed
 		 */
-		virtual void handleEvent(sf::Window* window,sf::Event* event) = 0;
+		virtual void handleEvent(sf::Window* window,sf::Event* event);
 		/**
 		 * Method drawing the Component
 		 */
-		virtual void draw(sf::RenderTarget* drawingBoard) = 0;
+		virtual void draw(sf::RenderTarget* drawingBoard);
 		
 		/**
 		 * The text contained in the Textfield, minus the prompt
