@@ -4,6 +4,7 @@
 #include "../include/component.h"
 #include "../include/click_callback.h"
 
+#include <vector>
 #include <iostream>
 
 class DisplayGrid : Component {
@@ -60,12 +61,23 @@ class DisplayGrid : Component {
 		/**
 		 * All the sprites used to display the grid itself
 		 */
-		sf::Sprite** spritesBackground;
+		std::vector<std::vector<sf::Sprite>> spritesBackground;
 	
 		/**
 		 * The texture atlas containing the backgroundtextures
 		 */
 		sf::Texture backgroundAtlas;
+
+		/**
+		 * The texture atlas containing the boat textures
+		 */
+		sf::Texture shipAtlas;
+
+		/**
+		 * Placeholder containing the ships for debugging
+		 */
+		std::vector<std::vector<sf::Sprite>> spritesShip;
+
 };
 
 

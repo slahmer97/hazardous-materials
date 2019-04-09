@@ -1,30 +1,47 @@
 #include "../include/display_grid.h"
 
-DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x, int y): gridWidth(gridWidth), gridHeight(gridHeight), x(x), y(y) {
-	
-	//We load the texture :
-	if(!backgroundAtlas.loadFromFile("assets/textures/basic_atlas.png")){
-		std::cerr<<"Coulnd't load assets/textures/basic_atlas.png, aborting"<<std::endl;
-		std::abort();
-	}
+DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x, int y): 
+	x(x),
+	y(y),
+	gridWidth(gridWidth),
+	gridHeight(gridHeight),
+	spritesBackground(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//creating the 2d vector of sprites representing the background
+	spritesShip(gridWidth, std::vector<sf::Sprite>(gridHeight) ) {//Creating the 2d vector of sprites representing the ships (or lack)
 
-	//We create the array containing all the background sprites
-	this->spritesBackground = new sf::Sprite*[gridWidth];
-
-	//Then we populate it
-	for(int i = 0; i < gridWidth; i++){
-		this->spritesBackground[i] = new sf::Sprite[gridHeight];
-		for(int j = 0; j < gridHeight; i++){
-			spritesBackground[i][j].setTexture(backgroundAtlas);
-			spritesBackground[i][j].setPosition(x+i*32, y+j*32);
+		//We load the texture :
+		if(!backgroundAtlas.loadFromFile("assets/textures/basic_atlas.png")){
+			std::cerr<<"Coulnd't load assets/textures/basic_atlas.png, aborting"<<std::endl;
+			std::abort();
 		}
+
+		if(!shipAtlas.loadFromFile("assets/textures/ship_atlas.png")) {
+
+			std::cerr<<"Coulnd't load assets/textures/ship_atlas.png, aborting"<<std::endl;
+			std::abort();
+
+		}
+
+		//We fill the 2d array displaying everything
+		for(int i = 0; i < gridWidth; i++){
+			for(int j = 0; j < gridHeight; j++){
+				//The background sprites
+				spritesBackground[i][j].setTexture(backgroundAtlas);
+				spritesBackground[i][j].setPosition(x+i*32, y+j*32);
+
+				//The ship sprites
+				spritesShip[i][j].setTexture(shipAtlas);
+				spritesShip[i][j].setPosition(x+i*32, y+j*32);
+				//We initialize with the empty square
+				spritesShip[i][j].setTextureRect(sf::IntRect(0,0,32,32));
+			}
+		}
+
+
+		//Then we call calculate_sprites to assign the right texture
+
+		calculate_sprites();
+
 	}
-
-	//Then we call calculate_sprites to assign the right texture
-	
-	calculate_sprites();
-
-}
 
 void DisplayGrid::calculate_sprites(){
 	//TODO: implement that when we know how are the client-side classes defined
@@ -32,7 +49,9 @@ void DisplayGrid::calculate_sprites(){
 	for(int i = 0; i < gridWidth; i++){
 		for(int j = 0; j < gridHeight; j++){
 			//We use the center texture
-			spritesBackground[i][j].setTextureRect(sf::IntRect(32,32,32,32));
+			int up = (i == 0 ? 0 : (i == gridWidth-1 ? 64 : 32 )),
+				left = (j == 0 ? 0 : (j == gridWidth-1 ? 64 : 32 ));
+			spritesBackground[i][j].setTextureRect(sf::IntRect(up,left,32,32));
 		}
 	}
 }
@@ -42,21 +61,63 @@ void DisplayGrid::setListener(ClickListener* listener){
 }
 
 DisplayGrid::~DisplayGrid(){
-	for(int i = 0; i < gridWidth; i++){
-		delete[] this->spritesBackground[i];
-	}
-	delete[] this->spritesBackground;
+
 }
 
 void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
-	
+	//For testing purpose only, we create boat of varying size on click
+	//TODO: implement attack
+	switch(event->type){
+		case sf::Event::MouseButtonPressed:
+			{
+				int mx = event->mouseButton.x,
+					my = event->mouseButton.y;
+				if(x <= mx && mx < x+(gridWidth*32) &&
+						y <= my && my < y+(gridHeight*32)){
+					//We are in this component
+					int gridX = (mx-x)/32,
+						gridY = (my-y)/32;
+					sf::IntRect texture = this->spritesShip[gridX][gridY].getTextureRect();
+					if(event->mouseButton.button == sf::Mouse::Left){
+						if(texture.top == 0 && texture.left == 0){
+							texture.top = 32;
+							texture.left = 32;
+						} else if(texture.top == 32 && texture.left == 32) {
+							texture.top = 0;
+							texture.left = 0;
+						}
+					} else if (event->mouseButton.button == sf::Mouse::Right) {
+						if(texture.top == 0 && texture.left == 32){
+							texture.top = 0;
+							texture.left = 0;
+						} else if(texture.top == 0 && texture.left == 0) {
+							texture.top = 0;
+							texture.left = 32;
+						}
+
+					}
+					this->spritesShip[gridX][gridY].setTextureRect(texture);
+				}
+				break;
+			}
+
+		default:
+
+			break;
+	}
 }
 
 
 void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
-	for(int i = 0; i < gridWidth; i++) {
+	for(int i = 0; i < gridWidth; i++) {
 		for(int j = 0; j < gridHeight; j++){
 			drawingBoard->draw(this->spritesBackground[i][j]);
+		}
+	}
+
+	for(int i = 0; i < gridWidth; i++){
+		for(int j = 0; j < gridHeight; j++){
+			drawingBoard->draw(this->spritesShip[i][j]);
 		}
 	}
 }
