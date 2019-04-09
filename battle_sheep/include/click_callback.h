@@ -1,7 +1,6 @@
 #ifndef CLICK_CALLBACK_H
 #define CLICK_CALLBACK_H
 
-class Button;
 
 #include "../include/component.h"
 
