@@ -58,25 +58,25 @@ public:
     * Make a damage to a position (Square) of the grid and burns it
     * Output : 1 hit, else 0 (miss or is not a position)
     */
-    int incendiary_shot(int x, int y, float damage = 1.f);
+    //int incendiary_shot(int x, int y, float damage = 1.f);
     
     /* Input : int x,y (position)
     * Burns the square at this position
     * Output : 1 success (something here to desactibvate), else 0
     */
-    int burn_square(int x, int y);
+    //int burn_square(int x, int y);
 
         /* Input : int x,y (position), float damage
     * Make a damage to a position (Square) of the grid and perforates it
     * Output : 1 hit, else 0 (miss or is not a position)
     */
-    int perforating_shot(int x, int y, float damage = 1.f);
+    //int perforating_shot(int x, int y, float damage = 1.f);
 
     /* Input : int x,y (position)
     * Perforates the square at this position
     * Output : 1 success (something here to desactibvate), else 0
     */
-    int perforate_square(int x, int y);
+    //int perforate_square(int x, int y);
     
     /* Input : int x,y (position)
     * Desactivate a weapon or a motor (of an engine) at this position

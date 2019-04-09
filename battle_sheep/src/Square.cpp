@@ -65,6 +65,7 @@ void Square::activate_motor(){
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON_BURNED_PERFORATED;
 
 }
+/*
 void Square::burn_square(){
     //MOTOR
     if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR)
@@ -116,7 +117,7 @@ void Square::perforate_square()
     else if (m_square_type == SQUARE_TYPE::ENGINE_PART_BURNED)
         m_square_type = SQUARE_TYPE::ENGINE_PART_BURNED_PERFORATED;
 }
-
+*/
 SQUARE_TYPE Square::get_square_type(){
     return m_square_type;
 }

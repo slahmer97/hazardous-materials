@@ -142,7 +142,7 @@ int Grid::normal_shot(int x, int y, float damage)
     return grid[x][y]->decrease_health(damage);
 }
 
-
+/*
 int Grid::incendiary_shot(int x, int y, float damage)
 {
     if(!(check_one_position(x,y)))
@@ -162,7 +162,7 @@ int Grid::perforating_shot(int x, int y, float damage)
     grid[x][y]->perforate_square();
     return grid[x][y]->decrease_health(damage);
 }
-
+*/
 
 int Grid::desactivate_square(int x, int y)
 {
@@ -178,7 +178,7 @@ int Grid::desactivate_square(int x, int y)
     }
     return 0;
 }
-
+/*
 int Grid::burn_square(int x, int y)
 {
     if(!(check_one_position(x,y)))
@@ -206,7 +206,7 @@ int Grid::perforate_square(int x, int y)
     }
     return 0;
 }
-
+*/
 int Grid::line_shot(int x, int y, int length, bool IEM, bool horizontal, float damage)
 {
     int number_case_touch = 0;
