@@ -5,6 +5,10 @@ project (Battle_Sheep )
 # Directory containing the cmake sfml importer
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
+#Compiling options
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+
 # Looking for the sfml package
 find_package(SFML 2 COMPONENTS network graphics window system )
 
