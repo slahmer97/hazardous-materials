@@ -16,6 +16,8 @@ Engine *Square::get_engine(){
 }
 
 bool squares_equals(Square *T){
+    if(T==nullptr)
+        return false;
     return (m_engine == T->m_engine && m_health_pr== T->m_health_pr && m_square_type == T->m_square_type);
 }
 

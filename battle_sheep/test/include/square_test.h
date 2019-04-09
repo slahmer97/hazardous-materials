@@ -26,6 +26,7 @@ public:
     SquareTest(){
         m_square = new Square();
         m_engine = new Engine(3,ENGINE_TYPE::PORTE_AVION);
+        m_square2 = new Square();
     }
     ~SquareTest(){
         delete(m_square);
