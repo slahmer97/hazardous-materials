@@ -31,6 +31,7 @@ void DisplayGrid::calculate_sprites(){
 	//Meanwhile, we implement a default texture
 	for(int i = 0; i < gridWidth; i++){
 		for(int j = 0; j < gridHeight; j++){
+			//We use the center texture
 			spritesBackground[i][j].setTextureRect(sf::IntRect(32,32,32,32));
 		}
 	}
@@ -53,7 +54,11 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 
 
 void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
-	
+	for(int i = 0; i < gridWidth; i++) {
+		for(int j = 0; j < gridHeight; j++){
+			drawingBoard->draw(this->spritesBackground[i][j]);
+		}
+	}
 }
 
 

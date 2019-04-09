@@ -25,11 +25,11 @@ class DisplayGrid : Component {
 		 */
 		void set_on_click(ClickListener* listener);
 		
-		/**
-		 * Var containing if the button is enabled or not
-		 */
-		bool enabled = true;
 		
+		/**
+		 * If we need to display the air or the water
+		 */
+		bool displayAir = false;
 
 		/**
 		 * Set the listener for the return button
