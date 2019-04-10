@@ -11,6 +11,7 @@
 class SquareTest : public ::testing::Test {
 protected:
     Square*m_square;
+    Square*m_square2;
     Engine * m_engine;
 
     void SetUp() override {
@@ -31,6 +32,7 @@ public:
     ~SquareTest(){
         delete(m_square);
         delete(m_engine);
+        delete(m_square2);
     }
 };
 
