@@ -377,7 +377,11 @@ int Grid::proximity_check(int x, int y, Engine *engine)
 }*/
 
 Square* Grid::radar_one_square(int x, int y)
-{
+{   
+    if(!(check_one_position(x,y)))
+    {
+        return nullptr;
+    }
     return grid[x][y];
 }
 
