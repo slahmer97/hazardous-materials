@@ -14,55 +14,58 @@ Square::Square(){
 Engine *Square::get_engine(){
     return m_engine;
 }
-/*
-bool squares_equals(Square T){
-    return (S->m_engine = T->m_engine && S->m_health_pr= T->m_health_pr && S->m_square_type =T.m_square_type);
+
+bool Square::squares_equals(Square *T){
+    if(T==nullptr)
+        return false;
+    return (m_engine == T->m_engine && m_health_pr== T->m_health_pr && m_square_type == T->m_square_type);
 }
-*/
+
 float Square::get_health_pr(){
     return m_health_pr;
 }
 void Square::desactivate_motor(){
     if(m_square_type == SQUARE_TYPE::ENGINE_MOTOR)
         m_square_type = SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED;
-    else if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR_BURNED)
+    /*else if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR_BURNED)
         m_square_type = SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR_PERFORATED)
         m_square_type = SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_PERFORATED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR_BURNED_PERFORATED)
-        m_square_type = SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED_PERFORATED;
+        m_square_type = SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED_PERFORATED;*/
 }
 void Square::desactivate_weapon(){
     if(m_square_type == SQUARE_TYPE::ENGINE_WEAPON)
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED;
-    else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_BURNED)
+    /*else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_BURNED)
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_PERFORATED)
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_PERFORATED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_BURNED_PERFORATED)
-        m_square_type = SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED_PERFORATED;
+        m_square_type = SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED_PERFORATED;*/
 }
 void Square::activate_weapon(){
     if(m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED)
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON;
-    else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED)
+    /*else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED)
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON_BURNED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_PERFORATED)
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON_PERFORATED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED_PERFORATED)
-        m_square_type = SQUARE_TYPE::ENGINE_WEAPON_BURNED_PERFORATED;
+        m_square_type = SQUARE_TYPE::ENGINE_WEAPON_BURNED_PERFORATED;*/
 }
 void Square::activate_motor(){
     if(m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED)
         m_square_type = SQUARE_TYPE::ENGINE_MOTOR;
-    else if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED)
+    /*else if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED)
         m_square_type = SQUARE_TYPE::ENGINE_MOTOR_BURNED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_PERFORATED)
         m_square_type = SQUARE_TYPE::ENGINE_WEAPON_PERFORATED;
     else if (m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED_PERFORATED)
-        m_square_type = SQUARE_TYPE::ENGINE_WEAPON_BURNED_PERFORATED;
+        m_square_type = SQUARE_TYPE::ENGINE_WEAPON_BURNED_PERFORATED;*/
 
 }
+/*
 void Square::burn_square(){
     //MOTOR
     if (m_square_type == SQUARE_TYPE::ENGINE_MOTOR)
@@ -114,7 +117,7 @@ void Square::perforate_square()
     else if (m_square_type == SQUARE_TYPE::ENGINE_PART_BURNED)
         m_square_type = SQUARE_TYPE::ENGINE_PART_BURNED_PERFORATED;
 }
-
+*/
 SQUARE_TYPE Square::get_square_type(){
     return m_square_type;
 }
@@ -134,27 +137,30 @@ void Square::set_square_type(SQUARE_TYPE square_type){
 //TODO check if this function can modify the engine health also
 int Square::decrease_health(float dammage) {
     if(m_engine == nullptr || m_square_type == SQUARE_TYPE::NONE || m_square_type == SQUARE_TYPE::ENGINE_PART_DEAD ||
-       m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DEAD || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DEAD )
+       m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DEAD || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DEAD)
         return 0;
 
+    if(dammage<=0.0f )
+        return 1;
+    
     m_engine->take_a_hit(dammage);
     if(m_health_pr > dammage){
         m_health_pr -=dammage;
     }
     else{
         m_health_pr = 0;
-        if(m_square_type == SQUARE_TYPE::ENGINE_MOTOR || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED ||
+        if(m_square_type == SQUARE_TYPE::ENGINE_MOTOR || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED /*||
         m_square_type == SQUARE_TYPE::ENGINE_MOTOR_BURNED || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_PERFORATED
         || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_BURNED_PERFORATED || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED
-        || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_PERFORATED || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED_PERFORATED){
+        || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_PERFORATED || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED_BURNED_PERFORATED*/){
             m_engine->kill_motor();
             m_square_type = SQUARE_TYPE ::ENGINE_MOTOR_DEAD;
         }
         else if(m_square_type == SQUARE_TYPE::ENGINE_WEAPON || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED
-        || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_BURNED || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_PERFORATED
+        /*|| m_square_type == SQUARE_TYPE::ENGINE_WEAPON_BURNED || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_PERFORATED
         || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_BURNED_PERFORATED || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED
         || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_PERFORATED
-        || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED_PERFORATED){
+        || m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED_BURNED_PERFORATED*/){
             m_engine->kill_weapon();
             m_square_type = SQUARE_TYPE::ENGINE_WEAPON_DEAD;
         }else{
@@ -164,10 +170,11 @@ int Square::decrease_health(float dammage) {
     return 1;
 }
 
-//TODO
 int Square::increase_health(float care){
     if(m_engine == nullptr || m_square_type == SQUARE_TYPE::NONE)
         return 0;
+    if(care<=0.0f)
+        return 1;
     m_engine->take_care((m_health_pr+care > 1.0f ? 1.0f : care));
     m_health_pr =(m_health_pr+care > 1.0f ? 1.0f : m_health_pr+care);
     if(m_health_pr > 0.0f){

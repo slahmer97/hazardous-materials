@@ -234,7 +234,8 @@ int Skill_reconnaissance::use(Grid *grid, Grid *grid2, int x, int y, bool horizo
     std::cerr << "Skill porte avion can't attack two grids in same time";
     std::exit(1);
 }
-
+/*
 Skill_incendiary::Skill_incendiary() : Skill(ENGINE_TYPE::INCENDIARY)
 {
 }
+*/

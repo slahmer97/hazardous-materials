@@ -43,7 +43,7 @@ public:
      * return if 2 squares are equals
      * Output : true they are equals, else false
      */
-    bool squares_equals(Square S, Square T);
+    bool squares_equals(Square *T);
 
     /**
      * @brief get_health_pr() is main function used to get the pourcetage of health of
@@ -88,13 +88,13 @@ public:
      * @brief burn_square() is main function used to burn the current square
      * if the current square is already on fire it does nothing
     */
-    void burn_square();
+    //void burn_square();
 
     /**
      * @brief burn_square() is main function used to perforate the current square
      * if the current square is already perforated it does nothing
     */
-   void perforate_square();
+   //void perforate_square();
     
 
     /**
