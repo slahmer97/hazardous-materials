@@ -7,29 +7,37 @@
 
 #include <iostream>
 #include <server_wss.hpp>
-using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
+#include "Game.h"
 
+using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
+class Game;
 class Player {
 public:
-    Player(std::shared_ptr<WssServer::Connection> m_connection);
+    Player(const std::shared_ptr<WssServer::Connection>& m_connection);
 
     unsigned char get_id() const;
-
-    void set_id(unsigned char m_id);
-
+    void set_id(unsigned char id);
     const std::string &get_username() const;
+    void set_username(const std::string &username);
+    void sendMessage(const std::string& msg);
+    void desactivate_chat();
+    void activate_chat();
+    bool get_chat_status();
+    WssServer::Connection* get_connection();
 
-    void set_username(const std::string &m_username);
-
-    void sendMessage(std::string msg);
-
-    std::shared_ptr<WssServer::Connection> get_connection();
+    void send_message(const std::string&);
     bool equals(Player*);
+    bool is_me(const std::string&);
+
+    Game * get_game();
+    void set_game(Game*);
 private:
-    unsigned char m_id;
+    unsigned char m_id = -1;
     std::string m_username;
+    bool m_mute_chat = true;
+    Game * m_game;
     //TODO player type ...planes,...
-    std::shared_ptr<WssServer::Connection> m_connection;
+    WssServer::Connection *m_connection;
 };
 
 

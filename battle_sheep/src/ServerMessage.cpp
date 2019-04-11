@@ -6,7 +6,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <vector>
-network::ServerMessage::SERVER_MESSAGE_TYPE network::ServerMessage::to_enum(std::string type) {
+using namespace network;
+ServerMessage::SERVER_MESSAGE_TYPE network::ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")
         return SERVER_MESSAGE_TYPE ::KILL_PLAYER;
     else if(type == "grid_assignement")
@@ -21,7 +22,7 @@ network::ServerMessage::SERVER_MESSAGE_TYPE network::ServerMessage::to_enum(std:
     return SCORE_BROADCAST;
 }
 
-std::string network::ServerMessage::to_string(network::ServerMessage::SERVER_MESSAGE_TYPE type){
+std::string ServerMessage::to_string(network::ServerMessage::SERVER_MESSAGE_TYPE type){
     if(type == KILL_PLAYER)
         return std::string("kill_player");
     else if(type == GRIDS_ASSIGNEMENT)
@@ -35,7 +36,7 @@ std::string network::ServerMessage::to_string(network::ServerMessage::SERVER_MES
 
     return std::string("none");//check later
 }
-std::string network::ServerMessage::getKillPlayerMessage(unsigned char id_player_grid) {
+std::string ServerMessage::getKillPlayerMessage(unsigned char id_player_grid) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(KILL_PLAYER));
     pt.put("id",id_player_grid);
@@ -46,7 +47,7 @@ std::string network::ServerMessage::getKillPlayerMessage(unsigned char id_player
 
     return buff.str();
 }
-std::string network::ServerMessage::getGridAssinementMessage(std::string username, unsigned char id_grid) {
+std::string ServerMessage::getGridAssinementMessage(const std::string& username, unsigned char id_grid) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(GRIDS_ASSIGNEMENT));
     pt.put("id",id_grid);
@@ -57,7 +58,7 @@ std::string network::ServerMessage::getGridAssinementMessage(std::string usernam
 
     return buff.str();
 }
-std::string network::ServerMessage::getChatMessage(std::string message, unsigned char id) {
+std::string ServerMessage::getChatMessage(const std::string& message, unsigned char id) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(CHAT_S));
     pt.put("id",id);
@@ -68,7 +69,7 @@ std::string network::ServerMessage::getChatMessage(std::string message, unsigned
 
     return buff.str();
 }
-std::string network::ServerMessage::getCurrentTurnMessage(unsigned char id) {
+std::string ServerMessage::getCurrentTurnMessage(unsigned char id) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(CURRENT_TURN));
     pt.put("id",id);
@@ -78,7 +79,7 @@ std::string network::ServerMessage::getCurrentTurnMessage(unsigned char id) {
 
     return buff.str();
 }
-std::string network::ServerMessage::getScoreBroadCastMessage(Score score) {
+std::string ServerMessage::getScoreBroadCastMessage(Score score) {
     boost::property_tree::ptree pt,s1,s2,s3,s4,p;
     pt.put("msg_type",to_string(SCORE_BROADCAST));
 
@@ -97,7 +98,7 @@ std::string network::ServerMessage::getScoreBroadCastMessage(Score score) {
 
     return buff.str();}
 
-network::ServerMessage* network::ServerMessage::getServerMessage(std::string json_ServerMessage){
+ServerMessage* ServerMessage::getServerMessage(const std::string& json_ServerMessage){
     network::ServerMessage*serverMessage;
     serverMessage = new ServerMessage(Score(-1, -1, -1, -1));
     boost::property_tree::ptree ptree;
@@ -138,38 +139,38 @@ network::ServerMessage* network::ServerMessage::getServerMessage(std::string jso
 network::ServerMessage::SERVER_MESSAGE_TYPE network::ServerMessage::get_msg_type() const {
     return m_msg_type;
 }
-void network::ServerMessage::set_msg_type(network::ServerMessage::SERVER_MESSAGE_TYPE m_msg_type) {
-    ServerMessage::m_msg_type = m_msg_type;
+void network::ServerMessage::set_msg_type(network::ServerMessage::SERVER_MESSAGE_TYPE messageType) {
+    ServerMessage::m_msg_type = messageType;
 }
 unsigned char network::ServerMessage::get_id() const {
     return m_id;
 }
-void network::ServerMessage::set_id(unsigned char m_id) {
-    ServerMessage::m_id = m_id;
+void network::ServerMessage::set_id(unsigned char id) {
+    ServerMessage::m_id = id;
 }
 const std::string &network::ServerMessage::get_grid() const {
     return m_grid;
 }
-void network::ServerMessage::set_grid(const std::string &m_grid) {
-    ServerMessage::m_grid = m_grid;
+void network::ServerMessage::set_grid(const std::string &grid) {
+    ServerMessage::m_grid = grid;
 }
 const std::string &network::ServerMessage::get_chat_msg() const {
     return m_chat_msg;
 }
-void network::ServerMessage::set_chat_msg(const std::string &m_chat_msg) {
-    ServerMessage::m_chat_msg = m_chat_msg;
+void network::ServerMessage::set_chat_msg(const std::string &chatMsg) {
+    ServerMessage::m_chat_msg = chatMsg;
 }
 const std::string &network::ServerMessage::get_username() const {
     return m_username;
 }
-void network::ServerMessage::set_username(const std::string &m_username) {
-    ServerMessage::m_username = m_username;
+void network::ServerMessage::set_username(const std::string &username) {
+    ServerMessage::m_username = username;
 }
 const Score &network::ServerMessage::get_score() const {
     return m_score;
 }
-void network::ServerMessage::set_score(const Score &m_score) {
-    ServerMessage::m_score = m_score;
+void network::ServerMessage::set_score(const Score &score) {
+    ServerMessage::m_score = score;
 }
-
 network::ServerMessage::ServerMessage(Score m_score) : m_score(m_score) {}
+

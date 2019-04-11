@@ -80,6 +80,8 @@ set(
         test/src/client_message_test.cpp
         test/src/server_message_test.cpp
         test/src/score_test.cpp
+        src/GameScheduler.cpp
+
 )
 
 enable_testing()

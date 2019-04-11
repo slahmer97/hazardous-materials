@@ -7,13 +7,17 @@
 
 
 #include "Player.h"
-
+class Player;
 class Team {
 public:
     Team();
     //TODO
+
+    Player* has(const std::string&);
+    Player* get_first_player();
+    Player* get_second_player();
 private:
-    std::shared_ptr<Player> m_player1,m_player2;
+    Player *m_player1,*m_player2;
 };
 
 

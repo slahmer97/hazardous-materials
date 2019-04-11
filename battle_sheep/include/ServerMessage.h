@@ -23,12 +23,15 @@ public:
     enum ERRORS{BLABLA};
 
     static std::string getKillPlayerMessage(unsigned char id_player_grid);
-    static std::string getGridAssinementMessage(std::string username, unsigned char id_grid);
-    static std::string getErrorMessage(ERRORS error,std::string clientMessage);//client message to be modified into CLIENT_MESSAGE_TYPE
-    static std::string getChatMessage(std::string message,unsigned char id);
+    static std::string getGridAssinementMessage(const std::string& username, unsigned char id_grid);
+    static std::string getErrorMessage(ERRORS error,ClientMessage::CLIENT_MESSAGE_TYPE clientMessage);//client message to be modified into CLIENT_MESSAGE_TYPE
+    static std::string getChatMessage(const std::string& message,unsigned char id);
     static std::string getCurrentTurnMessage(unsigned char id);
     static std::string getScoreBroadCastMessage(Score);
-    static ServerMessage* getServerMessage(std::string json_ServerMessage);
+    static ServerMessage* getServerMessage(const std::string& json_ServerMessage);
+    static SERVER_MESSAGE_TYPE to_enum(const std::string&);
+    static std::string to_string(SERVER_MESSAGE_TYPE);
+
 private:
     SERVER_MESSAGE_TYPE m_msg_type;
     unsigned char m_id;
@@ -42,22 +45,19 @@ public:
     ServerMessage(Score m_score);
 
     const Score &get_score() const;
-    void set_score(const Score &m_score);
+    void set_score(const Score &score);
 
     SERVER_MESSAGE_TYPE get_msg_type() const;
-    void set_msg_type(SERVER_MESSAGE_TYPE m_msg_type);
+    void set_msg_type(SERVER_MESSAGE_TYPE messageType);
     unsigned char get_id() const;
-    void set_id(unsigned char m_id);
+    void set_id(unsigned char id);
     const std::string &get_grid() const;
-    void set_grid(const std::string &m_grid);
+    void set_grid(const std::string &grid);
     const std::string &get_chat_msg() const;
-    void set_chat_msg(const std::string &m_chat_msg);
+    void set_chat_msg(const std::string &chatMsg);
     const std::string &get_username() const;
-    void set_username(const std::string &m_username);
+    void set_username(const std::string &username);
 
-private:
-    static SERVER_MESSAGE_TYPE to_enum(std::string);
-    static std::string to_string(SERVER_MESSAGE_TYPE);
 };
 
 }

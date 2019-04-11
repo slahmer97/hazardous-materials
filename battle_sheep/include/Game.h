@@ -7,17 +7,22 @@
 
 
 #include "Team.h"
+#include "Player.h"
+class Team;
+class Player;
 //TODO check play method...if we make method for each action and call the right one out side..or doing it inside play function...
 class Game {
 private:
     enum TURN{TEAM1_PLAYER1,TEAM1_PLAYER2,TEAM2_PLAYER1,TEAM2_PLAYER2};
 public:
-    Game(std::string);
+    Game(const std::string&);
     void start();
-    void play(Player* player,std::string msg);//TODO check if we
+    void play(Player* player,const std::string& msg);//TODO check if we
+    Player* has(const std::string&);
+    bool is_my_turn(Player*);
 private:
     std::string m_game_id;
-    std::shared_ptr<Team> m_t1,m_t2;
+    Team* m_t1,*m_t2;
     TURN m_current_turn;
 
 
