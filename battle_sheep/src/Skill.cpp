@@ -33,6 +33,47 @@ int Skill::get_points()
     return m_points;
 }
 
+std::string Skill::shot_type_to_string(SHOT_TYPE shot) {
+    if(shot == PORTE_AVION_SKILL)
+        return "porte_avion_skill";
+    else if(shot == CROISEUR_SKILL)
+        return "croiseur_skill";
+    else if(shot == CONTRE_TORPILLEUR_SKILL)
+        return "contre_torpilleur_skill";
+    else if(shot == BOMBARDIER_SKILL)
+        return "bombardier_skill";
+    else if(shot == INTERCEPTEUR_SKILL)
+        return "intercepteur_skill";
+    else if(shot == BROUILLEUR_SKILL)
+        return "brouilleur_skill";
+    else if(shot == RECONNAISSANCE_SKILL)
+        return "reconnaissance_skill";
+    else if(shot == NORMAL_SHOT)
+        return "normal_shot";
+
+
+    return "normal_shot";
+}
+SHOT_TYPE Skill::shot_type_to_type(const std::string &shot) {
+    if(shot == "porte_avion_skill")
+        return  PORTE_AVION_SKILL;
+    else if(shot == "croiseur_skill")
+        return CROISEUR_SKILL ;
+    else if(shot == "contre_torpilleur_skill")
+        return CONTRE_TORPILLEUR_SKILL;
+    else if(shot == "bombardier_skill")
+        return BOMBARDIER_SKILL;
+    else if(shot == "intercepteur_skill")
+        return INTERCEPTEUR_SKILL;
+    else if(shot == "brouilleur_skill")
+        return BROUILLEUR_SKILL;
+    else if(shot == "reconnaissance_skill")
+        return RECONNAISSANCE_SKILL;
+    else if(shot == "normal_shot")
+        return NORMAL_SHOT;
+    return NORMAL_SHOT;
+}
+
 Skill_porte_avion::Skill_porte_avion() : Skill(ENGINE_TYPE::PORTE_AVION) {}
 Skill_porte_avion::Skill_porte_avion(ENGINE_TYPE engine_type) : Skill(engine_type) {}
 int Skill_porte_avion::use(Grid *grid, int x, int y, bool horizontal)

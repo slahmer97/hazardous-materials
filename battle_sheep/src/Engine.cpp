@@ -306,3 +306,61 @@ MOTOR_STATE Engine::get_motor_state() const {
 WEAPON_STATE Engine::get_weapon_state() const {
     return m_weapon_state;
 }
+
+ENGINE_TYPE Engine::engine_type_to_type(const std::string &type) {
+    if(type == "porte_avion")
+        return PORTE_AVION;
+    else if(type == "croiseur")
+        return CROISEUR;
+    else if(type =="contre_torpilleur" )
+        return CONTRE_TORPILLEUR ;
+    else if(type == "cuirasse")
+        return CUIRASSE;
+    else if(type == "torpilleur")
+        return TORPILLEUR;
+    else if(type == "bombardier")
+        return BOMBARDIER;
+    else if(type =="intercepteur" )
+        return INTERCEPTEUR;
+    else if(type == "brouilleur")
+        return BROUILLEUR;
+    else if(type == "patrouile")
+        return PATROUILE;
+    else if(type == "reconnaissance")
+        return RECONNAISSANCE;
+    else if(type == "not_introduced")
+        return NOT_INTRODUCED ;
+    else if(type == "incendiary")
+        return INCENDIARY ;
+
+    return NOT_INTRODUCED ;
+}
+
+std::string Engine::engine_type_to_string(ENGINE_TYPE type) {
+    if(type == PORTE_AVION)
+        return "porte_avion";
+    else if(type == CROISEUR)
+        return "croiseur";
+    else if(type == CONTRE_TORPILLEUR)
+        return "contre_torpilleur";
+    else if(type == CUIRASSE)
+        return "cuirasse";
+    else if(type == TORPILLEUR)
+        return "torpilleur";
+    else if(type == BOMBARDIER)
+        return "bombardier";
+    else if(type ==INTERCEPTEUR )
+        return "intercepteur";
+    else if(type == BROUILLEUR)
+        return "brouilleur";
+    else if(type == PATROUILE)
+        return "patrouile";
+    else if(type == RECONNAISSANCE)
+        return "reconnaissance";
+    else if(type == NOT_INTRODUCED)
+        return "not_introduced";
+    else if(type == INCENDIARY)
+        return  "incendiary";
+
+    return std::__cxx11::string();
+}

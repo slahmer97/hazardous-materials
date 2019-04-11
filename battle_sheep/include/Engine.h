@@ -222,6 +222,12 @@ private:
     /*
     PART_STATE m_shell_state;
     */
+
+public:
+    static ENGINE_TYPE engine_type_to_type(const std::string& type);
+    static std::string  engine_type_to_string(ENGINE_TYPE type);
+
+
 };
 
 

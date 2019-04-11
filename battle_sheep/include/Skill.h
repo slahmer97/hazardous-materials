@@ -25,8 +25,11 @@ class Skill
     int get_points();
     virtual int use(Grid *grid, int x, int y, bool horizontal = true) = 0;
     virtual int use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal = true) = 0;
-
     ENGINE_TYPE get_engine_type();
+
+public:
+    static std::string shot_type_to_string(SHOT_TYPE shot);
+    static SHOT_TYPE shot_type_to_type(const std::string& shot);
 };
 
 class Skill_porte_avion : public Skill
