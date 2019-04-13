@@ -23,7 +23,8 @@ public:
 
     static std::string getKillPlayerMessage(unsigned char id_player_grid);
     static std::string getGridAssinementMessage(const std::string& username, unsigned char id_grid);
-    static std::string getErrorMessage(ERRORS error,ClientMessage::CLIENT_MESSAGE_TYPE clientMessage);//client message to be modified into CLIENT_MESSAGE_TYPE
+    static std::string getErrorMessage(ERRORS error,ClientMessage::CLIENT_MESSAGE_TYPE clientMessage);
+    static std::string getGridMessage(const std::string&);//TODO param is just the return string from Player.get_pub/priv_grid
     static std::string getChatMessage(const std::string& message,unsigned char id);
     static std::string getCurrentTurnMessage(unsigned char id);
     static std::string getScoreBroadCastMessage(Score);

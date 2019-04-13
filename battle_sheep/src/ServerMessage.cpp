@@ -131,7 +131,7 @@ ServerMessage* ServerMessage::getServerMessage(const std::string& json_ServerMes
         serverMessage->set_score(Score(sc[0],sc[1],sc[2],sc[3]));
     }
     //TODO continue.. GRID-MESSAGE,ERROR-MSG
-
+    //TODO if(msg_type == GRID_MESSAGE etc...)
     return serverMessage;
 }
 
