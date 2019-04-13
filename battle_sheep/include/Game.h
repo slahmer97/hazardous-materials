@@ -7,9 +7,13 @@
 
 
 #include "Team.h"
+#include <Score.h>
 #include "Player.h"
+#include <ClientMessage.h>
 class Team;
 class Player;
+class Score;
+class ClientMessage;
 //TODO check play method...if we make method for each action and call the right one out side..or doing it inside play function...
 class Game {
 private:
@@ -17,13 +21,17 @@ private:
 public:
     Game(const std::string&);
     void start();
-    void play(Player* player,const std::string& msg);//TODO check if we
+    void play(Player* player,ClientMessage*);//TODO check if we
     Player* has(const std::string&);
     bool is_my_turn(Player*);
+    unsigned char get_current_turn_id();
+    void broadcast_message(const std::string&);
+    std::string get_game_id();
 private:
     std::string m_game_id;
     Team* m_t1,*m_t2;
     TURN m_current_turn;
+    Score* m_score;
 
 
 

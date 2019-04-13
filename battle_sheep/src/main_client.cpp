@@ -31,9 +31,10 @@ int main(){
     thread client_thread([&client]() {
         client.start();
     });
-    sleep(5);
-    if(server != nullptr)
-        server->send(" First Message from Client");
+
+
+
+    while(true)
     client_thread.join();
 }
 

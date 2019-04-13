@@ -27,6 +27,13 @@ int main() {
     thread server_thread([&server]() {
         server.start();
     });
+
+    std::string m;
+    while(true){
+        std::cout<<"Enter Something to send : ";
+        std::getline(std::cin,m);
+        GameScheduler::test(m);
+    }
     server_thread.join();
     return 0;
 }

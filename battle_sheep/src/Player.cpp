@@ -14,6 +14,7 @@ void Player::sendMessage(const std::string& msg) {
 }
 Player::Player(const std::shared_ptr<WssServer::Connection>& conx) {
      m_connection = conx.get();
+     m_grid = new Grid();
 }
 unsigned char Player::get_id() const {
      return m_id;
@@ -54,4 +55,18 @@ Game * Player::get_game(){
 void Player::set_game(Game* _game){
     m_game = _game;
 }
+Grid * Player::get_grid(){
+    return m_grid;
+}
+
+std::string Player::get_pub_grid(){
+
+    return std::__cxx11::string();
+}
+
+std::string Player::get_priv_grid() {
+    return std::__cxx11::string();
+}
+
+
 

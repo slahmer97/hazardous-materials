@@ -8,9 +8,10 @@
 #include <iostream>
 #include <server_wss.hpp>
 #include "Game.h"
-
+#include <Grid.h>
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
 class Game;
+class Grid;
 class Player {
 public:
     Player(const std::shared_ptr<WssServer::Connection>& m_connection);
@@ -31,6 +32,12 @@ public:
 
     Game * get_game();
     void set_game(Game*);
+
+    Grid * get_grid();
+
+    std::string get_priv_grid();
+
+    std::string get_pub_grid();
 private:
     unsigned char m_id = -1;
     std::string m_username;
@@ -38,6 +45,7 @@ private:
     Game * m_game;
     //TODO player type ...planes,...
     WssServer::Connection *m_connection;
+    Grid* m_grid;
 };
 
 

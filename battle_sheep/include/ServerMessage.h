@@ -11,7 +11,6 @@
 #include <sstream>
 #include <iostream>
 
-namespace network{
 class ServerMessage {
 public:
     enum SERVER_MESSAGE_TYPE{
@@ -60,7 +59,7 @@ public:
 
 };
 
-}
+
 
 
 #endif //HAZARDOUS_MATERIALS_SERVERMESSAGE_H

@@ -155,17 +155,6 @@ public:
     */
     std::vector<std::vector<Square*>> radar_rectangular(int x, int y, int large, int length);
 
-    /* Input : nothing
-    *
-    * Output :
-    */
-    std::string get_my_grid();
-    
-    /* Input : nothing
-    *
-    * Output :
-    */
-    std::string get_enemy_grid();
 
     /* Input : int player
     * Print grid of the player

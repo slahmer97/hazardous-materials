@@ -16,6 +16,7 @@ public:
     Player* has(const std::string&);
     Player* get_first_player();
     Player* get_second_player();
+    void broadcast_message(const std::string&);
 private:
     Player *m_player1,*m_player2;
 };
