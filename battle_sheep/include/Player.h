@@ -6,7 +6,7 @@
 #define HAZARDOUS_MATERIALS_PLAYER_H
 
 #include <iostream>
-#include <server_wss.hpp>
+#include "../simple_web_socket/server_wss.hpp"
 #include "Game.h"
 #include <Grid.h>
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;

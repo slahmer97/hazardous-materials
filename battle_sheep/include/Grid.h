@@ -22,7 +22,7 @@ public:
     
     /*Constructor*/
     Grid();
-    ~Grid();
+    //~Grid();
     
     /* Input : int x,y (position in the grid)
     *  Return the engine at the position(x,y) in the grid

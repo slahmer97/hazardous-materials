@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <Game.h>
-#include <server_wss.hpp>
+#include "../simple_web_socket/server_wss.hpp"
 #include "Player.h"
 #include <map>
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
