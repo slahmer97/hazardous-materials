@@ -70,9 +70,9 @@ include_directories(include)
 add_executable(server src/main_server.cpp ${SHARED_SOURCES})
 add_executable(test_main src/main_test.cpp ${SHARED_SOURCES})
 add_executable(client src/main_client.cpp ${SHARED_SOURCES})
-target_link_libraries(server simple-websocket-server)
-target_link_libraries(client simple-websocket-server)
-target_link_libraries(test_main simple-websocket-server)
+target_link_libraries(server simple-websocket-server pthread)
+target_link_libraries(client simple-websocket-server pthread)
+target_link_libraries(test_main simple-websocket-server pthread)
 
 
 set(
@@ -87,9 +87,8 @@ set(
         src/GameScheduler.cpp
 
 )
-
-enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include simple_web_socket/include )
-add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} ${SHARED_SOURCES} )
-target_link_libraries(runUnitTests gtest gtest_main pthread)
-add_test( runUnitTests runUnitTests )
+#enable_testing()
+#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include simple_web_socket/include )
+#add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} ${SHARED_SOURCES} )
+#target_link_libraries(runUnitTests gtest gtest_main pthread)
+#add_test( runUnitTests runUnitTests )

@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <client_wss.hpp>
+#include <thread>
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 using namespace std;
