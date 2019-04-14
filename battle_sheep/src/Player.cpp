@@ -13,7 +13,10 @@ void Player::sendMessage(const std::string& msg) {
      m_connection->send(out_message);
 }
 Player::Player(const std::shared_ptr<WssServer::Connection>& conx) {
-     m_connection = conx.get();
+     if(conx != nullptr)
+        m_connection = conx.get();
+     else
+         m_connection = nullptr;
      m_grid = new Grid();
 }
 unsigned char Player::get_id() const {
@@ -65,7 +68,13 @@ std::string Player::get_pub_grid(){
 }
 
 std::string Player::get_priv_grid() {
-    return std::__cxx11::string();
+    std::string ret;
+    for (int line = 0; line < 10; ++line) {
+        for (int column = 0; column < 10 ; ++column) {
+            ret += m_grid->get(line,column)->to_pri_string()+std::string((line == 9 && column == 9)?"":"&");
+        }
+    }
+    return ret;
 }
 
 

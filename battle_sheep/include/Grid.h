@@ -162,6 +162,9 @@ public:
     */
     int proximity_check(int x, int y, Engine *engine);
     void display(int player);
+
+
+    Square* get(int,int);
 };
 
 #endif //TMP_PROJ_GRID_H

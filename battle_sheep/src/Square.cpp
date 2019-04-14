@@ -1,6 +1,7 @@
 //
 // Created by stevlulz on 3/7/19.
 //
+#include <boost/lexical_cast.hpp>
 #include "../include/Square.h"
 
 
@@ -191,4 +192,56 @@ int Square::increase_health(float care){
     }
 
     return 1;
+}
+
+std::string Square::to_pri_string(){
+    std::string engine = (m_engine == nullptr)? "nl": Engine::engine_type_to_string(m_engine->get_engine_type());
+    std::string ret = boost::lexical_cast<std::string>(m_health_pr)+"|"+square_type_to_string(m_square_type)+"|"+engine;
+    return ret;
+}
+
+std::string Square::to_pub_string() {
+    return std::__cxx11::string();
+}
+
+std::string Square::square_type_to_string(SQUARE_TYPE s) {
+    if(s == SQUARE_TYPE::ENGINE_MOTOR)
+        return "em";
+    if(s == SQUARE_TYPE::ENGINE_MOTOR_DEAD)
+        return "emd";
+    if(s == SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED)
+        return "emds";
+    if(s == SQUARE_TYPE::ENGINE_PART)
+        return "ep";
+    if(s == SQUARE_TYPE::ENGINE_PART_DEAD)
+        return "epd";
+    if(s == SQUARE_TYPE::ENGINE_WEAPON)
+        return "ew";
+    if(s == SQUARE_TYPE::ENGINE_WEAPON_DEAD)
+        return "ewd";
+    if(s == SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED)
+        return "ewds";
+
+    return "n";
+}
+SQUARE_TYPE Square::square_type_to_enum(const std::string &s){
+    if(s == "em")
+        return SQUARE_TYPE::ENGINE_MOTOR;
+    if(s == "emd")
+        return SQUARE_TYPE::ENGINE_MOTOR_DEAD;
+    if(s == "emds")
+        return  SQUARE_TYPE::ENGINE_MOTOR_DESACTIVATED;
+    if(s == "ep")
+        return SQUARE_TYPE::ENGINE_PART;
+    if(s == "epd")
+        return SQUARE_TYPE::ENGINE_PART_DEAD;
+    if(s == "ew")
+        return SQUARE_TYPE::ENGINE_WEAPON;
+    if(s == "ewd")
+        return SQUARE_TYPE::ENGINE_WEAPON_DEAD;
+    if(s == "ewds")
+        return SQUARE_TYPE::ENGINE_WEAPON_DESACTIVATED;
+
+
+    return NONE;
 }

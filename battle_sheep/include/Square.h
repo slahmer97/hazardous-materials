@@ -22,7 +22,8 @@ private:
 
 public:
 
-
+    std::string to_pri_string();
+    std::string to_pub_string();
     Square();
 
 
@@ -146,6 +147,9 @@ public:
      */
     void set_square_type(SQUARE_TYPE square_type);
 
+public:
+    static std::string square_type_to_string(SQUARE_TYPE);
+    static SQUARE_TYPE square_type_to_enum(const std::string&);
 };
 
 

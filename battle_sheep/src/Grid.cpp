@@ -475,3 +475,7 @@ void Grid::display(int player) {
 
 }
 
+Square *Grid::get(int x,int y) {
+    return grid[x][y];
+}
+
