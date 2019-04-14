@@ -27,6 +27,8 @@ public:
     unsigned char get_current_turn_id();
     void broadcast_message(const std::string&);
     std::string get_game_id();
+    int assign_grid(Player*,int);
+    Player* get_player(int);
 private:
     std::string m_game_id;
     Team* m_t1,*m_t2;

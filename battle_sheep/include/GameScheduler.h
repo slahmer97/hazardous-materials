@@ -30,6 +30,8 @@ private:
     static std::vector<Game*> m_online_games;
     static std::vector<Game*> m_offline_games;
     static std::vector<Player*> m_offline_players;
+
+    static void notify_all_except(int id,const std::string&,Game *pGame);
 };
 
 

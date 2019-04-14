@@ -17,6 +17,8 @@ public:
     Player* get_first_player();
     Player* get_second_player();
     void broadcast_message(const std::string&);
+    void set_first_player(Player*);
+    void set_second_player(Player*);
 private:
     Player *m_player1,*m_player2;
 };

@@ -77,5 +77,12 @@ std::string Player::get_priv_grid() {
     return ret;
 }
 
+void Player::set_logged_in(){
+    m_logged_in = true;
+}
+bool Player::is_logged_in(){
+    return m_logged_in;
+}
+
 
 

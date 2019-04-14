@@ -38,6 +38,9 @@ public:
     std::string get_priv_grid();
 
     std::string get_pub_grid();
+
+    void set_logged_in();
+    bool is_logged_in();
 private:
     unsigned char m_id = -1;
     std::string m_username;
@@ -46,6 +49,8 @@ private:
     //TODO player type ...planes,...
     WssServer::Connection *m_connection;
     Grid* m_grid;
+    bool m_logged_in = false;
+
 };
 
 

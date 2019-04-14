@@ -8,8 +8,8 @@
 using namespace std;
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
 int main() {
-    std::string crt = "/home/sidahmedlahmer/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/cert/server.crt";
-    std::string key = "/home/sidahmedlahmer/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/cert/server.key";
+    std::string crt = "/home/sidahmed/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/keys/server.crt";
+    std::string key = "/home/sidahmed/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/keys/server.key";
     WssServer server(crt, key);
     server.config.port = 8081;
     auto &echo = server.endpoint["^/echo/?$"];
@@ -30,12 +30,7 @@ int main() {
         server.start();
     });
 
-    std::string m;
-    while(true){
-        std::cout<<"Enter Something to send : ";
-        std::getline(std::cin,m);
-        GameScheduler::test(m);
-    }
+
     server_thread.join();
     return 0;
 }

@@ -11,18 +11,14 @@ WssClient::Connection* server = nullptr;
 int main(){
     WssClient client("localhost:8081/echo", false);
     client.on_message = [](shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message) {
-        cout << "Client: Message received: \"" << in_message->string() << "\"" << endl;
+        cout << "\n------>Received :\n" << in_message->string()<< endl;
     };
     client.on_open = [](shared_ptr<WssClient::Connection> connection) {
         if(server == nullptr)
             server = connection.get();
         cout << "Client: Opened connection" << endl;
 
-        string out_message("Hello");
-        cout << "Client: Sending message: \"" << out_message << "\"" << endl;
-
-        connection->send(out_message);
-    };
+};
     client.on_close = [](shared_ptr<WssClient::Connection> /*connection*/, int status, const string & /*reason*/) {
         cout << "Client: Closed connection with status code " << status << endl;
     };
@@ -35,7 +31,12 @@ int main(){
 
 
 
-    while(true)
+    while(true){
+        std::string in;
+        std::cout<<"Enter your msg : ";
+        getline(std::cin,in);
+        server->send(in);
+    }
     client_thread.join();
 }
 

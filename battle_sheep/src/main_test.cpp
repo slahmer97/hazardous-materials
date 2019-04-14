@@ -5,6 +5,8 @@
 
 
 int main(int argc,char**argv){
-    Player p(nullptr);
-    std::cout<<p.get_priv_grid();
+
+    std::string msg = ClientMessage::getChoseGridMessage(1);
+    std::cout<<msg;
+
 }

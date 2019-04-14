@@ -6,6 +6,20 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <vector>
+std::string ServerMessage::error_to_string(ERRORS e){
+    if(e == LOGIN_REQUIRE)
+        return "login_required";
+    else if(e == GAME_DOES_NOT_EXIST)
+        return "game_does_not_exist";
+
+}
+ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
+    if(s == "login_required")
+        return LOGIN_REQUIRE;
+    else if(s == "game_does_not_exist")
+        return GAME_DOES_NOT_EXIST;
+
+}
 ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")
         return SERVER_MESSAGE_TYPE ::KILL_PLAYER;
@@ -17,6 +31,12 @@ ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& typ
         return CURRENT_TURN;
     else if(type == "score_broadcast")
         return SCORE_BROADCAST;
+    else if(type == "login_success")
+        return LOGIN_SUCCESS;
+    else if(type == "created_success")
+        return CREATED_SUCCESS;
+    else if(type == "join_success")
+        return JOIN_SUCCESS;
     //TODO
     return SCORE_BROADCAST;
 }
@@ -32,6 +52,12 @@ std::string ServerMessage::to_string(ServerMessage::SERVER_MESSAGE_TYPE type){
         return std::string("current_turn");
     else if(type == SERVER_MESSAGE_TYPE::SCORE_BROADCAST)
         return std::string("score_broadcast");
+    else if(type == LOGIN_SUCCESS)
+        return std::string("login_success");
+    else if(type == CREATED_SUCCESS)
+        return std::string("created_success");
+    else if(type == JOIN_SUCCESS)
+        return std::string("join_success");
 
     return std::string("none");//check later
 }
@@ -95,7 +121,46 @@ std::string ServerMessage::getScoreBroadCastMessage(Score score) {
     std::ostringstream buff;
     boost::property_tree::write_json(buff,pt);
 
-    return buff.str();}
+    return buff.str();
+}
+std::string ServerMessage::getLoginSuccessMessage() {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(LOGIN_SUCCESS));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
+
+
+std::string ServerMessage::getErrorMessage(ServerMessage::ERRORS error, ClientMessage::CLIENT_MESSAGE_TYPE clientMessage) {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(ERROR));
+    pt.put("err",error_to_string(error));
+    pt.put("client_msg",ClientMessage::to_string(clientMessage));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
+std::string ServerMessage::getCreatedSucessMessage() {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(CREATED_SUCCESS));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
+std::string ServerMessage::getJoinSuccessMessage() {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(JOIN_SUCCESS));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
+
+
 
 ServerMessage* ServerMessage::getServerMessage(const std::string& json_ServerMessage){
     ServerMessage*serverMessage;
@@ -130,6 +195,13 @@ ServerMessage* ServerMessage::getServerMessage(const std::string& json_ServerMes
             sc[counter++] = s.second.get_value<int>();
         serverMessage->set_score(Score(sc[0],sc[1],sc[2],sc[3]));
     }
+    else if(msg_type == ERROR){
+        std::string err = ptree.get<std::string>("err");
+        std::string client_ms = ptree.get<std::string>("client_msg");
+        serverMessage->set_err_type(error_to_enum(err));
+        serverMessage->set_client_msg(ClientMessage::to_enum(client_ms));
+    }
+
     //TODO continue.. GRID-MESSAGE,ERROR-MSG
     //TODO if(msg_type == GRID_MESSAGE etc...)
     return serverMessage;
@@ -172,4 +244,12 @@ void ServerMessage::set_score(const Score &score) {
     ServerMessage::m_score = score;
 }
 ServerMessage::ServerMessage(Score m_score) : m_score(m_score) {}
+
+void ServerMessage::set_err_type(ERRORS msg) {
+    m_error_type = msg;
+}
+void ServerMessage::set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE s){
+    error_message = s;
+}
+
 

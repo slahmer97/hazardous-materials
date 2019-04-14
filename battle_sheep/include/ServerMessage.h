@@ -14,23 +14,28 @@
 class ServerMessage {
 public:
     enum SERVER_MESSAGE_TYPE{
-        KILL_PLAYER,GRIDS_ASSIGNEMENT,ERROR,CHAT_S,CURRENT_TURN,SCORE_BROADCAST
+        KILL_PLAYER,GRIDS_ASSIGNEMENT,ERROR,CHAT_S,CURRENT_TURN,SCORE_BROADCAST,LOGIN_SUCCESS,CREATED_SUCCESS,JOIN_SUCCESS
     };
     enum SKILL_TYPE{
         SKILLED,NORMAL
     };
-    enum ERRORS{BLABLA};
+    enum ERRORS{LOGIN_REQUIRE,GAME_DOES_NOT_EXIST,CONNECTION_LOST,ALREADY_CHOSEN};
 
     static std::string getKillPlayerMessage(unsigned char id_player_grid);
     static std::string getGridAssinementMessage(const std::string& username, unsigned char id_grid);
     static std::string getErrorMessage(ERRORS error,ClientMessage::CLIENT_MESSAGE_TYPE clientMessage);
     static std::string getGridMessage(const std::string&);//TODO param is just the return string from Player.get_pub/priv_grid
     static std::string getChatMessage(const std::string& message,unsigned char id);
+    static std::string getJoinSuccessMessage();
+    static std::string getCreatedSucessMessage();
     static std::string getCurrentTurnMessage(unsigned char id);
     static std::string getScoreBroadCastMessage(Score);
+    static std::string getLoginSuccessMessage();
     static ServerMessage* getServerMessage(const std::string& json_ServerMessage);
     static SERVER_MESSAGE_TYPE to_enum(const std::string&);
     static std::string to_string(SERVER_MESSAGE_TYPE);
+    static std::string error_to_string(ERRORS);
+    static ERRORS error_to_enum(const std::string&);
 
 private:
     SERVER_MESSAGE_TYPE m_msg_type;
@@ -57,6 +62,9 @@ public:
     void set_chat_msg(const std::string &chatMsg);
     const std::string &get_username() const;
     void set_username(const std::string &username);
+    void set_err_type(ERRORS);
+    void set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE);
+
 
 };
 

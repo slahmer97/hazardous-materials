@@ -86,7 +86,7 @@ std::string ClientMessage::to_string(ClientMessage::CLIENT_MESSAGE_TYPE _message
 std::string ClientMessage::getLoginMessage(const std::string& username, const std::string& password) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(LOGIN));
-    pt.put("login",username+".."+password);
+    pt.put("login",username+""+password);
 
     std::ostringstream buff;
     boost::property_tree::write_json(buff,pt);
