@@ -6,7 +6,8 @@ option(USE_STANDALONE_ASIO "set ON to use standalone Asio instead of Boost.Asio"
 option(BUILD_TESTING "set ON to build library tests" OFF)
 
 #add_compile_options(-std=c++11 -Wall -Wextra -Wsign-conversion)
-add_compile_options(-lboost_system)
+add_compile_options(-lboost_system -lboost_thread -lpthread -lcrypto -lssl -lboost_filesystem -llog4cpp)
+add_definitions(-DBOOST_ERROR_CODE_HEADER_ONLY -DBOOST_SYSTEM_NO_DEPRECATED)
 add_library(simple-websocket-server INTERFACE)
 
 
