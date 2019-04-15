@@ -7,6 +7,9 @@
 #include <GameScheduler.h>
 #include <ServerMessage.h>
 #include <iostream>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
 std::map<std::string,std::vector<Player*>> m_player_game_offline;
 std::vector<Game*> GameScheduler::m_online_games;
 std::vector<Game*> GameScheduler::m_offline_games;
@@ -19,6 +22,15 @@ void GameScheduler::onConnectionOpened(const std::shared_ptr<WssServer::Connecti
 }
 
 void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connection>& connection, const std::string& msg){
+
+    boost::property_tree::ptree ptree;
+    std::istringstream is (msg);
+    try {
+        boost::property_tree::json_parser::read_json(is,ptree);
+    }catch (boost::property_tree::json_parser_error e){
+        std::cout<<"[-] invalide message format"<<std::endl;
+        return;
+    }
     std::cout<<"\n--->Received : \n"<<msg<<std::endl;
     Game *game = nullptr;
     Player *p;

@@ -225,6 +225,9 @@ ClientMessage* ClientMessage::getClientMessage(const std::string& json){
             else if(msg_type == CHAT_C ){
                 clientMessage->set_chat_msg(ptree.get<std::string>("chat_msg"));
             }
+            else if(msg_type == CHOOSE_GRID){
+                clientMessage->set_id(ptree.get<int>("id"));
+            }
 
             return clientMessage;
         }
