@@ -29,7 +29,7 @@ const std::string &Player::get_username() const {
      return m_username;
 }
 void Player::set_username(const std::string &username) {
-     Player::m_username = username;
+     m_username = username;
 }
 bool Player::equals(Player * player) {
      return m_connection == player->get_connection();

@@ -11,8 +11,8 @@ int main() {
     std::string crt = "/home/sidahmed/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/keys/server.crt";
     std::string key = "/home/sidahmed/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/keys/server.key";
     WssServer server(crt, key);
-    server.config.port = 8081;
-    auto &echo = server.endpoint["^/echo/?$"];
+    server.config.port = 8080;
+    auto &echo = server.endpoint["^/game/?$"];
     echo.on_message = [](shared_ptr<WssServer::Connection> connection, shared_ptr<WssServer::InMessage> in_message) {
         auto out_message = in_message->string();
         GameScheduler::onMessageReceived(connection,out_message);

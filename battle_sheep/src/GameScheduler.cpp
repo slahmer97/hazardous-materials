@@ -73,7 +73,7 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
         p->set_logged_in();
         std::string login_success_msg = ServerMessage::getLoginSuccessMessage();
         p->send_message(login_success_msg);
-        std::cout<<"[+] player with username :"<<p->get_username()<<" has been successfully logged in"<<std::endl;
+        std::cout<<"[+] player with username :"<<user_name<<" has been successfully logged in"<<std::endl;
         return;
     }
 

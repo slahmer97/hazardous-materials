@@ -132,32 +132,32 @@ void Game::broadcast_message(const std::string & msg){
 }
 
 int Game::assign_grid(Player* player,int grid_num){
-    if(grid_num == 1 && m_t1->get_first_player() == nullptr)
+    if(grid_num == 1 && m_t1->get_first_player() != nullptr)
         return -1;
-    else if(grid_num == 1 && m_t1->get_first_player() != nullptr){
+    else if(grid_num == 1 && m_t1->get_first_player() == nullptr){
         m_t1->set_first_player(player);
         return 1;
     }
 
 
-    if(grid_num == 2 && m_t1->get_second_player() == nullptr)
+    if(grid_num == 2 && m_t1->get_second_player() != nullptr)
         return -2;
-    else if(grid_num == 2 && m_t1->get_second_player() != nullptr){
+    else if(grid_num == 2 && m_t1->get_second_player() == nullptr){
         m_t1->set_second_player(player);
         return 2;
     }
 
-    if(grid_num == 3 && m_t2->get_first_player() == nullptr)
+    if(grid_num == 3 && m_t2->get_first_player() != nullptr)
         return -3;
-    else if(grid_num == 3 && m_t2->get_first_player() != nullptr){
+    else if(grid_num == 3 && m_t2->get_first_player() == nullptr){
         m_t2->set_first_player(player);
         return 3;
     }
 
 
-    if(grid_num == 4 && m_t2->get_second_player() == nullptr)
+    if(grid_num == 4 && m_t2->get_second_player() != nullptr)
         return -4;
-    else if(grid_num == 4 && m_t2->get_second_player() != nullptr){
+    else if(grid_num == 4 && m_t2->get_second_player() == nullptr){
         m_t2->set_second_player(player);
         return 4;
     }
