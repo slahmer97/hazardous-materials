@@ -3,6 +3,7 @@
 
 #include "../include/component.h"
 #include "../include/click_callback.h"
+#include "../include/texture_manager.h"
 
 #include <vector>
 #include <iostream>

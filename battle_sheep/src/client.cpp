@@ -1,9 +1,10 @@
 #include "../include/interface.h"
+#include "../include/texture_manager.h"
 #include <iostream>
 
 int main(int argv, char**argc){
-	//Temporary main
-	std::cout<<"This will be the Client"<<std::endl;
+	
+	TextureManager::Init();
 
 	Interface inter;
 

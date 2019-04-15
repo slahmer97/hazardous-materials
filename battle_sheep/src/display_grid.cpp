@@ -8,31 +8,19 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 	spritesBackground(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//creating the 2d vector of sprites representing the background
 	spritesShip(gridWidth, std::vector<sf::Sprite>(gridHeight) ) {//Creating the 2d vector of sprites representing the ships (or lack)
 
-		//We load the texture :
-		if(!backgroundAtlas.loadFromFile("assets/textures/basic_atlas.png")){
-			std::cerr<<"Coulnd't load assets/textures/basic_atlas.png, aborting"<<std::endl;
-			std::abort();
-		}
-
-		if(!shipAtlas.loadFromFile("assets/textures/ship_atlas.png")) {
-
-			std::cerr<<"Coulnd't load assets/textures/ship_atlas.png, aborting"<<std::endl;
-			std::abort();
-
-		}
 
 		//We fill the 2d array displaying everything
 		for(int i = 0; i < gridWidth; i++){
 			for(int j = 0; j < gridHeight; j++){
 				//The background sprites
-				spritesBackground[i][j].setTexture(backgroundAtlas);
+				spritesBackground[i][j].setTexture(TextureManager::Background::Atlas);
 				spritesBackground[i][j].setPosition(x+i*32, y+j*32);
 
 				//The ship sprites
-				spritesShip[i][j].setTexture(shipAtlas);
+				spritesShip[i][j].setTexture(TextureManager::Ship::Atlas);
 				spritesShip[i][j].setPosition(x+i*32, y+j*32);
 				//We initialize with the empty square
-				spritesShip[i][j].setTextureRect(sf::IntRect(0,0,32,32));
+				spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
 			}
 		}
 
@@ -49,9 +37,7 @@ void DisplayGrid::calculate_sprites(){
 	for(int i = 0; i < gridWidth; i++){
 		for(int j = 0; j < gridHeight; j++){
 			//We use the center texture
-			int up = (i == 0 ? 0 : (i == gridWidth-1 ? 64 : 32 )),
-				left = (j == 0 ? 0 : (j == gridWidth-1 ? 64 : 32 ));
-			spritesBackground[i][j].setTextureRect(sf::IntRect(up,left,32,32));
+			spritesBackground[i][j].setTextureRect(TextureManager::Background::Water);
 		}
 	}
 }
@@ -87,10 +73,9 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 							texture.left = 0;
 						}
 					} else if (event->mouseButton.button == sf::Mouse::Right) {
-						if(texture.top == 0 && texture.left == 32){
-							texture.top = 0;
-							texture.left = 0;
-						} else if(texture.top == 0 && texture.left == 0) {
+						if(texture != TextureManager::Ship::Empty){
+							texture = TextureManager::Ship::Empty;
+						} else {
 							texture.top = 0;
 							texture.left = 32;
 						}

@@ -31,6 +31,7 @@ set (
 	src/b_switch.cpp
 	src/textfield.cpp
 	src/display_grid.cpp
+	src/texture_manager.cpp
 	)
 
 set (
