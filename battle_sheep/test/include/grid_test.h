@@ -34,10 +34,15 @@ class GridTest : public ::testing::Test
       grid_3 = new Grid();
       grid_4 = new Grid();
       engine1 = new Engine(3, ENGINE_TYPE::CONTRE_TORPILLEUR);
+      engine1->add_skill(ENGINE_TYPE::CONTRE_TORPILLEUR, SHOT_TYPE::CONTRE_TORPILLEUR_SKILL);
       engine2 = new Engine(4, ENGINE_TYPE::TORPILLEUR);
+      engine1->add_skill(ENGINE_TYPE::TORPILLEUR, SHOT_TYPE::TORPILLEUR_SKILL);
       engine3 = new Engine(2, ENGINE_TYPE::PATROUILE);
+      engine1->add_skill(ENGINE_TYPE::PATROUILE, SHOT_TYPE::PATROUILE_SKILL);
       engine4 = new Engine(2, ENGINE_TYPE::CROISEUR);
+      engine1->add_skill(ENGINE_TYPE::CROISEUR, SHOT_TYPE::CROISEUR_SKILL);
       engine5 = new Engine(5, ENGINE_TYPE::PORTE_AVION);
+      engine1->add_skill(ENGINE_TYPE::PORTE_AVION, SHOT_TYPE::PORTE_AVION_SKILL);
     }
     ~GridTest(){
       delete(grid_1);

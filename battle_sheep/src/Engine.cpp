@@ -120,7 +120,7 @@ float Engine::take_a_hit(float dammage)
 {
     if(!(m_is_on_grid))
         return -1.0f;
-    
+        
     m_current_health_point = (m_current_health_point < dammage ? 0.f : m_current_health_point-dammage);
     return m_current_health_point;
 }

@@ -141,7 +141,7 @@ int Square::decrease_health(float dammage) {
        m_square_type == SQUARE_TYPE::ENGINE_WEAPON_DEAD || m_square_type == SQUARE_TYPE::ENGINE_MOTOR_DEAD)
         return 0;
 
-    if(dammage<=0.0f )
+    if(dammage<0.0f )
         return 0;
     
     m_engine->take_a_hit(dammage);
@@ -174,7 +174,7 @@ int Square::decrease_health(float dammage) {
 int Square::increase_health(float care){
     if(m_engine == nullptr || m_square_type == SQUARE_TYPE::NONE)
         return 0;
-    if(care<=0.0f)
+    if(care<0.0f)
         return 0;
     m_engine->take_care((m_health_pr+care > 1.0f ? 1.0f : care));
     m_health_pr =(m_health_pr+care > 1.0f ? 1.0f : m_health_pr+care);

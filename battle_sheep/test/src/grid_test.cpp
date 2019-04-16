@@ -3,11 +3,12 @@
 //
 
 #include <grid_test.h>
+#include <iostream>
 
 TEST_F(GridTest, GRID_Engine)
 {
     //putable and add_engine
-    ASSERT_EQ(grid_1->check_putable(engine1, true, 3, -1, -1), -100);
+    ASSERT_EQ(grid_1->check_putable(engine1, true, 3, -1, -1), -1);
     ASSERT_EQ(grid_1->add_engine(nullptr, true, -1, -1), -100);
     ASSERT_EQ(grid_1->check_putable(engine1, true, 3, 1, 1), 1);
     ASSERT_EQ(grid_1->add_engine(engine1, true, 1, 1), 1);
@@ -36,8 +37,8 @@ TEST_F(GridTest, GRID_Shot)
     //check_one_position
     ASSERT_EQ(grid_2->check_one_position(3, 3), 1);
     ASSERT_EQ(grid_2->check_one_position(0, 0), 1);
-    ASSERT_EQ(grid_2->check_one_position(-4, 8), 0);
-    ASSERT_EQ(grid_2->check_one_position(10, 10), 0);
+    ASSERT_EQ(grid_2->check_one_position(-4, 8), -1);
+    ASSERT_EQ(grid_2->check_one_position(10, 10), -1);
 
     //add engine to test shot
     ASSERT_EQ(grid_2->check_putable(engine1, true, 3, 1, 1), 1);
@@ -54,8 +55,8 @@ TEST_F(GridTest, GRID_Shot)
     //normal_shot
     ASSERT_EQ(grid_2->normal_shot(-1, -1, 1.0), 0);
     ASSERT_EQ(grid_2->normal_shot(1, 1, 1.0), 1);
-    ASSERT_EQ(grid_2->normal_shot(1, 2, 1.0), 1);
-    ASSERT_EQ(grid_2->normal_shot(1, 2, 1.0), 0);
+    ASSERT_EQ(grid_2->normal_shot(2, 1, 1.0), 1);
+    ASSERT_EQ(grid_2->normal_shot(2, 1, 1.0), 0);
     ASSERT_EQ(grid_1->normal_shot(1, 1, 1.0), 0);
 
     //incendiary shot
@@ -88,25 +89,6 @@ TEST_F(GridTest, GRID_Mutiple_shot)
     ASSERT_EQ(grid_3->check_putable(engine1, true, 3, 1, 1), 1);
     
     
-    /*
-     *
-     * 
-     * 
-     * IT IS SUPOSED TO MAKE AN ERROR BUT IT DOES'NT !!!!!
-     * 
-     * 
-     * 
-     */
-    ASSERT_EQ(1+1,-1);//HERE !!
-    /*
-     *
-     * 
-     * 
-     * IT IS SUPOSED TO MAKE AN ERROR BUT IT DOES'NT !!!!!
-     * 
-     * 
-     * 
-     */
     
     
     ASSERT_EQ(grid_3->add_engine(engine1, true, 1, 1), 1);
@@ -117,6 +99,7 @@ TEST_F(GridTest, GRID_Mutiple_shot)
     ASSERT_EQ(grid_3->check_putable(engine4, true, 2, 1, 7), 1);
     ASSERT_EQ(grid_3->add_engine(engine4, true, 1, 7), 1);
     ASSERT_EQ(grid_3->check_putable(engine5, true, 2, 1, 9), 1);
+    ASSERT_EQ(grid_3->add_engine(engine5, true, 1, 9), 1);
 
     //line_shot
     ASSERT_EQ(grid_3->line_shot(-1, -1, 3, false, true, 1.0), 0);
@@ -141,20 +124,22 @@ TEST_F(GridTest, GRID_Mutiple_shot)
     //cross_shot
     ASSERT_EQ(grid_3->cross_shot(-1, -1, 4, false, 1.0), 0);
     ASSERT_EQ(grid_1->cross_shot(5, 5, 4, false, 1.0), 0);
-    ASSERT_EQ(grid_3->cross_shot(3, 9, 2, false, 1.0), 3);
+    ASSERT_EQ(grid_3->cross_shot(3, 9, 2, false, 1.0), 5);
 
+}
+
+TEST_F(GridTest, GRID_first_to_drawn_and_radar)
+{
     //first_to_drawn
+    ASSERT_EQ(grid_4->check_putable(engine4, true, 2, 4, 1), 1);
     grid_4->add_engine(engine4, false, 4, 1);
+    ASSERT_EQ(grid_4->check_putable(engine5, true, 2, 6, 1), 1);
     grid_4->add_engine(engine5, false, 6, 1);
     ASSERT_EQ(grid_4->first_to_drawn(9, 9, true, false, 1.0), 0);
     ASSERT_EQ(grid_4->first_to_drawn(0, 1, true, false, 1.0), 1);
     ASSERT_EQ(grid_4->first_to_drawn(6, 9, false, false, 1.0), 2);
     ASSERT_EQ(grid_4->first_to_drawn(7, 9, false, false, 1.0), 0);
     ASSERT_EQ(grid_4->first_to_drawn(0, 3, true, false, 1.0), 1);
-}
-
-TEST_F(GridTest, GRID_Radar)
-{
 
     //radar_one_square
     ASSERT_EQ(grid_4->radar_one_square(1, 6), grid_4->get(1,6));

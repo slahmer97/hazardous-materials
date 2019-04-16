@@ -18,7 +18,7 @@ int Grid::proximity_check(int x, int y, Engine *engine)
 {
     if(engine==nullptr)
         return -100;
-    if(!(check_one_position(x,y)))
+    if(check_one_position(x,y)==-1)
     {
         return -1;
     }
@@ -32,7 +32,7 @@ int Grid::proximity_check(int x, int y, Engine *engine)
 
 Engine *Grid::get_engine_x_y(int x, int y)
 {
-    if(!(check_one_position(x,y)))
+    if(check_one_position(x,y)==-1)
     {
         return nullptr;
     }
@@ -46,12 +46,12 @@ int Grid::check_putable(Engine *engine, bool horizontal, int size, int x, int y)
     {
         if(horizontal)
         {
-            if(!(proximity_check(x+i, y, engine)))
+            if(proximity_check(x+i, y, engine)<=-1)
                 return -1;
         }
         else
         {
-            if(!(proximity_check(x, y+i, engine)))
+            if(proximity_check(x, y+i, engine)<=-1)
                 return -1;
         }
     }
@@ -139,7 +139,7 @@ int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
 
 int Grid::normal_shot(int x, int y, float damage)
 {
-    if(!(check_one_position(x,y)))
+    if(check_one_position(x,y)==-1)
     {
         return 0;
     }
@@ -314,23 +314,24 @@ int Grid::first_to_drawn(int x, int y, bool horizontal, bool IEM, float damage )
     int v_i=(direction ? 1 : -1);
     if(horizontal){
         if(IEM){
-            for(i=x; (i<10 && i>-1) || !(number_case_touch+=desactivate_square(i,y)); i+=v_i );
+            for(i=x; (i<10 && i>-1) || ((number_case_touch+=desactivate_square(i,y))>0); i+=v_i );
             if(i<9 && i>0){
                 number_case_touch+=desactivate_square(i+v_i,y);
             }}
         else{
-            for(i=x; (i<10 && i>-1) || !(number_case_touch+=normal_shot(i,y,damage)); i+=v_i );
+                printf("test2\n");
+            for(i=x; (i<10 && i>-1) || ((number_case_touch+=normal_shot(i,y,damage))>0); i+=v_i );
             if(i<9 && i>0){
                 number_case_touch+=normal_shot(i+v_i,y,damage);
             }}}
     else{
         if(IEM){
-            for(i=y; (i<10 && i>-1) || !(number_case_touch+=desactivate_square(x,i)); i+=v_i );
+            for(i=y; (i<10 && i>-1) || ((number_case_touch+=desactivate_square(x,i))>0); i+=v_i );
             if(i<9 && i>0){
                 number_case_touch+=desactivate_square(x,i+v_i);
             }}
         else{
-            for(i=y; (i<10 && i>-1) || !(number_case_touch+=normal_shot(x,i,damage)); i+=v_i );
+            for(i=y; (i<10 && i>-1) || ((number_case_touch+=normal_shot(x,i,damage))>0); i+=v_i );
             if(i<9 && i>0){
                 number_case_touch+=normal_shot(x,i+v_i,damage);
             }}}
@@ -382,7 +383,7 @@ int Grid::proximity_check(int x, int y, Engine *engine)
 
 Square* Grid::radar_one_square(int x, int y)
 {   
-    if(!(check_one_position(x,y)))
+    if(check_one_position(x,y)==-1)
     {
         return nullptr;
     }
