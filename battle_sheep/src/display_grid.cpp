@@ -6,21 +6,30 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 	gridWidth(gridWidth),
 	gridHeight(gridHeight),
 	spritesBackground(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//creating the 2d vector of sprites representing the background
-	spritesShip(gridWidth, std::vector<sf::Sprite>(gridHeight) ) {//Creating the 2d vector of sprites representing the ships (or lack)
+	spritesBackgroundAir(gridWidth, std::vector<sf::Sprite>(gridHeight) ),
+	spritesShip(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//Creating the 2d vector of sprites representing the ships (or lack)
+	spritesPlanes(gridWidth, std::vector<sf::Sprite>(gridHeight) ){
 
 
-		//We fill the 2d array displaying everything
+		//We fill the 2d arrays displaying everything
 		for(int i = 0; i < gridWidth; i++){
 			for(int j = 0; j < gridHeight; j++){
 				//The background sprites
 				spritesBackground[i][j].setTexture(TextureManager::Background::Atlas);
+				spritesBackgroundAir[i][j].setTexture(TextureManager::Background::Atlas);
 				spritesBackground[i][j].setPosition(x+i*32, y+j*32);
+				spritesBackgroundAir[i][j].setPosition(x+i*32, y+j*32);
 
 				//The ship sprites
 				spritesShip[i][j].setTexture(TextureManager::Ship::Atlas);
 				spritesShip[i][j].setPosition(x+i*32, y+j*32);
 				//We initialize with the empty square
 				spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
+				//The Plane sprites
+				spritesPlanes[i][j].setTexture(TextureManager::Plane::Atlas);
+				spritesPlanes[i][j].setPosition(x+i*32, y+j*32);
+				//We initialize with the empty square
+				spritesPlanes[i][j].setTextureRect(sf::IntRect(0,0,32,32));
 			}
 		}
 
@@ -38,11 +47,12 @@ void DisplayGrid::calculate_sprites(){
 		for(int j = 0; j < gridHeight; j++){
 			//We use the center texture
 			spritesBackground[i][j].setTextureRect(TextureManager::Background::Water);
+			spritesBackgroundAir[i][j].setTextureRect(TextureManager::Background::Air);
 		}
 	}
 }
 
-void DisplayGrid::setListener(ClickListener* listener){
+void DisplayGrid::setListener(GridActionListener* listener){
 	this->listener = listener;
 }
 
@@ -80,6 +90,8 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 							texture.left = 32;
 						}
 
+					} else if (event->mouseButton.button == sf::Mouse::Middle) {
+						this->displayAir = !this->displayAir;
 					}
 					this->spritesShip[gridX][gridY].setTextureRect(texture);
 				}
@@ -94,17 +106,32 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 
 
 void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
-	for(int i = 0; i < gridWidth; i++) {
-		for(int j = 0; j < gridHeight; j++){
-			drawingBoard->draw(this->spritesBackground[i][j]);
+	if(this->displayAir) {
+		for(int i = 0; i < gridWidth; i++) {
+			for(int j = 0; j < gridHeight; j++){
+				drawingBoard->draw(this->spritesBackgroundAir[i][j]);
+			}
 		}
-	}
 
-	for(int i = 0; i < gridWidth; i++){
-		for(int j = 0; j < gridHeight; j++){
-			drawingBoard->draw(this->spritesShip[i][j]);
+		for(int i = 0; i < gridWidth; i++){
+			for(int j = 0; j < gridHeight; j++){
+				drawingBoard->draw(this->spritesPlanes[i][j]);
+			}
+		}
+	} else {
+		for(int i = 0; i < gridWidth; i++) {
+			for(int j = 0; j < gridHeight; j++){
+				drawingBoard->draw(this->spritesBackground[i][j]);
+			}
+		}
+
+		for(int i = 0; i < gridWidth; i++){
+			for(int j = 0; j < gridHeight; j++){
+				drawingBoard->draw(this->spritesShip[i][j]);
+			}
 		}
 	}
 }
+
 
 

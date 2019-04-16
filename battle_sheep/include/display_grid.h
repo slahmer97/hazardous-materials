@@ -53,31 +53,27 @@ class DisplayGrid : Component {
 		/**
 		 * The listener for when the Enter key is pressed
 		 */
-		ClickListener* listener = nullptr;
+		GridActionListener* listener = nullptr;
 		
 		/**
 		 * Size of the grid
 		 */
 		int gridWidth, gridHeight;
+
 		/**
 		 * All the sprites used to display the grid itself
 		 */
 		std::vector<std::vector<sf::Sprite>> spritesBackground;
+		std::vector<std::vector<sf::Sprite>> spritesBackgroundAir;
 	
 		/**
-		 * The texture atlas containing the backgroundtextures
-		 */
-		sf::Texture backgroundAtlas;
-
-		/**
-		 * The texture atlas containing the boat textures
-		 */
-		sf::Texture shipAtlas;
-
-		/**
-		 * Placeholder containing the ships for debugging
+		 * All the sprites used for the ships
+		 * TODO: update it to work with data obtained from the network
 		 */
 		std::vector<std::vector<sf::Sprite>> spritesShip;
+		std::vector<std::vector<sf::Sprite>> spritesPlanes;
+
+
 
 };
 
