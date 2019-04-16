@@ -32,6 +32,7 @@ set (
 	src/textfield.cpp
 	src/display_grid.cpp
 	src/texture_manager.cpp
+	src/textarea.cpp
 	)
 
 set (
