@@ -29,6 +29,8 @@ void TextField::handleEvent(sf::Window* window,sf::Event* event){
 				}
 			}
 			break;
+		default:
+			break;
 	}
 }
 

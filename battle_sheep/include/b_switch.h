@@ -42,6 +42,11 @@
 
     private:
 
+		/**
+		 * String containing the location for the texture of the button
+		 */
+		std::string img;
+
         /**
 		 * Geometry information for the button
 		 */
@@ -57,10 +62,6 @@
          */
          bool left = true;
 		
-		/**
-		 * String containing the location for the texture of the button
-		 */
-		std::string img;
  };
 
 #endif // B_SWITCH_H

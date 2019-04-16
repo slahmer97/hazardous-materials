@@ -57,6 +57,8 @@ void Button::handleEvent(sf::Window* window,sf::Event* event){
 			}
 
 			break;
+		default:
+			break;
 
 	}
 
