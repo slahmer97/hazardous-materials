@@ -35,7 +35,7 @@ class GridTest : public ::testing::Test
       grid_4 = new Grid();
       engine1 = new Engine(3, ENGINE_TYPE::CONTRE_TORPILLEUR);
       engine2 = new Engine(4, ENGINE_TYPE::TORPILLEUR);
-      engine3 = new Engine(1, ENGINE_TYPE::PATROUILE);
+      engine3 = new Engine(2, ENGINE_TYPE::PATROUILE);
       engine4 = new Engine(2, ENGINE_TYPE::CROISEUR);
       engine5 = new Engine(5, ENGINE_TYPE::PORTE_AVION);
     }

@@ -61,6 +61,8 @@ int Grid::remove_engine(Engine *engine)
 {
     if(engine==nullptr)
         return -100;
+    if(engine->get_is_on_grid()==false)
+        return -1;
     for (int i = 0; i < engine->get_size(); i++)
     {
         //Horizontal
@@ -83,6 +85,8 @@ int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
 {
     if(engine==nullptr)
         return -100;
+    if(engine->get_is_on_grid()==true)
+        return -1;
     float engine_square_health[engine->get_size()]={0.f};
     if(engine->get_is_on_grid())
     {

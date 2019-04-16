@@ -22,19 +22,7 @@ TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
     ASSERT_EQ(m_engine2->get_size(),3);
     ASSERT_EQ(m_engine2->get_current_health_point(),m_engine1->get_size());
     ASSERT_EQ(m_engine2->get_is_on_grid(),false);
-    ASSERT_EQ(m_engine1->get_motor_place(),0);
-    ASSERT_EQ(m_engine2->get_weapon_place(),2);
-    ASSERT_EQ(m_engine2->get_x(),-1);
-    ASSERT_EQ(m_engine2->get_y(),-1);
-    ASSERT_EQ(m_engine2->get_motor_state(),MOTOR_STATE::MOTOR);
-
-
-
-    ASSERT_EQ(m_engine2->get_engine_type(),ENGINE_TYPE::NOT_INTRODUCED);
-    ASSERT_EQ(m_engine2->get_size(),3);
-    ASSERT_EQ(m_engine2->get_current_health_point(),m_engine1->get_size());
-    ASSERT_EQ(m_engine2->get_is_on_grid(),false);
-    ASSERT_EQ(m_engine1->get_motor_place(),0);
+    ASSERT_EQ(m_engine2->get_motor_place(),0);
     ASSERT_EQ(m_engine2->get_weapon_place(),2);
     ASSERT_EQ(m_engine2->get_x(),-1);
     ASSERT_EQ(m_engine2->get_y(),-1);

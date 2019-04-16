@@ -10,7 +10,7 @@
 
 Engine::Engine(int size_a){
 
-    if(size_a < 1 || size_a > 5)
+    if(size_a < 2 || size_a > 5)
         size_a = 3;
     m_size=size_a;
     m_movement_point=6-size_a;
@@ -193,7 +193,7 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value){
         return -1;
     if(m_motor_state!=MOTOR)
         return -1;
-    if(m_movement_point<movement_value)
+    if(m_movement_point<movement_value || movement_value<1)
         return -1;
 
     int new_x=m_x;
