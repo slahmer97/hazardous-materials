@@ -1,6 +1,6 @@
 #include "../include/textarea.h"
 
-TextArea::TextArea(int fontHeight, int x, int y, int width, int height):
+TextArea::TextArea(unsigned int fontHeight, unsigned int x, unsigned int y, unsigned int width, unsigned int height):
 	x(x),
 	y(y),
 	width(width),
@@ -21,9 +21,9 @@ void TextArea::handleEvent(sf::Window* window, sf::Event* event){
 	//TODO: implement scrollbar
 }
 
-void TextArea::draw(sf::RenderTarget*, drawingBoard){
+void TextArea::draw(sf::RenderTarget* drawingBoard){
 
-	int position = content.size()-std::min(line_count, content.size());
+	int position = content.size()-std::min(line_count, (unsigned int)content.size());
 
 	for(unsigned int i = 0; i < line_count && i < content.size(); i++) {
 		sf::Text text;
@@ -37,9 +37,9 @@ void TextArea::draw(sf::RenderTarget*, drawingBoard){
 }
 
 
-void addTextLine(sf::String line){
+void TextArea::addTextLine(sf::String line){
 	content.push_back(line);
 	if(content.size() >= HISTORY_SIZE){
-		content.erase(0);
+		content.erase(content.begin());
 	}
 }

@@ -2,6 +2,8 @@
 #define DISPLAY_GRID_H
 
 #include "../include/component.h"
+
+class GridActionListener;
 #include "../include/click_callback.h"
 #include "../include/texture_manager.h"
 
@@ -22,11 +24,6 @@ class DisplayGrid : Component {
 		 */
 		virtual void draw(sf::RenderTarget* drawingBoard);
 
-		/**
-		 * Setter for the click handler
-		 */
-		void set_on_click(ClickListener* listener);
-		
 		
 		/**
 		 * If we need to display the air or the water
@@ -36,7 +33,7 @@ class DisplayGrid : Component {
 		/**
 		 * Set the listener for the return button
 		 */
-		void setListener(ClickListener* listener);
+		void setListener(GridActionListener* listener);
 
 		void calculate_sprites();
 

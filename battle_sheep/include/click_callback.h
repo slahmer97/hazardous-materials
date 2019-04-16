@@ -2,6 +2,7 @@
 #define CLICK_CALLBACK_H
 
 
+class DisplayGrid;
 #include "../include/component.h"
 #include "../include/display_grid.h"
 
@@ -18,8 +19,8 @@ class ClickListener {
  */
 class GridActionListener {
 	public:
-		static const ACTION_ATTACK = 1;
-		static const ACTION_PLACE = 2;
+		static const int ACTION_ATTACK = 1;
+		static const int ACTION_PLACE = 2;
 		virtual void on_action(DisplayGrid* grid, int action, int gridX, int gridY, int options1=0, int options2=0)=0;
 };
 

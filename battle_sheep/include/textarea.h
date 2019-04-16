@@ -3,12 +3,13 @@
 
 #include "../include/component.h"
 #include <vector>
+#include <iostream>
 #include <algorithm>
 
 class TextArea : Component {
 
 	public:
-		TextArea(int fontHeight = 20, int x = 0, int y = 0, int width = 0, int height = 0);
+		TextArea(unsigned int fontHeight = 20, unsigned int x = 0, unsigned int y = 0, unsigned int width = 0, unsigned int height = 0);
 		
 
 		virtual void handleEvent(sf::Window* window,sf::Event* event);
@@ -18,11 +19,11 @@ class TextArea : Component {
 		void addTextLine(sf::String line);
 
 	private:
-		int x,y,width,height, fontHeight, line_count;
-		static const HISTORY_SIZE = 40;
+		unsigned int x,y,width,height, fontHeight, line_count;
+		static const unsigned int HISTORY_SIZE = 40;
 		
 
-		sf::Font;
+		sf::Font font;
 		std::vector<sf::String> content;
 		
 
