@@ -18,6 +18,7 @@ class GridTest : public ::testing::Test
     Engine * engine3;
     Engine * engine4;
     Engine * engine5;
+    Engine * engine6;
     void SetUp() override {
       Test::SetUp();
 
@@ -36,13 +37,15 @@ class GridTest : public ::testing::Test
       engine1 = new Engine(3, ENGINE_TYPE::CONTRE_TORPILLEUR);
       engine1->add_skill(ENGINE_TYPE::CONTRE_TORPILLEUR, SHOT_TYPE::CONTRE_TORPILLEUR_SKILL);
       engine2 = new Engine(4, ENGINE_TYPE::TORPILLEUR);
-      engine1->add_skill(ENGINE_TYPE::TORPILLEUR, SHOT_TYPE::TORPILLEUR_SKILL);
+      engine2->add_skill(ENGINE_TYPE::TORPILLEUR, SHOT_TYPE::TORPILLEUR_SKILL);
       engine3 = new Engine(2, ENGINE_TYPE::PATROUILE);
-      engine1->add_skill(ENGINE_TYPE::PATROUILE, SHOT_TYPE::PATROUILE_SKILL);
+      engine3->add_skill(ENGINE_TYPE::PATROUILE, SHOT_TYPE::PATROUILE_SKILL);
       engine4 = new Engine(2, ENGINE_TYPE::CROISEUR);
-      engine1->add_skill(ENGINE_TYPE::CROISEUR, SHOT_TYPE::CROISEUR_SKILL);
+      engine4->add_skill(ENGINE_TYPE::CROISEUR, SHOT_TYPE::CROISEUR_SKILL);
       engine5 = new Engine(5, ENGINE_TYPE::PORTE_AVION);
-      engine1->add_skill(ENGINE_TYPE::PORTE_AVION, SHOT_TYPE::PORTE_AVION_SKILL);
+      engine5->add_skill(ENGINE_TYPE::PORTE_AVION, SHOT_TYPE::PORTE_AVION_SKILL);
+      engine6 = new Engine(4, ENGINE_TYPE::TORPILLEUR);
+      engine6->add_skill(ENGINE_TYPE::TORPILLEUR, SHOT_TYPE::TORPILLEUR_SKILL);
     }
     ~GridTest(){
       delete(grid_1);

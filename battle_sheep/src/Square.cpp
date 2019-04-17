@@ -19,7 +19,10 @@ Engine *Square::get_engine(){
 bool Square::squares_equals(Square *T){
     if(T==nullptr)
         return false;
-    return (m_engine == T->m_engine && m_health_pr== T->m_health_pr && m_square_type == T->m_square_type);
+    if(m_engine!=nullptr && T->get_engine()!=nullptr)
+        return (m_engine->get_engine_type() == T->get_engine()->get_engine_type() && m_health_pr== T->m_health_pr && m_square_type == T->m_square_type);
+    else
+        return (m_engine == T->get_engine() && m_health_pr== T->m_health_pr && m_square_type == T->m_square_type);
 }
 
 float Square::get_health_pr(){

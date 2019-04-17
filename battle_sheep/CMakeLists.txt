@@ -6,7 +6,7 @@ option(USE_STANDALONE_ASIO "set ON to use standalone Asio instead of Boost.Asio"
 option(BUILD_TESTING "set ON to build library tests" OFF)
 
 #add_compile_options(-std=c++11 -Wall -Wextra -Wsign-conversion)
-add_compile_options(-lboost_system -lboost_thread -lpthread -lcrypto -lssl -lboost_filesystem -llog4cpp)
+add_compile_options(-lboost_system -lboost_thread -lthread -lpthread -lcrypto -lssl -lboost_filesystem -llog4cpp)
 add_definitions(-DBOOST_ERROR_CODE_HEADER_ONLY -DBOOST_SYSTEM_NO_DEPRECATED)
 add_library(simple-websocket-server INTERFACE)
 
@@ -77,18 +77,23 @@ target_link_libraries(test_main simple-websocket-server pthread)
 
 set(
         TEST_SHARED
+        src/Square.cpp
+        src/Engine.cpp
+        src/Skill.cpp
+        src/Grid.cpp
+        src/FactorySkill.cpp
         test/src/engine_test.cpp
         test/src/square_test.cpp
         test/src/skill_test.cpp
         test/src/grid_test.cpp
-        test/src/client_message_test.cpp
-        test/src/server_message_test.cpp
-        test/src/score_test.cpp
-        src/GameScheduler.cpp
+        #test/src/client_message_test.cpp
+        #test/src/server_message_test.cpp
+        #test/src/score_test.cpp
+        #src/GameScheduler.cpp
 
 )
-#enable_testing()
-#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include simple_web_socket/include )
-#add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} ${SHARED_SOURCES} )
-#target_link_libraries(runUnitTests gtest gtest_main pthread)
-#add_test( runUnitTests runUnitTests )
+enable_testing()
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include )
+add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} )
+target_link_libraries(runUnitTests gtest gtest_main pthread)
+add_test( runUnitTests runUnitTests )

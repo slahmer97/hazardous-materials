@@ -188,13 +188,13 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -1;
+        return -2;
     if(grid->get_engine_x_y(m_x,m_y)!=this)
-        return -1;
+        return -3;
     if(m_motor_state!=MOTOR)
-        return -1;
+        return -4;
     if(m_movement_point<movement_value || movement_value<1)
-        return -1;
+        return -5;
 
     int new_x=m_x;
     int new_y=m_y;
@@ -209,11 +209,10 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value){
     }
 
 
-    if(grid->check_putable(this,m_horizontal,m_size,m_x, m_y))
+    if(grid->check_putable(this,m_horizontal,m_size,new_x, new_y)==1)
     {
         grid->remove_engine(this);
         grid->add_engine(this,m_horizontal,new_x,new_y);
-
         return 1;
     }
     return -1;
@@ -223,13 +222,13 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -1;
+        return -2;
     if(grid->get_engine_x_y(m_x,m_y)!=this)
-        return -1;
+        return -3;
     if(m_motor_state!=MOTOR)
-        return -1;
+        return -4;
     if(node_distance < 0 || node_distance > m_size-1)
-        return -1;
+        return -5;
     int new_x = m_x;
     int new_y = m_y;
     if (m_horizontal)
@@ -259,7 +258,7 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance){
         }
     }
 
-    if(grid->check_putable(this,!m_horizontal,m_size,m_x, m_y))
+    if(grid->check_putable(this,!m_horizontal,m_size,new_x, new_y)==1)
     {
         grid->remove_engine(this);
         grid->add_engine(this,!m_horizontal,new_x,new_y);
