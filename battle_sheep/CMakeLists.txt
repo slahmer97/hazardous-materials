@@ -74,7 +74,6 @@ target_link_libraries(server simple-websocket-server pthread)
 target_link_libraries(client simple-websocket-server pthread)
 target_link_libraries(test_main simple-websocket-server pthread)
 
-
 set(
         TEST_SHARED
         src/Square.cpp
@@ -93,7 +92,7 @@ set(
 
 )
 enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include )
-add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} )
-target_link_libraries(runUnitTests gtest gtest_main pthread simple_web_socket)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include simple_web_socket/include )
+add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} ${SHARED_SOURCES} )
+target_link_libraries(runUnitTests gtest gtest_main simple-websocket-server pthread)
 add_test( runUnitTests runUnitTests )
