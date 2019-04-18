@@ -131,12 +131,13 @@ TEST_F(GridTest, GRID_Mutiple_shot)
 TEST_F(GridTest, GRID_first_to_drawn_and_radar)
 {
     //first_to_drawn
-    ASSERT_EQ(grid_4->check_putable(engine4, true, 2, 4, 1), 1);
-    grid_4->add_engine(engine4, false, 4, 1);
-    ASSERT_EQ(grid_4->check_putable(engine5, true, 2, 6, 1), 1);
-    grid_4->add_engine(engine5, false, 6, 1);
+    ASSERT_EQ(grid_4->check_putable(engine4, false, 2, 4, 1), 1);
+    ASSERT_EQ(grid_4->add_engine(engine4, false, 4, 1),1);
+    ASSERT_EQ(grid_4->check_putable(engine5, false, 5, 6, 1), 1);
+    ASSERT_EQ(grid_4->add_engine(engine5, false, 6, 1),1);
+
     ASSERT_EQ(grid_4->first_to_drawn(9, 9, true, false, 1.0), 0);
-    ASSERT_EQ(grid_4->first_to_drawn(0, 1, true, false, 1.0), 1);
+    ASSERT_EQ(grid_4->first_to_drawn(0, 2, true, false, 1.0), 1);
     ASSERT_EQ(grid_4->first_to_drawn(6, 9, false, false, 1.0), 2);
     ASSERT_EQ(grid_4->first_to_drawn(7, 9, false, false, 1.0), 0);
     ASSERT_EQ(grid_4->first_to_drawn(0, 3, true, false, 1.0), 1);
@@ -151,26 +152,26 @@ TEST_F(GridTest, GRID_move_rotate_Engine)
     ASSERT_EQ(engine1->move_engine(nullptr,false,1),-100);
     ASSERT_EQ(engine1->rotate_engine(nullptr,true,1),-100);
 
-    ASSERT_EQ(engine1->move_engine(grid_1,false,1),-1);
-    ASSERT_EQ(engine1->rotate_engine(grid_1,true,1),-1);
+    ASSERT_EQ(engine1->move_engine(grid_1,false,1),-2);
+    ASSERT_EQ(engine1->rotate_engine(grid_1,true,1),-2);
 
 
     ASSERT_EQ(grid_1->check_putable(engine1, true, 3, 1, 1), 1);
     ASSERT_EQ(grid_1->add_engine(engine1, true, 1, 1), 1);
 
 
-    ASSERT_EQ(engine1->move_engine(grid_2,false,1),-1);
-    ASSERT_EQ(engine1->rotate_engine(grid_2,true,1),-1);
+    ASSERT_EQ(engine1->move_engine(grid_2,false,1),-3);
+    ASSERT_EQ(engine1->rotate_engine(grid_2,true,1),-3);
     
     engine1->desactivate_motor();
-    ASSERT_EQ(engine1->move_engine(grid_1,false,1),-1);
-    ASSERT_EQ(engine1->rotate_engine(grid_2,true,1),-1);
+    ASSERT_EQ(engine1->move_engine(grid_1,false,1),-4);
+    ASSERT_EQ(engine1->rotate_engine(grid_1,true,1),-4);
     engine1->activate_motor();
 
-    ASSERT_EQ(engine1->move_engine(grid_1,false,10),-1);
-    ASSERT_EQ(engine1->move_engine(grid_1,false,-1),-1);
-    ASSERT_EQ(engine1->rotate_engine(grid_1,true,-1),-1);
-    ASSERT_EQ(engine1->rotate_engine(grid_1,true,10),-1);
+    ASSERT_EQ(engine1->move_engine(grid_1,false,10),-5);
+    ASSERT_EQ(engine1->move_engine(grid_1,false,-1),-5);
+    ASSERT_EQ(engine1->rotate_engine(grid_1,true,-1),-5);
+    ASSERT_EQ(engine1->rotate_engine(grid_1,true,10),-5);
     
     ASSERT_EQ(engine1->move_engine(grid_1,false,1),1);
     ASSERT_EQ(engine1->move_engine(grid_1,true,1),1);
@@ -181,8 +182,7 @@ TEST_F(GridTest, GRID_move_rotate_Engine)
     ASSERT_EQ(grid_1->check_putable(engine2, false, 4, 1, 2), 1);
     ASSERT_EQ(grid_1->add_engine(engine2, false, 1, 2), 1);
 
-
-    ASSERT_EQ(engine1->move_engine(grid_1,false,1),-1);
+    ASSERT_EQ(engine2->move_engine(grid_1,false,1),-1);
     ASSERT_EQ(engine1->rotate_engine(grid_1,true,0),-1);
     
     ASSERT_EQ(engine2->move_engine(grid_1,true,1),1);
@@ -190,10 +190,12 @@ TEST_F(GridTest, GRID_move_rotate_Engine)
     ASSERT_EQ(engine1->rotate_engine(grid_1,false,1),1);
     ASSERT_EQ(engine2->move_engine(grid_1,false,1),1);
 
-    ASSERT_EQ(grid_2->normal_shot(1, 1, 1.0), 1);
-    ASSERT_EQ(grid_2->normal_shot(1, 2, 1.0), 1);
-    ASSERT_EQ(engine1->move_engine(grid_1,false,1),-1);
-    ASSERT_EQ(engine1->rotate_engine(grid_2,true,1),-1);
+    ASSERT_EQ(grid_1->normal_shot(1, 1, 1.0), 1);
+    ASSERT_EQ(grid_1->normal_shot(1, 2, 1.0), 1);
+    ASSERT_EQ(engine1->move_engine(grid_1,false,1),-4);
+    ASSERT_EQ(engine1->rotate_engine(grid_1,true,1),-4);
+    ASSERT_EQ(engine2->move_engine(grid_1,true,1),-4);
+    ASSERT_EQ(engine2->rotate_engine(grid_1,true,1),-4);
     
 }
 TEST_F(GridTest, 2GRID_equals)
@@ -220,8 +222,8 @@ TEST_F(GridTest, 2GRID_equals)
         }
     }
 
-    ASSERT_EQ(grid_2->check_putable(engine2, false, 4, 5, 5), 1);
-    ASSERT_EQ(grid_2->add_engine(engine2, false, 5, 5), 1);
+    ASSERT_EQ(grid_2->check_putable(engine6, false, 4, 5, 5), 1);
+    ASSERT_EQ(grid_2->add_engine(engine6, false, 5, 5), 1);
 
     for(int i=0; i<10; i++)
     {
