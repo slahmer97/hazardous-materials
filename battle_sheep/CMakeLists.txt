@@ -86,14 +86,14 @@ set(
         test/src/square_test.cpp
         test/src/skill_test.cpp
         test/src/grid_test.cpp
-        #test/src/client_message_test.cpp
-        #test/src/server_message_test.cpp
-        #test/src/score_test.cpp
-        #src/GameScheduler.cpp
+        test/src/client_message_test.cpp
+        test/src/server_message_test.cpp
+        test/src/score_test.cpp
+        src/GameScheduler.cpp
 
 )
 enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include )
 add_executable( runUnitTests test/mainTest.cpp ${TEST_SHARED} )
-target_link_libraries(runUnitTests gtest gtest_main pthread)
+target_link_libraries(runUnitTests gtest gtest_main pthread simple_web_socket)
 add_test( runUnitTests runUnitTests )
