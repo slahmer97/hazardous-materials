@@ -1,7 +1,6 @@
 #include "../include/interface.h"
-#include "../include/b_switch.h"
 
-Interface::Interface(): window(sf::VideoMode(800,400), "Battle Sheep") {
+Interface::Interface(): window(sf::VideoMode(960,540), "Battle Sheep") {
 	//Initialisation
 	//In the end here, there will be something like :
 	//this->change_current_menu(new MainMenu());
@@ -9,7 +8,8 @@ Interface::Interface(): window(sf::VideoMode(800,400), "Battle Sheep") {
 
 void Interface::start() {
 
-    B_Switch b("",0,0,100,50);
+    this->change_current_menu(new GameMenu());
+
 	//Starting the loop
 
 	while(this->window.isOpen()){
@@ -21,7 +21,7 @@ void Interface::start() {
 				window.close();
 				break;
 			}
-			b.handleEvent(&window, &event);
+		//.handleEvent(&window, &event);
 
 			//Then we pass any other to the current Menu
 			if(this->currentMenu != nullptr)
@@ -31,7 +31,7 @@ void Interface::start() {
 
 		//We clear the window of any previous drawing
 		window.clear();
-		b.draw(&window);
+		//gmenu.draw(&window);
 		//We draw the current menu in a buffer
 		if(this->currentMenu != nullptr)
 			this->currentMenu->draw(&window);
