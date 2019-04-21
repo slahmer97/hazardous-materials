@@ -29,7 +29,7 @@ class GameMenu : public Menu//, ClickListener
 		B_Switch * b1 = new B_Switch("",280,420,100,50);
 		B_Switch * b2 = new B_Switch("",580,420,100,50);
 
-
+		sf::Texture grille;
 
 
 
