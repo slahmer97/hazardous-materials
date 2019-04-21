@@ -7,12 +7,8 @@
 
 TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
 
-	printf("Salut ?\n");
-
     ASSERT_EQ(m_engine1->get_engine_type(),ENGINE_TYPE::NOT_INTRODUCED);
-		printf("Salut ?\n");
     ASSERT_EQ(m_engine1->get_size(),3);
-		printf("Salut ?\n");
     ASSERT_EQ(m_engine1->get_current_health_point(),m_engine1->get_size());
     ASSERT_EQ(m_engine1->get_is_on_grid(),false);
     ASSERT_EQ(m_engine1->get_motor_place(),0);
@@ -21,7 +17,6 @@ TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
     ASSERT_EQ(m_engine1->get_y(),-1);
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR);
 
-		printf("Salut ?\n");
 
     ASSERT_EQ(m_engine2->get_engine_type(),ENGINE_TYPE::NOT_INTRODUCED);
     ASSERT_EQ(m_engine2->get_size(),3);
@@ -36,7 +31,6 @@ TEST_F(EngineTest,ENGINE_Init_Contructor_TEST){
 }
 TEST_F(EngineTest,ENGINE_Getter_Setters_TEST){
 
-	printf("Salut ?\n");
     m_engine1->set_horizontal(true);
     ASSERT_EQ(m_engine1->is_horizontal(),-1);
     m_engine1->set_horizontal(false);
@@ -60,7 +54,6 @@ TEST_F(EngineTest,ENGINE_Getter_Setters_TEST){
 
 
     m_engine1->set_y(0);
-	printf("Salut ?\n");
 
     ASSERT_EQ(m_engine1->get_y(),0);
     ASSERT_EQ(m_engine1->get_x(),1);
@@ -75,24 +68,19 @@ TEST_F(EngineTest,ENGINE_Getter_Setters_TEST){
 
     m_engine1->set_horizontal(true);
     ASSERT_EQ(m_engine1->is_horizontal(),-1);
-	printf("Salut ?\n");
 
 }
 TEST_F(EngineTest,ENGINE_ACTIVATE_DESACTIVATE_TEST){
 
-	printf("Salut ?\n");
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR);
     m_engine1->desactivate_motor();
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR_DESACTIVATED);
     m_engine1->kill_motor();
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR_DEAD);
-	printf("Salut ?\n");
 
     ASSERT_EQ(m_engine1->get_weapon_state(),WEAPON_STATE::WEAPON);
     m_engine1->desactivate_weapon();
     ASSERT_EQ(m_engine1->get_weapon_state(),WEAPON_STATE::WEAPON_DESACTIVATED);
-
-	printf("Salut ?\n");
 
     m_engine1->kill_weapon();
     ASSERT_EQ(m_engine1->get_weapon_state(),WEAPON_STATE::WEAPON_DEAD);
