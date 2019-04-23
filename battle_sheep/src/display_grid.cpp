@@ -75,6 +75,9 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 						gridY = (my-y)/32;
 					sf::IntRect texture = this->spritesShip[gridX][gridY].getTextureRect();
 					if(event->mouseButton.button == sf::Mouse::Left){
+						if(this->listener != nullptr){
+							this->listener->on_action(this, 0, gridX, gridY);
+						}
 						if(texture.top == 0 && texture.left == 0){
 							texture.top = 32;
 							texture.left = 32;

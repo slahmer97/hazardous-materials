@@ -12,6 +12,8 @@ void Interface::start() {
 
 	//Starting the loop
 
+
+	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
 		//We check all event generated since the last loop
 		sf::Event event;
@@ -21,7 +23,12 @@ void Interface::start() {
 				window.close();
 				break;
 			}
-		//.handleEvent(&window, &event);
+			b.handleEvent(&window, &event);
+			if(event.type == sf::Event::Resized ){
+				if(event.size.width != 960 || event.size.height != 540)
+					window.setSize(sf::Vector2u(960, 540));
+				break;
+			}
 
 			//Then we pass any other to the current Menu
 			if(this->currentMenu != nullptr)
@@ -40,6 +47,7 @@ void Interface::start() {
 
 
 	}
+	std::cout<<"Cleaning up"<<std::endl;
 
 }
 
