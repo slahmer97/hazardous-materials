@@ -16,7 +16,8 @@ TextArea txt(10, 0, 0, 300, 100);
 void Interface::start() {
 
     this->change_current_menu(new GameMenu());
-
+	
+	
 
 	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
@@ -42,7 +43,7 @@ void Interface::start() {
 		}
 
 		//We clear the window of any previous drawing
-		window.clear();
+		window.clear(sf::Color(128,128,128));
 		//We draw the current menu in a buffer
 		if(this->currentMenu != nullptr)
 			this->currentMenu->draw(&window);
