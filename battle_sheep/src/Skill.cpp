@@ -18,14 +18,22 @@ ENGINE_TYPE Skill::get_engine_type()
     return m_engine_type;
 }
 
-void Skill::decrease_points(int dec)
+int Skill::decrease_points(int dec)
 {
+    if(dec < 0){
+        return -1;
+    }
     m_points = (m_points < dec) ? 0 : m_points - dec;
+    return m_points;
 }
 
-void Skill::increase_points(int inc)
+int Skill::increase_points(int inc)
 {
+    if(dec < 0){
+        return -1;
+    }
     m_points += inc;
+    return m_points;
 }
 
 int Skill::get_points()
