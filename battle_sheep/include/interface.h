@@ -8,7 +8,7 @@
 /**
  * Main class of the client-side GUI
  */
-class Interface
+class Interface 
 {
 	/*Methods*/
 	public:
@@ -31,6 +31,7 @@ class Interface
 		 * Class destructor
 		 */
 		~Interface();
+
 
 	private:
 		/**

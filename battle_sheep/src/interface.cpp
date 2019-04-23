@@ -1,4 +1,11 @@
 #include "../include/interface.h"
+=======
+#include "../include/b_switch.h"
+#include "../include/display_grid.h"
+#include "../include/textarea.h"
+#include "../include/textfield.h"
+
+>>>>>>> Stashed changes
 
 Interface::Interface(): window(sf::VideoMode(960,540), "Battle Sheep") {
 	//Initialisation
@@ -6,11 +13,11 @@ Interface::Interface(): window(sf::VideoMode(960,540), "Battle Sheep") {
 	//this->change_current_menu(new MainMenu());
 }
 
+TextArea txt(10, 0, 0, 300, 100);
+
 void Interface::start() {
 
     this->change_current_menu(new GameMenu());
-
-	//Starting the loop
 
 
 	std::cout<<"Starting loop"<<std::endl;
@@ -23,12 +30,12 @@ void Interface::start() {
 				window.close();
 				break;
 			}
-			b.handleEvent(&window, &event);
 			if(event.type == sf::Event::Resized ){
 				if(event.size.width != 960 || event.size.height != 540)
 					window.setSize(sf::Vector2u(960, 540));
 				break;
 			}
+
 
 			//Then we pass any other to the current Menu
 			if(this->currentMenu != nullptr)
@@ -38,7 +45,6 @@ void Interface::start() {
 
 		//We clear the window of any previous drawing
 		window.clear();
-		//gmenu.draw(&window);
 		//We draw the current menu in a buffer
 		if(this->currentMenu != nullptr)
 			this->currentMenu->draw(&window);
@@ -58,7 +64,6 @@ void Interface::change_current_menu(Menu* newMenu){
 	//Then set the new one
 	this->currentMenu = newMenu;
 }
-
 
 
 Interface::~Interface(){
