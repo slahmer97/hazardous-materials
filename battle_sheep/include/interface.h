@@ -2,8 +2,8 @@
 #define DEF_INTERFACE
 
 #include <SFML/Graphics.hpp>
-#include "game_menu.h"
-#include "menu.h"
+#include "../include/game_menu.h"
+#include "../include/menu.h"
 
 /**
  * Main class of the client-side GUI
