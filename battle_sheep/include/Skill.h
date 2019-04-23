@@ -20,8 +20,8 @@ class Skill
 
   public:
     Skill(ENGINE_TYPE);
-    void decrease_points(int dec);
-    void increase_points(int inc);
+    int decrease_points(int dec);
+    int increase_points(int inc);
     int get_points();
     virtual int use(Grid *grid, int x, int y, bool horizontal = true) = 0;
     virtual int use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal = true) = 0;
