@@ -1,11 +1,9 @@
 #include "../include/interface.h"
-=======
 #include "../include/b_switch.h"
 #include "../include/display_grid.h"
 #include "../include/textarea.h"
 #include "../include/textfield.h"
 
->>>>>>> Stashed changes
 
 Interface::Interface(): window(sf::VideoMode(960,540), "Battle Sheep") {
 	//Initialisation
