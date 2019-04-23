@@ -22,6 +22,11 @@ void Interface::start() {
 				break;
 			}
 			b.handleEvent(&window, &event);
+			if(event.type == sf::Event::Resized ){
+				if(event.size.width != 800 || event.size.height != 400)
+					window.setSize(sf::Vector2u(800, 400));
+				break;
+			}
 
 			//Then we pass any other to the current Menu
 			if(this->currentMenu != nullptr)
