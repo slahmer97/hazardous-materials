@@ -18,7 +18,7 @@ namespace TextureManager {
 	namespace Ship {
 		extern sf::Texture Atlas;
 		const std::string atlasFileLocation = "assets/textures/ships.png";
-		
+
 		/*
 		 * Part of the Atlas for horizontal ships :
 		 * _____________
@@ -26,14 +26,14 @@ namespace TextureManager {
 		 * left|body|right
 		 */
 
-		extern sf::IntRect ShipHoriLeft;
-		extern sf::IntRect ShipHoriBody;
-		extern sf::IntRect ShipHoriRight;
-		
+		const sf::IntRect ShipHoriLeft(0, 32, 32, 32);
+		const sf::IntRect ShipHoriBody(0, 64, 32, 32);
+		const sf::IntRect ShipHoriRight(0, 96, 32, 32);
+
 		/**
 		 * Part of the atlas for an empty square
 		 */
-		extern sf::IntRect Empty;
+		const sf::IntRect Empty(0,0,32,32);
 
 		/*
 		 * Part of the atlas for vertical ships :
@@ -43,24 +43,24 @@ namespace TextureManager {
 		 * \| Down
 		 *
 		 */
-		extern sf::IntRect ShipVertUp;
-		extern sf::IntRect ShipVertBody;
-		extern sf::IntRect ShipVertDown;
-		
-		
+		const sf::IntRect ShipVertUp(32,0, 32,32);
+		const sf::IntRect ShipVertBody(64,0,32,32);
+		const sf::IntRect ShipVertDown(96, 0, 32, 32);
+
+
 	}
 
 	namespace Plane {
 		extern sf::Texture Atlas;
 		const std::string atlasFileLocation = "assets/textures/planes.png";
-	
+
 	}
 
 	namespace Background {
 		extern sf::Texture Atlas;
 		const std::string atlasFileLocation = "assets/textures/tiles.png";
-		
-		
+
+
 		//Water textures
 
 		/*     2
@@ -71,21 +71,21 @@ namespace TextureManager {
 		 *   7   5
 		 *     6  
 		 */
-		extern sf::IntRect Water;//0
+		const sf::IntRect Water(32,32,32,32);//0
 
-		extern sf::IntRect WaterUpLeft;//1
-		extern sf::IntRect WaterUp;//2
-		extern sf::IntRect WaterUpRight;//3
+		const sf::IntRect WaterUpLeft(0,0,32,32);//1
+		const sf::IntRect WaterUp(32,0,32,32);//2
+		const sf::IntRect WaterUpRight(64,0,32,32);//3
 
-		extern sf::IntRect WaterLeft;//8
-		extern sf::IntRect WaterRight;//4
+		const sf::IntRect WaterLeft(0,32,32,32);//8
+		const sf::IntRect WaterRight(64,32,32,32);//4
 
-		extern sf::IntRect WaterDownLeft;//7
-		extern sf::IntRect WaterDown;//6
-		extern sf::IntRect WaterDownRight;//5
+		const sf::IntRect WaterDownLeft(0,64,32,32);//7
+		const sf::IntRect WaterDown(32,64,32,32);//6
+		const sf::IntRect WaterDownRight(64,64,32,32);//5
 
 		//Deep water textures
-		
+
 		/*     2
 		 *   1 _ 3
 		 *    / \
@@ -94,21 +94,21 @@ namespace TextureManager {
 		 *   7   5
 		 *     6  
 		 */
-		extern sf::IntRect DeepWater;//0
+		const sf::IntRect DeepWater(32,160,32,32);//0
 
-		extern sf::IntRect DeepWaterUpLeft;//1
-		extern sf::IntRect DeepWaterUp;//2
-		extern sf::IntRect DeepWaterUpRight;//3
+		const sf::IntRect DeepWaterUpLeft(0,128,32,32);//1
+		const sf::IntRect DeepWaterUp(32,128,32,32);//2
+		const sf::IntRect DeepWaterUpRight(64,128,32,32);//3
 
-		extern sf::IntRect DeepWaterLeft;//8
-		extern sf::IntRect DeepWaterRight;//4
+		const sf::IntRect DeepWaterLeft(0,160,32,32);//8
+		const sf::IntRect DeepWaterRight(64,160,32,32);//4
 
-		extern sf::IntRect DeepWaterDownLeft;//7
-		extern sf::IntRect DeepWaterDown;//6
-		extern sf::IntRect DeepWaterDownRight;//5
+		const sf::IntRect DeepWaterDownLeft(0,192,32,32);//7
+		const sf::IntRect DeepWaterDown(32,192,32,32);//6
+		const sf::IntRect DeepWaterDownRight(64,192,32,32);//5
 
 		//Sand textures
-		
+
 		/*     2
 		 *   1 _ 3
 		 *    / \
@@ -117,18 +117,18 @@ namespace TextureManager {
 		 *   7   5
 		 *     6  
 		 */
-		extern sf::IntRect Sand;//0
+		const sf::IntRect Sand(32,288,32,32);//0
 
-		extern sf::IntRect SandUpLeft;//1
-		extern sf::IntRect SandUp;//2
-		extern sf::IntRect SandUpRight;//3
+		const sf::IntRect SandUpLeft(0,256,32,32);//1
+		const sf::IntRect SandUp(32,256,32,32);//2
+		const sf::IntRect SandUpRight(64,256,32,32);//3
 
-		extern sf::IntRect SandLeft;//8
-		extern sf::IntRect SandRight;//4
+		const sf::IntRect SandLeft(0,288,32,32);//8
+		const sf::IntRect SandRight(64,288,32,32);//4
 
-		extern sf::IntRect SandDownLeft;//7
-		extern sf::IntRect SandDown;//6
-		extern sf::IntRect SandDownRight;//5
+		const sf::IntRect SandDownLeft(0,320,32,32);//7
+		const sf::IntRect SandDown(32,320,32,32);//6
+		const sf::IntRect SandDownRight(64,320,32,32);//5
 
 		//Air textures
 
@@ -140,18 +140,18 @@ namespace TextureManager {
 		 *   7   5
 		 *     6  
 		 */
-		extern sf::IntRect Air;//0
+		const sf::IntRect Air(32,416,32,32);//0
 
-		extern sf::IntRect AirUpLeft;//1
-		extern sf::IntRect AirUp;//2
-		extern sf::IntRect AirUpRight;//3
+		const sf::IntRect AirUpLeft(0,384,32,32);//1
+		const sf::IntRect AirUp(32,384,32,32);//2
+		const sf::IntRect AirUpRight(64,384,32,32);//3
 
-		extern sf::IntRect AirLeft;//8
-		extern sf::IntRect AirRight;//4
+		const sf::IntRect AirLeft(0,416,32,32);//8
+		const sf::IntRect AirRight(64,416,32,32);//4
 
-		extern sf::IntRect AirDownLeft;//7
-		extern sf::IntRect AirDown;//6
-		extern sf::IntRect AirDownRight;//5
+		const sf::IntRect AirDownLeft(0,448,32,32);//7
+		const sf::IntRect AirDown(32,448,32,32);//6
+		const sf::IntRect AirDownRight(64,448,32,32);//5
 
 		//Cloud textures
 
@@ -163,18 +163,18 @@ namespace TextureManager {
 		 *   7   5
 		 *     6  
 		 */
-		extern sf::IntRect Cloud;//0
+		const sf::IntRect Cloud(32,544,32,32);//0
 
-		extern sf::IntRect CloudUpLeft;//1
-		extern sf::IntRect CloudUp;//2
-		extern sf::IntRect CloudUpRight;//3
+		const sf::IntRect CloudUpLeft(0,512,32,32);//1
+		const sf::IntRect CloudUp(32,512,32,32);//2
+		const sf::IntRect CloudUpRight(64,512,32,32);//3
 
-		extern sf::IntRect CloudLeft;//8
-		extern sf::IntRect CloudRight;//4
+		const sf::IntRect CloudLeft(0,544,32,32);//8
+		const sf::IntRect CloudRight(64,544,32,32);//4
 
-		extern sf::IntRect CloudDownLeft;//7
-		extern sf::IntRect CloudDown;//6
-		extern sf::IntRect CloudDownRight;//5
+		const sf::IntRect CloudDownLeft(0,576,32,32);//7
+		const sf::IntRect CloudDown(32,576,32,32);//6
+		const sf::IntRect CloudDownRight(64,576,32,32);//5
 	}
 
 	namespace Other {
