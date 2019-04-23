@@ -12,6 +12,10 @@ GameMenu::GameMenu():
     std::cerr<<"Couldn't load assets/textures/grille_10x10.png"<<std::endl;
     std::abort();
   }
+
+  confirm.set_on_click(this);
+  b1.set_on_click(this);
+  b2.set_on_click(this);
 }
 
 
@@ -47,7 +51,14 @@ void GameMenu::draw(sf::RenderTarget* drawingBoard){
 }
 
 void GameMenu::on_click(Component* button){
-	printf("plouf\n");
+	if((void*)button == (void*)&b1){
+		grid_self.displayAir = !b1.is_left();
+	} else if((void*)button == (void*)&b2){
+		grid_opponent.displayAir = !b2.is_left();
+		
+	} else if((void*)button == (void*)&confirm){
+		printf("Plouf\n");
+	}
 }
 
 GameMenu::~GameMenu(){

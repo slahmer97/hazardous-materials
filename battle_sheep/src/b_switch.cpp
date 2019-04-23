@@ -21,6 +21,8 @@ void B_Switch::handleEvent(sf::Window* window,sf::Event* event){
             if(this->x <= event->mouseButton.x && event->mouseButton.x <= this->x+this->width &&
                 this->y <= event->mouseButton.y && event->mouseButton.y <= this->y+this->height ){
                     this->left = !left ;
+					if(this->listener != nullptr)
+						this->listener->on_click(this);
             }
         }
 
