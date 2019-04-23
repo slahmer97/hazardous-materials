@@ -22,6 +22,15 @@ void TextArea::handleEvent(sf::Window* window, sf::Event* event){
 }
 
 void TextArea::draw(sf::RenderTarget* drawingBoard){
+	sf::RectangleShape box;
+	box.setSize(sf::Vector2f(this->width, this->height));
+	box.setPosition(x, y);
+
+	box.setFillColor(sf::Color::White);
+	box.setOutlineColor(sf::Color::Black);
+	box.setOutlineThickness(1.0f);
+
+	drawingBoard->draw(box);
 
 	int position = content.size()-std::min(line_count, (unsigned int)content.size());
 
@@ -31,6 +40,7 @@ void TextArea::draw(sf::RenderTarget* drawingBoard){
 		text.setFont(font);
 		text.setCharacterSize(fontHeight);
 		text.setPosition(this->x, this->y+i*text.getLocalBounds().height);
+		text.setFillColor(sf::Color::Black);
 		
 		drawingBoard->draw(text);
 	}
