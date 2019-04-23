@@ -26,6 +26,10 @@ void TextField::handleEvent(sf::Window* window,sf::Event* event){
 			if(this->enabled){
 				if(event->text.unicode != '\n'){
 					this->text+=sf::String(event->text.unicode);
+				} else {
+					if(this->listener != nullptr){
+						this->listener->on_click(this);
+					}
 				}
 			}
 			break;
@@ -47,7 +51,7 @@ void TextField::draw(sf::RenderTarget* drawingBoard){
 
 	content.setFont(font);
 	content.setString(this->prompt+" "+this->text);
-	content.setCharacterSize(this->width*3/4);
+	content.setCharacterSize(20);
 
 	if(enabled)
 		content.setFillColor(sf::Color::Black);
