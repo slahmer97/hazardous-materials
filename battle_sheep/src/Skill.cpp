@@ -29,7 +29,7 @@ int Skill::decrease_points(int dec)
 
 int Skill::increase_points(int inc)
 {
-    if(dec < 0){
+    if(inc < 0){
         return -1;
     }
     m_points += inc;
