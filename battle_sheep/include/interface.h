@@ -2,7 +2,7 @@
 #define DEF_INTERFACE
 
 #include <SFML/Graphics.hpp>
-
+#include "game_menu.h"
 #include "menu.h"
 
 /**
@@ -16,17 +16,17 @@ class Interface
 		 * Constructor of the class
 		 */
 		Interface();
-		
+
 		/**
 		 * Start the rendering and updating loop, displaying the Interface
 		 */
 		void start();
-		
+
 		/**
 		 * Change the currently used menu to another (main menu to game menu, etc)
 		 */
 		void change_current_menu(Menu* newMenu);
-		
+
 		/**
 		 * Class destructor
 		 */
