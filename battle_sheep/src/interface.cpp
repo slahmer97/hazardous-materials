@@ -12,6 +12,8 @@ void Interface::start() {
     B_Switch b("",0,0,100,50);
 	//Starting the loop
 
+
+	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
 		//We check all event generated since the last loop
 		sf::Event event;
@@ -45,6 +47,7 @@ void Interface::start() {
 
 
 	}
+	std::cout<<"Cleaning up"<<std::endl;
 
 }
 

@@ -11,14 +11,19 @@ namespace TextureManager {
 		using namespace TextureManager;
 
 
+		std::cout<<"Loading Background texture atlas"<<std::endl;
 		if(!Background::Atlas.loadFromFile(Background::atlasFileLocation)){
 			std::cerr<<"Coulnd't load "<<Background::atlasFileLocation<<", aborting"<<std::endl;
 			std::abort();
 		}
+		
+		std::cout<<"Loading Planes texture atlas"<<std::endl;
 		if(!Plane::Atlas.loadFromFile(Plane::atlasFileLocation)){
 			std::cerr<<"Coulnd't load "<<Plane::atlasFileLocation<<", aborting"<<std::endl;
 			std::abort();
 		}
+	
+		std::cout<<"Loading Ships texture atlas"<<std::endl;
 		if(!Ship::Atlas.loadFromFile(Ship::atlasFileLocation)){
 			std::cerr<<"Coulnd't load "<<Ship::atlasFileLocation<<", aborting"<<std::endl;
 			std::abort();
