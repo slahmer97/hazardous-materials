@@ -60,6 +60,7 @@ set(
         src/Game.cpp
         src/GameScheduler.cpp
         src/Team.cpp
+        src/FactoryEngine.cpp
 
 )
 
@@ -69,7 +70,7 @@ include_directories(include)
 
 add_executable(server src/main_server.cpp ${SHARED_SOURCES})
 add_executable(test_main src/main_test.cpp ${SHARED_SOURCES})
-add_executable(client src/main_client.cpp ${SHARED_SOURCES})
+add_executable(client src/main_client.cpp ${SHARED_SOURCES} src/FactoryEngine.cpp include/FactoryEngine.h)
 target_link_libraries(server simple-websocket-server pthread)
 target_link_libraries(client simple-websocket-server pthread)
 target_link_libraries(test_main simple-websocket-server pthread)
@@ -77,11 +78,11 @@ target_link_libraries(test_main simple-websocket-server pthread)
 
 set(
         TEST_SHARED
-        src/Square.cpp
-        src/Engine.cpp
-        src/Skill.cpp
-        src/Grid.cpp
-        src/FactorySkill.cpp
+       # src/Square.cpp
+       # src/Engine.cpp
+       # src/Skill.cpp
+       # src/Grid.cpp
+       # src/FactorySkill.cpp
         test/src/engine_test.cpp
         test/src/square_test.cpp
         test/src/skill_test.cpp
@@ -89,7 +90,7 @@ set(
         test/src/client_message_test.cpp
         test/src/server_message_test.cpp
         test/src/score_test.cpp
-        src/GameScheduler.cpp
+        #src/GameScheduler.cpp
 
 )
 enable_testing()
