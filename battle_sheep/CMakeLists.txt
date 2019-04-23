@@ -74,6 +74,7 @@ target_link_libraries(server simple-websocket-server pthread)
 target_link_libraries(client simple-websocket-server pthread)
 target_link_libraries(test_main simple-websocket-server pthread)
 
+
 set(
         TEST_SHARED
         src/Square.cpp
