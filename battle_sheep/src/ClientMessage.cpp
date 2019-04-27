@@ -4,7 +4,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "ClientMessage.h"
+#include <ClientMessage.h>
 #include <Engine.h>
 
 ClientMessage::CLIENT_MESSAGE_TYPE ClientMessage::to_enum(const std::string& _message_type){

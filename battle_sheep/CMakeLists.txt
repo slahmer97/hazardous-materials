@@ -68,9 +68,12 @@ set(
 
 include_directories(include)
 
-add_executable(server src/main_server.cpp ${SHARED_SOURCES})
+add_executable(server src/main_server.cpp  ${SHARED_SOURCES})
 add_executable(test_main src/main_test.cpp ${SHARED_SOURCES})
-add_executable(client src/main_client.cpp ${SHARED_SOURCES} src/FactoryEngine.cpp include/FactoryEngine.h)
+add_executable(client src/main_client.cpp ${SHARED_SOURCES})
+
+
+
 target_link_libraries(server simple-websocket-server pthread)
 target_link_libraries(client simple-websocket-server pthread)
 target_link_libraries(test_main simple-websocket-server pthread)
