@@ -37,9 +37,9 @@ class SkillTest : public ::testing::Test
       grid_2 = new Grid();
       grid_3 = new Grid();
       grid_4 = new Grid();
-      skill1 = new Skill(ENGINE_TYPE::CONTRE_TORPILLEUR);
-      skill2 = new Skill(ENGINE_TYPE::TORPILLEUR);
-      skill3 = new Skill(ENGINE_TYPE::PATROUILE);
+      skill1 = FactorySkill::getSkill(ENGINE_TYPE::CONTRE_TORPILLEUR);
+      skill2 = FactorySkill::getSkill(ENGINE_TYPE::TORPILLEUR);
+      skill3 = FactorySkill::getSkill(ENGINE_TYPE::PATROUILE);
       engine1 = new Engine(3, ENGINE_TYPE::CONTRE_TORPILLEUR);
       engine1->add_skill(ENGINE_TYPE::CONTRE_TORPILLEUR, SHOT_TYPE::CONTRE_TORPILLEUR_SKILL);
       engine2 = new Engine(4, ENGINE_TYPE::TORPILLEUR);
@@ -64,5 +64,5 @@ class SkillTest : public ::testing::Test
       delete(engine4);
       delete(engine5);
     }
-}
+};
 #endif //HAZARDOUS_MATERIALS_SKILL_TEST_H

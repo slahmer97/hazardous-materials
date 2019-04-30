@@ -22,9 +22,13 @@ Player* Team::get_second_player(){return m_player2;}
 void Team::broadcast_message(const std::string& _msg){
     if(m_player1 != nullptr)
         m_player1->send_message(_msg);
-
+    else
+        std::cout<<"Player 1 is null"<<std::endl;
     if(m_player2 != nullptr)
       m_player2->send_message(_msg);
+    else
+        std::cout<<"Player 2 is null"<<std::endl;
+
 }
 void Team::set_first_player(Player *p) {
     m_player1 = p;

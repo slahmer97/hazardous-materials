@@ -205,8 +205,11 @@ public:
      */
     ENGINE_TYPE get_engine_type();
 
+    void set_id(int id);
+    int get_id();
 
 private:
+    int id;
     int m_size;
     float m_current_health_point;
     bool m_horizontal;

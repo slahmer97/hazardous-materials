@@ -11,6 +11,14 @@ std::string ServerMessage::error_to_string(ERRORS e){
         return "login_required";
     else if(e == GAME_DOES_NOT_EXIST)
         return "game_does_not_exist";
+    else if(e == ACTION_FAILED)
+        return "action_failed";
+    else if(e == CONNECTION_LOST)
+        return "connection_lost";
+    else if(e == ALREADY_CHOSEN)
+        return "already_chosen";
+    else if(e == ENGINE_ID_DOES_NOT_EXIST)
+        return "engine_id_does_not_exist";
 
 }
 ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
@@ -18,7 +26,15 @@ ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
         return LOGIN_REQUIRE;
     else if(s == "game_does_not_exist")
         return GAME_DOES_NOT_EXIST;
+    else if(s == "action_failed")
+        return ACTION_FAILED;
+    else if(s == "connection_lost")
+        return CONNECTION_LOST;
+    else if(s == "already_chosen")
+        return ALREADY_CHOSEN;
 
+    else if(s == "engine_id_does_not_exist")
+        return ENGINE_ID_DOES_NOT_EXIST;
 }
 ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")
@@ -37,6 +53,14 @@ ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& typ
         return CREATED_SUCCESS;
     else if(type == "join_success")
         return JOIN_SUCCESS;
+    else if(type == "start")
+        return START;
+    else if(type == "grid")
+        return GRID;
+    else if(type == "engine_added")
+        return ENGINE_ADDED;
+    else if(type == "move_success")
+        return MOVE_SUCCESS;
     //TODO
     return SCORE_BROADCAST;
 }
@@ -58,10 +82,18 @@ std::string ServerMessage::to_string(ServerMessage::SERVER_MESSAGE_TYPE type){
         return std::string("created_success");
     else if(type == JOIN_SUCCESS)
         return std::string("join_success");
+    else if(type == START)
+        return std::string("start");
+    else if(type == GRID)
+        return std::string("grid");
+    else if(type == ENGINE_ADDED)
+        return std::string("engine_added");
+    else if(type == MOVE_SUCCESS)
+        return std::string("move_success");
 
     return std::string("none");//check later
 }
-std::string ServerMessage::getKillPlayerMessage(unsigned char id_player_grid) {
+std::string ServerMessage::getKillPlayerMessage(int id_player_grid) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(KILL_PLAYER));
     pt.put("id",id_player_grid);
@@ -72,7 +104,17 @@ std::string ServerMessage::getKillPlayerMessage(unsigned char id_player_grid) {
 
     return buff.str();
 }
-std::string ServerMessage::getGridAssinementMessage(const std::string& username, unsigned char id_grid) {
+std::string ServerMessage::getMoveSuccessMessage(int id){
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(MOVE_SUCCESS));
+    pt.put("id",id);
+
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
+std::string ServerMessage::getGridAssinementMessage(const std::string& username,int id_grid) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(GRIDS_ASSIGNEMENT));
     pt.put("id",id_grid);
@@ -83,7 +125,7 @@ std::string ServerMessage::getGridAssinementMessage(const std::string& username,
 
     return buff.str();
 }
-std::string ServerMessage::getChatMessage(const std::string& message, unsigned char id) {
+std::string ServerMessage::getChatMessage(const std::string& message,int id) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(CHAT_S));
     pt.put("id",id);
@@ -94,7 +136,7 @@ std::string ServerMessage::getChatMessage(const std::string& message, unsigned c
 
     return buff.str();
 }
-std::string ServerMessage::getCurrentTurnMessage(unsigned char id) {
+std::string ServerMessage::getCurrentTurnMessage(int id) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(CURRENT_TURN));
     pt.put("id",id);
@@ -143,6 +185,26 @@ std::string ServerMessage::getErrorMessage(ServerMessage::ERRORS error, ClientMe
 
     return buff.str();
 }
+std::string ServerMessage::getGridMessage(int id, const std::string &grid) {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(GRID));
+    pt.put("grid",grid.c_str());
+    pt.put("id",id);
+
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+    return buff.str();
+}
+std::string ServerMessage::getEngineAddedMessage(){
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(ENGINE_ADDED));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+    return buff.str();
+}
+
+
+
 std::string ServerMessage::getCreatedSucessMessage() {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(CREATED_SUCCESS));
@@ -159,31 +221,44 @@ std::string ServerMessage::getJoinSuccessMessage() {
 
     return buff.str();
 }
+std::string ServerMessage::getStartMessage() {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(START));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
 
+    return buff.str();}
 
 
 ServerMessage* ServerMessage::getServerMessage(const std::string& json_ServerMessage){
-    ServerMessage*serverMessage;
-    serverMessage = new ServerMessage(Score(-1, -1, -1, -1));
+
     boost::property_tree::ptree ptree;
     std::istringstream is (json_ServerMessage);
-    boost::property_tree::json_parser::read_json(is,ptree);
+    try {
+        boost::property_tree::json_parser::read_json(is,ptree);
+    }catch (boost::property_tree::json_parser_error e){
+        std::cout<<"[-] invalide message format"<<std::endl;
+        return nullptr;
+    }
+    ServerMessage*serverMessage;
+    serverMessage = new ServerMessage(Score(-1, -1, -1, -1));
+
 
     std::string msg_type_tmp = ptree.get<std::string>("msg_type");
     SERVER_MESSAGE_TYPE msg_type = to_enum(msg_type_tmp);
     serverMessage->set_msg_type(msg_type);
-    if(msg_type == KILL_PLAYER || msg_type == CURRENT_TURN ){
-        auto id = ptree.get<uint8_t>("id");
+    if(msg_type == KILL_PLAYER || msg_type == CURRENT_TURN ||msg_type == MOVE_SUCCESS){
+        auto id = ptree.get<int>("id");
         serverMessage->set_id(id);
     }
     else if(msg_type == GRIDS_ASSIGNEMENT){
-        auto id = ptree.get<uint8_t>("id");
+        auto id = ptree.get<int>("id");
         serverMessage->set_id(id);
         std::string username = ptree.get<std::string>("username");
         serverMessage->set_username(username);
     }
     else if(msg_type == CHAT_S){
-        auto id = ptree.get<uint8_t>("id");
+        auto id = ptree.get<int>("id");
         serverMessage->set_id(id);
         std::string message = ptree.get<std::string>("message");
         serverMessage->set_chat_msg(message);
@@ -201,9 +276,11 @@ ServerMessage* ServerMessage::getServerMessage(const std::string& json_ServerMes
         serverMessage->set_err_type(error_to_enum(err));
         serverMessage->set_client_msg(ClientMessage::to_enum(client_ms));
     }
+    else if(msg_type == GRID){
+        serverMessage->set_grid(ptree.get<std::string>("grid"));
+        serverMessage->set_id(ptree.get<int>("id"));
+    }
 
-    //TODO continue.. GRID-MESSAGE,ERROR-MSG
-    //TODO if(msg_type == GRID_MESSAGE etc...)
     return serverMessage;
 }
 
@@ -213,10 +290,10 @@ ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::get_msg_type() const {
 void ServerMessage::set_msg_type(ServerMessage::SERVER_MESSAGE_TYPE messageType) {
     ServerMessage::m_msg_type = messageType;
 }
-unsigned char ServerMessage::get_id() const {
+int ServerMessage::get_id() const {
     return m_id;
 }
-void ServerMessage::set_id(unsigned char id) {
+void ServerMessage::set_id(int id) {
     ServerMessage::m_id = id;
 }
 const std::string &ServerMessage::get_grid() const {
@@ -231,8 +308,8 @@ const std::string &ServerMessage::get_chat_msg() const {
 void ServerMessage::set_chat_msg(const std::string &chatMsg) {
     ServerMessage::m_chat_msg = chatMsg;
 }
-const std::string &ServerMessage::get_username() const {
-    return m_username;
+const std::string ServerMessage::get_username() const {
+    return m_username.c_str();
 }
 void ServerMessage::set_username(const std::string &username) {
     ServerMessage::m_username = username;
@@ -251,5 +328,7 @@ void ServerMessage::set_err_type(ERRORS msg) {
 void ServerMessage::set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE s){
     error_message = s;
 }
+
+
 
 

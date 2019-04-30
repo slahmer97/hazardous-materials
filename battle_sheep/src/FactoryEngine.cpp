@@ -45,3 +45,23 @@ Engine *FactoryEngine::getNormalShot() {
     return ret;
 }
 
+Engine *FactoryEngine::getEngine(ENGINE_TYPE type){
+    if(type == RECONNAISSANCE)
+        return getReconnaissanceSkill();
+    else if(type == BROUILLEUR)
+        return getBrouilleurSkill();
+    else if(type == INTERCEPTEUR)
+        return getIntercepteurSkill();
+    else if(type == BOMBARDIER)
+        return getBombardierSkill();
+    else if(type == CONTRE_TORPILLEUR)
+        return getContreTorpilleurSkill();
+    else if(type == CROISEUR)
+        return getCroiseurSkill();
+    else if(type == PORTE_AVION)
+        return getPorteAvionSkill();
+
+
+    return getNormalShot();
+}
+

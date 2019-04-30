@@ -24,11 +24,13 @@ public:
     void play(Player* player,ClientMessage*);//TODO check if we
     Player* has(const std::string&);
     bool is_my_turn(Player*);
-    unsigned char get_current_turn_id();
+    int get_current_turn_id();
     void broadcast_message(const std::string&);
     std::string get_game_id();
     int assign_grid(Player*,int);
     Player* get_player(int);
+
+    bool is_ready();
 private:
     std::string m_game_id;
     Team* m_t1,*m_t2;

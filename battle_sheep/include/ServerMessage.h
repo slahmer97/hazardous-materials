@@ -14,21 +14,24 @@
 class ServerMessage {
 public:
     enum SERVER_MESSAGE_TYPE{
-        KILL_PLAYER,GRIDS_ASSIGNEMENT,ERROR,CHAT_S,CURRENT_TURN,SCORE_BROADCAST,LOGIN_SUCCESS,CREATED_SUCCESS,JOIN_SUCCESS
+        KILL_PLAYER,GRIDS_ASSIGNEMENT,ERROR,CHAT_S,CURRENT_TURN,SCORE_BROADCAST,LOGIN_SUCCESS,CREATED_SUCCESS,JOIN_SUCCESS,START,GRID,ENGINE_ADDED,MOVE_SUCCESS
     };
     enum SKILL_TYPE{
         SKILLED,NORMAL
     };
-    enum ERRORS{LOGIN_REQUIRE,GAME_DOES_NOT_EXIST,CONNECTION_LOST,ALREADY_CHOSEN};
+    enum ERRORS{LOGIN_REQUIRE,GAME_DOES_NOT_EXIST,CONNECTION_LOST,ALREADY_CHOSEN,ACTION_FAILED,ENGINE_ID_DOES_NOT_EXIST};
 
-    static std::string getKillPlayerMessage(unsigned char id_player_grid);
-    static std::string getGridAssinementMessage(const std::string& username, unsigned char id_grid);
+    static std::string getMoveSuccessMessage(int id);
+    static std::string getEngineAddedMessage();
+    static std::string getStartMessage();
+    static std::string getKillPlayerMessage(int id_player_grid);
+    static std::string getGridAssinementMessage(const std::string& username,int id_grid);
     static std::string getErrorMessage(ERRORS error,ClientMessage::CLIENT_MESSAGE_TYPE clientMessage);
-    static std::string getGridMessage(const std::string&);//TODO param is just the return string from Player.get_pub/priv_grid
-    static std::string getChatMessage(const std::string& message,unsigned char id);
+    static std::string getGridMessage(int id,const std::string&);//TODO param is just the return string from Player.get_pub/priv_grid
+    static std::string getChatMessage(const std::string& message,int id);
     static std::string getJoinSuccessMessage();
     static std::string getCreatedSucessMessage();
-    static std::string getCurrentTurnMessage(unsigned char id);
+    static std::string getCurrentTurnMessage(int id);
     static std::string getScoreBroadCastMessage(Score);
     static std::string getLoginSuccessMessage();
     static ServerMessage* getServerMessage(const std::string& json_ServerMessage);
@@ -39,7 +42,7 @@ public:
 
 private:
     SERVER_MESSAGE_TYPE m_msg_type;
-    unsigned char m_id;
+    int m_id;//unsigned char TODO
     std::string m_grid;
     std::string m_chat_msg;
     std::string m_username;
@@ -54,13 +57,13 @@ public:
 
     SERVER_MESSAGE_TYPE get_msg_type() const;
     void set_msg_type(SERVER_MESSAGE_TYPE messageType);
-    unsigned char get_id() const;
-    void set_id(unsigned char id);
+    int get_id() const;
+    void set_id(int id);
     const std::string &get_grid() const;
     void set_grid(const std::string &grid);
     const std::string &get_chat_msg() const;
     void set_chat_msg(const std::string &chatMsg);
-    const std::string &get_username() const;
+    const std::string get_username() const;
     void set_username(const std::string &username);
     void set_err_type(ERRORS);
     void set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE);

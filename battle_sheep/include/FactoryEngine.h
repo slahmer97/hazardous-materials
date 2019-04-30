@@ -12,6 +12,7 @@ class Engine;
 class FactoryEngine {
 
 public:
+    static Engine* getEngine(ENGINE_TYPE);
     static Engine* getPorteAvionSkill();
     static Engine* getCroiseurSkill();
     static Engine* getContreTorpilleurSkill();

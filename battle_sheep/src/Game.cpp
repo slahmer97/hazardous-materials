@@ -9,6 +9,7 @@ Game::Game(const std::string& game_id){
     m_t1 = new Team();
     m_t2 = new Team();
     m_score = new Score(10,10,10,10);
+    m_current_turn = TEAM1_PLAYER1;
 
 
 }
@@ -20,72 +21,129 @@ void Game::switch_turn(){
         case TEAM1_PLAYER1:
             m_current_turn = TEAM2_PLAYER1;
             break;
-        case TEAM1_PLAYER2:break;
+        case TEAM1_PLAYER2:
             m_current_turn = TEAM2_PLAYER2;
-        case TEAM2_PLAYER1:break;
+            break;
+        case TEAM2_PLAYER1:
             m_current_turn = TEAM1_PLAYER2;
-        case TEAM2_PLAYER2:break;
+            break;
+        case TEAM2_PLAYER2:
             m_current_turn = TEAM1_PLAYER1;
+            break;
     }
      on_game_state_changed();
 }
 
 void Game::on_game_state_changed() {
-    //TODO updating the view for all players....
-    std::string t1_player1_pub_view = m_t1->get_first_player()->get_pub_grid();
-    m_t1->broadcast_message(t1_player1_pub_view);
-    std::string t1_player2_pub_view = m_t1->get_second_player()->get_pub_grid();
-    m_t1->broadcast_message(t1_player2_pub_view);
-
-    std::string t1_player1_priv_view = m_t1->get_first_player()->get_priv_grid();
-    std::string t1_player2_priv_view = m_t1->get_second_player()->get_priv_grid();
-    m_t2->broadcast_message(t1_player1_priv_view);
-    m_t2->broadcast_message(t1_player2_priv_view);
-
-
-    std::string t2_player1_pub_view = m_t2->get_first_player()->get_pub_grid();
-    m_t2->broadcast_message(t2_player1_pub_view);
-    std::string t2_player2_pub_view = m_t2->get_second_player()->get_pub_grid();
-    m_t2->broadcast_message(t2_player2_pub_view);
-
-    std::string t2_player1_priv_view = m_t2->get_first_player()->get_priv_grid();
-    std::string t2_player2_priv_view = m_t2->get_second_player()->get_priv_grid();
-    m_t1->broadcast_message(t2_player1_priv_view);
-    m_t1->broadcast_message(t2_player2_priv_view);
-
 
     std::string score = ServerMessage::getScoreBroadCastMessage(*m_score);
     broadcast_message(score);
-    unsigned char current_turn_id = get_current_turn_id();
+
+
+
+    int current_turn_id = get_current_turn_id();
     std::string turn = ServerMessage::getCurrentTurnMessage(current_turn_id);
     broadcast_message(turn);
 
 
-    //send data to players...
+    //send  priv grids
+
+    //team 1 priv grid exchange
+  std::string m1 = ServerMessage::getGridMessage(1,m_t1->get_first_player()->get_priv_grid());
+
+    m_t1->get_second_player()->send_message(m1);
+
+    m_t1->get_first_player()->send_message(ServerMessage::getGridMessage(1,m_t1->get_first_player()->get_priv_grid()));
+    m_t1->get_second_player()->send_message(ServerMessage::getGridMessage(2,m_t1->get_second_player()->get_priv_grid()));
+    m_t1->get_first_player()->send_message(ServerMessage::getGridMessage(2,m_t1->get_second_player()->get_priv_grid()));
+
+    //team2 priv grid exchange
+    m_t2->get_second_player()->send_message(ServerMessage::getGridMessage(3,m_t2->get_first_player()->get_priv_grid()));
+    m_t2->get_first_player()->send_message(ServerMessage::getGridMessage(3,m_t2->get_first_player()->get_priv_grid()));
+    m_t2->get_second_player()->send_message(ServerMessage::getGridMessage(4,m_t2->get_second_player()->get_priv_grid()));
+    m_t2->get_first_player()->send_message(ServerMessage::getGridMessage(4,m_t2->get_second_player()->get_priv_grid()));
+
+
+
+    // 1 ==> 3,4
+    m_t2->get_second_player()->send_message(ServerMessage::getGridMessage(1,m_t1->get_first_player()->get_pub_grid()));
+    m_t2->get_first_player()->send_message(ServerMessage::getGridMessage(1,m_t1->get_first_player()->get_pub_grid()));
+
+
+    // 2 ==> 3,4
+    m_t2->get_second_player()->send_message(ServerMessage::getGridMessage(2,m_t1->get_second_player()->get_pub_grid()));
+    m_t2->get_first_player()->send_message(ServerMessage::getGridMessage(2,m_t1->get_second_player()->get_pub_grid()));
+
+
+    //3 ==> 1,2
+    m_t1->get_second_player()->send_message(ServerMessage::getGridMessage(3,m_t2->get_first_player()->get_pub_grid()));
+    m_t1->get_first_player()->send_message(ServerMessage::getGridMessage(3,m_t2->get_first_player()->get_pub_grid()));
+
+    //4 ==> 1,2
+    m_t1->get_second_player()->send_message(ServerMessage::getGridMessage(4,m_t2->get_second_player()->get_pub_grid()));
+    m_t1->get_first_player()->send_message(ServerMessage::getGridMessage(4,m_t2->get_second_player()->get_pub_grid()));
+
 }
 
-void Game::play(Player *player,ClientMessage * clientMessage) {
+void Game::play(Player *player,ClientMessage * clientMessage){
+
+    std::cout<<"[+] a player with id : "<<player->get_id()<<" is playing"<<std::endl;
+    ClientMessage::CLIENT_MESSAGE_TYPE msg_type = clientMessage->get_msg_type();
+    if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE){
+        ENGINE_TYPE engineType = clientMessage->get_engine_type();
+        Engine* engine = player->create_engine(engineType);
+        //TODO check if engine is null..
+        if(engine == nullptr){
+            std::cout<<"[-] player->create_engine() returned nullptr"<<std::endl;
+            return;
+        }
+        bool h = clientMessage->get_horizontal();
+        int x = clientMessage->get_x();
+        int y= clientMessage->get_y();
+        int ret = player->get_grid()->add_engine(engine,h,x,y);
+        if(ret == 1){
+            std::string sent_msg = ServerMessage::getEngineAddedMessage();
+            player->send_message(sent_msg);
+            switch_turn();
+        }
+        else{
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,msg_type);
+            player->send_message(err);
+        }
+    }
+    else if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::MOVE){
+        int engine_id = clientMessage->get_engine_id();
+        int x = clientMessage->get_x();
+        int y = clientMessage->get_y();
+        Engine* engine = player->get_engine_by_id(engine_id);
+        if(engine == nullptr){
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ENGINE_ID_DOES_NOT_EXIST,msg_type);
+            player->send_message(err);
+            return;
+        }
+
+        int ret = engine->move_engine(player->get_grid(),x,y);
+        if(ret == 1){
+            std::string msg = ServerMessage::getMoveSuccessMessage(engine_id);
+            player->send_message(msg);
+            switch_turn();
+        }
+        else{
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,msg_type);
+            player->send_message(err);
+        }
+    }
+    else{
+        std::cout<<"Action is not supported yet"<<std::endl;
+    }
+
 
 }
 
 
 void Game::start() {
-
-    //test
-
-    std::string grid_assign_1 = ServerMessage::getGridAssinementMessage(m_t1->get_first_player()->get_username(),1);
-    m_t1->get_second_player()->send_message(grid_assign_1);
-    std::string grid_assign_2 = ServerMessage::getGridAssinementMessage(m_t1->get_second_player()->get_username(),2);
-    m_t1->get_first_player()->send_message(grid_assign_2);
-    m_t2->broadcast_message(grid_assign_1);
-    m_t2->broadcast_message(grid_assign_2);
-
-    std::string grid_assign_3 = ServerMessage::getGridAssinementMessage(m_t2->get_first_player()->get_username(),3);
-    m_t2->get_second_player()->send_message(grid_assign_3);
-    std::string grid_assign_4 = ServerMessage::getGridAssinementMessage(m_t2->get_second_player()->get_username(),4);
-    m_t2->get_first_player()->send_message(grid_assign_4);
-    m_t1->broadcast_message(grid_assign_3);
-    m_t1->broadcast_message(grid_assign_4);
+    std::string start_msg =ServerMessage::getStartMessage();
+    broadcast_message(start_msg);
 
     on_game_state_changed();
 }
@@ -115,7 +173,7 @@ Player* Game::has(const std::string& player_id) {
 
     return nullptr;
 }
-unsigned char  Game::get_current_turn_id(){
+int  Game::get_current_turn_id(){
     if(m_current_turn == TEAM1_PLAYER1)
         return 1;
     if(m_current_turn == TEAM1_PLAYER2)
@@ -175,4 +233,13 @@ Player *Game::get_player(int i){
     if(i == 4)
         return m_t2->get_second_player();
     return nullptr;
+}
+
+bool Game::is_ready() {
+
+    if(m_t1->get_first_player() == nullptr || m_t1->get_second_player() == nullptr)
+        return false;
+
+    return !(m_t2->get_first_player() == nullptr || m_t2->get_second_player() == nullptr);
+
 }

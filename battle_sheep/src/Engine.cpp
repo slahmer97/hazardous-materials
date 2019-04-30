@@ -364,3 +364,10 @@ std::string Engine::engine_type_to_string(ENGINE_TYPE type) {
 
     return std::__cxx11::string();
 }
+
+void Engine::set_id(int id){
+    this->id = id;
+}
+int Engine::get_id(){
+    return this->id;
+}
