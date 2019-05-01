@@ -17,7 +17,7 @@ Engine::Engine(int size_a){
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
     m_motor_place = 0;
-    //m_weapon_state = WEAPON;
+    m_weapon_state = WEAPON_STATE::WEAPON_NOT_INTRODUCED;
     m_weapon_place = m_size-1;
     //m_shell_state = SHELL;
     m_is_on_grid=false;
@@ -134,14 +134,18 @@ int Engine::normal_shot(Grid *grid, int x, int y){
         return -1;
     if(grid->get_engine_x_y(m_x,m_y)==this)
         return -1;
+    /*if(m_current_health_point==0.f)
+        return -2;*/
     return grid->normal_shot(x, y);
 }
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -1;
+        return -2;
     if(grid->get_engine_x_y(m_x,m_y)==this)
+        return -3;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
         return -1;
     switch (type_of_shot){
 
@@ -168,10 +172,12 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
     if(grid1==nullptr || grid2 == nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -1;
+        return -2;
     if(grid1->get_engine_x_y(m_x,m_y)==this)
-        return -1;
+        return -3;
     if(grid2->get_engine_x_y(m_x,m_y)==this)
+        return -3;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
         return -1;
     switch (type_of_shot){
         case BOMBARDIER_SKILL:

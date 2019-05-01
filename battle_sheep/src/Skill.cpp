@@ -182,6 +182,8 @@ int Skill_cuirasse::use(Grid *grid, int x, int y, bool horizontal)
 {
     if (get_points() < POINT_COST)
         return -1;
+    
+    decrease_points(POINT_COST);
     int ret = grid->cross_shot(x, y, 1, false);
     return ret;
 }
@@ -198,6 +200,8 @@ int Skill_torpilleur::use(Grid *grid, int x, int y, bool horizontal)
 {
     if (get_points() < POINT_COST)
         return -1;
+    
+    decrease_points(POINT_COST);
     int ret = grid->first_to_drawn(x,y,horizontal,false);
     return ret;
 }
@@ -219,6 +223,8 @@ int Skill_intercepteur::use(Grid *grid1, Grid *grid2, int x, int y, bool horizon
 {
     if (get_points() < POINT_COST)
         return -1;
+    
+    decrease_points(POINT_COST);
     int ret1 = grid1->line_shot(x, y, 3, false, horizontal);
     int ret2 = grid2->line_shot(x, y, 3, false, horizontal);
     return ret1 + ret2;
@@ -231,7 +237,8 @@ int Skill_brouilleur::use(Grid *grid, int x, int y, bool horizontal)
 {
     if (get_points() < POINT_COST)
         return -1;
-
+    
+    decrease_points(POINT_COST);
     int ret = grid->rectangular_shot(x, y, 2, 2, true);
 
     return ret;
@@ -260,7 +267,8 @@ std::vector<std::vector<Square *>> Skill_patrouille::use(Grid *grid, int x, int 
 {
     if (get_points() < POINT_COST)
         return std::vector<std::vector<Square *>>();
-
+    
+    decrease_points(POINT_COST);
     return grid->radar_rectangular(x, y, 3, 3);
 }
 
@@ -271,6 +279,8 @@ int Skill_reconnaissance::use(Grid *grid, int x, int y, bool horizontal)
 {
     if (get_points() < POINT_COST)
         return -1;
+    
+    decrease_points(POINT_COST);
     int ret = grid->first_to_drawn(x, y, horizontal, false);
     return ret;
 }
