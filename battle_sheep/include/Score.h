@@ -18,6 +18,11 @@ public:
     int get_s3();
     int get_s4();
 
+    void set_s1(int);
+    void set_s2(int);
+    void set_s3(int);
+    void set_s4(int);
+
 
 
 

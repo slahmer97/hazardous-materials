@@ -19,10 +19,11 @@ class Player {
 public:
     Player(const std::shared_ptr<WssServer::Connection>& m_connection);
 
+    int get_engine_size();
     unsigned char get_id() const;
-    void set_id(unsigned char id);
+    void set_id(int id);
     const std::string &get_username() const;
-    void set_username(const std::string &username);
+    void set_username(char *username);
     void sendMessage(const std::string& msg);
     void desactivate_chat();
     void activate_chat();
@@ -45,11 +46,15 @@ public:
     void set_logged_in();
     bool is_logged_in();
 
+    std::vector<Engine*> get_engines();
+
+    void forward_chat_message(const std::string& );
+    bool is_ready();
     Engine* get_engine_by_id(int id);
     Engine* create_engine(ENGINE_TYPE);
 private:
     std::vector<Engine*> m_engine;
-    unsigned char m_id = -1;
+    int m_id = -1;
     std::string m_username;
     bool m_mute_chat = true;
     Game * m_game;

@@ -36,3 +36,11 @@ void Team::set_first_player(Player *p) {
 void Team::set_second_player(Player *p) {
     m_player2 = p;
 }
+
+void Team::forward_chat_message(Player* player,const std::string& msg){
+    if(m_player1 != player && m_player1 != nullptr ){
+        m_player1->forward_chat_message(msg);
+    }
+    if(m_player2 != player && m_player2 != nullptr)
+        m_player2->forward_chat_message(msg);
+}
