@@ -16,9 +16,12 @@ public:
     static Engine* getPorteAvionSkill();
     static Engine* getCroiseurSkill();
     static Engine* getContreTorpilleurSkill();
+    static Engine* getCuirasseSkill();
+    static Engine* getTorpilleurSkill();
     static Engine* getBombardierSkill();
     static Engine* getIntercepteurSkill();
     static Engine* getBrouilleurSkill();
+    static Engine* getPatrouileSkill();
     static Engine* getReconnaissanceSkill();
     static Engine* getNormalShot();
 };

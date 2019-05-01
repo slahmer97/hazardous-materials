@@ -13,7 +13,7 @@ TEST_F(GridTest, GRID_Engine)
     ASSERT_EQ(grid_1->check_putable(engine1, true,1, 1), 1);
     ASSERT_EQ(grid_1->add_engine(engine1, true, 1, 1), 1);
     ASSERT_EQ(grid_1->check_putable(engine2, true, 1, 1), -1);
-    ASSERT_EQ(grid_1->add_engine(engine2, true, 1, 1), -1);
+    ASSERT_EQ(grid_1->add_engine(engine2, false, 1, 1), -1);
     //proximity_check
     ASSERT_EQ(grid_1->proximity_check(1, 1, nullptr), -100);
     ASSERT_EQ(grid_1->proximity_check(-1, -1, engine1), -1);
