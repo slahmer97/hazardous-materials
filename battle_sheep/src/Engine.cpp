@@ -146,19 +146,19 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
     switch (type_of_shot){
 
         case PORTE_AVION_SKILL:
-            return ((Skill_porte_avion*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_porte_avion*)m_skill)->use(grid, x, y, horizontal);
         case CROISEUR_SKILL:
-            return ((Skill_croiseur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_croiseur*)m_skill)->use(grid, x, y, horizontal);
         case CONTRE_TORPILLEUR_SKILL:
-            return ((Skill_contre_torpilleur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_contre_torpilleur*)m_skill)->use(grid, x, y, horizontal);
         case CUIRASSE_SKILL:
-            return ((Skill_cuirasse*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_cuirasse*)m_skill)->use(grid, x, y, horizontal);
         case TORPILLEUR_SKILL:
-            return ((Skill_torpilleur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_torpilleur*)m_skill)->use(grid, x, y, horizontal);
         case BROUILLEUR_SKILL:
-            return ((Skill_brouilleur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_brouilleur*)m_skill)->use(grid, x, y, horizontal);
         case RECONNAISSANCE_SKILL:
-            return ((Skill_reconnaissance*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_reconnaissance*)m_skill)->use(grid, x, y, horizontal);
         default:
             return -1000;//this function can't call other skills :/
     }
@@ -175,11 +175,11 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
         return -1;
     switch (type_of_shot){
         case BOMBARDIER_SKILL:
-            return ((Skill_bombardier*)&m_skill)->use(grid1,grid2,x,y,horizontal);
+            return ((Skill_bombardier*)m_skill)->use(grid1,grid2,x,y,horizontal);
         case INTERCEPTEUR_SKILL:
-            return ((Skill_intercepteur*)&m_skill)->use(grid1,grid2,x,y,horizontal);
+            return ((Skill_intercepteur*)m_skill)->use(grid1,grid2,x,y,horizontal);
         case PATROUILE_SKILL:
-            return ((Skill_patrouille*)&m_skill)->use(grid1,grid2,x,y,horizontal); //TODO move it to other skill shot function
+            return ((Skill_patrouille*)m_skill)->use(grid1,grid2,x,y,horizontal); //TODO move it to other skill shot function
         default:
             return -1000;
     }

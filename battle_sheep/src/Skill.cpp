@@ -66,6 +66,8 @@ std::string Skill::shot_type_to_string(SHOT_TYPE shot) {
         return "reconnaissance_skill";
     else if(shot == PATROUILE_SKILL)
         return "patrouile_skill";
+    else if(shot == CUIRASSE_SKILL)
+        return "cuirasse_skill";
     else if(shot == NORMAL_SHOT)
         return "normal_shot";
 
@@ -93,6 +95,8 @@ SHOT_TYPE Skill::shot_type_to_type(const std::string &shot) {
         return RECONNAISSANCE_SKILL;
     else if(shot == "patrouile_skill")
         return PATROUILE_SKILL;
+    else if(shot == "cuirasse_skill")
+        return CUIRASSE_SKILL;
     else if(shot == "normal_shot")
         return NORMAL_SHOT;
     return NORMAL_SHOT;
