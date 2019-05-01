@@ -8,9 +8,20 @@
 
 int main(int argc,char**argv){
 
-    std::string msg = ClientMessage::getChoseGridMessage(1);
+    Player p(nullptr);
 
-    std::cout<<msg;
+    std::string s = "{\n"
+                    "    \"msg_type\": \"move\",\n"
+                    "    \"engine_id\": \"0\",\n"
+                    "    \"x\": \"1\",\n"
+                    "    \"y\": \"2\"\n"
+                    "}";
+
+
+    std::cout<<s;
+    ClientMessage *c = ClientMessage::getClientMessage(s);
+
+
 
 
 

@@ -6,6 +6,7 @@
 
 #include <Player.h>
 #include <boost/lexical_cast.hpp>
+#include <FactoryEngine.h>
 
 void Player::sendMessage(const std::string& msg) {
      auto out_message = std::make_shared<WssServer::OutMessage>();
@@ -29,7 +30,7 @@ const std::string &Player::get_username() const {
      return m_username;
 }
 void Player::set_username(const std::string &username) {
-     m_username = username;
+     m_username = std::string(username);
 }
 bool Player::equals(Player * player) {
      return m_connection == player->get_connection();
@@ -64,15 +65,16 @@ Grid * Player::get_grid(){
 
 std::string Player::get_pub_grid(){
 
-    return std::__cxx11::string();
+    return "Pub grid";
 }
 
 std::string Player::get_priv_grid() {
     std::string ret;
     for (int line = 0; line < 10; ++line) {
         for (int column = 0; column < 10 ; ++column) {
-            ret += m_grid->get(line,column)->to_pri_string()+std::string((line == 9 && column == 9)?"":"&");
+            ret += m_grid->get(line,column)->to_pri_string()+std::string("----");
         }
+        ret +=std::string("\n======================================================================\n");
     }
     return ret;
 }
@@ -86,3 +88,14 @@ bool Player::is_logged_in(){
 
 
 
+Engine* Player::get_engine_by_id(int id){
+    if(m_engine.size() >= id)
+        return m_engine[id-1];
+}
+Engine* Player::create_engine(ENGINE_TYPE engine){
+    Engine* ret = FactoryEngine::getEngine(engine);
+    this->m_engine.push_back(ret);
+    if(ret != nullptr)
+        ret->set_id(m_engine.size()+1);
+    return ret;
+}

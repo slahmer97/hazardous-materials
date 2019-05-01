@@ -23,6 +23,7 @@ Engine::Engine(int size_a){
     m_is_on_grid=false;
     m_x = -1;
     m_y = -1;
+    m_skill = nullptr;
 }
 
 
@@ -295,7 +296,7 @@ float Engine::take_care(float care){
 
 ENGINE_TYPE Engine::get_engine_type() {
     if(m_skill == nullptr)
-        return NOT_INTRODUCED;
+        return ENGINE_TYPE::NOT_INTRODUCED;
     return m_skill->get_engine_type();
 }
 
@@ -362,4 +363,11 @@ std::string Engine::engine_type_to_string(ENGINE_TYPE type) {
         return  "incendiary";
 
     return std::__cxx11::string();
+}
+
+void Engine::set_id(int id){
+    this->id = id;
+}
+int Engine::get_id(){
+    return this->id;
 }

@@ -23,18 +23,16 @@ void GameScheduler::onConnectionOpened(const std::shared_ptr<WssServer::Connecti
 
 void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connection>& connection, const std::string& msg){
 
-    boost::property_tree::ptree ptree;
-    std::istringstream is (msg);
-    try {
-        boost::property_tree::json_parser::read_json(is,ptree);
-    }catch (boost::property_tree::json_parser_error e){
-        std::cout<<"[-] invalide message format"<<std::endl;
-        return;
-    }
+
+
     std::cout<<"\n--->Received : \n"<<msg<<std::endl;
     Game *game = nullptr;
     Player *p;
     ClientMessage *clientMessage = ClientMessage::getClientMessage(msg);
+    if(clientMessage == nullptr){
+        //connection.get()->send(ServerMessage::getErrorMessage());
+        return;
+    }
     int type;
     if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::CREATE_GAME )
         type = 2;
@@ -51,7 +49,10 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
     std::string player_id = boost::lexical_cast<std::string>(connection.get());
     std::cout<<"[+] new player has sent message with id : "<<player_id<<std::endl;
 
-    p = get_player(type,player_id);
+    p = get_player(1,player_id);
+
+    if(p == nullptr)//TODO CHANGE LATER
+        p = get_player(2,player_id);
 
     if(p == nullptr){
         //ERROR player doesn't exist
@@ -132,14 +133,23 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
         }
         else{
             notify_all_except(id,player_id,game);
+            if(game->is_ready()){
+                std::cout<<"game is ready .."<<std::endl;
+                std::cout<<"game ref : "<<game;
+                game->start();
+
+            }
         }
 
     }
-
-    else {
+    else if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE || clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::MOVE) {
         game = p->get_game();
         if(game->is_my_turn(p)){
+
             game->play(p,clientMessage);
+        }
+        else{
+            std::cout<<"[-] =======================it's not your turn now"<<std::endl;
         }
 
     }
@@ -174,7 +184,11 @@ Player *GameScheduler::get_player(int type,const std::string& connection){
                 return g;
     }
     else
-        return nullptr;
+        for(Player* g : m_offline_players)
+            if(g->is_me(connection))
+                return g;
+
+    return nullptr;
 }
 Game* GameScheduler::get_offline_game(const std::string& id){
     for(Game* g : m_offline_games)

@@ -198,8 +198,9 @@ int Square::increase_health(float care){
 }
 
 std::string Square::to_pri_string(){
-    std::string engine = (m_engine == nullptr)? "nl": Engine::engine_type_to_string(m_engine->get_engine_type());
-    std::string ret = boost::lexical_cast<std::string>(m_health_pr)+"|"+square_type_to_string(m_square_type)+"|"+engine;
+    std::string engine = std::string("engine:")+std::string((m_engine == nullptr) ? "null" : std::to_string(m_engine->get_id()));
+    std::string ret = std::string("health:")+boost::lexical_cast<std::string>(m_health_pr)+"|"
+            +std::string("square_type:")+square_type_to_string(m_square_type)+"|"+engine;
     return ret;
 }
 

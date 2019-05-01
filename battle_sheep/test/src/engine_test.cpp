@@ -71,6 +71,7 @@ TEST_F(EngineTest,ENGINE_Getter_Setters_TEST){
 
 }
 TEST_F(EngineTest,ENGINE_ACTIVATE_DESACTIVATE_TEST){
+
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR);
     m_engine1->desactivate_motor();
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR_DESACTIVATED);

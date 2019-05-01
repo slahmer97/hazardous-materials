@@ -9,9 +9,12 @@
 #include "../simple_web_socket/server_wss.hpp"
 #include "Game.h"
 #include <Grid.h>
+#include <Engine.h>
+
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
 class Game;
 class Grid;
+class Engine;
 class Player {
 public:
     Player(const std::shared_ptr<WssServer::Connection>& m_connection);
@@ -41,7 +44,11 @@ public:
 
     void set_logged_in();
     bool is_logged_in();
+
+    Engine* get_engine_by_id(int id);
+    Engine* create_engine(ENGINE_TYPE);
 private:
+    std::vector<Engine*> m_engine;
     unsigned char m_id = -1;
     std::string m_username;
     bool m_mute_chat = true;
