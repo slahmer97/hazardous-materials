@@ -30,11 +30,11 @@ public:
     */
     Engine *get_engine_x_y(int x, int y);
     
-    /* Input : Engine, bool horizontal (orientation), int size x,y (position)
+    /* Input : Engine, bool horizontal (orientation) x,y (position)
     * Return a int, to check if an engine is putable at a place (x,y)
     * Ouput : 1 yes, -1 no or -100 is not an engine
     */
-    int check_putable(Engine *engine, bool horizontal, int size, int x, int y);
+    int check_putable(Engine *engine, bool horizontal, int x, int y);
 
     /* Input : Engine
     * Remove an engine of the grid

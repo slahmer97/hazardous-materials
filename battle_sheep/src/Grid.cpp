@@ -39,11 +39,11 @@ Engine *Grid::get_engine_x_y(int x, int y)
     }
     return grid[x][y]->get_engine();
 }
-int Grid::check_putable(Engine *engine, bool horizontal, int size, int x, int y)
+int Grid::check_putable(Engine *engine, bool horizontal, int x, int y)
 {
     if(engine==nullptr)
         return -100;
-    for(int i=0 ; i < size ; i++)
+    for(int i=0 ; i < engine->get_size() ; i++)
     {
         if(horizontal)
         {
@@ -88,6 +88,8 @@ int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
     if(engine==nullptr)
         return -100;
     if(engine->get_is_on_grid()==true)
+        return -1;
+    if(check_putable(engine,horizontal,x, y)!=1)
         return -1;
     float engine_square_health[engine->get_size()];
     for(int i=0; i<engine->get_size(); i++)
