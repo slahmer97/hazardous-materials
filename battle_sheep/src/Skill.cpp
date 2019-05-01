@@ -137,7 +137,7 @@ int Skill_croiseur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
     std::exit(1);
 }
 
-Skill_contre_torpilleur::Skill_contre_torpilleur() : Skill(ENGINE_TYPE::TORPILLEUR)
+Skill_contre_torpilleur::Skill_contre_torpilleur() : Skill(ENGINE_TYPE::CONTRE_TORPILLEUR)
 {
 }
 Skill_contre_torpilleur::Skill_contre_torpilleur(ENGINE_TYPE engine_type) : Skill(engine_type)
