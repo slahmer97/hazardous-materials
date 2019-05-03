@@ -103,9 +103,9 @@ set (
 # Header files
 include_directories(include)
 
-# The three executables files
-# The server
-add_executable(server src/server.cpp include/server.h ${SHARED_SOURCES} ${SERVER_ONLY_SOURCES})
+# The executables files
+# The old server, now hosted in main_server.h
+#add_executable(server src/server.cpp include/server.h ${SHARED_SOURCES} ${SERVER_ONLY_SOURCES})
 
 
 # We compile the client only if sfml was found
@@ -131,7 +131,7 @@ endif()
 add_executable(testing src/main_tmp.cpp ${SHARED_SOURCES} )
 
 # The server itself
-add_executable(server src/main_server.cpp  ${SHARED_SOURCES})
+add_executable(server src/main_server.cpp  ${SHARED_SOURCES} ${SERVER_ONLY_SOURCES})
 # The main used for testing
 add_executable(test_main src/main_test.cpp ${SHARED_SOURCES})
 # The CLI client to test the server
