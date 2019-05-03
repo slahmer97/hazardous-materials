@@ -5,6 +5,10 @@
 #include "../include/game_menu.h"
 #include "../include/menu.h"
 
+
+#include "../include/ServerMessage.h"
+#include "../include/ClientMessageSender.h"
+
 /**
  * Main class of the client-side GUI
  */
@@ -15,7 +19,7 @@ class Interface
 		/**
 		 * Constructor of the class
 		 */
-		Interface();
+		Interface(WssClient* connection);
 
 		/**
 		 * Start the rendering and updating loop, displaying the Interface
@@ -43,6 +47,30 @@ class Interface
 		 */
 		Menu* currentMenu = nullptr;
 
+		/**
+		 * The connection to the server
+		 */
+		WssClient::Connection* co;
+
+		/**
+		 * Method used to receive messages from the server, it's here that everything is parseda first time
+		 */
+		void on_server_message_received( shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message  );
+
+		/**
+		 * Method called when the server is first started
+		 */
+		void on_server_connection_open( shared_ptr<WssClient::Connection> connection);
+		
+		/**
+		 * Method called when the server is closed
+		 */
+		void on_server_connection_closed( shared_ptr<WssClient::Connection> connection, int status, const std::string &reason);
+
+		/**
+		 * Method called when we receive an error from the server
+		 */
+		void on_server_connection_error(shared_ptr<WssClient::Connection>, const SimpleWeb::error_code &ec);
 };
 
 #endif
