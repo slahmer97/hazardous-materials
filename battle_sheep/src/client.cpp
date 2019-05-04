@@ -3,8 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-
-#include <client_wss.hpp>
+#include <thread>
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 int main(int argv, char**argc){
@@ -37,7 +36,7 @@ int main(int argv, char**argc){
 
 
 	std::cout<<"Creating connection"<<std::endl;
-	WssClient client(hostname+":"+port+"/game", false);
+	WssClient client(hostname+std::string(":")+std::to_string(port)+std::string("/game"), false);
 
 	std::cout<<"Creating interface"<<std::endl;
 	Interface inter(&client, username, password);

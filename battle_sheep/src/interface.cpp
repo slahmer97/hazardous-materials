@@ -6,7 +6,7 @@
 
 
 
-Interface(WssClient* connection, std::string username, std::password):
+Interface(WssClient * connection, std::string username, std::password):
 	player(username),
 	password(password),
 	window(sf::VideoMode(960,540), "Battle Sheep"),
@@ -14,23 +14,23 @@ Interface(WssClient* connection, std::string username, std::password):
 	
 {
 	//We pass the method dedicated to receive messages via a lambda function
-	co->on_message = [this] (shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message) {
+	co->on_message = [this] (std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message) {
 		this->on_server_message_received(connection, in_message);
 	};
 
 	//We pass the method dedicated to detect the connection opening via a lambda function
 	
-    co->on_open = [this](shared_ptr<WssClient::Connection> connection) {
+    co->on_open = [this](std::shared_ptr<WssClient::Connection> connection) {
 		this->on_server_connection_open(connection);
 	};
 	
 	//Same for the method dedicated to the closing
-	co->on_close = [this](shared_ptr<WssClient::Connection> connection, int status, const string &reason){
+	co->on_close = [this](std::shared_ptr<WssClient::Connection> connection, int status, const string &reason){
 		this->on_server_connection_closed(connection, status, reason);
 	};
 
 	//And the method dedicated to errors from the connection
-	co->on_error = [this](shared_ptr<WssClient::Connection> connection, const SimpleWeb::error_code &ec) {
+	co->on_error = [this](std::shared_ptr<WssClient::Connection> connection, const SimpleWeb::error_code &ec) {
 		this->on_server_connection_error(connection, ec);
 	};
 }
@@ -90,7 +90,7 @@ void Interface::change_current_menu(Menu* newMenu){
 
 
 
-void Interface::on_server_message_received( shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message  ){
+void Interface::on_server_message_received( std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message  ){
 	ServerMessage m = ServerMessage::getServerMessage(in_message->string());
 	
 	//Les messages normaux
@@ -136,7 +136,7 @@ void Interface::handle_errror_message(ServerMessage* m){
 }
 
 
-void Interface::on_server_connection_open( shared_ptr<WssClient::Connection> connection){
+void Interface::on_server_connection_open( std::shared_ptr<WssClient::Connection> connection){
 
 	if(!ClientMessageSender::isUp())
 		ClientMessageSender::setServer(connection.get());
@@ -150,12 +150,12 @@ void Interface::on_server_connection_open( shared_ptr<WssClient::Connection> con
 
 
 
-void Interface::on_server_connection_closed( shared_ptr<WssClient::Connection> connection, int status, const std::string &reason){
+void Interface::on_server_connection_closed( std::shared_ptr<WssClient::Connection> connection, int status, const std::string &reason){
 	std::cout<<"Server connection closed with status code "<<status<<" and reason "<<reason<<std::endl;
 }
 
 
-void Interface::on_server_connection_error(shared_ptr<WssClient::Connection>, const SimpleWeb::error_code &ec){
+void Interface::on_server_connection_error(std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code &ec){
 	
 	std::cout "Server connection error : " << ec << " with message " << ec.message() << std::endl;
 

@@ -9,6 +9,8 @@
 #include "../include/ServerMessage.h"
 #include "../include/ClientMessageSender.h"
 
+#include <client_wss.hpp>
+
 /**
  * Main class of the client-side GUI
  */
@@ -19,7 +21,7 @@ class Interface
 		/**
 		 * Constructor of the class
 		 */
-		Interface(WssClient* connection, std::string username = "player", std::string password = "");
+		Interface(WssClient * connection, std::string username = "player", std::string password = "");
 
 		/**
 		 * Start the rendering and updating loop, displaying the Interface
@@ -62,7 +64,7 @@ class Interface
 		/**
 		 * Method used to receive messages from the server, it's here that everything is parseda first time
 		 */
-		void on_server_message_received( shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message  );
+		void on_server_message_received( std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message  );
 
 		/**
 		 * Method used to handle error message, to free space in on_server_message_received
@@ -72,17 +74,17 @@ class Interface
 		/**
 		 * Method called when the server is first started
 		 */
-		void on_server_connection_open( shared_ptr<WssClient::Connection> connection);
+		void on_server_connection_open( std::shared_ptr<WssClient::Connection> connection);
 		
 		/**
 		 * Method called when the server is closed
 		 */
-		void on_server_connection_closed( shared_ptr<WssClient::Connection> connection, int status, const std::string &reason);
+		void on_server_connection_closed( std::shared_ptr<WssClient::Connection> connection, int status, const std::string &reason);
 
 		/**
 		 * Method called when we receive an error from the server
 		 */
-		void on_server_connection_error(shared_ptr<WssClient::Connection>, const SimpleWeb::error_code &ec);
+		void on_server_connection_error(std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code &ec);
 };
 
 #endif
