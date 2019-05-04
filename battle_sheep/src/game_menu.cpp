@@ -5,7 +5,8 @@ GameMenu::GameMenu():
 	b1("",280,420,100,50),
 	b2("",580,420,100,50),
 	grid_self(nullptr, 10,10, 50,50),
-	grid_opponent(nullptr, 10,10,590,50)
+	grid_opponent(nullptr, 10,10,590,50),
+	currentState(STATE_DISABLED)
 {
   if (!grille.loadFromFile("assets/textures/grille_10x10.png"))
   {

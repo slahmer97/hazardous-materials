@@ -31,6 +31,13 @@ class DisplayGrid : Component {
 		bool displayAir = false;
 
 		/**
+		 * The currently selected case, to hightlight a boat/plane or to aim
+		 */
+		int selectedX = -1, selectedY = -1;
+
+
+
+		/**
 		 * Set the listener for the return button
 		 */
 		void setListener(GridActionListener* listener);
@@ -69,8 +76,9 @@ class DisplayGrid : Component {
 		 */
 		std::vector<std::vector<sf::Sprite>> spritesShip;
 		std::vector<std::vector<sf::Sprite>> spritesPlanes;
-
-
+	
+		//TODO: create member to contain the ships/planes received from the network
+		//TODO: create member to store successful shots on this grid
 
 };
 

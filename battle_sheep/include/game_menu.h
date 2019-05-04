@@ -10,6 +10,17 @@
 #include "../include/ServerMessage.h"
 #include "../include/ClientMessageSender.h"
 
+
+enum GameMenuState {
+	STATE_PLACE,
+	STATE_DISABLED,
+	STATE_PLAY,
+	STATE_TURN_OTHER
+};
+
+//TODO: implement current selected ship/plane to be highlighted
+//TODO: implement ghost of the ship you have to place
+
 class GameMenu : public Menu, public ClickListener
 {
 	public:
@@ -24,6 +35,8 @@ class GameMenu : public Menu, public ClickListener
 		virtual void on_click(Component* button);
 
 		~GameMenu();
+		
+		GameMenuState currentState;
 	private:
 		/**
 		 * Button to confirm the selected action and leave the
@@ -38,7 +51,6 @@ class GameMenu : public Menu, public ClickListener
 		DisplayGrid grid_self, grid_opponent;
 
 		sf::Texture grille;
-
 
 
 };
