@@ -3,10 +3,12 @@
 #include "../include/display_grid.h"
 #include "../include/textarea.h"
 #include "../include/textfield.h"
+#include <iostream>
+
+using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 
 
-
-Interface(WssClient * connection, std::string username, std::password):
+Interface(WssClient * connection, std::string username, std::string password):
 	player(username),
 	password(password),
 	window(sf::VideoMode(960,540), "Battle Sheep"),
@@ -90,58 +92,125 @@ void Interface::change_current_menu(Menu* newMenu){
 
 
 
-void Interface::on_server_message_received( std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message  ){
-	ServerMessage m = ServerMessage::getServerMessage(in_message->string());
+void Interface::on_server_message_received( const std::shared_ptr<WssClient::Connection>& connection, std::shared_ptr<WssClient::InMessage> in_message  ){
+	ServerMessage *m = ServerMessage::getServerMessage(in_message->string());
 	
 	//Les messages normaux
-	switch(m.get_msg_type()){
-		case LOGIN_SUCCESS:
-			{
-				//We managed to login
-				std::cout<<"Succefully logged in with username '"<<username<<"'"<<std::endl;
-				std::cout<<"Attempting to login on game "
-			}
-			break;
-		case ERROR://Handle error message
-			{
-				handle_errror_message(&m);
-			}
-			break;
-		case CREATED_SUCCESS:
-			{
-				std::cout<<"Succefullt created game default"<<std::endl;
-			}
-			break;
-		//Add any other messages that need to be transmitted to the menu
-		case MOVE:
-		case CURRENT_TURN:
-			GameMenu* menu = dynamic_cast<GameMenu*>(this->currentMenu);
-			if(menu != nullptr){
-				menu->handle_server_message(&m);
-			}
-			break;
-	}
+	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
+	switch(msg_type){
+        case ServerMessage::KILL_PLAYER:
+            {
+
+            }
+            break;
+        case ServerMessage::GRIDS_ASSIGNEMENT:
+            {
+
+            }
+            break;
+        case ServerMessage::ERROR:
+            {
+
+            }
+            break;
+        case ServerMessage::CHAT_S:break;
+            {
+
+            }
+        case ServerMessage::CURRENT_TURN:break;
+            {
+
+            }
+        case ServerMessage::SCORE_BROADCAST:break;
+            {
+
+            }
+        case ServerMessage::LOGIN_SUCCESS:break;
+            {
+
+            }
+        case ServerMessage::CREATED_SUCCESS:break;
+            {
+
+            }
+        case ServerMessage::JOIN_SUCCESS:break;
+            {
+
+            }
+        case ServerMessage::START:break;
+            {
+
+            }
+        case ServerMessage::GRID:break;
+            {
+
+            }
+        case ServerMessage::ENGINE_ADDED:break;
+            {
+
+            }
+        case ServerMessage::MOVE_SUCCESS:break;
+            {
+
+            }
+        case ServerMessage::ROTATE_SUCCESS:break;
+            {
+
+            }
+    }
 
 }
 
 void Interface::handle_errror_message(ServerMessage* m){
-	switch(m->get_err_type()){
-		case GAME_DOES_NOT_EXIST:
+    ServerMessage::ERRORS error = m->get_err_type();
+	switch(error){
+		case ServerMessage::GAME_DOES_NOT_EXIST:
 			{
-				std::cout<<"Default game inexistant, requesting creation of it"<<endl;
+				std::cout<<"Default game inexistant, requesting creation of it"<<std::endl;
 				ClientMessageSender::sendCreateGameRequest("default");
 			}
 			break;
-	}
+        case ServerMessage::LOGIN_REQUIRE:
+            {
+
+            }
+            break;
+        case ServerMessage::CONNECTION_LOST:
+            {
+
+            }
+
+            break;
+        case ServerMessage::ALREADY_CHOSEN:
+            {
+
+            }
+            break;
+        case ServerMessage::ACTION_FAILED:
+            {
+
+            }
+            break;
+        case ServerMessage::ENGINE_ID_DOES_NOT_EXIST:
+            {
+
+            }
+            break;
+        case ServerMessage::GRID_ID_DOES_NOT_EXIST:
+            {
+
+            }
+            break;
+    }
 }
 
 
-void Interface::on_server_connection_open( std::shared_ptr<WssClient::Connection> connection){
+void Interface::on_server_connection_open( const std::shared_ptr<WssClient::Connection>& connection){
 
 	if(!ClientMessageSender::isUp())
 		ClientMessageSender::setServer(connection.get());
 
-	cout << "Server connection opened, sending login information" << endl;
+	std::cout<< "Server connection opened, sending login information" << std::endl;
 	
 	//When the connection is established, we send the login information
 	ClientMessageSender::sendLoginRequest(username, password);
@@ -150,14 +219,14 @@ void Interface::on_server_connection_open( std::shared_ptr<WssClient::Connection
 
 
 
-void Interface::on_server_connection_closed( std::shared_ptr<WssClient::Connection> connection, int status, const std::string &reason){
+void Interface::on_server_connection_closed( const std::shared_ptr<WssClient::Connection>& connection, int status, const std::string &reason){
 	std::cout<<"Server connection closed with status code "<<status<<" and reason "<<reason<<std::endl;
 }
 
 
-void Interface::on_server_connection_error(std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code &ec){
-	
-	std::cout "Server connection error : " << ec << " with message " << ec.message() << std::endl;
+void Interface::on_server_connection_error(const std::shared_ptr<WssClient::Connection>& connection, const SimpleWeb::error_code &ec){
+
+	std::cout<<"Server connection error : " << ec << " with message " << ec.message() << std::endl;
 
 }
 

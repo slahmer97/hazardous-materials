@@ -71,6 +71,7 @@ public:
     void set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE);
 
 
+    ERRORS get_err_type();
 };
 
 

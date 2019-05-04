@@ -348,4 +348,9 @@ void ServerMessage::set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE s){
     error_message = s;
 }
 
+ServerMessage::ERRORS ServerMessage::get_err_type(){
+
+
+}
+
 
