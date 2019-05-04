@@ -31,6 +31,31 @@ void Game::switch_turn(){
             m_current_turn = TEAM1_PLAYER1;
             break;
     }
+    int score = 0;
+    for(Engine* e : m_t1->get_first_player()->get_engines())
+        score += static_cast<int>(e->get_current_health_point());
+    this->m_score->set_s1(score);
+
+
+    score = 0;
+    for(Engine* e : m_t1->get_second_player()->get_engines())
+        score += static_cast<int>(e->get_current_health_point());
+    this->m_score->set_s2(score);
+
+
+    score = 0;
+    for(Engine* e : m_t2->get_first_player()->get_engines())
+        score += static_cast<int>(e->get_current_health_point());
+    this->m_score->set_s3(score);
+
+
+    score = 0;
+    for(Engine* e : m_t2->get_second_player()->get_engines())
+        score += static_cast<int>(e->get_current_health_point());
+    this->m_score->set_s4(score);
+
+
+    //TODO may be check if some player is dead then send them END OF GAME
      on_game_state_changed();
 }
 
@@ -89,29 +114,7 @@ void Game::play(Player *player,ClientMessage * clientMessage){
 
     std::cout<<"[+] a player with id : "<<player->get_id()<<" is playing"<<std::endl;
     ClientMessage::CLIENT_MESSAGE_TYPE msg_type = clientMessage->get_msg_type();
-    if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE){
-        ENGINE_TYPE engineType = clientMessage->get_engine_type();
-        Engine* engine = player->create_engine(engineType);
-        //TODO check if engine is null..
-        if(engine == nullptr){
-            std::cout<<"[-] player->create_engine() returned nullptr"<<std::endl;
-            return;
-        }
-        bool h = clientMessage->get_horizontal();
-        int x = clientMessage->get_x();
-        int y= clientMessage->get_y();
-        int ret = player->get_grid()->add_engine(engine,h,x,y);
-        if(ret == 1){
-            std::string sent_msg = ServerMessage::getEngineAddedMessage();
-            player->send_message(sent_msg);
-            switch_turn();
-        }
-        else{
-            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,msg_type);
-            player->send_message(err);
-        }
-    }
-    else if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::MOVE){
+   if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::MOVE){
         int engine_id = clientMessage->get_engine_id();
         int x = clientMessage->get_x();
         int y = clientMessage->get_y();
@@ -240,6 +243,24 @@ bool Game::is_ready() {
     if(m_t1->get_first_player() == nullptr || m_t1->get_second_player() == nullptr)
         return false;
 
-    return !(m_t2->get_first_player() == nullptr || m_t2->get_second_player() == nullptr);
+    if(m_t2->get_first_player() == nullptr || m_t2->get_second_player() == nullptr)
+        return false;
+    if(! m_t1->get_first_player()->is_ready() || !m_t1->get_second_player()->is_ready() )
+        return false;
+
+    return !(!m_t2->get_first_player()->is_ready() || !m_t2->get_second_player()->is_ready());
 
 }
+
+bool Game::is_all_grids_assigned() {
+    return m_t1->get_first_player() != nullptr && m_t1->get_second_player() != nullptr &&
+           m_t2->get_first_player() != nullptr && m_t2->get_second_player() != nullptr;
+}
+
+void Game::forward_chat_message(Player* player,const std::string& msg) {
+
+    std::string send_msg = ServerMessage::getChatMessage(msg,player->get_id());
+    m_t1->forward_chat_message(player,send_msg);
+    m_t2->forward_chat_message(player,send_msg);
+}
+

@@ -41,6 +41,8 @@ ClientMessage::CLIENT_MESSAGE_TYPE ClientMessage::to_enum(const std::string& _me
     else if(_message_type == "choose_grid"){
         return CHOOSE_GRID;
     }
+    else if(_message_type == "un_mute_chat")
+        return UN_MUTE_CHAT;
 
     return NONE_C;
 }
@@ -78,6 +80,8 @@ std::string ClientMessage::to_string(ClientMessage::CLIENT_MESSAGE_TYPE _message
     else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::CHOOSE_GRID){
         return "choose_grid";
     }
+    else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::UN_MUTE_CHAT)
+        return "un_mute_chat";
 
 
     return "none";
@@ -228,7 +232,7 @@ ClientMessage* ClientMessage::getClientMessage(const std::string& json){
         }
         else{
 
-            if(msg_type == REGISTER){
+            if(msg_type == REGISTER || msg_type == LOGIN ){
                 clientMessage->set_login(ptree.get<std::string>("login"));
             }
             else if(msg_type == CREATE_GAME || msg_type == JOIN_GAME){

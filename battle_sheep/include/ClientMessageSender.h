@@ -20,6 +20,7 @@ public:
    static void setServer(WssClient::Connection*);
 
    static bool sendRegisterRequest(const std::string& username,const std::string& pass);
+   static bool sendChatRequest(const std::string& msg);
    static bool sendLoginRequest(const std::string& username,const std::string& pass);
    static bool sendJoinGameRequest(const std::string& game_id);
    static bool sendCreateGameRequest(const std::string& game_id);
@@ -30,6 +31,7 @@ public:
 
 
 };
+
 
 
 #endif //HAZARDOUS_MATERIALS_CLIENTMESSAGESENDER_H

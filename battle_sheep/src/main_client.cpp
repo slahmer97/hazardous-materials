@@ -79,6 +79,12 @@ int main(){
             std::cin>>y;
             ClientMessageSender::sendMoveEngineRequest(id,x,y);
         }
+        else if(in == "chat"){
+
+            std::cout<<"msg_chat : ";
+            getline(std::cin,tmp1);
+            ClientMessageSender::sendChatRequest(tmp1);
+        }
             continue;
 
     }

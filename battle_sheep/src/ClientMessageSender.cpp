@@ -77,9 +77,18 @@ bool ClientMessageSender::sendMoveEngineRequest(int id,bool reading_direction, i
     return &checkServerStatus;
 }
 
+bool ClientMessageSender::sendChatRequest(const std::string & msg_chat) {
+
+    std::string msg = ClientMessage::getChatMessage(msg_chat);
+    ClientMessageSender::server->send(msg);
+    std::cout<<"Client Sent : "<<msg<<std::endl;
+    return &checkServerStatus;
+}
+
 bool ClientMessageSender::isUp() {
     return server != nullptr;
 }
+
 
 
 

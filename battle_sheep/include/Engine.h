@@ -205,7 +205,7 @@ public:
      */
     ENGINE_TYPE get_engine_type();
 
-    void set_id(int id);
+    void set_id(int i);
     int get_id();
 
 private:

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <iostream>
 
 std::map<std::string,std::vector<Player*>> m_player_game_offline;
 std::vector<Game*> GameScheduler::m_online_games;
@@ -17,7 +18,7 @@ std::vector<Player*> GameScheduler::m_offline_players;
 void GameScheduler::onConnectionOpened(const std::shared_ptr<WssServer::Connection>& connection) {
     Player *p;
     p = new Player(connection);
-    std::cout<<"New player has opened connection with id : "<<boost::lexical_cast<std::string>(connection.get())<<std::endl;
+    std::cout<<"[+] New player has opened connection with id : "<<boost::lexical_cast<std::string>(connection.get())<<std::endl;
     GameScheduler::m_offline_players.push_back(p);
 }
 
@@ -70,7 +71,7 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
     if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::LOGIN){
         //TODO maybe check in database ...
         std::string user_name = clientMessage->get_login(); //TODO split later login = username,password
-        p->set_username(user_name);
+        p->set_username(const_cast<char *>(user_name.c_str()));
         p->set_logged_in();
         std::string login_success_msg = ServerMessage::getLoginSuccessMessage();
         p->send_message(login_success_msg);
@@ -122,6 +123,8 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
 
         return;
     }
+
+    std::cout<<"[+] Player has :choose_gr "<<p->get_engine_size()<<" engines"<<std::endl;
     if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::CHOOSE_GRID){
         int id = clientMessage->get_id();
         int ret = game->assign_grid(p,id);
@@ -132,17 +135,63 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
             return;
         }
         else{
+            p->set_id(id);
             notify_all_except(id,player_id,game);
-            if(game->is_ready()){
-                std::cout<<"game is ready .."<<std::endl;
-                std::cout<<"game ref : "<<game;
-                game->start();
-
-            }
+        }
+    }
+    else if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::CHAT_C){
+        if(p->is_ready()){
+          std::string chatMsg = clientMessage->get_chat_msg();
+          game->forward_chat_message(p,chatMsg);
+        }
+        else{
+            std::cout<<"[-] player with id "<<player_id<<" can't send chat message unless he has grid assigned to him"<<std::endl;
+            return;
+        }
+    }
+    else if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE){
+        if(!p->get_game()->is_all_grids_assigned()){
+            std::cout<<"[-] All grids must be assigned before adding an engine !!";
+            return;
+        }
+        if(p->is_ready() ){
+            std::cout<<"[-] Player with id : "<<player_id<<" has assinged all his engine on his grid "<<std::endl;
+            return ;
+        }
+        ENGINE_TYPE engineType = clientMessage->get_engine_type();
+        Engine* engine = p->create_engine(engineType);
+        //TODO check if engine is null..
+        if(engine == nullptr){
+            std::cout<<"[-] player->create_engine() returned nullptr"<<std::endl;
+            return;
+        }
+        bool h = clientMessage->get_horizontal();
+        int x = clientMessage->get_x();
+        int y= clientMessage->get_y();
+        std::cout<<"H : "<<h<<"\t x : "<<x<<"\t y : "<<y<<std::endl;
+        std::cout<<"Grid ref"<<p->get_grid()<<std::endl;
+        int ret = p->get_grid()->add_engine(engine,h,x,y);
+        std::cout<<"Return : "<<ret<<std::endl;
+        if(ret == 1){
+            std::string sent_msg = ServerMessage::getEngineAddedMessage();
+            p->send_message(sent_msg);
+            p->send_message(p->get_priv_grid());
+        }
+        else{
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE);
+            p->send_message(err);
+            p->send_message(err);
         }
 
+
+        if(game->is_ready()){
+            std::cout<<"game is ready .."<<std::endl;
+            std::cout<<"game ref : "<<game;
+            game->start();
+
+        }
     }
-    else if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE || clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::MOVE) {
+    else /*(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::MOVE)*/ {
         game = p->get_game();
         if(game->is_my_turn(p)){
 
