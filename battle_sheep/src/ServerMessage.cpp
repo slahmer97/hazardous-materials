@@ -66,8 +66,10 @@ ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& typ
         return MOVE_SUCCESS;
     else if(type == "rotate_success")
         return ROTATE_SUCCESS;
+    else if(type == "grid_assign_success")
+        return GRID_ASSIGN_SUCCESS;
     //TODO
-    return SCORE_BROADCAST;
+    return NONEE;
 }
 
 std::string ServerMessage::to_string(ServerMessage::SERVER_MESSAGE_TYPE type){
@@ -97,6 +99,8 @@ std::string ServerMessage::to_string(ServerMessage::SERVER_MESSAGE_TYPE type){
         return std::string("move_success");
     else if(type == ROTATE_SUCCESS)
         return std::string("rotate_success");
+    else if(type == GRID_ASSIGN_SUCCESS)
+        return std::string("grid_assign_success");
 
     return std::string("none");//check later
 }
@@ -165,6 +169,15 @@ std::string ServerMessage::getCurrentTurnMessage(int id) {
 
     return buff.str();
 }
+std::string ServerMessage::getGridAssignSuccess() {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(GRID_ASSIGN_SUCCESS));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();}
+
+
 std::string ServerMessage::getScoreBroadCastMessage(Score score) {
     boost::property_tree::ptree pt,s1,s2,s3,s4,p;
     pt.put("msg_type",to_string(SCORE_BROADCAST));
@@ -352,5 +365,4 @@ ServerMessage::ERRORS ServerMessage::get_err_type(){
 
 
 }
-
 

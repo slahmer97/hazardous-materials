@@ -243,6 +243,8 @@ void GameScheduler::gameGridsAssignementRoutine(Player* p,Game* game,int id,cons
         return;
     }
     else{
+        std::string msg_grid_assign_success = ServerMessage::getGridAssignSuccess();
+        p->send_message(msg_grid_assign_success);
         p->set_id(id);
         notify_all_except(id,player_id,game);
     }

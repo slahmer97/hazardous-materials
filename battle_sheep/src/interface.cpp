@@ -115,50 +115,66 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
             }
             break;
-        case ServerMessage::CHAT_S:break;
+        case ServerMessage::CHAT_S:
             {
 
             }
-        case ServerMessage::CURRENT_TURN:break;
+            break;
+        case ServerMessage::CURRENT_TURN:
             {
 							this->currentMenu->currentState = STATE_PLAY;
             }
-        case ServerMessage::SCORE_BROADCAST:break;
+            break;
+        case ServerMessage::SCORE_BROADCAST:
             {
 
             }
-        case ServerMessage::LOGIN_SUCCESS:break;
+            break;
+        case ServerMessage::LOGIN_SUCCESS:
             {
 
             }
-        case ServerMessage::CREATED_SUCCESS:break;
+            break;
+        case ServerMessage::CREATED_SUCCESS:
             {
 
             }
-        case ServerMessage::JOIN_SUCCESS:break;
+            break;
+        case ServerMessage::JOIN_SUCCESS:
             {
 
             }
-        case ServerMessage::START:break;
+            break;
+        case ServerMessage::START:
             {
 
             }
-        case ServerMessage::GRID:break;
+            break;
+        case ServerMessage::GRID:
             {
 
             }
-        case ServerMessage::ENGINE_ADDED:break;
+            break;
+        case ServerMessage::ENGINE_ADDED:
             {
 
             }
-        case ServerMessage::MOVE_SUCCESS:break;
+            break;
+        case ServerMessage::MOVE_SUCCESS:
             {
 
             }
-        case ServerMessage::ROTATE_SUCCESS:break;
+            break;
+        case ServerMessage::ROTATE_SUCCESS:
             {
 
             }
+            break;
+        case ServerMessage::GRID_ASSIGN_SUCCESS:
+            {
+
+            }
+            break;
     }
 
 }
