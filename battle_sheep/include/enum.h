@@ -102,6 +102,12 @@ enum SHOT_TYPE
     NORMAL_SHOT
 };
 
+enum GameMenuState {
+	STATE_PLACE,
+	STATE_DISABLED,
+	STATE_PLAY,
+	STATE_TURN_OTHER
+};
 
 
 #endif //TMP_PROJ_ENUM_H

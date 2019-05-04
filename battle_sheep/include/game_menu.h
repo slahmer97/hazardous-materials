@@ -9,14 +9,7 @@
 #include "../include/click_callback.h"
 #include "../include/ServerMessage.h"
 #include "../include/ClientMessageSender.h"
-
-
-enum GameMenuState {
-	STATE_PLACE,
-	STATE_DISABLED,
-	STATE_PLAY,
-	STATE_TURN_OTHER
-};
+#include "../include/enum.h"
 
 //TODO: implement current selected ship/plane to be highlighted
 //TODO: implement ghost of the ship you have to place
@@ -35,7 +28,7 @@ class GameMenu : public Menu, public ClickListener
 		virtual void on_click(Component* button);
 
 		~GameMenu();
-		
+
 		GameMenuState currentState;
 	private:
 		/**
