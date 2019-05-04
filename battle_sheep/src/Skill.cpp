@@ -48,12 +48,18 @@ std::string Skill::shot_type_to_string(SHOT_TYPE shot) {
         return "croiseur_skill";
     else if(shot == CONTRE_TORPILLEUR_SKILL)
         return "contre_torpilleur_skill";
+    else if(shot == CUIRASSE_SKILL)
+        return "cuirasse_skill";
+    else if(shot == TORPILLEUR_SKILL)
+        return "torpilleur_skill";
     else if(shot == BOMBARDIER_SKILL)
         return "bombardier_skill";
     else if(shot == INTERCEPTEUR_SKILL)
         return "intercepteur_skill";
     else if(shot == BROUILLEUR_SKILL)
         return "brouilleur_skill";
+    else if(shot == PATROUILE_SKILL)
+        return "patrouile_skill";
     else if(shot == RECONNAISSANCE_SKILL)
         return "reconnaissance_skill";
     else if(shot == NORMAL_SHOT)
@@ -69,12 +75,18 @@ SHOT_TYPE Skill::shot_type_to_type(const std::string &shot) {
         return CROISEUR_SKILL ;
     else if(shot == "contre_torpilleur_skill")
         return CONTRE_TORPILLEUR_SKILL;
+    else if(shot == "cuirasse_skill")
+        return CUIRASSE_SKILL;
+    else if(shot == "torpilleur_skill")
+        return TORPILLEUR_SKILL;
     else if(shot == "bombardier_skill")
         return BOMBARDIER_SKILL;
     else if(shot == "intercepteur_skill")
         return INTERCEPTEUR_SKILL;
     else if(shot == "brouilleur_skill")
         return BROUILLEUR_SKILL;
+    else if(shot == "patrouile_skill")
+        return PATROUILE_SKILL;
     else if(shot == "reconnaissance_skill")
         return RECONNAISSANCE_SKILL;
     else if(shot == "normal_shot")

@@ -8,7 +8,10 @@
 
 #include "enum.h"
 #include "Grid.h"
+#include "Square.h"
 #include "FactorySkill.h"
+#include <iostream>
+#include <vector>
 
 class Grid;
 class Skill;
