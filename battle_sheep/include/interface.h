@@ -14,7 +14,7 @@
 /**
  * Main class of the client-side GUI
  */
-class Interface 
+class Interface
 {
 	/*Methods*/
 	public:
@@ -40,7 +40,7 @@ class Interface
 
 
 	private:
-		
+
 		/**
 		 * The player name and passwords
 		 */
@@ -75,7 +75,7 @@ class Interface
 		 * Method called when the server is first started
 		 */
 		void on_server_connection_open( const std::shared_ptr<WssClient::Connection>& connection);
-		
+
 		/**
 		 * Method called when the server is closed
 		 */

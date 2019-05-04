@@ -7,17 +7,17 @@
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 int main(int argv, char**argc){
-	
+
 	//Very basic cmd args handling
-	
+
 	if(argv != 3 || argv != 2) {
 		std::cerr<<"Usage : "<<argc[0]<<" host [port]"<<std::endl;
 		return -1;
 	}
-	
+
 	std::string hostname(argc[1]), username, password;
 	int port = 8080;
-	
+
 	if( argv == 3){
 		port = atoi(argc[2]);
 	}

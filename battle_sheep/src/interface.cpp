@@ -8,7 +8,7 @@
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 
 
-Interface(WssClient * connection, std::string username, std::string password):
+Interface::Interface(WssClient* connection, std::string username, std::string password):
 	player(username),
 	password(password),
 	window(sf::VideoMode(960,540), "Battle Sheep"),
