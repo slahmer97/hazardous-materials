@@ -26,6 +26,9 @@ class Skill
     virtual int use(Grid *grid, int x, int y, bool horizontal = true) = 0;
     virtual int use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal = true) = 0;
     ENGINE_TYPE get_engine_type();
+    ENGINE_TYPE shot_type_to_engine_type(SHOT_TYPE shot);
+    SHOT_TYPE engine_type_to_shot_type(ENGINE_TYPE engine);
+    int engine_type_is_shot_type(SHOT_TYPE shot);
 
 public:
     static std::string shot_type_to_string(SHOT_TYPE shot);
