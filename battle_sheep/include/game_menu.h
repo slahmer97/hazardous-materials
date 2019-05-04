@@ -7,6 +7,8 @@
 #include "../include/textfield.h"
 #include "../include/display_grid.h"
 #include "../include/click_callback.h"
+#include "../include/ServerMessage.h"
+#include "../include/ClientMessageSender.h"
 
 class GameMenu : public Menu, public ClickListener
 {
@@ -14,6 +16,8 @@ class GameMenu : public Menu, public ClickListener
 		GameMenu();
 
 		virtual void handleEvent(sf::Window* window, sf::Event* event);
+
+		void handle_server_message(ServerMessage* m);
 
 	 	virtual void draw(sf::RenderTarget* drawingBoard);
 

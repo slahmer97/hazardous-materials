@@ -13,14 +13,23 @@ int main(int argv, char**argc){
 	
 	if(argv != 3 || argv != 2) {
 		std::cerr<<"Usage : "<<argc[0]<<" host [port]"<<std::endl;
+		return -1;
 	}
 	
-	std::string hostname(argc[1]);
+	std::string hostname(argc[1]), username, password;
 	int port = 8080;
 	
 	if( argv == 3){
 		port = atoi(argc[2]);
 	}
+
+	std::cout<<"Username> ";
+	std::cin>>username;
+	std::cout<<std::endl;
+
+	std::cout<<"Password> ";
+	std::cin>>password;
+	std::cout<<std::endl;
 
 	std::cout<<"Initializing texture manager"<<std::endl;
 	TextureManager::Init();
@@ -31,7 +40,12 @@ int main(int argv, char**argc){
 	WssClient client(hostname+":"+port+"/game", false);
 
 	std::cout<<"Creating interface"<<std::endl;
-	Interface inter(&client);
+	Interface inter(&client, username, password);
+
+	std::cout<<"Creating network listening thread"<<std::endl;
+	std::thread client_thread([&client]() {
+        client.start();
+    });
 
 	std::cout<<"Starting interface"<<std::endl;
 	inter.start();

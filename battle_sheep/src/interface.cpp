@@ -6,7 +6,9 @@
 
 
 
-Interface(WssClient* connection):
+Interface(WssClient* connection, std::string username, std::password):
+	player(username),
+	password(password),
 	window(sf::VideoMode(960,540), "Battle Sheep"),
 	co(connection)
 	
@@ -91,23 +93,58 @@ void Interface::change_current_menu(Menu* newMenu){
 void Interface::on_server_message_received( shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message  ){
 	ServerMessage m = ServerMessage::getServerMessage(in_message->string());
 	
+	//Les messages normaux
 	switch(m.get_msg_type()){
 		case LOGIN_SUCCESS:
 			{
-				//TODO: code what happen on login succes and the other messages
+				//We managed to login
+				std::cout<<"Succefully logged in with username '"<<username<<"'"<<std::endl;
+				std::cout<<"Attempting to login on game "
+			}
+			break;
+		case ERROR://Handle error message
+			{
+				handle_errror_message(&m);
+			}
+			break;
+		case CREATED_SUCCESS:
+			{
+				std::cout<<"Succefullt created game default"<<std::endl;
+			}
+			break;
+		//Add any other messages that need to be transmitted to the menu
+		case MOVE:
+		case CURRENT_TURN:
+			GameMenu* menu = dynamic_cast<GameMenu*>(this->currentMenu);
+			if(menu != nullptr){
+				menu->handle_server_message(&m);
 			}
 			break;
 	}
 
 }
 
+void Interface::handle_errror_message(ServerMessage* m){
+	switch(m->get_err_type()){
+		case GAME_DOES_NOT_EXIST:
+			{
+				std::cout<<"Default game inexistant, requesting creation of it"<<endl;
+				ClientMessageSender::sendCreateGameRequest("default");
+			}
+			break;
+	}
+}
 
 
 void Interface::on_server_connection_open( shared_ptr<WssClient::Connection> connection){
 
 	if(!ClientMessageSender::isUp())
 		ClientMessageSender::setServer(connection.get());
-	cout << "Server connection opened" << endl;
+
+	cout << "Server connection opened, sending login information" << endl;
+	
+	//When the connection is established, we send the login information
+	ClientMessageSender::sendLoginRequest(username, password);
 
 }
 

@@ -19,6 +19,14 @@ GameMenu::GameMenu():
 }
 
 
+
+void GameMenu::handle_server_message(ServerMessage* m){
+	switch(m->get_msg_type()){
+		default:
+			break;
+	}
+}
+
 void GameMenu::handleEvent(sf::Window* window, sf::Event* event){
     confirm.handleEvent(window,event);
     b1.handleEvent(window,event);

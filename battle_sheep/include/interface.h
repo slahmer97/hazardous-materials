@@ -19,7 +19,7 @@ class Interface
 		/**
 		 * Constructor of the class
 		 */
-		Interface(WssClient* connection);
+		Interface(WssClient* connection, std::string username = "player", std::string password = "");
 
 		/**
 		 * Start the rendering and updating loop, displaying the Interface
@@ -38,6 +38,13 @@ class Interface
 
 
 	private:
+		
+		/**
+		 * The player name and passwords
+		 */
+		std::string player, password;
+
+
 		/**
 		 * The window in which we render everything
 		 */
@@ -56,6 +63,11 @@ class Interface
 		 * Method used to receive messages from the server, it's here that everything is parseda first time
 		 */
 		void on_server_message_received( shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message  );
+
+		/**
+		 * Method used to handle error message, to free space in on_server_message_received
+		 */
+		void handle_errror_message(ServerMessage* m);
 
 		/**
 		 * Method called when the server is first started
