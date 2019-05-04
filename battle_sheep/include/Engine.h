@@ -142,6 +142,8 @@ public:
      */
     int Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot);
 
+    std::vector<std::vector<Square*>> Skill_shot(Grid *grid, int x, int y, SHOT_TYPE type_of_shot);
+
     /* Input : the grid1 the grid2 targeted x and y position the direction and the shot type
      * a skill shot on two grids
      * Output : hited engines
