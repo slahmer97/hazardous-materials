@@ -135,6 +135,8 @@ int Engine::normal_shot(Grid *grid, int x, int y){
         return -1;
     if(grid->get_engine_x_y(m_x,m_y)==this)
         return -1;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
+        return -1;
     return grid->normal_shot(x, y);
 }
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot){
@@ -142,8 +144,12 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
         return -100;
     if(!(m_is_on_grid))
         return -2;
+    if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
+        return -4;
     if(grid->get_engine_x_y(m_x,m_y)==this)
         return -3;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
+        return -1;
     switch (type_of_shot){
 
         case PORTE_AVION_SKILL:
@@ -170,10 +176,14 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
         return -100;
     if(!(m_is_on_grid))
         return -2;
+    if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
+        return -4;
     if(grid1->get_engine_x_y(m_x,m_y)==this)
         return -3;
     if(grid2->get_engine_x_y(m_x,m_y)==this)
         return -3;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
+        return -1;
     switch (type_of_shot){
         case BOMBARDIER_SKILL:
             return ((Skill_bombardier*)m_skill)->use(grid1,grid2,x,y,horizontal);
@@ -203,7 +213,11 @@ std::vector<std::vector<Square*>> Engine::Skill_shot(Grid *grid, int x, int y, S
         return ret;
     if(!(m_is_on_grid))
         return ret;
+    if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
+        return ret;
     if(grid->get_engine_x_y(m_x,m_y)==this)
+        return ret;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
         return ret;
     if(type_of_shot==PATROUILE_SKILL)
         return ((Skill_patrouille*)m_skill)->use(grid,x,y);

@@ -85,16 +85,17 @@ TEST_F(SkillTest, play_with_skills)
     }
     ASSERT_EQ(engine16->Skill_shot(grid_1,grid_3,3,6,true,BOMBARDIER_SKILL),8);
     ASSERT_EQ(engine6->Skill_shot(grid_2,grid_4,3,6,true,BOMBARDIER_SKILL),8);
-    ASSERT_EQ(engine9->Skill_shot(grid_2,3,6,true,PATROUILE_SKILL),-1);
+    ASSERT_EQ(engine10->Skill_shot(grid_2,3,6,true,RECONNAISSANCE_SKILL),-1);
+    ASSERT_EQ(engine10->Skill_shot(grid_2,3,6,true,PATROUILE_SKILL),-4);
     ASSERT_EQ(engine13->Skill_shot(grid_1,2,4,true,CONTRE_TORPILLEUR_SKILL),2);
     ASSERT_EQ(engine3->Skill_shot(grid_2,2,4,true,CONTRE_TORPILLEUR_SKILL),2);
-    ASSERT_EQ(engine3->Skill_shot(grid_2,3,5,true,BOMBARDIER_SKILL),-1000);
-    ASSERT_EQ(engine6->Skill_shot(grid_2,grid_4,1,0,true,CONTRE_TORPILLEUR_SKILL),-1000);
-    ASSERT_EQ(engine16->Skill_shot(grid_2,grid_4,1,0,true,CONTRE_TORPILLEUR_SKILL),-3);
+    ASSERT_EQ(engine6->Skill_shot(grid_2,3,5,true,BOMBARDIER_SKILL),-1000);
+    ASSERT_EQ(engine3->Skill_shot(grid_2,grid_4,1,0,true,CONTRE_TORPILLEUR_SKILL),-1000);
+    ASSERT_EQ(engine16->Skill_shot(grid_2,grid_4,1,0,true,BOMBARDIER_SKILL),-3);
     ASSERT_EQ(engine13->Skill_shot(grid_2,3,5,true,CONTRE_TORPILLEUR_SKILL),-3);
-    ASSERT_EQ(engine16->Skill_shot(nullptr,grid_3,1,0,true,CONTRE_TORPILLEUR_SKILL),-100);
-    ASSERT_EQ(engine16->Skill_shot(grid_1,nullptr,1,0,true,CONTRE_TORPILLEUR_SKILL),-100);
-    ASSERT_EQ(engine16->Skill_shot(nullptr,nullptr,1,0,true,CONTRE_TORPILLEUR_SKILL),-100);
+    ASSERT_EQ(engine13->Skill_shot(nullptr,grid_3,1,0,true,CONTRE_TORPILLEUR_SKILL),-100);
+    ASSERT_EQ(engine13->Skill_shot(grid_1,nullptr,1,0,true,CONTRE_TORPILLEUR_SKILL),-100);
+    ASSERT_EQ(engine13->Skill_shot(nullptr,nullptr,1,0,true,CONTRE_TORPILLEUR_SKILL),-100);
     ASSERT_EQ(engine13->Skill_shot(nullptr,3,5,true,CONTRE_TORPILLEUR_SKILL),-100);
     for(int i=0; i<10; i++)
     {

@@ -72,7 +72,7 @@ SHOT_TYPE Skill::shot_type_to_type(const std::string &shot) {
     if(shot == "porte_avion_skill")
         return  PORTE_AVION_SKILL;
     else if(shot == "croiseur_skill")
-        return CROISEUR_SKILL ;
+        return CROISEUR_SKILL;
     else if(shot == "contre_torpilleur_skill")
         return CONTRE_TORPILLEUR_SKILL;
     else if(shot == "cuirasse_skill")
@@ -93,7 +93,63 @@ SHOT_TYPE Skill::shot_type_to_type(const std::string &shot) {
         return NORMAL_SHOT;
     return NORMAL_SHOT;
 }
-
+ENGINE_TYPE Skill::shot_type_to_engine_type(SHOT_TYPE shot) {
+    if(shot == PORTE_AVION_SKILL)
+        return  PORTE_AVION;
+    else if(shot == CROISEUR_SKILL)
+        return CROISEUR;
+    else if(shot == CONTRE_TORPILLEUR_SKILL)
+        return CONTRE_TORPILLEUR;
+    else if(shot == CUIRASSE_SKILL)
+        return CUIRASSE;
+    else if(shot == TORPILLEUR_SKILL)
+        return TORPILLEUR;
+    else if(shot == BOMBARDIER_SKILL)
+        return BOMBARDIER;
+    else if(shot == INTERCEPTEUR_SKILL)
+        return INTERCEPTEUR;
+    else if(shot == BROUILLEUR_SKILL)
+        return BROUILLEUR;
+    else if(shot == PATROUILE_SKILL)
+        return PATROUILE;
+    else if(shot == RECONNAISSANCE_SKILL)
+        return RECONNAISSANCE;
+    else if(shot == NORMAL_SHOT)
+        return NOT_INTRODUCED;
+    return NOT_INTRODUCED;
+}
+SHOT_TYPE Skill::engine_type_to_shot_type(ENGINE_TYPE engine) {
+    if(engine == PORTE_AVION)
+        return  PORTE_AVION_SKILL;
+    else if(engine == CROISEUR)
+        return CROISEUR_SKILL;
+    else if(engine == CONTRE_TORPILLEUR)
+        return CONTRE_TORPILLEUR_SKILL;
+    else if(engine == CUIRASSE)
+        return CUIRASSE_SKILL;
+    else if(engine == TORPILLEUR)
+        return TORPILLEUR_SKILL;
+    else if(engine == BOMBARDIER)
+        return BOMBARDIER_SKILL;
+    else if(engine == INTERCEPTEUR)
+        return INTERCEPTEUR_SKILL;
+    else if(engine == BROUILLEUR)
+        return BROUILLEUR_SKILL;
+    else if(engine == PATROUILE)
+        return PATROUILE_SKILL;
+    else if(engine == RECONNAISSANCE)
+        return RECONNAISSANCE_SKILL;
+    else if(engine == NOT_INTRODUCED)
+        return NORMAL_SHOT;
+    return NORMAL_SHOT;
+}
+int Skill::engine_type_is_shot_type(SHOT_TYPE shot)
+{
+    if(m_engine_type==shot_type_to_engine_type(shot))
+        return 1;
+    else
+        return -1;
+}
 Skill_porte_avion::Skill_porte_avion() : Skill(ENGINE_TYPE::PORTE_AVION) {}
 Skill_porte_avion::Skill_porte_avion(ENGINE_TYPE engine_type) : Skill(engine_type) {}
 int Skill_porte_avion::use(Grid *grid, int x, int y, bool horizontal)
