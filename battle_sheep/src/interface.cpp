@@ -102,7 +102,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 	switch(msg_type){
         case ServerMessage::KILL_PLAYER:
             {
-
+							this->currentMenu->currentState = STATE_DISABLED;
             }
             break;
         case ServerMessage::GRIDS_ASSIGNEMENT:
@@ -121,7 +121,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             }
         case ServerMessage::CURRENT_TURN:break;
             {
-
+							this->currentMenu->currentState = STATE_PLAY;
             }
         case ServerMessage::SCORE_BROADCAST:break;
             {
@@ -179,7 +179,8 @@ void Interface::handle_errror_message(ServerMessage* m){
             break;
         case ServerMessage::CONNECTION_LOST:
             {
-
+								std::cout<<"Connection lost to current game, attempting reconnection"<<std::endl;
+								ClientMessageSender::sendJoinGameRequest("");
             }
 
             break;
