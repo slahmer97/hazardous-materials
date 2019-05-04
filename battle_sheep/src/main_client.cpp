@@ -6,20 +6,24 @@
 #include <thread>
 #include <ClientMessage.h>
 #include <ClientMessageSender.h>
+#include <ServerMessage.h>
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 using namespace std;
 int main(){
     WssClient client("localhost:8080/game", false);
     client.on_message = [](shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message) {
-        cout << "\n------>Received :\n" << in_message->string()<< endl;
+        std::string msg = std::move(in_message->string());
+
+        cout << "\n------>Received :\n" <<msg<< endl;
+
     };
     client.on_open = [](shared_ptr<WssClient::Connection> connection) {
         if(!ClientMessageSender::isUp())
             ClientMessageSender::setServer(connection.get());
         cout << "Client: Opened connection" << endl;
 
-};
+    };
     client.on_close = [](shared_ptr<WssClient::Connection> /*connection*/, int status, const string & /*reason*/) {
         cout << "Client: Closed connection with status code " << status << endl;
     };
@@ -85,9 +89,19 @@ int main(){
             getline(std::cin,tmp1);
             ClientMessageSender::sendChatRequest(tmp1);
         }
-            continue;
+        else if(in == "engine_rotate"){
+            int id = 1,x,y;
+            std::cout<<"id : ";
+            std::cin>>id;
+            std::cout<<"clock ? : ";
+            std::cin>>x;
+            std::cout<<"node dist : ";
+            std::cin>>y;
+            ClientMessageSender::sendRotateEngineRequest(id,x,y);
+        }
+
+        continue;
 
     }
     client_thread.join();
 }
-

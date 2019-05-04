@@ -23,7 +23,7 @@ public:
     static std::string getShotMessage(SHOT_TYPE,int,int,int);
     static std::string getChatMessage(const std::string& msg);
     static std::string getMoveMessage(int,int,int);
-    static std::string getRotateMessage(int,int);
+    static std::string getRotateMessage(int,int,int node_dist);
     static std::string getSkipTurnMessage();
     static std::string getCreateGameMessage(const std::string&);
     static std::string getJoinGameMessage(const std::string& id);

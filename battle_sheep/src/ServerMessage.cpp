@@ -19,6 +19,8 @@ std::string ServerMessage::error_to_string(ERRORS e){
         return "already_chosen";
     else if(e == ENGINE_ID_DOES_NOT_EXIST)
         return "engine_id_does_not_exist";
+    else if(e == GRID_ID_DOES_NOT_EXIST)
+        return "grid_id_does_not_exist";
 
 }
 ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
@@ -32,9 +34,10 @@ ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
         return CONNECTION_LOST;
     else if(s == "already_chosen")
         return ALREADY_CHOSEN;
-
     else if(s == "engine_id_does_not_exist")
         return ENGINE_ID_DOES_NOT_EXIST;
+    else if(s == "grid_id_does_not_exist")
+        return GRID_ID_DOES_NOT_EXIST;
 }
 ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")
@@ -61,6 +64,8 @@ ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& typ
         return ENGINE_ADDED;
     else if(type == "move_success")
         return MOVE_SUCCESS;
+    else if(type == "rotate_success")
+        return ROTATE_SUCCESS;
     //TODO
     return SCORE_BROADCAST;
 }
@@ -90,6 +95,8 @@ std::string ServerMessage::to_string(ServerMessage::SERVER_MESSAGE_TYPE type){
         return std::string("engine_added");
     else if(type == MOVE_SUCCESS)
         return std::string("move_success");
+    else if(type == ROTATE_SUCCESS)
+        return std::string("rotate_success");
 
     return std::string("none");//check later
 }
@@ -114,6 +121,18 @@ std::string ServerMessage::getMoveSuccessMessage(int id){
 
     return buff.str();
 }
+
+std::string ServerMessage::getRotateSuccessMessage(int id) {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(ROTATE_SUCCESS));
+    pt.put("id",id);
+
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();}
+
+
 std::string ServerMessage::getGridAssinementMessage(const std::string& username,int id_grid) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(GRIDS_ASSIGNEMENT));
@@ -260,7 +279,7 @@ ServerMessage* ServerMessage::getServerMessage(const std::string& json_ServerMes
     else if(msg_type == CHAT_S){
         auto id = ptree.get<int>("id");
         serverMessage->set_id(id);
-        std::string message = ptree.get<std::string>("message");
+        std::string message = ptree.get<std::string>("chat_msg");
         serverMessage->set_chat_msg(message);
     }
     else if(msg_type == SCORE_BROADCAST){
@@ -328,11 +347,5 @@ void ServerMessage::set_err_type(ERRORS msg) {
 void ServerMessage::set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE s){
     error_message = s;
 }
-
-ServerMessage::ERRORS ServerMessage::get_err_type(){
-	return this->m_error_type;
-}
-
-
 
 

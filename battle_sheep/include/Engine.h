@@ -25,11 +25,11 @@ public:
     Engine(int size_a);
     Engine(int size_a,ENGINE_TYPE engine_type);
 
-    
+
     /* Input :/
      * get the size
      * Output : size
-     */ 
+     */
     int get_size();
 
     /* Input : /

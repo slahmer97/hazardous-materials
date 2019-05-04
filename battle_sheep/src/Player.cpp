@@ -9,35 +9,37 @@
 #include <FactoryEngine.h>
 
 void Player::sendMessage(const std::string& msg) {
-     auto out_message = std::make_shared<WssServer::OutMessage>();
-     *out_message <<msg;
-     m_connection->send(out_message);
+    auto out_message = std::make_shared<WssServer::OutMessage>();
+    *out_message <<msg;
+    m_connection->send(out_message);
 }
 Player::Player(const std::shared_ptr<WssServer::Connection>& conx) {
-     if(conx != nullptr)
+    if(conx != nullptr)
         m_connection = conx.get();
-     else
-         m_connection = nullptr;
-     m_grid = new Grid();
+    else
+        m_connection = nullptr;
+    m_grid = new Grid();
+
+    m_mute_chat = false;
 }
 unsigned char Player::get_id() const {
-     return m_id;
+    return m_id;
 }
 void Player::set_id(int id) {
-     Player::m_id = id;
+    Player::m_id = id;
 }
 const std::string &Player::get_username() const {
-     return m_username;
+    return m_username;
 }
 void Player::set_username(char* username) {
-     m_username = std::string(username);
+    m_username = std::string(username);
 
 }
 bool Player::equals(Player * player) {
-     return m_connection == player->get_connection();
+    return m_connection == player->get_connection();
 }
 WssServer::Connection* Player::get_connection() {
-     return m_connection;
+    return m_connection;
 }
 void Player::desactivate_chat(){
     m_mute_chat = false;
@@ -73,9 +75,9 @@ std::string Player::get_priv_grid() {
     std::string ret;
     for (int line = 0; line < 10; ++line) {
         for (int column = 0; column < 10 ; ++column) {
-            ret += m_grid->get(line,column)->to_pri_string()+std::string("----");
+            ret += m_grid->get(line,column)->to_pri_string()+std::string("\t\t");
         }
-        ret +=std::string("=========");
+        ret +=std::string("\n");
     }
     return ret;
 }
@@ -116,4 +118,8 @@ int Player::get_engine_size() {
 
 std::vector<Engine *> Player::get_engines() {
     return m_engine;
+}
+
+void Player::set_dead() {
+    this->dead = true;
 }

@@ -10,10 +10,12 @@
 #include <Score.h>
 #include "Player.h"
 #include <ClientMessage.h>
+#include <Grid.h>
 class Team;
 class Player;
 class Score;
 class ClientMessage;
+class Grid;
 //TODO check play method...if we make method for each action and call the right one out side..or doing it inside play function...
 class Game {
 private:
@@ -39,9 +41,10 @@ private:
     Score* m_score;
 
 
-
+    Grid* get_grid_by_id(int id);
     void switch_turn();
     void on_game_state_changed();
+    void update_score();
 };
 
 

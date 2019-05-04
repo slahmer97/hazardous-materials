@@ -2,8 +2,7 @@
 // Created by stevlulz on 3/7/19.
 //
 #include <boost/lexical_cast.hpp>
-#include "../include/Square.h"
-
+#include <Square.h>
 
 
 Square::Square(){

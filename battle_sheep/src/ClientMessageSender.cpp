@@ -62,8 +62,8 @@ bool ClientMessageSender::sendChooseGridRequest(int &grid_id) {
     return &checkServerStatus;
 }
 
-bool ClientMessageSender::sendRotateEngineRequest(int id,bool clock){
-    std::string msg = ClientMessage::getRotateMessage(id, clock ? 1 : 0);
+bool ClientMessageSender::sendRotateEngineRequest(int id,int clock,int node_dist){
+    std::string msg = ClientMessage::getRotateMessage(id, clock,node_dist);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
 
@@ -88,7 +88,6 @@ bool ClientMessageSender::sendChatRequest(const std::string & msg_chat) {
 bool ClientMessageSender::isUp() {
     return server != nullptr;
 }
-
 
 
 

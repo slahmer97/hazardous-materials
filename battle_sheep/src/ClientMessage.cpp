@@ -43,6 +43,8 @@ ClientMessage::CLIENT_MESSAGE_TYPE ClientMessage::to_enum(const std::string& _me
     }
     else if(_message_type == "un_mute_chat")
         return UN_MUTE_CHAT;
+    else if(_message_type == "rotate")
+        return ROTATE;
 
     return NONE_C;
 }
@@ -82,6 +84,8 @@ std::string ClientMessage::to_string(ClientMessage::CLIENT_MESSAGE_TYPE _message
     }
     else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::UN_MUTE_CHAT)
         return "un_mute_chat";
+    else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::ROTATE)
+        return "rotate";
 
 
     return "none";
@@ -150,11 +154,12 @@ std::string ClientMessage::getSkipTurnMessage() {
     boost::property_tree::write_json(buff,pt);
     return buff.str();
 }//
-std::string ClientMessage::getRotateMessage(int id,int clock) {
+std::string ClientMessage::getRotateMessage(int id,int clock,int node_dist) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(ROTATE));
     pt.put("clock",clock);
     pt.put("engine_id",id);
+    pt.put("node_dist",node_dist);
 
     std::ostringstream buff;
     boost::property_tree::write_json(buff,pt);
@@ -195,62 +200,64 @@ std::string ClientMessage::getChoseGridMessage(int id) {
     return buff.str();}//
 
 ClientMessage* ClientMessage::getClientMessage(const std::string& json){
-        ClientMessage *clientMessage;
-        clientMessage = new ClientMessage(Score(-1,-1,-1,-1));
-        boost::property_tree::ptree ptree;
-        std::istringstream is (json);
-        try {
-            boost::property_tree::json_parser::read_json(is,ptree);
-        }catch (boost::property_tree::json_parser_error e){
-            std::cout<<"[-] invalide message format"<<std::endl;
-            return nullptr;
+    ClientMessage *clientMessage;
+    clientMessage = new ClientMessage(Score(-1,-1,-1,-1));
+    boost::property_tree::ptree ptree;
+    std::istringstream is (json);
+    try {
+        boost::property_tree::json_parser::read_json(is,ptree);
+    }catch (boost::property_tree::json_parser_error e){
+        std::cout<<"[-] invalide message format"<<std::endl;
+        return nullptr;
+    }
+
+
+    std::string msg_type_tmp = ptree.get<std::string>("msg_type");
+
+    std::cout<<"Message type : "<<msg_type_tmp<<std::endl;
+    CLIENT_MESSAGE_TYPE msg_type = to_enum(msg_type_tmp);
+    if(msg_type == MOVE)
+        int a = 2;
+
+    clientMessage->set_msg_type(msg_type);
+
+    if(msg_type == SHOT ||  msg_type == MOVE || msg_type == ROTATE){
+        //clientMessage->set_id( ptree.get<int>("id"));
+        if(msg_type == SHOT){
+            clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
+            clientMessage->set_shot_type(Skill::shot_type_to_type(ptree.get<std::string>("shot_type")));
+        }
+        else if(msg_type == MOVE){
+            clientMessage->set_engine_id(ptree.get<int>("engine_id"));
+            clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
+        }
+        else if(msg_type == ROTATE){
+            clientMessage->set_x_y(ptree.get<int>("clock"),ptree.get<int>("node_dist"));
+            clientMessage->set_engine_id(ptree.get<int>("engine_id"));
+        }
+        return clientMessage;
+    }
+    else{
+
+        if(msg_type == REGISTER || msg_type == LOGIN ){
+            clientMessage->set_login(ptree.get<std::string>("login"));
+        }
+        else if(msg_type == CREATE_GAME || msg_type == JOIN_GAME){
+            clientMessage->set_game_name(ptree.get<std::string>("game_name"));
+        }
+        else if(msg_type == CHAT_C ){
+            clientMessage->set_chat_msg(ptree.get<std::string>("chat_msg"));
+        }
+        else if(msg_type == CHOOSE_GRID){
+            clientMessage->set_id(ptree.get<int>("id"));
+        }
+        else if(msg_type == ADD_ENGINE){
+            clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
+            clientMessage->set_horizontal(ptree.get<int>("id"));
         }
 
-
-        std::string msg_type_tmp = ptree.get<std::string>("msg_type");
-
-        std::cout<<"Message type : "<<msg_type_tmp<<std::endl;
-
-        CLIENT_MESSAGE_TYPE msg_type = to_enum(msg_type_tmp);
-        clientMessage->set_msg_type(msg_type);
-
-        if(msg_type == SHOT ||  msg_type == MOVE || msg_type == ROTATE){
-            clientMessage->set_id( ptree.get<int>("id"));
-            if(msg_type == SHOT){
-                clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
-                clientMessage->set_shot_type(Skill::shot_type_to_type(ptree.get<std::string>("shot_type")));
-            }
-            else if(msg_type == MOVE){
-                clientMessage->set_engine_id(ptree.get<int>("engine_id"));
-                clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
-            }
-            else if(msg_type == ROTATE){
-                clientMessage->set_clock(ptree.get<int>("clock"));
-                clientMessage->set_engine_id(ptree.get<int>("engine_id"));
-            }
-            return clientMessage;
-        }
-        else{
-
-            if(msg_type == REGISTER || msg_type == LOGIN ){
-                clientMessage->set_login(ptree.get<std::string>("login"));
-            }
-            else if(msg_type == CREATE_GAME || msg_type == JOIN_GAME){
-                clientMessage->set_game_name(ptree.get<std::string>("game_name"));
-            }
-            else if(msg_type == CHAT_C ){
-                clientMessage->set_chat_msg(ptree.get<std::string>("chat_msg"));
-            }
-            else if(msg_type == CHOOSE_GRID){
-                clientMessage->set_id(ptree.get<int>("id"));
-            }
-            else if(msg_type == ADD_ENGINE){
-                clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
-                clientMessage->set_horizontal(ptree.get<int>("id"));
-            }
-
-            return clientMessage;
-        }
+        return clientMessage;
+    }
 
 }
 
@@ -352,4 +359,3 @@ int ClientMessage::get_distance() {
 int ClientMessage::get_engine_id(){
     return this->m_engine_id;
 }
-

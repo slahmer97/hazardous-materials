@@ -40,4 +40,3 @@ void Score::set_s3(int s) {
 void Score::set_s4(int s) {
     this->m_s4 = s;
 }
-

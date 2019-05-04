@@ -17,7 +17,7 @@ Engine::Engine(int size_a){
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
     m_motor_place = 0;
-    m_weapon_state = WEAPON_STATE::WEAPON_NOT_INTRODUCED;
+    //m_weapon_state = WEAPON;
     m_weapon_place = m_size-1;
     //m_shell_state = SHELL;
     m_is_on_grid=false;
@@ -28,15 +28,15 @@ Engine::Engine(int size_a){
 
 
 Engine::Engine(int size_a, ENGINE_TYPE engine_type):Engine(size_a) {
-        m_skill = FactorySkill::getSkill(engine_type);
-        m_weapon_state = WEAPON_STATE::WEAPON;
-        m_weapon_place = m_size-1;
-        
+    m_skill = FactorySkill::getSkill(engine_type);
+    m_weapon_state = WEAPON_STATE::WEAPON;
+    m_weapon_place = m_size-1;
+
 }
 
 
 void Engine::add_skill(ENGINE_TYPE engine_type,SHOT_TYPE shot_type){
-        m_skill = FactorySkill::getSkill(shot_type,engine_type);
+    m_skill = FactorySkill::getSkill(shot_type,engine_type);
 }
 
 //Getters
@@ -77,7 +77,7 @@ int Engine::get_motor_place()
 }
 int Engine::get_weapon_place()
 {
- return m_weapon_place;
+    return m_weapon_place;
 }
 bool Engine::get_is_on_grid()
 {
@@ -97,7 +97,7 @@ void Engine::set_x(int x_a)
     if(m_x < 0 || m_x >9)
         m_is_on_grid = false;
     if(m_y < 10 && m_y >= 0)
-         m_is_on_grid = true;
+        m_is_on_grid = true;
 }
 void Engine::set_y(int y_a)
 {
@@ -121,7 +121,7 @@ float Engine::take_a_hit(float dammage)
 {
     if(!(m_is_on_grid))
         return -1.0f;
-        
+
     m_current_health_point = (m_current_health_point < dammage ? 0.f : m_current_health_point-dammage);
     return m_current_health_point;
 }
@@ -134,35 +134,31 @@ int Engine::normal_shot(Grid *grid, int x, int y){
         return -1;
     if(grid->get_engine_x_y(m_x,m_y)==this)
         return -1;
-    /*if(m_current_health_point==0.f)
-        return -2;*/
     return grid->normal_shot(x, y);
 }
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -2;
+        return -1;
     if(grid->get_engine_x_y(m_x,m_y)==this)
-        return -3;
-    if(m_weapon_state!=WEAPON_STATE::WEAPON)
         return -1;
     switch (type_of_shot){
 
         case PORTE_AVION_SKILL:
-            return ((Skill_porte_avion*)m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_porte_avion*)&m_skill)->use(grid, x, y, horizontal);
         case CROISEUR_SKILL:
-            return ((Skill_croiseur*)m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_croiseur*)&m_skill)->use(grid, x, y, horizontal);
         case CONTRE_TORPILLEUR_SKILL:
-            return ((Skill_contre_torpilleur*)m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_contre_torpilleur*)&m_skill)->use(grid, x, y, horizontal);
         case CUIRASSE_SKILL:
-            return ((Skill_cuirasse*)m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_cuirasse*)&m_skill)->use(grid, x, y, horizontal);
         case TORPILLEUR_SKILL:
-            return ((Skill_torpilleur*)m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_torpilleur*)&m_skill)->use(grid, x, y, horizontal);
         case BROUILLEUR_SKILL:
-            return ((Skill_brouilleur*)m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_brouilleur*)&m_skill)->use(grid, x, y, horizontal);
         case RECONNAISSANCE_SKILL:
-            return ((Skill_reconnaissance*)m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_reconnaissance*)&m_skill)->use(grid, x, y, horizontal);
         default:
             return -1000;//this function can't call other skills :/
     }
@@ -172,20 +168,18 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
     if(grid1==nullptr || grid2 == nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -2;
+        return -1;
     if(grid1->get_engine_x_y(m_x,m_y)==this)
-        return -3;
+        return -1;
     if(grid2->get_engine_x_y(m_x,m_y)==this)
-        return -3;
-    if(m_weapon_state!=WEAPON_STATE::WEAPON)
         return -1;
     switch (type_of_shot){
         case BOMBARDIER_SKILL:
-            return ((Skill_bombardier*)m_skill)->use(grid1,grid2,x,y,horizontal);
+            return ((Skill_bombardier*)&m_skill)->use(grid1,grid2,x,y,horizontal);
         case INTERCEPTEUR_SKILL:
-            return ((Skill_intercepteur*)m_skill)->use(grid1,grid2,x,y,horizontal);
+            return ((Skill_intercepteur*)&m_skill)->use(grid1,grid2,x,y,horizontal);
         case PATROUILE_SKILL:
-            return ((Skill_patrouille*)m_skill)->use(grid1,grid2,x,y,horizontal); //TODO move it to other skill shot function
+            return ((Skill_patrouille*)&m_skill)->use(grid1,grid2,x,y,horizontal); //TODO move it to other skill shot function
         default:
             return -1000;
     }

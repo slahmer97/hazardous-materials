@@ -69,13 +69,13 @@ int Grid::remove_engine(Engine *engine)
         //Horizontal
         if (engine->is_horizontal())
         {
-        
+
             grid[engine->get_x() + i][engine->get_y()]->set_engine(nullptr);
             grid[engine->get_x() + i][engine->get_y()]->set_square_type(NONE);
         }
-        //Vertical
+            //Vertical
         else
-        {    
+        {
             grid[engine->get_x()][engine->get_y() + i]->set_engine(nullptr);
             grid[engine->get_x()][engine->get_y() + i]->set_square_type(NONE);
         }
@@ -127,7 +127,7 @@ int Grid::add_engine(Engine *engine, bool horizontal, int x, int y)
                 grid[x + i][y]->set_square_type(ENGINE_PART);
         }
     }
-    //Vertical
+        //Vertical
     else
     {
         grid[x][y + engine->get_weapon_place()]->set_square_type(ENGINE_WEAPON);
@@ -314,7 +314,7 @@ int Grid::first_to_drawn(int x, int y, bool horizontal, bool IEM, float damage )
             direction=false;
         }
     }
-    
+
     int number_case_touch = 0;
     int i;
     int v_i=(direction ? 1 : -1);
@@ -403,7 +403,7 @@ int Grid::proximity_check(int x, int y, Engine *engine)
 }*/
 
 Square* Grid::radar_one_square(int x, int y)
-{   
+{
     if(check_one_position(x,y)==-1)
     {
         return nullptr;
@@ -447,8 +447,8 @@ void static print_one_line_gride(int i,Square *grid[10][10], bool hide)
             if (!(hide))
             {
                 std:: cout << grid[j][i]->get_engine()->get_size()
-                     << "_"
-                     << grid[j][i]->get_health_pr();
+                           << "_"
+                           << grid[j][i]->get_health_pr();
                 SQUARE_TYPE type = grid[j][i]->get_square_type();
                 if(type==ENGINE_MOTOR || type ==ENGINE_MOTOR_DEAD || type == ENGINE_MOTOR_DESACTIVATED)
                     std:: cout << 'M';
@@ -504,4 +504,3 @@ void Grid::display(int player) {
 Square *Grid::get(int x,int y) {
     return grid[x][y];
 }
-
