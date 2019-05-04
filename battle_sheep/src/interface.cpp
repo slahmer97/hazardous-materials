@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "../include/interface.h"
 #include "../include/b_switch.h"
 #include "../include/display_grid.h"
@@ -5,29 +7,29 @@
 #include "../include/textfield.h"
 #include <iostream>
 
-using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 
 
-Interface(WssClient * connection, std::string username, std::string password):
-	player(username),
-	password(password),
+Interface::Interface(WssClient * connection, std::string username, std::string password):
+	player(std::move(username)),
+	password(std::move(password)),
 	window(sf::VideoMode(960,540), "Battle Sheep"),
 	co(connection)
-
+	
 {
+
 	//We pass the method dedicated to receive messages via a lambda function
 	co->on_message = [this] (std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message) {
 		this->on_server_message_received(connection, in_message);
 	};
 
 	//We pass the method dedicated to detect the connection opening via a lambda function
-
+	
     co->on_open = [this](std::shared_ptr<WssClient::Connection> connection) {
 		this->on_server_connection_open(connection);
 	};
-
+	
 	//Same for the method dedicated to the closing
-	co->on_close = [this](std::shared_ptr<WssClient::Connection> connection, int status, const string &reason){
+	co->on_close = [this](std::shared_ptr<WssClient::Connection> connection, int status, const std::string &reason){
 		this->on_server_connection_closed(connection, status, reason);
 	};
 
@@ -42,8 +44,8 @@ TextArea txt(10, 0, 0, 300, 100);
 void Interface::start() {
 
     this->change_current_menu(new GameMenu());
-
-
+	
+	
 
 	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
@@ -94,7 +96,7 @@ void Interface::change_current_menu(Menu* newMenu){
 
 void Interface::on_server_message_received( const std::shared_ptr<WssClient::Connection>& connection, std::shared_ptr<WssClient::InMessage> in_message  ){
 	ServerMessage *m = ServerMessage::getServerMessage(in_message->string());
-
+	
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
 	switch(msg_type){
@@ -211,9 +213,9 @@ void Interface::on_server_connection_open( const std::shared_ptr<WssClient::Conn
 		ClientMessageSender::setServer(connection.get());
 
 	std::cout<< "Server connection opened, sending login information" << std::endl;
-
+	
 	//When the connection is established, we send the login information
-	ClientMessageSender::sendLoginRequest(player, password);
+	//ClientMessageSender::sendLoginRequest(, password);
 
 }
 
