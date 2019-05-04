@@ -127,8 +127,6 @@ else()
 endif()
 
 
-# The testing client
-add_executable(testing src/main_tmp.cpp ${SHARED_SOURCES} )
 
 # The server itself
 add_executable(server src/main_server.cpp  ${SHARED_SOURCES} ${SERVER_ONLY_SOURCES})
