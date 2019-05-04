@@ -185,6 +185,33 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
     }
 
 }
+std::vector<std::vector<Square*>> Engine::Skill_shot(Grid *grid, int x, int y, SHOT_TYPE type_of_shot){
+        std::vector<std::vector<Square*>> ret;
+        std::vector<Square*> ret1;
+        std::vector<Square*> ret2;
+        std::vector<Square*> ret3;
+        for(int i=0;i<3;i++)
+            ret1.push_back(nullptr);
+        for(int i=0;i<3;i++)
+            ret2.push_back(nullptr);
+        for(int i=0;i<3;i++)
+            ret3.push_back(nullptr);
+        ret.push_back(ret1);
+        ret.push_back(ret2);
+        ret.push_back(ret3);
+
+    if(grid==nullptr)
+        return ret;
+    if(!(m_is_on_grid))
+        return ret;
+    if(grid->get_engine_x_y(m_x,m_y)==this)
+        return ret;
+    if(type_of_shot==PATROUILE_SKILL)
+        return ((Skill_patrouille*)&m_skill)->use(grid,x,y);
+    else
+        return ret;
+}
+    
 int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value){
     if(grid==nullptr)
         return -100;

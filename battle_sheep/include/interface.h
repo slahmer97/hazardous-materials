@@ -59,7 +59,8 @@ class Interface
 		/**
 		 * The connection to the server
 		 */
-		WssClient::Connection* co;
+		WssClient * co;
+
 
 		/**
 		 * Method used to receive messages from the server, it's here that everything is parseda first time

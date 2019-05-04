@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "../include/interface.h"
 #include "../include/b_switch.h"
 #include "../include/display_grid.h"
@@ -5,16 +7,16 @@
 #include "../include/textfield.h"
 #include <iostream>
 
-using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 
 
-Interface::Interface(WssClient* connection, std::string username, std::string password):
-	player(username),
-	password(password),
+Interface::Interface(WssClient * connection, std::string username, std::string password):
+	player(std::move(username)),
+	password(std::move(password)),
 	window(sf::VideoMode(960,540), "Battle Sheep"),
 	co(connection)
 
 {
+
 	//We pass the method dedicated to receive messages via a lambda function
 	co->on_message = [this] (std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message) {
 		this->on_server_message_received(connection, in_message);
@@ -27,7 +29,7 @@ Interface::Interface(WssClient* connection, std::string username, std::string pa
 	};
 
 	//Same for the method dedicated to the closing
-	co->on_close = [this](std::shared_ptr<WssClient::Connection> connection, int status, const string &reason){
+	co->on_close = [this](std::shared_ptr<WssClient::Connection> connection, int status, const std::string &reason){
 		this->on_server_connection_closed(connection, status, reason);
 	};
 
@@ -213,7 +215,7 @@ void Interface::on_server_connection_open( const std::shared_ptr<WssClient::Conn
 	std::cout<< "Server connection opened, sending login information" << std::endl;
 
 	//When the connection is established, we send the login information
-	ClientMessageSender::sendLoginRequest(player, password);
+	//ClientMessageSender::sendLoginRequest(, password);
 
 }
 
