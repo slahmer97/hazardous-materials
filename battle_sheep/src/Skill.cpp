@@ -253,11 +253,13 @@ Skill_patrouille::Skill_patrouille(ENGINE_TYPE engine_type) : Skill(engine_type)
 int Skill_patrouille::use(Grid *grid, int x, int y, bool horizontal)
 {
     std::cerr << "Skill patrouille can't return an int";
+    return -1000;
     std::exit(1);
 }
 int Skill_patrouille::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill patrouille can't attack two grids in same time and can't return an int";
+    return -1000;
     std::exit(1);
 }
 //TOCHECK

@@ -10,7 +10,7 @@ int main(int argv, char**argc){
 	
 	//Very basic cmd args handling
 	
-	if(argv != 3 || argv != 2) {
+	if(argv != 3 && argv != 2) {
 		std::cerr<<"Usage : "<<argc[0]<<" host [port]"<<std::endl;
 		return -1;
 	}

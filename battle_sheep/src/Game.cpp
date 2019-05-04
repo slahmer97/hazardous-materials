@@ -145,7 +145,10 @@ void Game::play(Player *player,ClientMessage * clientMessage){
     else if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::SHOT){
         //TODO
         int engine_id = 1;
-        int x,y;
+        int x = clientMessage->get_x();
+        int y = clientMessage->get_y();
+        SHOT_TYPE  shotType = SHOT_TYPE ::NORMAL_SHOT;
+        int hori = 1;
         int grid_id = 0;
         Grid * grid = get_grid_by_id(grid_id);
         Engine* engine = player->get_engine_by_id(engine_id);
@@ -158,6 +161,12 @@ void Game::play(Player *player,ClientMessage * clientMessage){
             std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::GRID_ID_DOES_NOT_EXIST,msg_type);
             player->send_message(err);
             return;
+        }
+
+        int ret = engine->Skill_shot(grid,x,y,hori,shotType);
+
+        if(ret > 0){
+
         }
 
         // engine->Skill_shot();

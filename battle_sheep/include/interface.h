@@ -14,6 +14,8 @@
 /**
  * Main class of the client-side GUI
  */
+using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
+
 class Interface 
 {
 	/*Methods*/
@@ -59,7 +61,8 @@ class Interface
 		/**
 		 * The connection to the server
 		 */
-		WssClient::Connection* co;
+		WssClient * co;
+
 
 		/**
 		 * Method used to receive messages from the server, it's here that everything is parseda first time

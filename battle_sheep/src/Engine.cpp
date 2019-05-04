@@ -160,6 +160,7 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
         case RECONNAISSANCE_SKILL:
             return ((Skill_reconnaissance*)&m_skill)->use(grid, x, y, horizontal);
         default:
+            return normal_shot(grid,x,y);
             return -1000;//this function can't call other skills :/
     }
 }
@@ -181,7 +182,7 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
         case PATROUILE_SKILL:
             return ((Skill_patrouille*)&m_skill)->use(grid1,grid2,x,y,horizontal); //TODO move it to other skill shot function
         default:
-            return -1000;
+            return -100;
     }
 
 }
