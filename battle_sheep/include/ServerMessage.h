@@ -66,6 +66,7 @@ public:
     const std::string get_username() const;
     void set_username(const std::string &username);
     void set_err_type(ERRORS);
+	ERRORS get_err_type();
     void set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE);
 
 
