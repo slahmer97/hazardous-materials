@@ -187,6 +187,19 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
 }
 std::vector<std::vector<Square*>> Engine::Skill_shot(Grid *grid, int x, int y, SHOT_TYPE type_of_shot){
         std::vector<std::vector<Square*>> ret;
+        std::vector<Square*> ret1;
+        std::vector<Square*> ret2;
+        std::vector<Square*> ret3;
+        for(int i=0;i<3;i++)
+            ret1.push_back(nullptr);
+        for(int i=0;i<3;i++)
+            ret2.push_back(nullptr);
+        for(int i=0;i<3;i++)
+            ret3.push_back(nullptr);
+        ret.push_back(ret1);
+        ret.push_back(ret2);
+        ret.push_back(ret3);
+
     if(grid==nullptr)
         return ret;
     if(!(m_is_on_grid))
