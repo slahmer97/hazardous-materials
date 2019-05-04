@@ -9,6 +9,8 @@
 #include "../include/ServerMessage.h"
 #include "../include/ClientMessageSender.h"
 
+#include <client_wss.hpp>
+
 /**
  * Main class of the client-side GUI
  */
