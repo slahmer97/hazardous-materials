@@ -99,11 +99,13 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
-	GameMenu* gm = nullptr;
+
+	//We pre-cast into a gamemenu and a mainmenu for simplicity in the different cases
+	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
+	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
 	switch(msg_type){
         case ServerMessage::KILL_PLAYER:
             {
-				gm = dynamic_cast<GameMenu*>(this->currentMenu);
 				if(gm != nullptr){
 					gm->currentState = STATE_DISABLED;
 				}
@@ -126,7 +128,6 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::CURRENT_TURN:
             {
-				gm = dynamic_cast<GameMenu*>(this->currentMenu);
 				if(gm != nullptr){
 					gm->currentState = STATE_PLAY;
 				}
@@ -149,7 +150,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::JOIN_SUCCESS:
             {
-
+				std::cout<<"Succefully joined game"<<std::endl;
             }
             break;
         case ServerMessage::START:
@@ -203,8 +204,8 @@ void Interface::handle_errror_message(ServerMessage* m){
             break;
         case ServerMessage::CONNECTION_LOST:
             {
-								std::cout<<"Connection lost to current game, attempting reconnection"<<std::endl;
-								ClientMessageSender::sendJoinGameRequest("");
+				std::cout<<"Connection lost to current game, attempting reconnection"<<std::endl;
+				ClientMessageSender::sendJoinGameRequest("");
             }
 
             break;
