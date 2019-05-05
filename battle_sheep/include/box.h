@@ -30,7 +30,7 @@
 		 */
 		virtual void draw(sf::RenderTarget* drawingBoard);
 
-    std::vector<Component *> compo;
+    std::vector<Component*> compo;
 
     void setPosition(int x, int y);
 

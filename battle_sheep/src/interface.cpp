@@ -45,13 +45,11 @@ void Interface::start() {
 
     this->change_current_menu(new MainMenu());
 
-	//	sf::RectangleShape boite(sf::Vector2f(480.f,270.f));
-	//	boite.setPosition(sf::Vector2f(220.f,135.f));
-
-	//	Button sel1("Select 1",300,195,140,35);
-	//	Button sel2("Select 2",300,315,140,35);
-	//	Button sel3("Select 3",490,195,140,35);
-	//	Button sel4("Select 4",490,315,140,35);
+		//boite[0] = new Box(220.f,133.f,480.f,270.f);
+		//boite[0]->compo[0] = new Button("Select 1",300,195,140,35);
+		//boite[0]->compo[1] = new Button("Select 2",300,315,140,35);
+		//boite[0]->compo[2] = new Button("Select 3",490,195,140,35);
+		//boite[0]->compo[3] = new Button("Select 4",490,315,140,35);
 
 	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
@@ -74,10 +72,8 @@ void Interface::start() {
 			if(this->currentMenu != nullptr)
 				this->currentMenu->handleEvent(&window,&event);
 
-		//	sel1.handleEvent(&window,&event);
-		//	sel2.handleEvent(&window,&event);
-		//	sel3.handleEvent(&window,&event);
-		//	sel4.handleEvent(&window,&event);
+		//	for(size_t i = 0; i < (this->boite).size();i++)
+		//		boite[0]->handleEvent(&window,&event);
 		}
 
 		//We clear the window of any previous drawing
@@ -86,11 +82,8 @@ void Interface::start() {
 		if(this->currentMenu != nullptr)
 			this->currentMenu->draw(&window);
 
-	//	window.draw(boite);
-	//	sel1.draw(&window);
-	//	sel2.draw(&window);
-	//	sel3.draw(&window);
-	//	sel4.draw(&window);
+		//for(size_t i = 0; i < (this->boite).size();i++)
+		//	boite[0]->draw(&window);
 
 		//We then display the buffer on the window
 		window.display();

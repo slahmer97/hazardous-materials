@@ -7,9 +7,9 @@ Box::Box(int x, int y, int width, int height):
 
 
 void Box::handleEvent(sf::Window* window, sf::Event* event){
-  for(int i = 0; i < this->compo.length; i++)
+  for(size_t i = 0; i < (this->compo).size(); i++)
   {
-    compo[i].handleEvent(window,event);
+    compo[i]->handleEvent(window,event);
   }
 }
 
@@ -19,18 +19,18 @@ void Box::draw(sf::RenderTarget* drawingBoard){
 
   this->fond.setFillColor(sf::Color(172,172,172));
   drawingBoard->draw(this->fond);
-  for(int i = 0; i < this->compo.length; i++)
+  for(size_t i = 0; i < (this->compo).size(); i++)
   {
-    compo[i].draw(drawingBoard);
+    compo[i]->draw(drawingBoard);
   }
 }
 
-void setPosition(int x, int y){
+void Box::setPosition(int x, int y){
   this->x = x;
   this->y = y;
 }
 
-void setSize(int width, int height){
+void Box::setSize(int width, int height){
   this->width = width;
-  this->height = heigth;
+  this->height = height;
 }

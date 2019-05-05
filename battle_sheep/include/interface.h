@@ -5,7 +5,7 @@
 #include "../include/game_menu.h"
 #include "../include/main_menu.h"
 #include "../include/menu.h"
-
+#include "../include/box.h"
 
 #include "../include/ServerMessage.h"
 #include "../include/ClientMessageSender.h"
@@ -38,6 +38,10 @@ class Interface
 		 * Class destructor
 		 */
 		~Interface();
+
+		/*Variables*/
+
+		std::vector<Box*> boite;
 
 
 	private:
