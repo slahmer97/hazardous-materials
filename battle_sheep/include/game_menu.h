@@ -14,7 +14,7 @@
 //TODO: implement current selected ship/plane to be highlighted
 //TODO: implement ghost of the ship you have to place
 
-class GameMenu : public Menu, public ClickListener
+class GameMenu : public Menu, public ClickListener, public GridActionListener
 {
 	public:
 		GameMenu();
@@ -25,6 +25,7 @@ class GameMenu : public Menu, public ClickListener
 
 	 	virtual void draw(sf::RenderTarget* drawingBoard);
 
+		virtual void on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX, int gridY, int options1=0, int options2=0);
 		virtual void on_click(Component* button);
 
 		~GameMenu();

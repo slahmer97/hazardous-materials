@@ -20,6 +20,13 @@ GameMenu::GameMenu():
 }
 
 
+void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX, int gridY, int options1, int options2){
+	switch(this->currentState){
+		case STATUS_PLACE:
+			//Place ship
+			break;
+	}
+}
 
 void GameMenu::handle_server_message(ServerMessage* m){
 	switch(m->get_msg_type()){

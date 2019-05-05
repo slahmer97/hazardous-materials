@@ -30,12 +30,12 @@ class DisplayGrid : public Component {
 		 */
 		bool displayAir = false;
 
+
 		/**
-		 * The currently selected case, to hightlight a boat/plane or to aim
+		 * Select a case to highlight
+		 * Will also highliht the ship if there is one there
 		 */
-		int selectedX = -1, selectedY = -1;
-
-
+		void selectCase(int x, int y, bool force = false);
 
 		/**
 		 * Set the listener for the return button
@@ -55,7 +55,7 @@ class DisplayGrid : public Component {
 		int x,y,width,height;
 		
 		/**
-		 * The listener for when the Enter key is pressed
+		 * The listener for when we click somewhere on the grid
 		 */
 		GridActionListener* listener = nullptr;
 		
@@ -63,6 +63,13 @@ class DisplayGrid : public Component {
 		 * Size of the grid
 		 */
 		int gridWidth, gridHeight;
+
+		/**
+		 * The currently selected case, to hightlight a boat/plane or to aim
+		 */
+		int selectedX = -1, selectedY = -1;
+		
+		std::vector<sf::Sprite> highlight_sprites;
 
 		/**
 		 * All the sprites used to display the grid itself
