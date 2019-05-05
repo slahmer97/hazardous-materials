@@ -39,12 +39,14 @@ private:
     Team* m_t1,*m_t2;
     TURN m_current_turn;
     Score* m_score;
-
-
     Grid* get_grid_by_id(int id);
     void switch_turn();
     void on_game_state_changed();
     void update_score();
+
+
+
+    void shot1routine(Player* p,Engine* engine,Grid*grid,int hori,int x,int y);
 };
 
 

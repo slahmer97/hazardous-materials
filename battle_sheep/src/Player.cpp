@@ -7,6 +7,7 @@
 #include <Player.h>
 #include <boost/lexical_cast.hpp>
 #include <FactoryEngine.h>
+#define  MAX_ENGINE 2
 
 void Player::sendMessage(const std::string& msg) {
     auto out_message = std::make_shared<WssServer::OutMessage>();
@@ -92,8 +93,13 @@ bool Player::is_logged_in(){
 
 
 Engine* Player::get_engine_by_id(int id){
+    if(id > MAX_ENGINE)
+        return nullptr;
+
     if(m_engine.size() >= id)
         return m_engine[id-1];
+    else
+        return nullptr;
 }
 Engine* Player::create_engine(ENGINE_TYPE engine){
     Engine* ret = FactoryEngine::getEngine(engine);
@@ -104,7 +110,7 @@ Engine* Player::create_engine(ENGINE_TYPE engine){
 }
 
 bool Player::is_ready() {
-    return this->m_engine.size() == 1;
+    return this->m_engine.size() == MAX_ENGINE;
 }
 
 void Player::forward_chat_message(const std::string& msg){

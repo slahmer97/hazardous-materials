@@ -32,7 +32,7 @@ bool ClientMessageSender::sendRegisterRequest(const std::string& username,const 
     return &checkServerStatus;
 }
 
-bool ClientMessageSender::sendAddEngineRequest(ENGINE_TYPE type, bool horizontal, int x, int y){
+bool ClientMessageSender::sendAddEngineRequest(ENGINE_TYPE type, int horizontal, int x, int y){
     std::string msg = ClientMessage::getAdd_engineMessage(type,horizontal,x,y);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
@@ -70,7 +70,7 @@ bool ClientMessageSender::sendRotateEngineRequest(int id,int clock,int node_dist
     return &checkServerStatus;
 }
 
-bool ClientMessageSender::sendMoveEngineRequest(int id,bool reading_direction, int movement_value) {
+bool ClientMessageSender::sendMoveEngineRequest(int id,int reading_direction, int movement_value) {
     std::string msg = ClientMessage::getMoveMessage(id,reading_direction,movement_value);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
@@ -87,6 +87,14 @@ bool ClientMessageSender::sendChatRequest(const std::string & msg_chat) {
 
 bool ClientMessageSender::isUp() {
     return server != nullptr;
+}
+
+bool ClientMessageSender::sendShotRequest(int engine_id,int target_grid,int hori,int x,int y) {
+
+    std::string msg = ClientMessage::getShotMessage(engine_id,target_grid,hori,x,y);
+    ClientMessageSender::server->send(msg);
+    std::cout<<"Client Sent : "<<msg<<std::endl;
+    return &checkServerStatus;
 }
 
 
