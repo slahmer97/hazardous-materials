@@ -8,7 +8,6 @@
 #include <Engine.h>
 #include <iostream>
 
-
 Engine::Engine(int size_a){
 
     if(size_a < 2 || size_a > 5)
@@ -144,8 +143,9 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
         return -100;
     if(!(m_is_on_grid))
         return -2;
-    if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
-        return -4;
+    if(m_skill != nullptr)
+        if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
+            return -4;
     if(grid->get_engine_x_y(m_x,m_y)==this)
         return -3;
     if(m_weapon_state!=WEAPON_STATE::WEAPON)
@@ -166,6 +166,8 @@ int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type
             return ((Skill_brouilleur*)m_skill)->use(grid, x, y, horizontal);
         case RECONNAISSANCE_SKILL:
             return ((Skill_reconnaissance*)m_skill)->use(grid, x, y, horizontal);
+        case NORMAL_SHOT:
+            return  normal_shot(grid,x,y);
         default:
             return -1000;//this function can't call other skills :/
     }
@@ -402,7 +404,7 @@ std::string Engine::engine_type_to_string(ENGINE_TYPE type) {
     else if(type == INCENDIARY)
         return  "incendiary";
 
-    return std::__cxx11::string();
+    return std::string("not_introduced");
 }
 
 void Engine::set_id(int i){
@@ -410,4 +412,17 @@ void Engine::set_id(int i){
 }
 int Engine::get_id(){
     return this->id;
+}
+
+SHOT_TYPE Engine::get_shot_type() {
+    if(m_skill == nullptr)
+        return NORMAL_SHOT;
+    if(m_skill->get_points() < POINT_COST)
+     return NORMAL_SHOT;
+    else
+        return m_skill->engine_type_to_shot_type(m_skill->get_engine_type());
+}
+
+bool Engine::has_skill() {
+    return m_skill != nullptr;
 }

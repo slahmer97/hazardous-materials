@@ -13,14 +13,15 @@ class ClientMessage {
 public:
     enum CLIENT_MESSAGE_TYPE{
         LOGIN,REGISTER,ADD_ENGINE,SHOT,CHAT_C,MOVE,ROTATE,SKIP_TURN,CREATE_GAME,CHOOSE_GRID,JOIN_GAME,MUTE_CHAT,NONE_C,
-        UN_MUTE_CHAT
+        UN_MUTE_CHAT,SHOT2
     };
     static CLIENT_MESSAGE_TYPE to_enum(const std::string&);
     static std::string to_string(CLIENT_MESSAGE_TYPE);
     static std::string getLoginMessage(const std::string&,const std::string&);
     static std::string getRegisterMessage(const std::string&,const std::string&);
     static std::string getAdd_engineMessage(ENGINE_TYPE type,int horizontal,int x,int y);
-    static std::string getShotMessage(SHOT_TYPE,int,int,int);
+    static std::string getShotMessage(int engine_id,int target_grid,int hori,int x,int y);
+    static std::string getShot2Message(int engine_id,int target_grid1,int target_grid2,int hori,int x,int y);
     static std::string getChatMessage(const std::string& msg);
     static std::string getMoveMessage(int,int,int);
     static std::string getRotateMessage(int,int,int node_dist);
@@ -38,6 +39,7 @@ private:
     int m_coor_x,m_coor_y;
     Score m_score;
     int m_engine_id;
+    int m_grid_id_1,m_grid_id_2;
     std::string m_chat_msg;
     std::string m_game_name;
     std::string m_grid_type;
@@ -76,6 +78,10 @@ public:
     ENGINE_TYPE get_engine_type();
     SHOT_TYPE  get_shot_type();
     int get_clock();
+    void set_grid_id_1(int id);
+    void set_grid_id_2(int id);
+    int get_grid_id_1();
+    int get_grid_id_2();
 
     void set_clock(int i);
 };

@@ -68,6 +68,10 @@ ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& typ
         return ROTATE_SUCCESS;
     else if(type == "grid_assign_success")
         return GRID_ASSIGN_SUCCESS;
+    else if(type == "error")
+        return ERROR;
+    else if(type == "shot_success")
+        return SHOT_SUCCESS;
     //TODO
     return NONEE;
 }
@@ -101,6 +105,10 @@ std::string ServerMessage::to_string(ServerMessage::SERVER_MESSAGE_TYPE type){
         return std::string("rotate_success");
     else if(type == GRID_ASSIGN_SUCCESS)
         return std::string("grid_assign_success");
+    else if(type == ERROR)
+        return std::string("error");
+    else if(type == SHOT_SUCCESS)
+        return std::string("shot_success");
 
     return std::string("none");//check later
 }
@@ -115,6 +123,14 @@ std::string ServerMessage::getKillPlayerMessage(int id_player_grid) {
 
     return buff.str();
 }
+
+std::string ServerMessage::getShotSuccessMessage() {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(SHOT_SUCCESS));
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+    return buff.str();}
+
 std::string ServerMessage::getMoveSuccessMessage(int id){
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(MOVE_SUCCESS));
@@ -178,14 +194,14 @@ std::string ServerMessage::getGridAssignSuccess() {
     return buff.str();}
 
 
-std::string ServerMessage::getScoreBroadCastMessage(Score score) {
+std::string ServerMessage::getScoreBroadCastMessage(Score* score) {
     boost::property_tree::ptree pt,s1,s2,s3,s4,p;
     pt.put("msg_type",to_string(SCORE_BROADCAST));
 
-    s1.put("",score.get_s1());
-    s2.put("",score.get_s2());
-    s3.put("",score.get_s3());
-    s4.put("",score.get_s4());
+    s1.put("",score->get_s1());
+    s2.put("",score->get_s2());
+    s3.put("",score->get_s3());
+    s4.put("",score->get_s4());
     p.push_back(std::make_pair("",s1));
     p.push_back(std::make_pair("",s2));
     p.push_back(std::make_pair("",s3));
@@ -341,7 +357,7 @@ void ServerMessage::set_chat_msg(const std::string &chatMsg) {
     ServerMessage::m_chat_msg = chatMsg;
 }
 const std::string ServerMessage::get_username() const {
-    return m_username.c_str();
+    return m_username;
 }
 void ServerMessage::set_username(const std::string &username) {
     ServerMessage::m_username = username;
@@ -362,7 +378,6 @@ void ServerMessage::set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE s){
 }
 
 ServerMessage::ERRORS ServerMessage::get_err_type(){
-
-
+    return m_error_type;
 }
 

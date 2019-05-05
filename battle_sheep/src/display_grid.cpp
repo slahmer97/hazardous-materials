@@ -61,8 +61,7 @@ DisplayGrid::~DisplayGrid(){
 }
 
 void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
-	//For testing purpose only, we create boat of varying size on click
-	//TODO: implement attack
+
 	switch(event->type){
 		case sf::Event::MouseButtonPressed:
 			{
@@ -73,30 +72,9 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 					//We are in this component
 					int gridX = (mx-x)/32,
 						gridY = (my-y)/32;
-					sf::IntRect texture = this->spritesShip[gridX][gridY].getTextureRect();
-					if(event->mouseButton.button == sf::Mouse::Left){
-						if(this->listener != nullptr){
-							this->listener->on_action(this, 0, gridX, gridY);
-						}
-						if(texture.top == 0 && texture.left == 0){
-							texture.top = 32;
-							texture.left = 32;
-						} else if(texture.top == 32 && texture.left == 32) {
-							texture.top = 0;
-							texture.left = 0;
-						}
-					} else if (event->mouseButton.button == sf::Mouse::Right) {
-						if(texture != TextureManager::Ship::Empty){
-							texture = TextureManager::Ship::Empty;
-						} else {
-							texture.top = 0;
-							texture.left = 32;
-						}
-
-					} else if (event->mouseButton.button == sf::Mouse::Middle) {
-						this->displayAir = !this->displayAir;
+					if(this->listener != nullptr){
+						this->listener->on_action(this, event->mouseButton.button, gridX, gridY);
 					}
-					this->spritesShip[gridX][gridY].setTextureRect(texture);
 				}
 				break;
 			}
@@ -108,26 +86,75 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 }
 
 
+void DisplayGrid::selectCase(int x, int y, bool force){
+	//We check if the value is different from before
+	if(this->selectedX == x && this->selectedY == y && !force){
+		//No need to change anything
+		return;
+	}
+	//We create a new vector
+	std::vector<sf::Sprite> new_vect;
+	
+	//Check if there is a know ship at (x,y)
+	
+	//Else juste a simple highlight
+	int absX=this->x+x*32, absY=this->y+y*32;
+
+	new_vect.resize(4);
+
+	new_vect[0].setTexture(TextureManager::Background::Atlas);
+	new_vect[1].setTexture(TextureManager::Background::Atlas);
+	new_vect[2].setTexture(TextureManager::Background::Atlas);
+	new_vect[3].setTexture(TextureManager::Background::Atlas);
+	
+	new_vect[0].setTextureRect(TextureManager::Background::HighlightUpLeft);
+	new_vect[1].setTextureRect(TextureManager::Background::HighlightUpRight);
+	new_vect[2].setTextureRect(TextureManager::Background::HighlightDownLeft);
+	new_vect[3].setTextureRect(TextureManager::Background::HighlightDownRight);
+
+	new_vect[0].setPosition(absX, absY);
+	new_vect[1].setPosition(absX+16, absY);
+	new_vect[2].setPosition(absX, absY+16);
+	new_vect[3].setPosition(absX+16, absY+16);
+	
+	highlight_sprites.swap(new_vect);
+}
+
+
+
 void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 	if(this->displayAir) {
+		//We start by drawing the background
 		for(int i = 0; i < gridWidth; i++) {
 			for(int j = 0; j < gridHeight; j++){
 				drawingBoard->draw(this->spritesBackgroundAir[i][j]);
 			}
 		}
-
+		//We draw the higlight in-between
+		for(int i = 0; i < highlight_sprites.size(); i++){
+			drawingBoard->draw(this->highlight_sprites[i]);
+		}
+		
+		//And we finish with the planes
 		for(int i = 0; i < gridWidth; i++){
 			for(int j = 0; j < gridHeight; j++){
 				drawingBoard->draw(this->spritesPlanes[i][j]);
 			}
 		}
 	} else {
+		//We start by drawing the background
 		for(int i = 0; i < gridWidth; i++) {
 			for(int j = 0; j < gridHeight; j++){
 				drawingBoard->draw(this->spritesBackground[i][j]);
 			}
 		}
-
+		
+		//We draw the highligh in-between
+		for(int i = 0; i < highlight_sprites.size(); i++){
+			drawingBoard->draw(this->highlight_sprites[i]);
+		}
+	
+		//We finish by drawing all the ships
 		for(int i = 0; i < gridWidth; i++){
 			for(int j = 0; j < gridHeight; j++){
 				drawingBoard->draw(this->spritesShip[i][j]);

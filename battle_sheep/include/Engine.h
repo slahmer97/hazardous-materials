@@ -15,6 +15,7 @@
 
 class Grid;
 class Skill;
+#define POINT_COST 50
 
 
 class Engine {
@@ -210,8 +211,11 @@ public:
      */
     ENGINE_TYPE get_engine_type();
 
+    SHOT_TYPE get_shot_type();
+
     void set_id(int i);
     int get_id();
+    bool has_skill();
 
 private:
     int id;

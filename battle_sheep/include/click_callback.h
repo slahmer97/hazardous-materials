@@ -19,9 +19,7 @@ class ClickListener {
  */
 class GridActionListener {
 	public:
-		static const int ACTION_ATTACK = 1;
-		static const int ACTION_PLACE = 2;
-		virtual void on_action(DisplayGrid* grid, int action, int gridX, int gridY, int options1=0, int options2=0)=0;
+		virtual void on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX, int gridY, int options1=0, int options2=0)=0;
 };
 
 
