@@ -12,7 +12,7 @@
 #include "../include/enum.h"
 
 
-class MainMenu : public Menu, public ClickListener, public TextField
+class MainMenu : public Menu, public ClickListener
 {
 	public:
 		MainMenu();
