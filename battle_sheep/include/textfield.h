@@ -18,7 +18,7 @@ class TextField : public Component {
 		 * Method drawing the Component
 		 */
 		virtual void draw(sf::RenderTarget* drawingBoard);
-		
+
 		/**
 		 * The text contained in the Textfield, minus the prompt
 		 */
@@ -28,8 +28,8 @@ class TextField : public Component {
 		 * A prompt for the textfield, printed before the text can be entered
 		 */
 		sf::String prompt;
-		
-		
+
+
 		/**
 		 * Var containing if the textfield is enabled or not
 		 */
@@ -46,19 +46,19 @@ class TextField : public Component {
 		 */
 		bool selected = false;
 
-	
+
 	private:
-		
+
 		/**
 		 * Geometry information for the textfield
 		 */
 		int x,y,width,height;
-		
+
 		/**
 		 * The font for the textfield
 		 */
 		sf::Font font;
-		
+
 		/**
 		 * The listener for when the Enter key is pressed
 		 */
