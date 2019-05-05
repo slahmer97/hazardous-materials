@@ -53,6 +53,11 @@ class TextField : Component {
 		sf::Font font;
 		
 		/**
+		 * If the textfield is selected
+		 */
+		bool selected = false;
+
+		/**
 		 * The listener for when the Enter key is pressed
 		 */
 		ClickListener* listener = nullptr;
