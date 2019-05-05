@@ -348,25 +348,44 @@ Grid *Game::get_grid_by_id(int id) {
             return nullptr;
     }
 }
-
 void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
 
 
     SHOT_TYPE  shotType = engine->get_shot_type();
-    int ret = engine->Skill_shot(grid,x,y,h,shotType);
-    if(ret >= 0){
-            std::string shot_suc_msg = ServerMessage::getShotSuccessMessage();
-            p->send_message(shot_suc_msg);
-            std::cout<<"[+]" <<shot_suc_msg<<std::endl;
-            switch_turn();
+    bool is_shot = shotType == SHOT_TYPE ::NORMAL_SHOT || shotType == SHOT_TYPE ::PORTE_AVION_SKILL ||
+                   shotType == SHOT_TYPE ::CROISEUR_SKILL ||  shotType == SHOT_TYPE ::CONTRE_TORPILLEUR_SKILL ||
+                   shotType ==   SHOT_TYPE ::CUIRASSE_SKILL || shotType == SHOT_TYPE ::TORPILLEUR_SKILL ||
+                   shotType == SHOT_TYPE ::BROUILLEUR_SKILL || shotType == SHOT_TYPE ::RECONNAISSANCE_SKILL;
+    bool is_radare = shotType == SHOT_TYPE :: PATROUILE_SKILL;
+
+    if(is_shot){
+        int ret = engine->Skill_shot(grid,x,y,h,shotType);
+        if(ret >= 0){
+                std::string shot_suc_msg = ServerMessage::getShotSuccessMessage();
+                p->send_message(shot_suc_msg);
+                std::cout<<"[+]" <<shot_suc_msg<<std::endl;
+                switch_turn();
+        }
+        else{
+                std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::SHOT);
+                p->send_message(err);
+                std::cerr<<"[-] player could not perform this shot============= "<<std::endl;
+        }
+        return;
     }
-    else{
-            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::SHOT);
-            p->send_message(err);
-            std::cerr<<"[-] player could not perform this shot============= "<<std::endl;
+    if(is_radare){
+        //TODO=========================================
+
+
+
+
+
     }
 
 
+    //
+  //SHOT_TYPE ::BOMBARDIER_SKILL;TODOOOOOOOOOOOOOOOO
+   // SHOT_TYPE ::INTERCEPTEUR_SKILL;
 
 
 }
