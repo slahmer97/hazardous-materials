@@ -86,14 +86,14 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 }
 
 
-void selectCase(int x, int y, bool force){
+void DisplayGrid::selectCase(int x, int y, bool force){
 	//We check if the value is different from before
 	if(this->selectedX == x && this->selectedY == y && !force){
 		//No need to change anything
 		return;
 	}
 	//We create a new vector
-	std::vector<sf::Sprite>> new_vect;
+	std::vector<sf::Sprite> new_vect;
 	
 	//Check if there is a know ship at (x,y)
 	
@@ -131,7 +131,7 @@ void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 			}
 		}
 		//We draw the higlight in-between
-		for(int i = 0; i < highlight_sprites.getSize(); i++){
+		for(int i = 0; i < highlight_sprites.size(); i++){
 			drawingBoard->draw(this->highlight_sprites[i]);
 		}
 		
@@ -150,7 +150,7 @@ void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 		}
 		
 		//We draw the highligh in-between
-		for(int i = 0; i < highlight_sprites.getSize(); i++){
+		for(int i = 0; i < highlight_sprites.size(); i++){
 			drawingBoard->draw(this->highlight_sprites[i]);
 		}
 	

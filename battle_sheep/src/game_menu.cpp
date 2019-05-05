@@ -22,7 +22,7 @@ GameMenu::GameMenu():
 
 void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX, int gridY, int options1, int options2){
 	switch(this->currentState){
-		case STATUS_PLACE:
+		case STATE_PLACE:
 			//Place ship
 			break;
 	}
