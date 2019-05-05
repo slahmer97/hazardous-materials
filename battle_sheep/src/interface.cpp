@@ -46,7 +46,6 @@ void Interface::start() {
     this->change_current_menu(new MainMenu());
 
 
-
 	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
 		//We check all event generated since the last loop
@@ -150,6 +149,13 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::LOGIN_SUCCESS:
             {
+
+				/*boite.push_back(new Box(220.f,133.f,480.f,270.f));
+				boite.back()->compo.push_back(new TextField("","Create>",250,163,200,50));
+				boite.back()->compo.push_back(new Button("Create",505,163,140,50));
+				boite.back()->compo.push_back(new TextField("","Join>",250,323,200,50));
+				boite.back()->compo.push_back(new Button("Join",505,323,140,50));
+				*/
 				if(mm != nullptr) {
 					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
 					this->player = mm->getLogin();

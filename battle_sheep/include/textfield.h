@@ -6,7 +6,7 @@
 #include "../include/component.h"
 #include "../include/click_callback.h"
 
-class TextField : Component {
+class TextField : public Component {
 	public:
 		TextField(sf::String defaultText = "", sf::String prompt = "", int x = 0, int y = 0, int width = 0, int height = 0);
 
