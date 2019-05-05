@@ -203,9 +203,6 @@ std::string Square::to_pri_string(){
     return ret;
 }
 
-std::string Square::to_pub_string() {
-    return std::__cxx11::string();
-}
 
 std::string Square::square_type_to_string(SQUARE_TYPE s) {
     if(s == SQUARE_TYPE::ENGINE_MOTOR)

@@ -268,17 +268,26 @@ void GameScheduler::gameEngineAddRoutine(Player *p, Game *game, const std::strin
         std::cout<<"[-] All grids must be assigned before adding an engine !!";
         return;
     }
-    if(p->is_ready() ){
-        std::cout<<"[-] Player with id : "<<player_id<<" has assinged all his engine on his grid "<<std::endl;
-        return ;
+    if(p->is_ready() ) {
+        std::cout << "[-] Player with id : " << player_id << " has assinged all his engine on his grid " << std::endl;
+        return;
     }
     ENGINE_TYPE engineType = clientMessage->get_engine_type();
+    std::cout<<"*****************Engine type "<<Engine::engine_type_to_string(engineType)<<std::endl;
     Engine* engine = p->create_engine(engineType);
     //TODO check if engine is null..
     if(engine == nullptr){
         std::cout<<"[-] player->create_engine() returned nullptr"<<std::endl;
         return;
     }
+
+    if(engine->has_skill()){
+        std::cout<<"\t\t\t[+]^^^^^^^^^^^^^Engine has Skill^^^^^^^^^^^^^^^"<<std::endl;
+    }
+    else
+        std::cerr<<"\t\t\t^^^^^^^^^^^^^Engine Skill is Null^^^^^^^^^^^^^^^"<<std::endl;
+
+
     bool h = clientMessage->get_horizontal();
     int x = clientMessage->get_x();
     int y= clientMessage->get_y();

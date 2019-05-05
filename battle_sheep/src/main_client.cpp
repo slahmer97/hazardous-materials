@@ -99,6 +99,24 @@ int main(){
             std::cin>>y;
             ClientMessageSender::sendRotateEngineRequest(id,x,y);
         }
+        else if(in == "shot"){
+            int id = 1,grid,x,y,h;
+            std::cout<<"engine_id: ";
+            std::cin>>id;
+            std::cout<<"grid_target_id ? : ";
+            std::cin>>grid;
+            std::cout<<"hori ? : ";
+            std::cin>>h;
+            std::cout<<"x ? : ";
+            std::cin>>x;
+
+            std::cout<<"y ? : ";
+            std::cin>>y;
+
+
+
+            ClientMessageSender::sendShotRequest(id,grid,h,x,y);
+        }
 
         continue;
 

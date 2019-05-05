@@ -14,7 +14,8 @@
 class ServerMessage {
 public:
     enum SERVER_MESSAGE_TYPE{
-        KILL_PLAYER,GRIDS_ASSIGNEMENT,ERROR,CHAT_S,CURRENT_TURN,SCORE_BROADCAST,LOGIN_SUCCESS,CREATED_SUCCESS,JOIN_SUCCESS,START,GRID,ENGINE_ADDED,MOVE_SUCCESS,ROTATE_SUCCESS,GRID_ASSIGN_SUCCESS,NONEE
+        KILL_PLAYER,GRIDS_ASSIGNEMENT,ERROR,CHAT_S,CURRENT_TURN,SCORE_BROADCAST,LOGIN_SUCCESS,CREATED_SUCCESS,JOIN_SUCCESS,START,GRID,ENGINE_ADDED,
+        MOVE_SUCCESS,ROTATE_SUCCESS,GRID_ASSIGN_SUCCESS,SHOT_SUCCESS,NONEE
 
     };
     enum SKILL_TYPE{
@@ -22,6 +23,7 @@ public:
     };
     enum ERRORS{LOGIN_REQUIRE,GAME_DOES_NOT_EXIST,CONNECTION_LOST,ALREADY_CHOSEN,ACTION_FAILED,ENGINE_ID_DOES_NOT_EXIST,GRID_ID_DOES_NOT_EXIST};
     static std::string getGridAssignSuccess();
+    static std::string getShotSuccessMessage();
     static std::string getMoveSuccessMessage(int id);
     static std::string getRotateSuccessMessage(int id);
     static std::string getEngineAddedMessage();
@@ -34,7 +36,7 @@ public:
     static std::string getJoinSuccessMessage();
     static std::string getCreatedSucessMessage();
     static std::string getCurrentTurnMessage(int id);
-    static std::string getScoreBroadCastMessage(Score);
+    static std::string getScoreBroadCastMessage(Score*);
     static std::string getLoginSuccessMessage();
     static ServerMessage* getServerMessage(const std::string& json_ServerMessage);
     static SERVER_MESSAGE_TYPE to_enum(const std::string&);
