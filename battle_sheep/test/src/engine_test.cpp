@@ -78,7 +78,7 @@ TEST_F(EngineTest,ENGINE_ACTIVATE_DESACTIVATE_TEST){
     m_engine1->kill_motor();
     ASSERT_EQ(m_engine1->get_motor_state(),MOTOR_STATE::MOTOR_DEAD);
 
-    ASSERT_EQ(m_engine1->get_weapon_state(),WEAPON_STATE::WEAPON);
+    ASSERT_EQ(m_engine1->get_weapon_state(),WEAPON_STATE::WEAPON_NOT_INTRODUCED);
     m_engine1->desactivate_weapon();
     ASSERT_EQ(m_engine1->get_weapon_state(),WEAPON_STATE::WEAPON_DESACTIVATED);
 

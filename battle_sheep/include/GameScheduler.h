@@ -31,6 +31,14 @@ private:
     static std::vector<Game*> m_offline_games;
     static std::vector<Player*> m_offline_players;
 
+    static void gameLoginRoutine(Player*,std::string login);
+    static void gameCreationRoutine(Player*,const std::string& game_name);
+    static void gameJoinRoutine(Player*,const std::string&,std::string player_id);
+    static void gameGridsAssignementRoutine(Player*,Game*,int id,const std::string& player_id);
+    static void gameChatRoutine(Player*p,Game*,std::string msg,const std::string& player_id);
+    static void gameEngineAddRoutine(Player*,Game*,const std::string& player_id,ClientMessage*);
+
+
     static void notify_all_except(int id,const std::string&,Game *pGame);
 };
 

@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <Engine.h>
-
+#include <iostream>
 
 Engine::Engine(int size_a){
 
@@ -17,7 +17,7 @@ Engine::Engine(int size_a){
     m_current_health_point=size_a;
     m_motor_state=MOTOR;
     m_motor_place = 0;
-    //m_weapon_state = WEAPON;
+    m_weapon_state = WEAPON_NOT_INTRODUCED;
     m_weapon_place = m_size-1;
     //m_shell_state = SHELL;
     m_is_on_grid=false;
@@ -28,15 +28,15 @@ Engine::Engine(int size_a){
 
 
 Engine::Engine(int size_a, ENGINE_TYPE engine_type):Engine(size_a) {
-        m_skill = FactorySkill::getSkill(engine_type);
-        m_weapon_state = WEAPON_STATE::WEAPON;
-        m_weapon_place = m_size-1;
-        
+    m_skill = FactorySkill::getSkill(engine_type);
+    m_weapon_state = WEAPON_STATE::WEAPON;
+    m_weapon_place = m_size-1;
+
 }
 
 
 void Engine::add_skill(ENGINE_TYPE engine_type,SHOT_TYPE shot_type){
-        m_skill = FactorySkill::getSkill(shot_type,engine_type);
+    m_skill = FactorySkill::getSkill(shot_type,engine_type);
 }
 
 //Getters
@@ -77,7 +77,7 @@ int Engine::get_motor_place()
 }
 int Engine::get_weapon_place()
 {
- return m_weapon_place;
+    return m_weapon_place;
 }
 bool Engine::get_is_on_grid()
 {
@@ -97,7 +97,7 @@ void Engine::set_x(int x_a)
     if(m_x < 0 || m_x >9)
         m_is_on_grid = false;
     if(m_y < 10 && m_y >= 0)
-         m_is_on_grid = true;
+        m_is_on_grid = true;
 }
 void Engine::set_y(int y_a)
 {
@@ -121,7 +121,7 @@ float Engine::take_a_hit(float dammage)
 {
     if(!(m_is_on_grid))
         return -1.0f;
-        
+
     m_current_health_point = (m_current_health_point < dammage ? 0.f : m_current_health_point-dammage);
     return m_current_health_point;
 }
@@ -134,31 +134,40 @@ int Engine::normal_shot(Grid *grid, int x, int y){
         return -1;
     if(grid->get_engine_x_y(m_x,m_y)==this)
         return -1;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
+        return -1;
     return grid->normal_shot(x, y);
 }
 int Engine::Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot){
     if(grid==nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -1;
+        return -2;
+    if(m_skill != nullptr)
+        if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
+            return -4;
     if(grid->get_engine_x_y(m_x,m_y)==this)
+        return -3;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
         return -1;
     switch (type_of_shot){
 
         case PORTE_AVION_SKILL:
-            return ((Skill_porte_avion*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_porte_avion*)m_skill)->use(grid, x, y, horizontal);
         case CROISEUR_SKILL:
-            return ((Skill_croiseur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_croiseur*)m_skill)->use(grid, x, y, horizontal);
         case CONTRE_TORPILLEUR_SKILL:
-            return ((Skill_contre_torpilleur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_contre_torpilleur*)m_skill)->use(grid, x, y, horizontal);
         case CUIRASSE_SKILL:
-            return ((Skill_cuirasse*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_cuirasse*)m_skill)->use(grid, x, y, horizontal);
         case TORPILLEUR_SKILL:
-            return ((Skill_torpilleur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_torpilleur*)m_skill)->use(grid, x, y, horizontal);
         case BROUILLEUR_SKILL:
-            return ((Skill_brouilleur*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_brouilleur*)m_skill)->use(grid, x, y, horizontal);
         case RECONNAISSANCE_SKILL:
-            return ((Skill_reconnaissance*)&m_skill)->use(grid, x, y, horizontal);
+            return ((Skill_reconnaissance*)m_skill)->use(grid, x, y, horizontal);
+        case NORMAL_SHOT:
+            return  normal_shot(grid,x,y);
         default:
             return -1000;//this function can't call other skills :/
     }
@@ -168,23 +177,56 @@ int Engine::Skill_shot(Grid *grid1, Grid *grid2, int x, int y, bool horizontal, 
     if(grid1==nullptr || grid2 == nullptr)
         return -100;
     if(!(m_is_on_grid))
-        return -1;
+        return -2;
+    if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
+        return -4;
     if(grid1->get_engine_x_y(m_x,m_y)==this)
-        return -1;
+        return -3;
     if(grid2->get_engine_x_y(m_x,m_y)==this)
+        return -3;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
         return -1;
     switch (type_of_shot){
         case BOMBARDIER_SKILL:
-            return ((Skill_bombardier*)&m_skill)->use(grid1,grid2,x,y,horizontal);
+            return ((Skill_bombardier*)m_skill)->use(grid1,grid2,x,y,horizontal);
         case INTERCEPTEUR_SKILL:
-            return ((Skill_intercepteur*)&m_skill)->use(grid1,grid2,x,y,horizontal);
-        case PATROUILE_SKILL:
-            return ((Skill_patrouille*)&m_skill)->use(grid1,grid2,x,y,horizontal); //TODO move it to other skill shot function
+            return ((Skill_intercepteur*)m_skill)->use(grid1,grid2,x,y,horizontal);
         default:
             return -1000;
     }
 
 }
+std::vector<std::vector<Square*>> Engine::Skill_shot(Grid *grid, int x, int y, SHOT_TYPE type_of_shot){
+        std::vector<std::vector<Square*>> ret;
+        std::vector<Square*> ret1;
+        std::vector<Square*> ret2;
+        std::vector<Square*> ret3;
+        for(int i=0;i<3;i++)
+            ret1.push_back(nullptr);
+        for(int i=0;i<3;i++)
+            ret2.push_back(nullptr);
+        for(int i=0;i<3;i++)
+            ret3.push_back(nullptr);
+        ret.push_back(ret1);
+        ret.push_back(ret2);
+        ret.push_back(ret3);
+
+    if(grid==nullptr)
+        return ret;
+    if(!(m_is_on_grid))
+        return ret;
+    if(m_skill->engine_type_is_shot_type(type_of_shot)!=1)
+        return ret;
+    if(grid->get_engine_x_y(m_x,m_y)==this)
+        return ret;
+    if(m_weapon_state!=WEAPON_STATE::WEAPON)
+        return ret;
+    if(type_of_shot==PATROUILE_SKILL)
+        return ((Skill_patrouille*)m_skill)->use(grid,x,y);
+    else
+        return ret;
+}
+    
 int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value){
     if(grid==nullptr)
         return -100;
@@ -210,7 +252,7 @@ int Engine::move_engine(Grid *grid, bool reading_direction, int movement_value){
     }
 
 
-    if(grid->check_putable(this,m_horizontal,m_size,new_x, new_y)==1)
+    if(grid->check_putable(this,m_horizontal,new_x, new_y)==1)
     {
         grid->remove_engine(this);
         grid->add_engine(this,m_horizontal,new_x,new_y);
@@ -259,7 +301,7 @@ int Engine::rotate_engine(Grid *grid ,bool clockwise, int node_distance){
         }
     }
 
-    if(grid->check_putable(this,!m_horizontal,m_size,new_x, new_y)==1)
+    if(grid->check_putable(this,!m_horizontal,new_x, new_y)==1)
     {
         grid->remove_engine(this);
         grid->add_engine(this,!m_horizontal,new_x,new_y);
@@ -362,12 +404,25 @@ std::string Engine::engine_type_to_string(ENGINE_TYPE type) {
     else if(type == INCENDIARY)
         return  "incendiary";
 
-    return std::__cxx11::string();
+    return std::string("not_introduced");
 }
 
-void Engine::set_id(int id){
-    this->id = id;
+void Engine::set_id(int i){
+    this->id = i;
 }
 int Engine::get_id(){
     return this->id;
+}
+
+SHOT_TYPE Engine::get_shot_type() {
+    if(m_skill == nullptr)
+        return NORMAL_SHOT;
+    if(m_skill->get_points() < POINT_COST)
+     return NORMAL_SHOT;
+    else
+        return m_skill->engine_type_to_shot_type(m_skill->get_engine_type());
+}
+
+bool Engine::has_skill() {
+    return m_skill != nullptr;
 }

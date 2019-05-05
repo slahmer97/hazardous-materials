@@ -25,3 +25,18 @@ int Score::get_s3() {
 int Score::get_s4() {
     return m_s4;
 }
+
+void Score::set_s1(int s) {
+    this->m_s1 = s;
+}
+void Score::set_s2(int s) {
+    this->m_s2 = s;
+}
+
+void Score::set_s3(int s) {
+    this->m_s3 = s;
+}
+
+void Score::set_s4(int s) {
+    this->m_s4 = s;
+}

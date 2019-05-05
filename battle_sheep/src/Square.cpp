@@ -2,8 +2,7 @@
 // Created by stevlulz on 3/7/19.
 //
 #include <boost/lexical_cast.hpp>
-#include "../include/Square.h"
-
+#include <Square.h>
 
 
 Square::Square(){
@@ -198,15 +197,12 @@ int Square::increase_health(float care){
 }
 
 std::string Square::to_pri_string(){
-    std::string engine = std::string("engine:")+std::string((m_engine == nullptr) ? "null" : std::to_string(m_engine->get_id()));
-    std::string ret = std::string("health:")+boost::lexical_cast<std::string>(m_health_pr)+"|"
-            +std::string("square_type:")+square_type_to_string(m_square_type)+"|"+engine;
+    std::string engine = std::string("Eng : ")+std::string((m_engine == nullptr) ? "null" : std::to_string(m_engine->get_id()));
+    std::string ret = std::string("SQ_H:")+boost::lexical_cast<std::string>(m_health_pr)+","
+            +std::string("SQ_T:")+square_type_to_string(m_square_type)+","+engine;
     return ret;
 }
 
-std::string Square::to_pub_string() {
-    return std::__cxx11::string();
-}
 
 std::string Square::square_type_to_string(SQUARE_TYPE s) {
     if(s == SQUARE_TYPE::ENGINE_MOTOR)

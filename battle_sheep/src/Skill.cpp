@@ -6,8 +6,8 @@
 #include <iostream>
 
 #include "../include/Skill.h"
-
 #define POINT_COST 50
+
 Skill::Skill(ENGINE_TYPE engine_type)
 {
     m_engine_type = engine_type;
@@ -48,12 +48,18 @@ std::string Skill::shot_type_to_string(SHOT_TYPE shot) {
         return "croiseur_skill";
     else if(shot == CONTRE_TORPILLEUR_SKILL)
         return "contre_torpilleur_skill";
+    else if(shot == CUIRASSE_SKILL)
+        return "cuirasse_skill";
+    else if(shot == TORPILLEUR_SKILL)
+        return "torpilleur_skill";
     else if(shot == BOMBARDIER_SKILL)
         return "bombardier_skill";
     else if(shot == INTERCEPTEUR_SKILL)
         return "intercepteur_skill";
     else if(shot == BROUILLEUR_SKILL)
         return "brouilleur_skill";
+    else if(shot == PATROUILE_SKILL)
+        return "patrouile_skill";
     else if(shot == RECONNAISSANCE_SKILL)
         return "reconnaissance_skill";
     else if(shot == NORMAL_SHOT)
@@ -66,22 +72,84 @@ SHOT_TYPE Skill::shot_type_to_type(const std::string &shot) {
     if(shot == "porte_avion_skill")
         return  PORTE_AVION_SKILL;
     else if(shot == "croiseur_skill")
-        return CROISEUR_SKILL ;
+        return CROISEUR_SKILL;
     else if(shot == "contre_torpilleur_skill")
         return CONTRE_TORPILLEUR_SKILL;
+    else if(shot == "cuirasse_skill")
+        return CUIRASSE_SKILL;
+    else if(shot == "torpilleur_skill")
+        return TORPILLEUR_SKILL;
     else if(shot == "bombardier_skill")
         return BOMBARDIER_SKILL;
     else if(shot == "intercepteur_skill")
         return INTERCEPTEUR_SKILL;
     else if(shot == "brouilleur_skill")
         return BROUILLEUR_SKILL;
+    else if(shot == "patrouile_skill")
+        return PATROUILE_SKILL;
     else if(shot == "reconnaissance_skill")
         return RECONNAISSANCE_SKILL;
     else if(shot == "normal_shot")
         return NORMAL_SHOT;
     return NORMAL_SHOT;
 }
-
+ENGINE_TYPE Skill::shot_type_to_engine_type(SHOT_TYPE shot) {
+    if(shot == PORTE_AVION_SKILL)
+        return  PORTE_AVION;
+    else if(shot == CROISEUR_SKILL)
+        return CROISEUR;
+    else if(shot == CONTRE_TORPILLEUR_SKILL)
+        return CONTRE_TORPILLEUR;
+    else if(shot == CUIRASSE_SKILL)
+        return CUIRASSE;
+    else if(shot == TORPILLEUR_SKILL)
+        return TORPILLEUR;
+    else if(shot == BOMBARDIER_SKILL)
+        return BOMBARDIER;
+    else if(shot == INTERCEPTEUR_SKILL)
+        return INTERCEPTEUR;
+    else if(shot == BROUILLEUR_SKILL)
+        return BROUILLEUR;
+    else if(shot == PATROUILE_SKILL)
+        return PATROUILE;
+    else if(shot == RECONNAISSANCE_SKILL)
+        return RECONNAISSANCE;
+    else if(shot == NORMAL_SHOT)
+        return NOT_INTRODUCED;
+    return NOT_INTRODUCED;
+}
+SHOT_TYPE Skill::engine_type_to_shot_type(ENGINE_TYPE engine) {
+    if(engine == PORTE_AVION)
+        return  PORTE_AVION_SKILL;
+    else if(engine == CROISEUR)
+        return CROISEUR_SKILL;
+    else if(engine == CONTRE_TORPILLEUR)
+        return CONTRE_TORPILLEUR_SKILL;
+    else if(engine == CUIRASSE)
+        return CUIRASSE_SKILL;
+    else if(engine == TORPILLEUR)
+        return TORPILLEUR_SKILL;
+    else if(engine == BOMBARDIER)
+        return BOMBARDIER_SKILL;
+    else if(engine == INTERCEPTEUR)
+        return INTERCEPTEUR_SKILL;
+    else if(engine == BROUILLEUR)
+        return BROUILLEUR_SKILL;
+    else if(engine == PATROUILE)
+        return PATROUILE_SKILL;
+    else if(engine == RECONNAISSANCE)
+        return RECONNAISSANCE_SKILL;
+    else if(engine == NOT_INTRODUCED)
+        return NORMAL_SHOT;
+    return NORMAL_SHOT;
+}
+int Skill::engine_type_is_shot_type(SHOT_TYPE shot)
+{
+    if(m_engine_type==shot_type_to_engine_type(shot))
+        return 1;
+    else
+        return -1;
+}
 Skill_porte_avion::Skill_porte_avion() : Skill(ENGINE_TYPE::PORTE_AVION) {}
 Skill_porte_avion::Skill_porte_avion(ENGINE_TYPE engine_type) : Skill(engine_type) {}
 int Skill_porte_avion::use(Grid *grid, int x, int y, bool horizontal)
@@ -95,7 +163,8 @@ int Skill_porte_avion::use(Grid *grid, int x, int y, bool horizontal)
 int Skill_porte_avion::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 
 Skill_bombardier::Skill_bombardier(ENGINE_TYPE engine_type) : Skill(engine_type) {}
@@ -103,7 +172,8 @@ Skill_bombardier::Skill_bombardier() : Skill(ENGINE_TYPE::BOMBARDIER) {}
 int Skill_bombardier::use(Grid *grid, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    // std::exit(1);
+    return -1000;
 }
 int Skill_bombardier::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal)
 {
@@ -134,10 +204,11 @@ int Skill_croiseur::use(Grid *grid, int x, int y, bool horizontal)
 int Skill_croiseur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 
-Skill_contre_torpilleur::Skill_contre_torpilleur() : Skill(ENGINE_TYPE::TORPILLEUR)
+Skill_contre_torpilleur::Skill_contre_torpilleur() : Skill(ENGINE_TYPE::CONTRE_TORPILLEUR)
 {
 }
 Skill_contre_torpilleur::Skill_contre_torpilleur(ENGINE_TYPE engine_type) : Skill(engine_type)
@@ -155,7 +226,8 @@ int Skill_contre_torpilleur::use(Grid *grid, int x, int y, bool horizontal)
 int Skill_contre_torpilleur::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 
 Skill_cuirasse::Skill_cuirasse() : Skill(ENGINE_TYPE::CUIRASSE)
@@ -174,7 +246,8 @@ int Skill_cuirasse::use(Grid *grid, int x, int y, bool horizontal)
 int Skill_cuirasse::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 
 Skill_torpilleur::Skill_torpilleur() : Skill(ENGINE_TYPE::TORPILLEUR)
@@ -194,7 +267,8 @@ int Skill_torpilleur::use(Grid *grid, int x, int y, bool horizontal)
 int Skill_torpilleur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 
 Skill_intercepteur::Skill_intercepteur() : Skill(ENGINE_TYPE::INTERCEPTEUR)
@@ -206,7 +280,8 @@ Skill_intercepteur::Skill_intercepteur(ENGINE_TYPE engine_type) : Skill(engine_t
 int Skill_intercepteur::use(Grid *grid, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    // std::exit(1);
+    return -1000;
 }
 int Skill_intercepteur::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal)
 {
@@ -236,7 +311,8 @@ int Skill_brouilleur::use(Grid *grid, int x, int y, bool horizontal)
 int Skill_brouilleur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 
 Skill_patrouille::Skill_patrouille() : Skill(ENGINE_TYPE::PATROUILE)
@@ -248,12 +324,14 @@ Skill_patrouille::Skill_patrouille(ENGINE_TYPE engine_type) : Skill(engine_type)
 int Skill_patrouille::use(Grid *grid, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 int Skill_patrouille::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill patrouille can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 
 //TOCHECK
@@ -281,7 +359,8 @@ int Skill_reconnaissance::use(Grid *grid, int x, int y, bool horizontal)
 int Skill_reconnaissance::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
     std::cerr << "Skill porte avion can't attack two grids in same time";
-    std::exit(1);
+    //std::exit(1);
+    return -1000;
 }
 /*
 Skill_incendiary::Skill_incendiary() : Skill(ENGINE_TYPE::INCENDIARY)

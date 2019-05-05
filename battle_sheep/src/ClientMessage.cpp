@@ -41,6 +41,12 @@ ClientMessage::CLIENT_MESSAGE_TYPE ClientMessage::to_enum(const std::string& _me
     else if(_message_type == "choose_grid"){
         return CHOOSE_GRID;
     }
+    else if(_message_type == "un_mute_chat")
+        return UN_MUTE_CHAT;
+    else if(_message_type == "rotate")
+        return ROTATE;
+    else if(_message_type == "shot2")
+        return SHOT2;
 
     return NONE_C;
 }
@@ -78,6 +84,12 @@ std::string ClientMessage::to_string(ClientMessage::CLIENT_MESSAGE_TYPE _message
     else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::CHOOSE_GRID){
         return "choose_grid";
     }
+    else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::UN_MUTE_CHAT)
+        return "un_mute_chat";
+    else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::ROTATE)
+        return "rotate";
+    else if(_message_type == ClientMessage::CLIENT_MESSAGE_TYPE::SHOT2)
+        return "shot2";
 
 
     return "none";
@@ -105,17 +117,34 @@ std::string ClientMessage::getAdd_engineMessage(ENGINE_TYPE type,int horizontal,
     boost::property_tree::write_json(buff,pt);
     return buff.str();
 }
-std::string ClientMessage::getShotMessage(SHOT_TYPE type,int x,int y,int id) {
+std::string ClientMessage::getShotMessage(int engine_id,int target_grid,int horizontal,int x,int y) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(SHOT));
-    pt.put("id",id);
-    pt.put("shot_type",Skill::shot_type_to_string(type));
+    pt.put("engine_id",engine_id);
+    pt.put("target_grid",target_grid);
+    pt.put("id",horizontal);
     pt.put("x",x);
     pt.put("y",y);
     std::ostringstream buff;
     boost::property_tree::write_json(buff,pt);
     return buff.str();
 } //
+
+
+std::string ClientMessage::getShot2Message(int engine_id, int target_grid1, int target_grid2, int horizontal, int x, int y) {
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(SHOT2));
+    pt.put("engine_id",engine_id);
+    pt.put("target_grid",target_grid1);
+    pt.put("target_grid2",target_grid2);
+    pt.put("id",horizontal);
+    pt.put("x",x);
+    pt.put("y",y);
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+    return buff.str();
+}
+
 std::string ClientMessage::getChatMessage(const std::string& msg) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(CHAT_C));
@@ -146,11 +175,12 @@ std::string ClientMessage::getSkipTurnMessage() {
     boost::property_tree::write_json(buff,pt);
     return buff.str();
 }//
-std::string ClientMessage::getRotateMessage(int id,int clock) {
+std::string ClientMessage::getRotateMessage(int id,int clock,int node_dist) {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(ROTATE));
     pt.put("clock",clock);
     pt.put("engine_id",id);
+    pt.put("node_dist",node_dist);
 
     std::ostringstream buff;
     boost::property_tree::write_json(buff,pt);
@@ -191,62 +221,73 @@ std::string ClientMessage::getChoseGridMessage(int id) {
     return buff.str();}//
 
 ClientMessage* ClientMessage::getClientMessage(const std::string& json){
-        ClientMessage *clientMessage;
-        clientMessage = new ClientMessage(Score(-1,-1,-1,-1));
-        boost::property_tree::ptree ptree;
-        std::istringstream is (json);
-        try {
-            boost::property_tree::json_parser::read_json(is,ptree);
-        }catch (boost::property_tree::json_parser_error e){
-            std::cout<<"[-] invalide message format"<<std::endl;
-            return nullptr;
+    ClientMessage *clientMessage;
+    clientMessage = new ClientMessage(Score(-1,-1,-1,-1));
+    boost::property_tree::ptree ptree;
+    std::istringstream is (json);
+    try {
+        boost::property_tree::json_parser::read_json(is,ptree);
+    }catch (boost::property_tree::json_parser_error e){
+        std::cout<<"[-] invalide message format"<<std::endl;
+        return nullptr;
+    }
+
+
+    std::string msg_type_tmp = ptree.get<std::string>("msg_type");
+
+    std::cout<<"Message type : "<<msg_type_tmp<<std::endl;
+    CLIENT_MESSAGE_TYPE msg_type = to_enum(msg_type_tmp);
+
+
+    clientMessage->set_msg_type(msg_type);
+
+    if(msg_type == SHOT ||  msg_type == MOVE || msg_type == ROTATE || msg_type == SHOT2){
+        //clientMessage->set_id( ptree.get<int>("id"));
+        if(msg_type == SHOT || msg_type == SHOT2){
+            clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
+            clientMessage->set_horizontal(ptree.get<int>("id"));
+            clientMessage->set_grid_id_1(ptree.get<int>("target_grid"));
+            clientMessage->set_engine_id(ptree.get<int>("engine_id"));
+            if(msg_type == SHOT2){
+                clientMessage->set_grid_id_1(ptree.get<int>("target_grid2"));
+            }
+
+        }
+        else if(msg_type == MOVE){
+            clientMessage->set_engine_id(ptree.get<int>("engine_id"));
+            clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
+        }
+        else if(msg_type == ROTATE){
+            clientMessage->set_x_y(ptree.get<int>("clock"),ptree.get<int>("node_dist"));
+            clientMessage->set_engine_id(ptree.get<int>("engine_id"));
         }
 
+        return clientMessage;
+    }
+    else{
 
-        std::string msg_type_tmp = ptree.get<std::string>("msg_type");
-
-        std::cout<<"Message type : "<<msg_type_tmp<<std::endl;
-
-        CLIENT_MESSAGE_TYPE msg_type = to_enum(msg_type_tmp);
-        clientMessage->set_msg_type(msg_type);
-
-        if(msg_type == SHOT ||  msg_type == MOVE || msg_type == ROTATE){
-            clientMessage->set_id( ptree.get<int>("id"));
-            if(msg_type == SHOT){
-                clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
-                clientMessage->set_shot_type(Skill::shot_type_to_type(ptree.get<std::string>("shot_type")));
-            }
-            else if(msg_type == MOVE){
-                clientMessage->set_engine_id(ptree.get<int>("engine_id"));
-                clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
-            }
-            else if(msg_type == ROTATE){
-                clientMessage->set_clock(ptree.get<int>("clock"));
-                clientMessage->set_engine_id(ptree.get<int>("engine_id"));
-            }
-            return clientMessage;
+        if(msg_type == REGISTER || msg_type == LOGIN ){
+            clientMessage->set_login(ptree.get<std::string>("login"));
         }
-        else{
-
-            if(msg_type == REGISTER){
-                clientMessage->set_login(ptree.get<std::string>("login"));
-            }
-            else if(msg_type == CREATE_GAME || msg_type == JOIN_GAME){
-                clientMessage->set_game_name(ptree.get<std::string>("game_name"));
-            }
-            else if(msg_type == CHAT_C ){
-                clientMessage->set_chat_msg(ptree.get<std::string>("chat_msg"));
-            }
-            else if(msg_type == CHOOSE_GRID){
-                clientMessage->set_id(ptree.get<int>("id"));
-            }
-            else if(msg_type == ADD_ENGINE){
-                clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
-                clientMessage->set_horizontal(ptree.get<int>("id"));
-            }
-
-            return clientMessage;
+        else if(msg_type == CREATE_GAME || msg_type == JOIN_GAME){
+            clientMessage->set_game_name(ptree.get<std::string>("game_name"));
         }
+        else if(msg_type == CHAT_C ){
+            clientMessage->set_chat_msg(ptree.get<std::string>("chat_msg"));
+        }
+        else if(msg_type == CHOOSE_GRID){
+            clientMessage->set_id(ptree.get<int>("id"));
+        }
+        else if(msg_type == ADD_ENGINE){
+            clientMessage->set_x_y(ptree.get<int>("x"),ptree.get<int>("y"));
+            clientMessage->set_horizontal(ptree.get<int>("id"));
+            clientMessage->set_engine_type(Engine::engine_type_to_type(ptree.get<std::string>("engine_type")));
+            //TODO============================================================================
+
+        }
+
+        return clientMessage;
+    }
 
 }
 
@@ -349,3 +390,16 @@ int ClientMessage::get_engine_id(){
     return this->m_engine_id;
 }
 
+void ClientMessage::set_grid_id_2(int id) {
+    m_grid_id_2 = id;
+}
+void ClientMessage::set_grid_id_1(int id){
+    m_grid_id_1 = id;
+}
+
+int ClientMessage::get_grid_id_1(){
+    return m_grid_id_1;
+}
+int ClientMessage::get_grid_id_2(){
+    return m_grid_id_2;
+}

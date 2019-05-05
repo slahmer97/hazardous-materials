@@ -8,10 +8,14 @@
 
 #include "enum.h"
 #include "Grid.h"
+#include "Square.h"
 #include "FactorySkill.h"
+#include <iostream>
+#include <vector>
 
 class Grid;
 class Skill;
+#define POINT_COST 50
 
 
 class Engine {
@@ -25,11 +29,11 @@ public:
     Engine(int size_a);
     Engine(int size_a,ENGINE_TYPE engine_type);
 
-    
+
     /* Input :/
      * get the size
      * Output : size
-     */ 
+     */
     int get_size();
 
     /* Input : /
@@ -142,6 +146,8 @@ public:
      */
     int Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot);
 
+    std::vector<std::vector<Square*>> Skill_shot(Grid *grid, int x, int y, SHOT_TYPE type_of_shot);
+
     /* Input : the grid1 the grid2 targeted x and y position the direction and the shot type
      * a skill shot on two grids
      * Output : hited engines
@@ -205,8 +211,11 @@ public:
      */
     ENGINE_TYPE get_engine_type();
 
-    void set_id(int id);
+    SHOT_TYPE get_shot_type();
+
+    void set_id(int i);
     int get_id();
+    bool has_skill();
 
 private:
     int id;
