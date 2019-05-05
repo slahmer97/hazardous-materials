@@ -9,7 +9,7 @@
  *  A simple class to create and use a switch button
  */
 
- class B_Switch : Component {
+ class B_Switch : public Component {
     public:
         /**
          * Switch button constructor

@@ -43,7 +43,7 @@ TextArea txt(10, 0, 0, 300, 100);
 
 void Interface::start() {
 
-    this->change_current_menu(new GameMenu());
+    this->change_current_menu(new MainMenu());
 
 	//	sf::RectangleShape boite(sf::Vector2f(480.f,270.f));
 	//	boite.setPosition(sf::Vector2f(220.f,135.f));
@@ -116,10 +116,16 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
+
+	//We pre-cast into a gamemenu and a mainmenu for simplicity in the different cases
+	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
+	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
 	switch(msg_type){
         case ServerMessage::KILL_PLAYER:
             {
-							this->currentMenu->currentState = STATE_DISABLED;
+				if(gm != nullptr){
+					gm->currentState = STATE_DISABLED;
+				}
             }
             break;
         case ServerMessage::GRIDS_ASSIGNEMENT:	//choisir grille
@@ -129,7 +135,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::ERROR:
             {
-
+				this->handle_errror_message(m);
             }
             break;
         case ServerMessage::CHAT_S:
@@ -139,7 +145,13 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::CURRENT_TURN:
             {
+<<<<<<< HEAD
 
+=======
+				if(gm != nullptr){
+					gm->currentState = STATE_PLAY;
+				}
+>>>>>>> 0270c8f5d94e1f0a6c413ee78de7404f67438ea1
             }
             break;
         case ServerMessage::SCORE_BROADCAST:
@@ -149,22 +161,34 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::LOGIN_SUCCESS:
             {
-
+				if(mm != nullptr) {
+					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
+					this->player = mm->getLogin();
+					std::cout<<"Requestion to join 'default' game"<<std::endl;
+					ClientMessageSender::sendJoinGameRequest("default");
+				}
             }
             break;
         case ServerMessage::CREATED_SUCCESS:
             {
+				std::cout<<"Succefully created game 'default'"<<std::endl;
+				//TODO: Not sure if this is required -Alex
+				ClientMessageSender::sendJoinGameRequest("default");
 
             }
             break;
         case ServerMessage::JOIN_SUCCESS:
             {
-
+				std::cout<<"Succefully joined game 'default'"<<std::endl;
+				this->change_current_menu(new GameMenu());
             }
             break;
         case ServerMessage::START:
             {
+<<<<<<< HEAD
 							this->currentMenu->currentState = STATE_TURN_OTHER;
+=======
+>>>>>>> 0270c8f5d94e1f0a6c413ee78de7404f67438ea1
             }
             break;
         case ServerMessage::GRID:
@@ -192,16 +216,17 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
             }
             break;
-    }
+		
 
-}
+	}
+	}
 
 void Interface::handle_errror_message(ServerMessage* m){
     ServerMessage::ERRORS error = m->get_err_type();
 	switch(error){
 		case ServerMessage::GAME_DOES_NOT_EXIST:
 			{
-				std::cout<<"Default game inexistant, requesting creation of it"<<std::endl;
+				std::cout<<"'default' game inexistant, requesting creation"<<std::endl;
 				ClientMessageSender::sendCreateGameRequest("default");
 			}
 			break;
@@ -212,8 +237,8 @@ void Interface::handle_errror_message(ServerMessage* m){
             break;
         case ServerMessage::CONNECTION_LOST:
             {
-								std::cout<<"Connection lost to current game, attempting reconnection"<<std::endl;
-								ClientMessageSender::sendJoinGameRequest("");
+				std::cout<<"Connection lost to current game, attempting reconnection"<<std::endl;
+				ClientMessageSender::sendJoinGameRequest("");
             }
 
             break;

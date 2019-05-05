@@ -12,7 +12,7 @@
 #include "../include/enum.h"
 
 
-class MainMenu : public Menu, public ClickListener, public TextField
+class MainMenu : public Menu, public ClickListener
 {
 	public:
 		MainMenu();
@@ -24,8 +24,10 @@ class MainMenu : public Menu, public ClickListener, public TextField
 	 	virtual void draw(sf::RenderTarget* drawingBoard);
 
 		virtual void on_click(Component* button);
+		
+		std::string getLogin();
 
-		~MainMenu();
+		~MainMenu() {};
 
 	private:
 		/**

@@ -2,7 +2,6 @@
 #include "../include/texture_manager.h"
 #include <iostream>
 #include <string>
-#include <cstdlib>
 #include <thread>
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
@@ -15,20 +14,13 @@ int main(int argv, char**argc){
 		return -1;
 	}
 
-	std::string hostname(argc[1]), username, password;
+	std::string hostname(argc[1]);
 	int port = 8080;
 
 	if( argv == 3){
-		port = atoi(argc[2]);
+		port = std::atoi(argc[2]);
 	}
 
-	std::cout<<"Username> ";
-	std::cin>>username;
-	std::cout<<std::endl;
-
-	std::cout<<"Password> ";
-	std::cin>>password;
-	std::cout<<std::endl;
 
 	std::cout<<"Initializing texture manager"<<std::endl;
 	TextureManager::Init();
@@ -39,7 +31,7 @@ int main(int argv, char**argc){
 	WssClient client(hostname+std::string(":")+std::to_string(port)+std::string("/game"), false);
 
 	std::cout<<"Creating interface"<<std::endl;
-	Interface inter(&client, username, password);
+	Interface inter(&client);
 
 	std::cout<<"Creating network listening thread"<<std::endl;
 	std::thread client_thread([&client]() {

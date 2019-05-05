@@ -1,11 +1,13 @@
 #include "../include/main_menu.h"
 
 MainMenu::MainMenu():
-    login("","login",100,100,500,50),
-    password("","password",100,300,500,50),
+    login("","login>",100,100,500,50),
+    password("","password>",100,300,500,50),
 	confirm_lp("Confirm",430,420,100,50)
 {
   confirm_lp.set_on_click(this);
+  login.setListener(this);
+  password.setListener(this);
 }
 
 void MainMenu::handle_server_message(ServerMessage* m){
@@ -25,6 +27,11 @@ void MainMenu::draw(sf::RenderTarget* drawingBoard){
     password.draw(drawingBoard);
     confirm_lp.draw(drawingBoard);
 }
+
+std::string MainMenu::getLogin(){
+	return this->login.text;
+}
+
 void MainMenu::on_click(Component* button){
     
 	if((void*)button == (void*)&confirm_lp){
@@ -34,5 +41,12 @@ void MainMenu::on_click(Component* button){
         {
             ClientMessageSender::sendLoginRequest(log1,pass1);
         }
+	} else if((void*)button == (void*)&login){
+		//We pass the focus to password
+		login.selected = false;
+		password.selected = true;
+	} else if((void*)button == (void*)&password){
+		//emulating button click
+		this->on_click(&confirm_lp);
 	}
 }
