@@ -21,6 +21,8 @@ std::string ServerMessage::error_to_string(ERRORS e){
         return "engine_id_does_not_exist";
     else if(e == GRID_ID_DOES_NOT_EXIST)
         return "grid_id_does_not_exist";
+    else if(e == GAME_ID_ALREADY_EXIST)
+        return "game_id_already_exist";
 
 }
 ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
@@ -38,6 +40,8 @@ ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
         return ENGINE_ID_DOES_NOT_EXIST;
     else if(s == "grid_id_does_not_exist")
         return GRID_ID_DOES_NOT_EXIST;
+    else if(s == "game_id_already_exist")
+        return GAME_ID_ALREADY_EXIST;
 }
 ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")

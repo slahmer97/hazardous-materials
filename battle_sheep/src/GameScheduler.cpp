@@ -211,12 +211,24 @@ void GameScheduler::notify_all_except(int id,const std::string& player_id ,Game 
 }
 
 void GameScheduler::gameCreationRoutine(Player* p,const std::string& game_name) {
+
+    for(Game* g : m_offline_games)
+        if(g->get_game_id() == game_name){
+            std::cout<<"[-] Game already exist with that id !"<<std::endl;
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::GAME_ID_ALREADY_EXIST,ClientMessage::CREATE_GAME);
+            p->send_message(err);
+            return;
+        }
+
+
     Game *game = new Game(game_name);
     m_offline_games.push_back(game);
     p->set_game(game);
     std::cout<<"[+] a new game has been created with name "<<game_name<<std::endl;
     std::string created_success_msg = ServerMessage::getCreatedSucessMessage();
     p->send_message(created_success_msg);
+
+
 }
 
 void GameScheduler::gameJoinRoutine(Player * p, const std::string& game_id,std::string player_id) {

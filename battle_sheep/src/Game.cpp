@@ -95,7 +95,7 @@ void Game::play(Player *player,ClientMessage * clientMessage){
 
     std::cout<<"[+] a player with id : "<<player->get_id()<<" is playing"<<std::endl;
     ClientMessage::CLIENT_MESSAGE_TYPE msg_type = clientMessage->get_msg_type();
-    if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::MOVE){//==========================================================
+    if(msg_type == ClientMessage::MOVE){//==========================================================
         int engine_id = clientMessage->get_engine_id();
         int x = clientMessage->get_x();
         int y = clientMessage->get_y();
@@ -117,7 +117,7 @@ void Game::play(Player *player,ClientMessage * clientMessage){
             player->send_message(err);
         }
     }
-    else if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::ROTATE){//===================================================
+    else if(msg_type == ClientMessage::ROTATE){//===================================================
         int engine_id = clientMessage->get_engine_id();
         int clock_wise = clientMessage->get_x();
         int node_dist = clientMessage->get_y();
@@ -141,12 +141,12 @@ void Game::play(Player *player,ClientMessage * clientMessage){
 
 
     }
-    else if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::SKIP_TURN){
+    else if(msg_type == ClientMessage::SKIP_TURN){
         switch_turn();
     }
-    else if(msg_type == ClientMessage::CLIENT_MESSAGE_TYPE::SHOT){
+    else if(msg_type == ClientMessage::SHOT){
         //TODO
-        int engine_id = 1;
+        int engine_id = clientMessage->get_engine_id();
         int x = clientMessage->get_x();
         int y = clientMessage->get_y();
         int hori = clientMessage->get_horizontal();
@@ -167,6 +167,32 @@ void Game::play(Player *player,ClientMessage * clientMessage){
 
         shot1routine(player,engine,grid,hori,x,y);
 
+    }
+    else if(msg_type == ClientMessage::SHOT2){
+        int engine_id = clientMessage->get_engine_id();
+        int x = clientMessage->get_x();
+        int y = clientMessage->get_y();
+        int hori = clientMessage->get_horizontal();
+        int grid_id1 = clientMessage->get_grid_id_1();
+        int grid_id2 = clientMessage->get_grid_id_2();
+
+        Grid* grid1 = get_grid_by_id(grid_id1);
+        Grid* grid2 = get_grid_by_id(grid_id2);
+
+        Engine* engine = player->get_engine_by_id(engine_id);
+
+        if(engine == nullptr){
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ENGINE_ID_DOES_NOT_EXIST,msg_type);
+            player->send_message(err);
+            return;
+        }
+        if(grid1 == nullptr || grid2 == nullptr ){
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::GRID_ID_DOES_NOT_EXIST,msg_type);
+            player->send_message(err);
+            return;
+        }
+
+        shot2routine(player,engine,grid1,grid2,hori,x,y);
     }
     else{
         std::cout<<"Action is not supported yet"<<std::endl;
@@ -348,23 +374,72 @@ Grid *Game::get_grid_by_id(int id) {
             return nullptr;
     }
 }
-
 void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
 
 
     SHOT_TYPE  shotType = engine->get_shot_type();
-    int ret = engine->Skill_shot(grid,x,y,h,shotType);
-    if(ret >= 0){
+    bool is_shot = shotType == SHOT_TYPE ::NORMAL_SHOT || shotType == SHOT_TYPE ::PORTE_AVION_SKILL ||
+                   shotType == SHOT_TYPE ::CROISEUR_SKILL ||  shotType == SHOT_TYPE ::CONTRE_TORPILLEUR_SKILL ||
+                   shotType ==   SHOT_TYPE ::CUIRASSE_SKILL || shotType == SHOT_TYPE ::TORPILLEUR_SKILL ||
+                   shotType == SHOT_TYPE ::BROUILLEUR_SKILL || shotType == SHOT_TYPE ::RECONNAISSANCE_SKILL;
+    bool is_radare = shotType == SHOT_TYPE :: PATROUILE_SKILL;
+
+    if(is_shot){
+        int ret = engine->Skill_shot(grid,x,y,h,shotType);
+        if(ret >= 0){
+                std::string shot_suc_msg = ServerMessage::getShotSuccessMessage();
+                p->send_message(shot_suc_msg);
+                std::cout<<"[+]" <<shot_suc_msg<<std::endl;
+                switch_turn();
+        }
+        else{
+                std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::SHOT);
+                p->send_message(err);
+                std::cerr<<"[-] player could not perform this shot============= "<<std::endl;
+        }
+        return;
+    }
+    if(is_radare){
+        //TODO=========================================
+
+       // Grid* grid1 = engine.
+
+
+
+
+
+    }
+
+
+    //
+  //;TODOOOOOOOOOOOOOOOO
+   // ;
+
+
+}
+
+void Game::shot2routine(Player *p, Engine *engine, Grid *grid1, Grid *grid2,int hori,int x,int y){
+
+    SHOT_TYPE  shotType = engine->get_shot_type();
+
+    bool is_right_skill_two_grid = shotType == SHOT_TYPE ::BOMBARDIER_SKILL ||  shotType == SHOT_TYPE ::INTERCEPTEUR_SKILL;
+
+    if(is_right_skill_two_grid){
+        int ret = engine->Skill_shot(grid1,grid2,x,y,hori,shotType);
+        if(ret >= 0){
             std::string shot_suc_msg = ServerMessage::getShotSuccessMessage();
             p->send_message(shot_suc_msg);
             std::cout<<"[+]" <<shot_suc_msg<<std::endl;
             switch_turn();
-    }
-    else{
+        }
+        else{
             std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::SHOT);
             p->send_message(err);
             std::cerr<<"[-] player could not perform this shot============= "<<std::endl;
+        }
+        return;
     }
+
 
 
 
