@@ -43,7 +43,7 @@ TextArea txt(10, 0, 0, 300, 100);
 
 void Interface::start() {
 
-    this->change_current_menu(new GameMenu());
+    this->change_current_menu(new MainMenu());
 
 
 
