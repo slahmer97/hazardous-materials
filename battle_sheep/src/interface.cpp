@@ -46,10 +46,10 @@ void Interface::start() {
     this->change_current_menu(new MainMenu());
 
 		boite.push_back(new Box(220.f,133.f,480.f,270.f));
-		boite.at(0)->compo.push_back(new Button("Select 1",300,195,140,35));
-		boite.at(0)->compo.push_back(new Button("Select 2",300,315,140,35));
-		boite.at(0)->compo.push_back(new Button("Select 3",490,195,140,35));
-		boite.at(0)->compo.push_back(new Button("Select 4",490,315,140,35));
+		boite[0]->compo.push_back(new Button("Select 1",300,195,140,35));
+		boite[0]->compo.push_back(new Button("Select 2",300,315,140,35));
+		boite[0]->compo.push_back(new Button("Select 3",490,195,140,35));
+		boite[0]->compo.push_back(new Button("Select 4",490,315,140,35));
 
 	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
@@ -73,7 +73,7 @@ void Interface::start() {
 				this->currentMenu->handleEvent(&window,&event);
 
 			for(size_t i = 0; i < (this->boite).size();i++)
-				boite.at(0)->handleEvent(&window,&event);
+				boite[0]->handleEvent(&window,&event);
 		}
 
 		//We clear the window of any previous drawing
@@ -83,7 +83,7 @@ void Interface::start() {
 			this->currentMenu->draw(&window);
 
 		for(size_t i = 0; i < (this->boite).size();i++)
-			boite.at(0)->draw(&window);
+			boite[0]->draw(&window);
 
 		//We then display the buffer on the window
 		window.display();

@@ -9,7 +9,7 @@ Box::Box(int x, int y, int width, int height):
 void Box::handleEvent(sf::Window* window, sf::Event* event){
   for(size_t i = 0; i < (this->compo).size(); i++)
   {
-    compo.at(i)->handleEvent(window,event);
+    compo[i]->handleEvent(window,event);
   }
 }
 
@@ -21,7 +21,7 @@ void Box::draw(sf::RenderTarget* drawingBoard){
   drawingBoard->draw(this->fond);
   for(size_t i = 0; i < (this->compo).size(); i++)
   {
-    compo.at(i)->draw(drawingBoard);
+    compo[i]->draw(drawingBoard);
   }
 }
 
