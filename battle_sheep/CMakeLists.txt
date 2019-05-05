@@ -131,6 +131,10 @@ endif()
 
 # The server itself
 add_executable(server src/main_server.cpp  ${SHARED_SOURCES} ${SERVER_ONLY_SOURCES})
+# We copy the cert files to the build destination
+configure_file(simple_web_socket/key/server.crt ${CMAKE_BINARY_DIR}/key/server.crt COPYONLY)
+configure_file(simple_web_socket/key/server.key ${CMAKE_BINARY_DIR}/key/server.key COPYONLY)
+
 # The main used for testing
 add_executable(test_main src/main_test.cpp ${SHARED_SOURCES})
 # The CLI client to test the server
