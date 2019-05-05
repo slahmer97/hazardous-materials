@@ -145,13 +145,9 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::CURRENT_TURN:
             {
-<<<<<<< HEAD
-
-=======
 				if(gm != nullptr){
 					gm->currentState = STATE_PLAY;
 				}
->>>>>>> 0270c8f5d94e1f0a6c413ee78de7404f67438ea1
             }
             break;
         case ServerMessage::SCORE_BROADCAST:
@@ -185,10 +181,6 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::START:
             {
-<<<<<<< HEAD
-							this->currentMenu->currentState = STATE_TURN_OTHER;
-=======
->>>>>>> 0270c8f5d94e1f0a6c413ee78de7404f67438ea1
             }
             break;
         case ServerMessage::GRID:
@@ -216,7 +208,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
             }
             break;
-		
+
 
 	}
 	}
