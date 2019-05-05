@@ -5,10 +5,9 @@ require "./style.sass"
 h = maquette.h
 projector = maquette.createProjector!
 
-socket = new WebSocket "ws://localhost:3000/"
+socket = new WebSocket "wss://localhost:8080/"
 
 model = {
-	card: "resources/island.jpg"
 	state: "login"
 
 	login: ""
@@ -44,8 +43,6 @@ render = ->
 			| "login" =>
 				model.menu = model.loginMenu
 
-
-
 				h 'div.form', {
 					key: "login"
 				}, [
@@ -69,10 +66,13 @@ render = ->
 						type: "submit"
 						value: "Sign in"
 						onclick: (e) ->
+							model.state = "index"
+							model.menu = model.gameMenu
+
 							socket.send JSON.stringify {
-								type: "login"
-								login: model.login
-								password: model.password
+								msg_type: "login"
+								login: "#{model.login},#{model.password}"
+								#password: model.password
 							}
 					}, ["Send"]
 					h 'input.button.is-fullwidth', {
