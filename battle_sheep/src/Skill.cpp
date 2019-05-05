@@ -335,10 +335,10 @@ int Skill_patrouille::use(Grid *grid1, Grid *grid2, int x, int y, bool horizonta
 }
 
 //TOCHECK
-std::vector<std::vector<Square *>> Skill_patrouille::use(Grid *grid, int x, int y)
+Grid* Skill_patrouille::use(Grid *grid, int x, int y)
 {
     if (get_points() < POINT_COST)
-        return std::vector<std::vector<Square *>>();
+        return nullptr;
 
     return grid->radar_rectangular(x, y, 3, 3);
 }
