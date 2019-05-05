@@ -139,21 +139,21 @@ public:
     * Return the Square at this position(x,y)
     * Ouput : Square
     */
-    Square* radar_one_square(int x, int y);
+    //Square* radar_one_square(int x, int y);
 
 
     /* Input : int length, x,y (position)
     *
     * Output :
     */
-    std::vector<Square*> radar_horizontal(int x, int y, int length);
+    //std::vector<Square*> radar_horizontal(int x, int y, int length);
 
     
     /* Input : int large,length,  x,y (position)
     *
     * Output :
     */
-    std::vector<std::vector<Square*>> radar_rectangular(int x, int y, int large, int length);
+    Grid *radar_rectangular(int x, int y, int large, int length);
 
 
     /* Input : int player

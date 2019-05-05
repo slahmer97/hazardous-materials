@@ -116,7 +116,7 @@ class Skill_patrouille : public Skill
     Skill_patrouille(ENGINE_TYPE);
     int use(Grid *grid, int x, int y, bool horizontal);
     int use(Grid *grid, Grid *grid2, int x, int y, bool horizontal);
-    std::vector<std::vector<Square *>> use(Grid *grid, int x, int y);
+    Grid *use(Grid *grid, int x, int y);
 };
 
 class Skill_reconnaissance : public Skill
