@@ -77,7 +77,7 @@ public:
      * Output : is on the grid ?
      */
     bool get_is_on_grid();
-    void increment_skill_points();
+    void increment_points();
     /* Input : /
      * get the curent motor state
      * Output : motor state

@@ -87,9 +87,9 @@ bool Engine::get_is_on_grid()
 
 
 //Setters
-void Engine::increment_skill_points()
+void Engine::increment_points()
 {
-
+    m_skill->increase_points(5);
 }
 void Engine::set_horizontal(bool horizontal_a)
 {
