@@ -12,7 +12,7 @@
 #include "../include/enum.h"
 
 
-class MainMenu : public Menu, public ClickListener, public TextField
+class MainMenu : public Menu, public ClickListener
 {
 	public:
 		MainMenu();
@@ -25,7 +25,7 @@ class MainMenu : public Menu, public ClickListener, public TextField
 
 		virtual void on_click(Component* button);
 
-		~MainMenu();
+		~MainMenu() {};
 
 	private:
 		/**

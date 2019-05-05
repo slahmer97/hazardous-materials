@@ -10,7 +10,7 @@ class GridActionListener;
 #include <vector>
 #include <iostream>
 
-class DisplayGrid : Component {
+class DisplayGrid : public Component {
 
 	public:
 		DisplayGrid( void* placeholder = nullptr, int gridWidth = 10, int gridHeight = 10, int x = 0, int y = 0);

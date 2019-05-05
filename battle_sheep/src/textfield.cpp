@@ -12,9 +12,20 @@ TextField::TextField(sf::String defaultText, sf::String prompt, int x, int y, in
 
 void TextField::handleEvent(sf::Window* window,sf::Event* event){
 	switch(event->type){
+		case sf::Event::MouseButtonPressed:
+			if(this->enabled && event->mouseButton.button == sf::Mouse::Left){
+				if(this->x <= event->mouseButton.x && event->mouseButton.x <= this->x+this->width &&
+						this->y <= event->mouseButton.y && event->mouseButton.y <= this->y+this->height ){
+					this->selected = true;
+				}
+				else
+					this->selected = false;
+			}
+			break;
 		case sf::Event::KeyPressed:
-			if(this->enabled){
+			if(this->enabled && this->selected){
 				if(event->key.code == sf::Keyboard::Return){
+					std::cout<<"KeyPressed: return"<<std::endl;
 					if(this->listener != nullptr){
 						this->listener->on_click(this);
 					}
@@ -23,14 +34,14 @@ void TextField::handleEvent(sf::Window* window,sf::Event* event){
 			break;
 			
 		case sf::Event::TextEntered:
-			if(this->enabled){
-				if(event->text.unicode != '\n'){
+			if(this->enabled && this->selected){
+				//8 means backspace, so we erase one character
+				if(event->text.unicode == 8){
+					if(this->text.getSize()>0)
+						this->text.erase(this->text.getSize()-1);
+				} else if(event->text.unicode != 13){//13 is return
 					this->text+=sf::String(event->text.unicode);
-				} else {
-					if(this->listener != nullptr){
-						this->listener->on_click(this);
-					}
-				}
+				} 
 			}
 			break;
 		default:
@@ -57,12 +68,14 @@ void TextField::draw(sf::RenderTarget* drawingBoard){
 		content.setFillColor(sf::Color::Black);
 	else
 		content.setFillColor(sf::Color(128,128,128));
+	
+	if(selected)
+		box.setFillColor(sf::Color(200,200,200));
 
 	//We correctly center the text
-	int text_width = (int)content.getLocalBounds().width;
 	int text_height= (int)content.getLocalBounds().height;
 
-	content.setPosition(this->x+this->width/2-text_width/2, this->y+this->height/2-text_height);
+	content.setPosition(this->x+10, this->y+this->height/2-text_height);
 
 	drawingBoard->draw(box);
 	drawingBoard->draw(content);

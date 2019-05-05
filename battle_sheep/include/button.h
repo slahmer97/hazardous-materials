@@ -10,7 +10,7 @@
 /**
  * A simple class to use and create a button
  */
-class Button : Component {
+class Button : public Component {
 	public:
 		/**
 		 * Button constructor

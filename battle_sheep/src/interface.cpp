@@ -43,7 +43,7 @@ TextArea txt(10, 0, 0, 300, 100);
 
 void Interface::start() {
 
-    this->change_current_menu(new GameMenu());
+    this->change_current_menu(new MainMenu());
 
 
 
@@ -99,10 +99,16 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
+
+	//We pre-cast into a gamemenu and a mainmenu for simplicity in the different cases
+	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
+	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
 	switch(msg_type){
         case ServerMessage::KILL_PLAYER:
             {
-							this->currentMenu->currentState = STATE_DISABLED;
+				if(gm != nullptr){
+					gm->currentState = STATE_DISABLED;
+				}
             }
             break;
         case ServerMessage::GRIDS_ASSIGNEMENT:
@@ -112,7 +118,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::ERROR:
             {
-
+				this->handle_errror_message(m);
             }
             break;
         case ServerMessage::CHAT_S:
@@ -122,7 +128,9 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::CURRENT_TURN:
             {
-							this->currentMenu->currentState = STATE_PLAY;
+				if(gm != nullptr){
+					gm->currentState = STATE_PLAY;
+				}
             }
             break;
         case ServerMessage::SCORE_BROADCAST:
@@ -142,7 +150,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::JOIN_SUCCESS:
             {
-
+				std::cout<<"Succefully joined game"<<std::endl;
             }
             break;
         case ServerMessage::START:
@@ -175,9 +183,10 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
             }
             break;
-    }
+		
 
-}
+	}
+	}
 
 void Interface::handle_errror_message(ServerMessage* m){
     ServerMessage::ERRORS error = m->get_err_type();
@@ -195,8 +204,8 @@ void Interface::handle_errror_message(ServerMessage* m){
             break;
         case ServerMessage::CONNECTION_LOST:
             {
-								std::cout<<"Connection lost to current game, attempting reconnection"<<std::endl;
-								ClientMessageSender::sendJoinGameRequest("");
+				std::cout<<"Connection lost to current game, attempting reconnection"<<std::endl;
+				ClientMessageSender::sendJoinGameRequest("");
             }
 
             break;

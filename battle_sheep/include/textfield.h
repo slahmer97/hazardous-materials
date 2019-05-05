@@ -39,6 +39,13 @@ class TextField : Component {
 		 * Set the listener for the return button
 		 */
 		void setListener(ClickListener* listener);
+
+
+		/**
+		 * If the textfield is selected
+		 */
+		bool selected = false;
+
 	
 	private:
 		

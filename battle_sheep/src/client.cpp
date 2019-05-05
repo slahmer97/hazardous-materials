@@ -15,20 +15,13 @@ int main(int argv, char**argc){
 		return -1;
 	}
 
-	std::string hostname(argc[1]), username, password;
+	std::string hostname(argc[1]);
 	int port = 8080;
 
 	if( argv == 3){
 		port = atoi(argc[2]);
 	}
 
-	std::cout<<"Username> ";
-	std::cin>>username;
-	std::cout<<std::endl;
-
-	std::cout<<"Password> ";
-	std::cin>>password;
-	std::cout<<std::endl;
 
 	std::cout<<"Initializing texture manager"<<std::endl;
 	TextureManager::Init();
