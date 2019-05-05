@@ -140,22 +140,30 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::LOGIN_SUCCESS:
             {
-
+				if(mm != nullptr) {
+					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
+					this->player = mm->getLogin();
+					std::cout<<"Requestion to join 'default' game"<<std::endl;
+					ClientMessageSender::sendJoinGameRequest("default");
+				}
             }
             break;
         case ServerMessage::CREATED_SUCCESS:
             {
+				std::cout<<"Succefully created game 'default'"<<std::endl;
+				//TODO: Not sure if this is required -Alex
+				ClientMessageSender::sendJoinGameRequest("default");
 
             }
             break;
         case ServerMessage::JOIN_SUCCESS:
             {
-				std::cout<<"Succefully joined game"<<std::endl;
+				std::cout<<"Succefully joined game 'default'"<<std::endl;
+				this->change_current_menu(new GameMenu());
             }
             break;
         case ServerMessage::START:
             {
-
             }
             break;
         case ServerMessage::GRID:
@@ -193,7 +201,7 @@ void Interface::handle_errror_message(ServerMessage* m){
 	switch(error){
 		case ServerMessage::GAME_DOES_NOT_EXIST:
 			{
-				std::cout<<"Default game inexistant, requesting creation of it"<<std::endl;
+				std::cout<<"'default' game inexistant, requesting creation"<<std::endl;
 				ClientMessageSender::sendCreateGameRequest("default");
 			}
 			break;
