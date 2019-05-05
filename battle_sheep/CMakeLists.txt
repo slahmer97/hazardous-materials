@@ -88,6 +88,7 @@ set (
 	src/interface.cpp
 	src/button.cpp
 	src/game_menu.cpp
+	src/main_menu.cpp
 	src/b_switch.cpp
 	src/textfield.cpp
 	src/display_grid.cpp

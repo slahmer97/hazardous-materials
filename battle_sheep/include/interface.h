@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "../include/game_menu.h"
+#include "../include/main_menu.h"
 #include "../include/menu.h"
 
 
