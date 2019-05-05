@@ -77,7 +77,7 @@ public:
      * Output : is on the grid ?
      */
     bool get_is_on_grid();
-
+    void increment_skill_points();
     /* Input : /
      * get the curent motor state
      * Output : motor state
@@ -146,7 +146,7 @@ public:
      */
     int Skill_shot(Grid *grid, int x, int y, bool horizontal, SHOT_TYPE type_of_shot);
 
-    std::vector<std::vector<Square*>> Skill_shot(Grid *grid, int x, int y, SHOT_TYPE type_of_shot);
+    Grid *Skill_shot(Grid *grid, int x, int y, SHOT_TYPE type_of_shot);
 
     /* Input : the grid1 the grid2 targeted x and y position the direction and the shot type
      * a skill shot on two grids

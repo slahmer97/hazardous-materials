@@ -404,10 +404,6 @@ int Grid::proximity_check(int x, int y, Engine *engine)
 /*
 Square* Grid::radar_one_square(int x, int y)
 {
-    if(check_one_position(x,y)==-1)
-    {
-        return nullptr;
-    }
     return grid[x][y];
 }
 
@@ -431,7 +427,7 @@ Grid *Grid::radar_rectangular(int x, int y, int large, int length)
         {
             type=grid[i][j]->get_square_type();
             if(type==ENGINE_WEAPON_DEAD||type==ENGINE_PART_DEAD||type==ENGINE_MOTOR_DEAD)
-                bigresult->grid[i][j]->set_square_type(grid[i][j]->get_square_type());
+                bigresult->grid[i][j]->set_square_type(type);
         }
     }
 
@@ -439,7 +435,10 @@ Grid *Grid::radar_rectangular(int x, int y, int large, int length)
     {
         for(int j=0;j<large;j++)
         {
-            bigresult->grid[x + i][y + j]->set_square_type(grid[x + i][y + j]->get_square_type());
+            if(check_one_position(x,y)!=-1)
+            {
+                bigresult->grid[x + i][y + j]->set_square_type(grid[x + i][y + j]->get_square_type());
+            }
         }
     }
     return bigresult;
