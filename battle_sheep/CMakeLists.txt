@@ -94,6 +94,7 @@ set (
 	src/display_grid.cpp
 	src/texture_manager.cpp
 	src/textarea.cpp
+  src/box.cpp
 	)
 
 # the server only sources
@@ -118,7 +119,7 @@ if(${SFML_FOUND})
 	# Library linking
 	target_link_libraries(client simple-websocket-server pthread)
 	target_link_libraries(client ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
-	
+
 	# We copy the assets directory, containing the textures and font for the game
 	file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
