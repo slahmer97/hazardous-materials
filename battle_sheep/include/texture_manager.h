@@ -175,6 +175,18 @@ namespace TextureManager {
 		const sf::IntRect CloudDownLeft(0,576,32,32);//7
 		const sf::IntRect CloudDown(32,576,32,32);//6
 		const sf::IntRect CloudDownRight(64,576,32,32);//5
+
+		//Highlight texture
+		const sf::IntRect HighlightUpLeft(0, 640, 16,16);
+		const sf::IntRect HighlightUp(8,640,16,16);
+		const sf::IntRect HighlightUpRight(16,640,16,16);
+
+		const sf::IntRect HightlightLeft(0,648,16,16);
+		const sf::IntRect HightlightRight(16,648,16,16);
+
+		const sf::IntRect HighlightDownLeft(0, 656, 16,16);
+		const sf::IntRect HighlightDown(8,656,16,16);
+		const sf::IntRect HighlightDownRight(16,656,16,16);
 	}
 
 	namespace Other {
