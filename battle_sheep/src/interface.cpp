@@ -237,6 +237,8 @@ void Interface::handle_errror_message(ServerMessage* m){
 
             }
             break;
+        default:
+            std::cerr<<"[-] Error that has been received could not be recognized"<<std::endl;
     }
 }
 

@@ -357,7 +357,7 @@ void ServerMessage::set_chat_msg(const std::string &chatMsg) {
     ServerMessage::m_chat_msg = chatMsg;
 }
 const std::string ServerMessage::get_username() const {
-    return m_username.c_str();
+    return m_username;
 }
 void ServerMessage::set_username(const std::string &username) {
     ServerMessage::m_username = username;
@@ -378,7 +378,6 @@ void ServerMessage::set_client_msg(ClientMessage::CLIENT_MESSAGE_TYPE s){
 }
 
 ServerMessage::ERRORS ServerMessage::get_err_type(){
-
-
+    return m_error_type;
 }
 
