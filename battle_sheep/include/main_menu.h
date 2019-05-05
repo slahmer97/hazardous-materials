@@ -25,7 +25,7 @@ class MainMenu : public Menu, public ClickListener
 
 		virtual void on_click(Component* button);
 
-		~MainMenu();
+		~MainMenu() {};
 
 	private:
 		/**
