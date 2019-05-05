@@ -99,10 +99,14 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
+	GameMenu* gm = nullptr;
 	switch(msg_type){
         case ServerMessage::KILL_PLAYER:
             {
-							this->currentMenu->currentState = STATE_DISABLED;
+				gm = dynamic_cast<GameMenu*>(this->currentMenu);
+				if(gm != nullptr){
+					gm->currentState = STATE_DISABLED;
+				}
             }
             break;
         case ServerMessage::GRIDS_ASSIGNEMENT:
@@ -112,7 +116,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::ERROR:
             {
-
+				this->handle_errror_message(m);
             }
             break;
         case ServerMessage::CHAT_S:
@@ -122,7 +126,10 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::CURRENT_TURN:
             {
-							this->currentMenu->currentState = STATE_PLAY;
+				gm = dynamic_cast<GameMenu*>(this->currentMenu);
+				if(gm != nullptr){
+					gm->currentState = STATE_PLAY;
+				}
             }
             break;
         case ServerMessage::SCORE_BROADCAST:
@@ -175,9 +182,10 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
             }
             break;
-    }
+		
 
-}
+	}
+	}
 
 void Interface::handle_errror_message(ServerMessage* m){
     ServerMessage::ERRORS error = m->get_err_type();
