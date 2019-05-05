@@ -45,7 +45,13 @@ void Interface::start() {
 
     this->change_current_menu(new GameMenu());
 
+	//	sf::RectangleShape boite(sf::Vector2f(480.f,270.f));
+	//	boite.setPosition(sf::Vector2f(220.f,135.f));
 
+	//	Button sel1("Select 1",300,195,140,35);
+	//	Button sel2("Select 2",300,315,140,35);
+	//	Button sel3("Select 3",490,195,140,35);
+	//	Button sel4("Select 4",490,315,140,35);
 
 	std::cout<<"Starting loop"<<std::endl;
 	while(this->window.isOpen()){
@@ -68,6 +74,10 @@ void Interface::start() {
 			if(this->currentMenu != nullptr)
 				this->currentMenu->handleEvent(&window,&event);
 
+		//	sel1.handleEvent(&window,&event);
+		//	sel2.handleEvent(&window,&event);
+		//	sel3.handleEvent(&window,&event);
+		//	sel4.handleEvent(&window,&event);
 		}
 
 		//We clear the window of any previous drawing
@@ -75,6 +85,13 @@ void Interface::start() {
 		//We draw the current menu in a buffer
 		if(this->currentMenu != nullptr)
 			this->currentMenu->draw(&window);
+
+	//	window.draw(boite);
+	//	sel1.draw(&window);
+	//	sel2.draw(&window);
+	//	sel3.draw(&window);
+	//	sel4.draw(&window);
+
 		//We then display the buffer on the window
 		window.display();
 
@@ -105,7 +122,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 							this->currentMenu->currentState = STATE_DISABLED;
             }
             break;
-        case ServerMessage::GRIDS_ASSIGNEMENT:
+        case ServerMessage::GRIDS_ASSIGNEMENT:	//choisir grille
             {
 
             }
@@ -121,7 +138,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             }
         case ServerMessage::CURRENT_TURN:break;
             {
-							this->currentMenu->currentState = STATE_PLAY;
+
             }
         case ServerMessage::SCORE_BROADCAST:break;
             {
@@ -141,7 +158,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             }
         case ServerMessage::START:break;
             {
-
+							this->currentMenu->currentState = STATE_TURN_OTHER;
             }
         case ServerMessage::GRID:break;
             {
@@ -172,7 +189,7 @@ void Interface::handle_errror_message(ServerMessage* m){
 				ClientMessageSender::sendCreateGameRequest("default");
 			}
 			break;
-        case ServerMessage::LOGIN_REQUIRE:
+        case ServerMessage::LOGIN_REQUIRE:	//pas login , action illegal
             {
 
             }
