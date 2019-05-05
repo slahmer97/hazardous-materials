@@ -27,6 +27,11 @@ void MainMenu::draw(sf::RenderTarget* drawingBoard){
     password.draw(drawingBoard);
     confirm_lp.draw(drawingBoard);
 }
+
+std::string MainMenu::getLogin(){
+	return this->login.text;
+}
+
 void MainMenu::on_click(Component* button){
     
 	if((void*)button == (void*)&confirm_lp){

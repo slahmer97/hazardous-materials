@@ -24,6 +24,8 @@ class MainMenu : public Menu, public ClickListener
 	 	virtual void draw(sf::RenderTarget* drawingBoard);
 
 		virtual void on_click(Component* button);
+		
+		std::string getLogin();
 
 		~MainMenu() {};
 

@@ -142,7 +142,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             {
 				if(mm != nullptr) {
 					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
-					this->player = mm->login.text;
+					this->player = mm->getLogin();
 					std::cout<<"Requestion to join 'default' game"<<std::endl;
 					ClientMessageSender::sendJoinGameRequest("default");
 				}
