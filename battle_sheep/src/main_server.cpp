@@ -8,8 +8,8 @@
 using namespace std;
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
 int main() {
-    std::string crt = "/home/sidahmed/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/keys/server.crt";
-    std::string key = "/home/sidahmed/CLionProjects/hazardous-materials/battle_sheep/simple_web_socket/keys/server.key";
+    std::string crt = "/home/gapir67/Documents/PI/hazardous-materials/battle_sheep/simple_web_socket/key/server.crt";
+    std::string key = "/home/gapir67/Documents/PI/hazardous-materials/battle_sheep/simple_web_socket/key/server.key";
     WssServer server(crt, key);
     server.config.port = 8080;
     auto &echo = server.endpoint["^/game/?$"];
