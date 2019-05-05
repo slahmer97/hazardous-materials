@@ -39,6 +39,13 @@ class TextField : Component {
 		 * Set the listener for the return button
 		 */
 		void setListener(ClickListener* listener);
+
+
+		/**
+		 * If the textfield is selected
+		 */
+		bool selected = false;
+
 	
 	private:
 		
@@ -52,11 +59,6 @@ class TextField : Component {
 		 */
 		sf::Font font;
 		
-		/**
-		 * If the textfield is selected
-		 */
-		bool selected = false;
-
 		/**
 		 * The listener for when the Enter key is pressed
 		 */
