@@ -6,7 +6,7 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	b2("",580,420,100,50),
 	grid_self(nullptr, 10,10, 50,50),
 	grid_opponent(nullptr, 10,10,590,50),
-	currentState(STATE_DISABLED),
+	currentState(STATE_PLACE),
 	textarea(15, 400, 185, 160, 160),
 	chatField("", ">", 400, 345, 160, 25),
 	local_player(local_player)
@@ -24,6 +24,8 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	
 	for(int i = 0; i < 4; i++){
 		this->players[i] = players[i];
+		if(this->players[i] == "")
+			currentState = stateDisabled;
 	}
 
 	for(int i = 0; i < 4; i++){
@@ -150,12 +152,28 @@ void GameMenu::handle_server_message(ServerMessage* m){
 			shipPlacementStep++;
 			waitingForAnswer = false;
 			break;
+		case SHOT_SUCCESS:
+			currentState = STATE_TURN_OTHER;
+			break;
+		case MOVE_SUCCESS:
+			currentState = STATE_TURN_OTHER;
+			break;
+		case ROTATE_SUCCESS:
+			currentState = STATE_TURN_OTHER;
+			break;
+		case ServerMessage::START:
+			if(currentState != STATE_PLAY)
+				currentState = STATE_TURN_OTHER;
+			break;
 		case ServerMessage::GRIDS_ASSIGNEMENT:
 		{
 			players[m->get_id()-1] = m->get_username();
+			currentState = STATE_PLACE;
 			for(int i=0;i<4;i++)
 			{
 				players_draw[i].setString("player :"+players[i]);
+				if(this->players[i] == "")
+					currentState = STATE_DISABLED;
 			}
 		}
 		break;

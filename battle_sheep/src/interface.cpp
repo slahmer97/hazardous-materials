@@ -274,7 +274,7 @@ void Interface::handle_errror_message(ServerMessage* m){
 			{
 				if(jm!=nullptr)
 				{
-					std::cout<<"'"<<(std::string)jm->createtxt.text<<"' game inexistant, requesting creation"<<std::endl;
+					std::cout<<"'"<<(std::string)jm->createtxt.text<<"' game inexistant"<<std::endl;
 					jm->error.addTextLine("game inexistant");
 					jm->show=true;
 					//ClientMessageSender::sendCreateGameRequest("default");
