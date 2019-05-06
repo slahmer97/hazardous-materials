@@ -66,6 +66,7 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	b2.set_on_click(this);
 	chatField.setListener(this);
 	grid_self.setListener(this);
+	grid_opponent.setListener(this);
 
 	if(this->local_player%2 == 0) {
 		ships_to_place.push_back(PORTE_AVION);
