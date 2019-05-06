@@ -213,6 +213,10 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 	}
 }
 
+void DisplayGrid::get_selected_cases(int* x, int* y){
+	(*x)=selectedX;
+	(*y)=selectedY;
+}
 
 void DisplayGrid::selectCase(int x, int y, bool force){
 	//We check if the value is different from before
@@ -220,9 +224,19 @@ void DisplayGrid::selectCase(int x, int y, bool force){
 		//No need to change anything
 		return;
 	}
+	
+	this->selectedX = x;
+	this->selectedY = y;
+
+	
 	//We create a new vector
 	std::vector<sf::Sprite> new_vect;
 	
+	if(x == -1 || y == -1){
+		highlight_sprites.swap(new_vect);
+		return;
+	}
+
 	//Check if there is a know ship at (x,y)
 	
 	//Else juste a simple highlight
@@ -249,6 +263,12 @@ void DisplayGrid::selectCase(int x, int y, bool force){
 }
 
 
+GridCase DisplayGrid::get_case_at(int x, int y, bool planes){
+	if(planes)
+		return gridPlane[x][y];
+	else
+		return gridShip[x][y];
+}
 
 void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 	if(this->displayAir) {

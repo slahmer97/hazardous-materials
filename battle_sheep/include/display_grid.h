@@ -45,6 +45,10 @@ class DisplayGrid : public Component {
 		 * Will also highliht the ship if there is one there
 		 */
 		void selectCase(int x, int y, bool force = false);
+		
+		void get_selected_cases(int* x, int* y);
+
+		GridCase get_case_at(int x, int y, bool air);
 
 		/**
 		 * Set the listener for the return button
