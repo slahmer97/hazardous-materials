@@ -2,7 +2,7 @@
 
 static const GridCase EMPTY_CASE = {0,0.0f,NONE};
 
-DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x, int y): 
+DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x, int y):
 	x(x),
 	y(y),
 	gridWidth(gridWidth),
@@ -187,14 +187,12 @@ void DisplayGrid::set_grid_ship(std::string strGridShip){
 		for(j = 0; j < splittedGridShip[i].size(); j++){
 			//gridPlanes[j][i]
 			//splitted[i][j]
-			std::vector<std::string> dataShip = split(splittedGridShip[i][j]);
-
+			std::vector<std::string> dataShip = split(splittedGridShip[i][j],';');
 			gridShip[j][i].id = std::atoi(dataShip[0].c_str());
 			gridShip[j][i].health = std::atof(dataShip[1].c_str());
 			gridShip[j][i].type = Square::square_type_to_enum(dataShip[2]);
 		}
 	}
-
 	calculate_sprites();
 }
 
@@ -225,7 +223,7 @@ void DisplayGrid::set_grid_planes(std::string strGridPlane){
 		for(j = 0; j < splittedGridPlane[i].size(); j++){
 			//gridPlanes[j][i]
 			//splitted[i][j]
-			std::vector<std::string> dataPlane = split(splittedGridPlane[i][j]);
+			std::vector<std::string> dataPlane = split(splittedGridPlane[i][j],';');
 
 			gridPlane[j][i].id = std::atoi(dataPlane[0].c_str());
 			gridPlane[j][i].health = std::atof(dataPlane[1].c_str());
@@ -358,6 +356,3 @@ void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 		}
 	}
 }
-
-
-
