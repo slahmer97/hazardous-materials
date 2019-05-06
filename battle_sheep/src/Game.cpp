@@ -33,7 +33,7 @@ void Game::switch_turn(){
             break;
     }
     //update score
-
+    update_score();
     Player* p = get_player(get_current_turn_id());
     if(p->dead()){
         switch_turn();
@@ -45,7 +45,6 @@ void Game::switch_turn(){
 
 void Game::on_game_state_changed() {
 
-    update_score();
     //TODO Check if player is dead !
     std::string score = ServerMessage::getScoreBroadCastMessage(m_score);
     broadcast_message(score);
@@ -415,6 +414,7 @@ void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
 
     if(is_shot){
         int ret = engine->Skill_shot(grid,x,y,h,shotType);
+        std::cout<<"[+] ==================================******Skill points : "<<engine->get_remain_points()<<std::endl;
         if(ret >= 0){
                 std::string shot_suc_msg = ServerMessage::getShotSuccessMessage();
                 p->send_message(shot_suc_msg);

@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "../include/Skill.h"
-#define POINT_COST 50
+#define POINT_COST 20
 
 Skill::Skill(ENGINE_TYPE engine_type)
 {
