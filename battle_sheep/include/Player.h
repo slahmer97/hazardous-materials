@@ -53,6 +53,7 @@ public:
     Engine* get_engine_by_id(int id);
     Engine* create_engine(ENGINE_TYPE);
     void set_dead();
+    bool dead();
 private:
     std::vector<Engine*> m_engine;
     int m_id = -1;
@@ -63,7 +64,7 @@ private:
     WssServer::Connection *m_connection;
     Grid* m_grid;
     bool m_logged_in = false;
-    bool dead = false;
+    bool m_dead = false;
 
 };
 

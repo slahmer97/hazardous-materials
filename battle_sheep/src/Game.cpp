@@ -210,45 +210,76 @@ void Game::start() {
 }
 void Game::update_score(){
     int score = 0;
-    for(Engine* e : m_t1->get_first_player()->get_engines())
-        score += static_cast<int>(e->get_current_health_point());
-    m_score->set_s1(score);
-    if(score == 0){
-        std::string msg = ServerMessage::getKillPlayerMessage(1);
-        m_t1->get_first_player()->send_message(msg);
-        m_t1->get_first_player()->set_dead();
+    if(!m_t1->get_first_player()->dead()){
+        for(Engine* e : m_t1->get_first_player()->get_engines())
+            score += static_cast<int>(e->get_current_health_point());
+        m_score->set_s1(score);
+        if(score == 0){
+            std::string msg = ServerMessage::getKillPlayerMessage(1);
+            m_t1->get_first_player()->send_message(msg);
+            m_t1->get_first_player()->set_dead();
+        }
     }
 
-    score = 0;
-    for(Engine* e : m_t1->get_second_player()->get_engines())
-        score += static_cast<int>(e->get_current_health_point());
-    m_score->set_s2(score);
+    if(!m_t1->get_second_player()->dead()){
+        score = 0;
+        for(Engine* e : m_t1->get_second_player()->get_engines())
+            score += static_cast<int>(e->get_current_health_point());
+        m_score->set_s2(score);
 
-    if(score == 0){
-        std::string msg = ServerMessage::getKillPlayerMessage(2);
-        m_t1->get_second_player()->send_message(msg);
-        m_t1->get_second_player()->set_dead();
-    }
-
-    score = 0;
-    for(Engine* e : m_t2->get_first_player()->get_engines())
-        score += static_cast<int>(e->get_current_health_point());
-    m_score->set_s3(score);
-    if(score <= 0){
-        std::string msg = ServerMessage::getKillPlayerMessage(3);
-        m_t2->get_first_player()->send_message(msg);
-        m_t2->get_first_player()->set_dead();
+        if(score == 0){
+            std::string msg = ServerMessage::getKillPlayerMessage(2);
+            m_t1->get_second_player()->send_message(msg);
+            m_t1->get_second_player()->set_dead();
+        }
     }
 
 
-    score = 0;
-    for(Engine* e : m_t2->get_second_player()->get_engines())
-        score += static_cast<int>(e->get_current_health_point());
-    this->m_score->set_s4(score);
-    if(score <= 0){
-        std::string msg = ServerMessage::getKillPlayerMessage(4);
-        m_t2->get_second_player()->send_message(msg);
-        m_t2->get_second_player()->set_dead();
+
+
+
+
+
+
+
+    if(!m_t2->get_first_player()->dead()) {
+        score = 0;
+        for (Engine *e : m_t2->get_first_player()->get_engines())
+            score += static_cast<int>(e->get_current_health_point());
+        m_score->set_s3(score);
+        if (score <= 0) {
+            std::string msg = ServerMessage::getKillPlayerMessage(3);
+            m_t2->get_first_player()->send_message(msg);
+            m_t2->get_first_player()->set_dead();
+        }
+
+    }
+
+    if(!m_t2->get_second_player()->dead()) {
+        score = 0;
+        for (Engine *e : m_t2->get_second_player()->get_engines())
+            score += static_cast<int>(e->get_current_health_point());
+        this->m_score->set_s4(score);
+        if (score <= 0) {
+            std::string msg = ServerMessage::getKillPlayerMessage(4);
+            m_t2->get_second_player()->send_message(msg);
+            m_t2->get_second_player()->set_dead();
+        }
+    }
+
+
+
+    if(m_t1->get_second_player()->dead() && m_t1->get_first_player()->dead()){
+        m_t1->set_lost();
+        on_game_end();
+        return;
+    }
+
+
+    if(m_t2->get_second_player()->dead() && m_t2->get_first_player()->dead()){
+        m_t2->set_lost();
+        on_game_end();
+        return;
     }
 
 
@@ -462,6 +493,12 @@ void Game::shot2routine(Player *p, Engine *engine, Grid *grid1, Grid *grid2,int 
 
 
 
+}
+
+void Game::on_game_end() {
+    //TODO ??
+    m_t1->on_game_end();
+    m_t2->on_game_end();
 }
 
 

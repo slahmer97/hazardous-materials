@@ -21,6 +21,14 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 		this->players[i] = players[i];
 	}
 
+	for(int i = 0; i < 4; i++){
+		this->players_score[i].setColor(sf::Color::Blue);
+		this->players_score[i].setCharacterSize(25);
+		sf::Vector2f vec;
+		vec.x=400;
+		vec.y=50+(i*30);
+		this->players_score[i].setPosition(vec);
+	}
 	confirm.set_on_click(this);
 	b1.set_on_click(this);
 	b2.set_on_click(this);
@@ -60,6 +68,21 @@ void GameMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::CHAT_S:
 			this->textarea.addTextLine(players[m->get_id()-1]+m->get_chat_msg());
 			break;
+		case ServerMessage::SCORE_BROADCAST:
+		{
+				std::string s[4];
+				std::string s[0]=m->get_score().get_s1;
+				std::string s[1]=m->get_score().get_s2;
+				std::string s[2]=m->get_score().get_s3;
+				std::string s[3]=m->get_score().get_s4;
+
+				for(int i=0;i<4;i++)
+				{
+					std::string ret="joueur "+std::to_string(i)+" : "+s[i];
+					players_score[i].setString(ret);
+				}
+		}
+		break;
 		default:
 			break;
 	}
@@ -96,6 +119,9 @@ void GameMenu::draw(sf::RenderTarget* drawingBoard){
     confirm.draw(drawingBoard);
     b1.draw(drawingBoard);
     b2.draw(drawingBoard);
+	for(int i = 0; i < 4; i++){
+		drawingBoard->draw(players_score[i]);
+	}
 }
 
 void GameMenu::on_click(Component* button){

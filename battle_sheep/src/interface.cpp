@@ -245,7 +245,16 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 			}
 			break;
+		case ServerMessage::WON:
+			{
 
+			}
+			break;
+		case ServerMessage::LOST:
+			{
+
+			}
+			break;
 
 	}
 	}
