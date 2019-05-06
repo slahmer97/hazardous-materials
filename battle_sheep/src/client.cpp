@@ -39,7 +39,7 @@ int main(int argv, char**argc){
         client.start();
     });
 
-
+/*
     std::cout<<"Creating server second communicator thread"<<std::endl;
     std::thread communicator([]() {
 
@@ -128,11 +128,11 @@ int main(int argv, char**argc){
                 continue;
         }
     });
-
+*/
 	std::cout<<"Starting interface"<<std::endl;
 	inter.start();
 
 
-	communicator.join();
+	//communicator.join();
 	return 0;
 }
