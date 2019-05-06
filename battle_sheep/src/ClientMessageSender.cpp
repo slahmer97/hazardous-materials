@@ -16,7 +16,7 @@ bool ClientMessageSender::checkServerStatus() {
     return ClientMessageSender::server != nullptr;
 }
 
-bool ClientMessageSender::sendLoginRequest(const std::string username,const  std::string pass){
+bool ClientMessageSender::sendLoginRequest(const std::string& username,const  std::string& pass){
     std::string msg = ClientMessage::getLoginMessage(username,pass);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
@@ -24,7 +24,7 @@ bool ClientMessageSender::sendLoginRequest(const std::string username,const  std
     return checkServerStatus();
 }
 
-bool ClientMessageSender::sendRegisterRequest(const std::string username,const  std::string pass){
+bool ClientMessageSender::sendRegisterRequest(const std::string& username,const  std::string& pass){
     std::string msg = ClientMessage::getRegisterMessage(username,pass);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
@@ -40,21 +40,21 @@ bool ClientMessageSender::sendAddEngineRequest(ENGINE_TYPE type, int horizontal,
     return checkServerStatus();
 }
 
-bool ClientMessageSender::sendJoinGameRequest(const std::string game_id) {
+bool ClientMessageSender::sendJoinGameRequest(const std::string& game_id) {
     std::string msg = ClientMessage::getJoinGameMessage(game_id);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
 
     return checkServerStatus();
 }
-bool ClientMessageSender::sendCreateGameRequest(const std::string game_id) {
+bool ClientMessageSender::sendCreateGameRequest(const std::string &game_id) {
     std::string msg = ClientMessage::getCreateGameMessage(game_id);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
 
     return checkServerStatus();
 }
-bool ClientMessageSender::sendChooseGridRequest(int grid_id) {
+bool ClientMessageSender::sendChooseGridRequest(int &grid_id) {
     std::string msg = ClientMessage::getChoseGridMessage(grid_id);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;
@@ -77,7 +77,7 @@ bool ClientMessageSender::sendMoveEngineRequest(int id,int reading_direction, in
     return checkServerStatus();
 }
 
-bool ClientMessageSender::sendChatRequest(const std::string msg_chat) {
+bool ClientMessageSender::sendChatRequest(const std::string & msg_chat) {
 
     std::string msg = ClientMessage::getChatMessage(msg_chat);
     ClientMessageSender::server->send(msg);
