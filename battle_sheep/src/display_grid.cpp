@@ -8,7 +8,10 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 	spritesBackground(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//creating the 2d vector of sprites representing the background
 	spritesBackgroundAir(gridWidth, std::vector<sf::Sprite>(gridHeight) ),
 	spritesShip(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//Creating the 2d vector of sprites representing the ships (or lack)
-	spritesPlanes(gridWidth, std::vector<sf::Sprite>(gridHeight) ){
+	spritesPlanes(gridWidth, std::vector<sf::Sprite>(gridHeight) ),
+	gridShip(gridWidth, std::vector<GridCase>(gridHeight, GridCase())),
+	gridPlane(gridWidth, std::vector<GridCase>(gridHeight, GridCase()))
+{
 
 
 		//We fill the 2d arrays displaying everything
@@ -41,13 +44,51 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 	}
 
 void DisplayGrid::calculate_sprites(){
-	//TODO: implement that when we know how are the client-side classes defined
-	//Meanwhile, we implement a default texture
+
 	for(int i = 0; i < gridWidth; i++){
 		for(int j = 0; j < gridHeight; j++){
-			//We use the center texture
+			//We set the background texture
 			spritesBackground[i][j].setTextureRect(TextureManager::Background::Water);
 			spritesBackgroundAir[i][j].setTextureRect(TextureManager::Background::Air);
+			
+			switch(gridShip[i][j].type){
+				case NONE:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
+					break;
+				case ENGINE_MOTOR:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipHoriLeft);
+					break;
+				case ENGINE_WEAPON:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipHoriRight);
+					break;
+				case ENGINE_PART:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipHoriBody);
+					break;
+				default:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipVertBody);
+					break;
+			}
+			
+			
+			switch(gridPlane[i][j].type){
+				case NONE:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::Empty);
+					break;
+				case ENGINE_MOTOR:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipHoriLeft);
+					break;
+				case ENGINE_WEAPON:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipHoriRight);
+					break;
+				case ENGINE_PART:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipHoriBody);
+					break;
+				default:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipVertBody);
+					break;
+			}
+
+
 		}
 	}
 }
@@ -59,6 +100,64 @@ void DisplayGrid::setListener(GridActionListener* listener){
 DisplayGrid::~DisplayGrid(){
 
 }
+
+std::vector<std::string> split(std::string str, char delim = ' '){
+	std::stringstream ss(str);
+	std::string token;
+	std::vector<std::string> cont;
+
+	while(std::getline(ss, token, delim)) {
+		cont.push_back(token);
+	}
+
+	return cont;
+}
+
+void DisplayGrid::set_grid(std::string strGridShip, std::string strGridPlane){
+	
+	unsigned int i=0,j = 0;
+
+	//We parse everything needed
+	std::vector<std::vector<std::string>> splittedGridShip;
+	std::vector<std::vector<std::string>> splittedGridPlane;
+
+	std::vector<std::string> partSplitGridShip = split(strGridShip, '\n');
+	std::vector<std::string> partSplitGridPlane = split(strGridPlane, '\n');
+
+	for(i = 0; i < partSplitGridShip.size(); i++){
+		splittedGridShip.push_back(split(partSplitGridShip[i], '\t'));
+		splittedGridPlane.push_back(split(partSplitGridPlane[i], '\t'));
+	}
+
+	//Format : grid[i][j]
+	// \________ j
+	// |
+	// |
+	// |
+	// |
+	// i
+	// != from gridPlanes and Ship !
+	
+	for(i = 0; i < splittedGridShip.size(); i++){
+		for(j = 0; j < splittedGridShip[i].size(); j++){
+			//gridPlanes[j][i]
+			//splitted[i][j]
+			std::vector<std::string> dataShip = split(splittedGridShip[i][j]);
+			std::vector<std::string> dataPlane = split(splittedGridPlane[i][j]);
+
+			gridPlane[j][i].id = std::atoi(dataPlane[0].c_str());
+			gridPlane[j][i].health = std::atof(dataPlane[1].c_str());
+			gridPlane[j][i].type = Square::square_type_to_enum(dataPlane[2]);
+			
+			gridShip[j][i].id = std::atoi(dataShip[0].c_str());
+			gridShip[j][i].health = std::atof(dataShip[1].c_str());
+			gridShip[j][i].type = Square::square_type_to_enum(dataShip[2]);
+		}
+	}
+
+	calculate_sprites();
+}
+
 
 void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 
