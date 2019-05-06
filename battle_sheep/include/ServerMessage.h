@@ -24,6 +24,8 @@ public:
     enum ERRORS{LOGIN_REQUIRE,GAME_DOES_NOT_EXIST,CONNECTION_LOST,ALREADY_CHOSEN,ACTION_FAILED,ENGINE_ID_DOES_NOT_EXIST,GRID_ID_DOES_NOT_EXIST,GAME_ID_ALREADY_EXIST};
 
     static std::string getGridAssignSuccess();
+    static std::string getWonMessage();
+    static std::string getLostMessage();
     static std::string getShotSuccessMessage();
     static std::string getMoveSuccessMessage(int id);
     static std::string getRotateSuccessMessage(int id);
