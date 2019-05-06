@@ -108,6 +108,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 	//We pre-cast into a gamemenu and a mainmenu for simplicity in the different cases
 	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
 	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
+	std::string tmp[4];
 	switch(msg_type){
         case ServerMessage::KILL_PLAYER:
             {
@@ -208,8 +209,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::GRID_ASSIGN_SUCCESS:
             {
-
-				this->change_current_menu(new GameMenu());
+				this->change_current_menu(new GameMenu(tmp, m->get_id()));
             }
             break;
 

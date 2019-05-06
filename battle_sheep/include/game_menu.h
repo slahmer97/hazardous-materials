@@ -5,6 +5,7 @@
 #include "../include/button.h"
 #include "../include/b_switch.h"
 #include "../include/textfield.h"
+#include "../include/textarea.h"
 #include "../include/display_grid.h"
 #include "../include/click_callback.h"
 #include "../include/ServerMessage.h"
@@ -17,7 +18,7 @@
 class GameMenu : public Menu, public ClickListener, public GridActionListener
 {
 	public:
-		GameMenu();
+		GameMenu(std::string players[4], int local_player);
 
 		virtual void handleEvent(sf::Window* window, sf::Event* event);
 
@@ -44,7 +45,14 @@ class GameMenu : public Menu, public ClickListener, public GridActionListener
 
 		DisplayGrid grid_self, grid_opponent;
 
+		TextArea textarea;
+		TextField chatField;
+
 		sf::Texture grille;
+
+		std::string players[4];
+
+		int local_player;
 
 
 };
