@@ -298,7 +298,8 @@ void GameScheduler::gameEngineAddRoutine(Player *p, Game *game, const std::strin
     if(ret == 1){
         std::string sent_msg = ServerMessage::getEngineAddedMessage();
         p->send_message(sent_msg);
-        p->send_message(p->get_priv_grid());
+		std::string grid_msg = ServerMessge::getGridMessage(p->get_id(), p->get_priv_grid());
+		//p->send_message(p->get_priv_grid());
     }
     else{
         std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE);

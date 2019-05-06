@@ -161,6 +161,12 @@ void GameMenu::handle_server_message(ServerMessage* m){
 			if(currentState != STATE_PLAY)
 				currentState = STATE_TURN_OTHER;
 			break;
+		case ServerMessage::ERROR:
+			if(m->get_err_type() == ServerMessage::ACTION_FAILED){
+				waitingForAnswer = false;
+			}
+
+			break;
 		case ServerMessage::GRIDS_ASSIGNEMENT:
 		{
 			players[m->get_id()-1] = m->get_username();
