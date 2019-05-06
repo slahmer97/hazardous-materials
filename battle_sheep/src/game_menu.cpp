@@ -16,18 +16,52 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 		std::cerr<<"Couldn't load assets/textures/grille_10x10.png"<<std::endl;
 		std::abort();
 	}
+	if(!font.loadFromFile("assets/font/LiberationMono-Regular.ttf")){
+		//We couldn't load the font
+		std::cerr<<"Couldn't load assets/font/LiberationMono-Regular.ttf"<<std::endl;
+		std::abort();
+	}
 	
 	for(int i = 0; i < 4; i++){
 		this->players[i] = players[i];
 	}
 
 	for(int i = 0; i < 4; i++){
-		this->players_score[i].setFillColor(sf::Color::Blue);
+		this->players_score[i].setFillColor(sf::Color::Green);
 		this->players_score[i].setCharacterSize(25);
+		this->players_score[i].setFont(font);
 		sf::Vector2f vec;
 		vec.x=400;
 		vec.y=50+(i*30);
 		this->players_score[i].setPosition(vec);
+		this->players_draw[i].setCharacterSize(20);
+		this->players_draw[i].setFont(font);
+	}
+	if(local_player<2)
+	{
+		this->players_draw[0].setFillColor(sf::Color::Blue);
+		this->players_draw[1].setFillColor(sf::Color::Blue);
+		this->players_draw[2].setFillColor(sf::Color::Red);
+		this->players_draw[3].setFillColor(sf::Color::Red);
+		this->players_draw[0].setPosition(sf::Vector2f(50,30));
+		this->players_draw[1].setPosition(sf::Vector2f(50,30));
+		this->players_draw[2].setPosition(sf::Vector2f(590,30));
+		this->players_draw[3].setPosition(sf::Vector2f(590,30));
+	}
+	else
+	{
+		this->players_draw[0].setFillColor(sf::Color::Red);
+		this->players_draw[1].setFillColor(sf::Color::Red);
+		this->players_draw[2].setFillColor(sf::Color::Blue);
+		this->players_draw[3].setFillColor(sf::Color::Blue);
+		this->players_draw[0].setPosition(sf::Vector2f(590,30));
+		this->players_draw[1].setPosition(sf::Vector2f(590,30));
+		this->players_draw[2].setPosition(sf::Vector2f(50,30));
+		this->players_draw[3].setPosition(sf::Vector2f(50,30));
+  }
+	for(int i=0;i<4;i++)
+	{
+		players_draw[i].setString("player :"+players[i]);
 	}
 	confirm.set_on_click(this);
 	b1.set_on_click(this);
@@ -47,8 +81,14 @@ void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX,
 void GameMenu::handle_server_message(ServerMessage* m){
 	switch(m->get_msg_type()){
 		case ServerMessage::GRIDS_ASSIGNEMENT:
+		{
 			players[m->get_id()-1] = m->get_username();
-			break;
+			for(int i=0;i<4;i++)
+			{
+				players_draw[i].setString("player :"+players[i]);
+			}
+		}
+		break;
 		case ServerMessage::CHAT_S:
 			//TODO add m->get_chat_msg()
 			this->textarea.addTextLine(players[m->get_id()-1]+m->get_chat_msg());
@@ -107,6 +147,45 @@ void GameMenu::draw(sf::RenderTarget* drawingBoard){
 	for(int i = 0; i < 4; i++){
 		drawingBoard->draw(players_score[i]);
 	}
+	if(local_player<2)
+	{
+		if(b1.is_left()==true)
+		{
+			drawingBoard->draw(players_draw[0]);
+		}
+		if(b1.is_left()!=true)
+		{
+			drawingBoard->draw(players_draw[1]);
+		}
+		if(b2.is_left()==true)
+		{
+			drawingBoard->draw(players_draw[2]);
+		}
+		if(b2.is_left()!=true)
+		{
+			drawingBoard->draw(players_draw[3]);
+		}
+	}
+	else
+	{
+		if(b1.is_left()==true)
+		{
+			drawingBoard->draw(players_draw[2]);
+		}
+		if(b1.is_left()!=true)
+		{
+			drawingBoard->draw(players_draw[3]);
+		}
+		if(b2.is_left()==true)
+		{
+			drawingBoard->draw(players_draw[0]);
+		}
+		if(b2.is_left()!=true)
+		{
+			drawingBoard->draw(players_draw[1]);
+		}
+	}
+	
 }
 
 void GameMenu::on_click(Component* button){
