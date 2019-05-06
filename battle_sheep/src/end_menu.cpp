@@ -3,11 +3,17 @@
 EndMenu::EndMenu():
   	confirm("Confirm",430,420,100,50)
 {
+	if(!font.loadFromFile("assets/font/LiberationMono-Regular.ttf")){
+		//We couldn't load the font
+		std::cerr<<"Couldn't load assets/font/LiberationMono-Regular.ttf"<<std::endl;
+		std::abort();
+	}
   end_text.setCharacterSize(40);
   sf::Vector2f vec;
   vec.x=400;
   vec.y=270;
   end_text.setPosition(vec);
+  end_text.setFont(font);
   confirm.set_on_click(this);
 }
 

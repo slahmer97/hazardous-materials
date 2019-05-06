@@ -35,6 +35,8 @@ class EndMenu : public Menu, public ClickListener
 		 */
 		Button confirm;
 		sf::Text end_text;
+
+		sf::Font font;
 };
 
 
