@@ -63,4 +63,4 @@ void ChooseMenu::on_click(Component* button){
 	}
     ClientMessageSender::sendChooseGridRequest(selected);
 }
-ChooseMenu::~ChooseMenu(){delete this;}
+ChooseMenu::~ChooseMenu(){}

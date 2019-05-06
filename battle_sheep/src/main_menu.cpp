@@ -53,4 +53,4 @@ void MainMenu::on_click(Component* button){
 	}
 }
 
-MainMenu::~MainMenu(){delete this;}
+MainMenu::~MainMenu(){}
