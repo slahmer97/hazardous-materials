@@ -7,8 +7,8 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	grid_self(nullptr, 10,10, 50,50),
 	grid_opponent(nullptr, 10,10,590,50),
 	currentState(STATE_DISABLED),
-	textarea(15, 400, 100, 160, 160),
-	chatField("", ">", 400, 260, 160, 25),
+	textarea(15, 400, 185, 160, 160),
+	chatField("", ">", 400, 345, 160, 25),
 	local_player(local_player)
 {
 	if (!grille.loadFromFile("assets/textures/grille_10x10.png"))
