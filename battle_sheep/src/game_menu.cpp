@@ -89,14 +89,12 @@ void GameMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::GRIDS_ASSIGNEMENT:
 		{
 			players[m->get_id()-1] = m->get_username();
-<<<<<<< HEAD
 			for(int i=0;i<4;i++)
 			{
 				players_draw[i].setString("player :"+players[i]);
 			}
 		}
 		break;
-=======
 			break;
 		case ServerMessage::GRID:
 			switch(m->get_id()){
@@ -114,7 +112,6 @@ void GameMenu::handle_server_message(ServerMessage* m){
 					break;
 			}
 			break;
->>>>>>> 7673055c5b6049b07ff36bb98afd7e8d2ae1d4db
 		case ServerMessage::CHAT_S:
 			this->textarea.addTextLine(players[m->get_id()-1]+m->get_chat_msg());
 			break;
