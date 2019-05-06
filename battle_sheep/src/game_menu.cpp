@@ -1,22 +1,30 @@
 #include "game_menu.h"
 
-GameMenu::GameMenu():
+GameMenu::GameMenu(std::string players[4], int local_player):
 	confirm("Confirm",430,420,100,50),
 	b1("",280,420,100,50),
 	b2("",580,420,100,50),
 	grid_self(nullptr, 10,10, 50,50),
 	grid_opponent(nullptr, 10,10,590,50),
-	currentState(STATE_DISABLED)
+	currentState(STATE_DISABLED),
+	textarea(15, 400, 300, 160, 160),
+	chatField("", ">", 400, 460, 160, 25),
+	local_player(local_player)
 {
-  if (!grille.loadFromFile("assets/textures/grille_10x10.png"))
-  {
-    std::cerr<<"Couldn't load assets/textures/grille_10x10.png"<<std::endl;
-    std::abort();
-  }
+	if (!grille.loadFromFile("assets/textures/grille_10x10.png"))
+	{
+		std::cerr<<"Couldn't load assets/textures/grille_10x10.png"<<std::endl;
+		std::abort();
+	}
+	
+	for(int i = 0; i < 4; i++){
+		this->players[i] = players[i];
+	}
 
-  confirm.set_on_click(this);
-  b1.set_on_click(this);
-  b2.set_on_click(this);
+	confirm.set_on_click(this);
+	b1.set_on_click(this);
+	b2.set_on_click(this);
+	chatField.setListener(this);
 }
 
 
@@ -30,6 +38,13 @@ void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX,
 
 void GameMenu::handle_server_message(ServerMessage* m){
 	switch(m->get_msg_type()){
+		case ServerMessage::GRIDS_ASSIGNEMENT:
+			players[m->get_id()-1] = m->get_username();
+			break;
+		case ServerMessage::CHAT_S:
+			//TODO add m->get_chat_msg()
+			this->textarea.addTextLine(players[m->get_id()-1]+m->get_chat_msg());
+			break;
 		default:
 			break;
 	}
@@ -74,6 +89,9 @@ void GameMenu::on_click(Component* button){
 		
 	} else if((void*)button == (void*)&confirm){
 		printf("Plouf\n");
+	} else if((void*)button == (void*)&chatField){
+		ClientMessageSender::sendChatRequest(chatField.text);
+		chatField.text = "";
 	}
 }
 

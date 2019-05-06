@@ -27,6 +27,8 @@ class ChooseMenu : public Menu, public ClickListener
 		
 		~ChooseMenu() {};
 
+		std::string players[4];
+
 	private:
 		/**
 		 * Button to select grid
@@ -35,6 +37,7 @@ class ChooseMenu : public Menu, public ClickListener
 		Button select_2;
 		Button select_3;
 		Button select_4;
+
 
 };
 

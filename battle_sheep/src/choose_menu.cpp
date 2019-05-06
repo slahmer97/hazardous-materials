@@ -10,6 +10,10 @@ select_4("Select 4",490,315,140,35)
   select_2.set_on_click(this);
   select_3.set_on_click(this);
   select_4.set_on_click(this);
+  players[0]="";
+  players[1]="";
+  players[2]="";
+  players[3]="";
 }
 
 void ChooseMenu::handle_server_message(ServerMessage* m){
@@ -17,6 +21,7 @@ void ChooseMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::GRIDS_ASSIGNEMENT: 
 		{
 			int player = m->get_id();
+			players[player-1] = m->get_username();
 			if(player==1)
 				select_1.enabled=false;
 			else if(player==2)
