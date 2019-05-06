@@ -34,9 +34,8 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
         //connection.get()->send(ServerMessage::getErrorMessage());
         return;
     }
-    if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE ::MOVE){
-        int a = 22;
-    }
+
+/*
     int type;
     if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::CREATE_GAME )
         type = 2;
@@ -48,7 +47,7 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
         type = 2;
     else
         type = 1;
-
+*/
 
     std::string player_id = boost::lexical_cast<std::string>(connection.get());
     std::cout<<"[+] new player has sent message with id : "<<player_id<<std::endl;
