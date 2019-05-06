@@ -34,6 +34,11 @@ void Game::switch_turn(){
     }
     //update score
 
+    Player* p = get_player(get_current_turn_id());
+    if(p->dead()){
+        switch_turn();
+        return;
+    }
     on_game_state_changed();
     std::cout<<"[+]************************Switching turn ("<<get_current_turn_id()<<")************************************"<<std::endl;
 }
@@ -233,13 +238,6 @@ void Game::update_score(){
             m_t1->get_second_player()->set_dead();
         }
     }
-
-
-
-
-
-
-
 
 
     if(!m_t2->get_first_player()->dead()) {

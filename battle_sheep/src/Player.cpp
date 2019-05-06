@@ -99,7 +99,7 @@ Engine* Player::create_engine(ENGINE_TYPE engine){
     Engine* ret = FactoryEngine::getEngine(engine);
     this->m_engine.push_back(ret);
     if(ret != nullptr)
-        ret->set_id(m_engine.size()+1);
+        ret->set_id(m_engine.size());
     return ret;
 }
 
