@@ -218,7 +218,8 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::GRID_ASSIGN_SUCCESS:
             {
-				this->change_current_menu(new GameMenu(tmp, m->get_id()));
+				cm->players[m->get_id()-1]=this->player;
+				this->change_current_menu(new GameMenu(cm->players, m->get_id()-1));
             }
             break;
 
