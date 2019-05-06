@@ -47,7 +47,7 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 
 
 void DisplayGrid::rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vertical){
-	if(vertical){
+	if(!vertical){
 		sprite->setRotation(0);
 		sprite->setPosition(this->x+x*32, this->y+y*32);
 	} else {
