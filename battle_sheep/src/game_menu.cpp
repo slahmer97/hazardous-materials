@@ -61,10 +61,6 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 		this->players_draw[2].setPosition(sf::Vector2f(50,30));
 		this->players_draw[3].setPosition(sf::Vector2f(50,30));
   }
-	for(int i=0;i<4;i++)
-	{
-		players_draw[i].setString("player :"+players[i]);
-	}
 	confirm.set_on_click(this);
 	b1.set_on_click(this);
 	b2.set_on_click(this);
@@ -207,7 +203,7 @@ void GameMenu::handle_server_message(ServerMessage* m){
 
 				for(int i=0;i<4;i++)
 				{
-					std::string ret="joueur "+std::to_string(i)+" : "+s[i];
+					std::string ret="joueur "+std::to_string(i+1)+" : "+s[i];
 					players_score[i].setString(ret);
 				}
 		}
@@ -250,6 +246,10 @@ void GameMenu::draw(sf::RenderTarget* drawingBoard){
     b2.draw(drawingBoard);
 	for(int i = 0; i < 4; i++){
 		drawingBoard->draw(players_score[i]);
+	}
+	for(int i=0;i<4;i++)
+	{
+		players_draw[i].setString("player "+std::to_string(i+1)+":"+players[i]);
 	}
 	if(local_player<2)
 	{
