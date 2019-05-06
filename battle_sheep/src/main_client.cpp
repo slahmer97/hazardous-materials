@@ -15,8 +15,12 @@ int main(){
     WssClient client("localhost:8080/game", false);
     client.on_message = [](shared_ptr<WssClient::Connection> connection, shared_ptr<WssClient::InMessage> in_message) {
         std::string msg = std::move(in_message->string());
-
+        ServerMessage* s = ServerMessage::getServerMessage(msg);
         cout << "\n------>Received :\n" <<msg<< endl;
+
+        if(s != nullptr)
+            if(s->get_msg_type() == ServerMessage::GRID)
+                std::cout<<s->get_grid()<<std::endl;
 
     };
     client.on_open = [](shared_ptr<WssClient::Connection> connection) {
