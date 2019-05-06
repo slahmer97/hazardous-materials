@@ -104,8 +104,9 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
-    JoinMenu *joinmenu=new JoinMenu();
 	//We pre-cast into a gamemenu and a mainmenu for simplicity in the different cases
+    JoinMenu *jm= dynamic_cast<JoinMenu*>(this->currentMenu);
+    ChooseMenu *cm= dynamic_cast<ChooseMenu*>(this->currentMenu);
 	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
 	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
 	switch(msg_type){
@@ -160,7 +161,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 				if(mm != nullptr) {
 					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
 					this->player = mm->getLogin();
-					this->change_current_menu(joinmenu);
+					this->change_current_menu(new JoinMenu);
 
 					//std::cout<<"Requestion to join 'default' game"<<std::endl;
 					//ClientMessageSender::sendJoinGameRequest("default");
@@ -169,17 +170,23 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::CREATED_SUCCESS:
             {
-				std::cout<<"Succefully created game 'default'"<<std::endl;
-				//TODO: Not sure if this is required -Alex
-				std::string join=joinmenu->createtxt.text;
-				ClientMessageSender::sendJoinGameRequest(join);
-
+				if(jm!=nullptr)
+				{
+					jm->show=false;
+					std::cout<<"Succefully created game '"<<(std::string)jm->createtxt.text<<"'"<<std::endl;
+					//TODO: Not sure if this is required -Alex
+					ClientMessageSender::sendJoinGameRequest(jm->createtxt.text);
+				}
             }
             break;
         case ServerMessage::JOIN_SUCCESS:
             {
-				std::cout<<"Succefully joined game 'default'"<<std::endl;
-				this->change_current_menu(new ChooseMenu());
+				if(jm!=nullptr)
+				{
+					jm->show=false;
+					std::cout<<"Succefully joined game '"<<(std::string)jm->createtxt.text<<"'"<<std::endl;
+					this->change_current_menu(new ChooseMenu());
+				}
             }
             break;
         case ServerMessage::START:
@@ -219,11 +226,17 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 void Interface::handle_errror_message(ServerMessage* m){
     ServerMessage::ERRORS error = m->get_err_type();
+	JoinMenu *jm= dynamic_cast<JoinMenu*>(this->currentMenu);
 	switch(error){
 		case ServerMessage::GAME_DOES_NOT_EXIST:
 			{
-				std::cout<<"'default' game inexistant, requesting creation"<<std::endl;
-				ClientMessageSender::sendCreateGameRequest("default");
+				if(jm!=nullptr)
+				{
+					std::cout<<"'"<<(std::string)jm->createtxt.text<<"' game inexistant, requesting creation"<<std::endl;
+					jm->error.addTextLine("game inexistant");
+					jm->show=true;
+					//ClientMessageSender::sendCreateGameRequest("default");
+				}
 			}
 			break;
         case ServerMessage::LOGIN_REQUIRE:	//pas login , action illegal

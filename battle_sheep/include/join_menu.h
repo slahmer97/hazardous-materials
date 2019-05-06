@@ -5,6 +5,7 @@
 #include "../include/button.h"
 #include "../include/b_switch.h"
 #include "../include/textfield.h"
+#include "../include/textarea.h"
 #include "../include/display_grid.h"
 #include "../include/click_callback.h"
 #include "../include/ServerMessage.h"
@@ -25,9 +26,12 @@ class JoinMenu : public Menu, public ClickListener
 
 		virtual void on_click(Component* button);
 
+		void show_error(bool show);
 
 		~JoinMenu() {};
         TextField createtxt;
+		TextArea error;
+		bool show;
 
 	private:
 		/**

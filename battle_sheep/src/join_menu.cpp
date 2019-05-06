@@ -3,7 +3,9 @@
 JoinMenu::JoinMenu():
 createtxt("","Create/Join>",150,193,300,50),
 createbut("Create",505,63,140,50),
-joinbut("Join",505,323,140,50)
+joinbut("Join",505,323,140,50),
+error(20,150,100,300,50),
+show(false)
 {
   createtxt.setListener(this);
   createbut.set_on_click(this);
@@ -20,12 +22,15 @@ void JoinMenu::handleEvent(sf::Window* window, sf::Event* event){
     createtxt.handleEvent(window,event);
     createbut.handleEvent(window,event);
     joinbut.handleEvent(window,event);
+	error.handleEvent(window,event);
 }
 void JoinMenu::draw(sf::RenderTarget* drawingBoard){
 
     createtxt.draw(drawingBoard);
     createbut.draw(drawingBoard);
     joinbut.draw(drawingBoard);
+	if(show==true)
+		error.draw(drawingBoard);
 }
 
 
