@@ -7,45 +7,43 @@
 #include <algorithm>
 
 namespace TextureManager {
-	
-	
+
+
 	/*
 	 * Function initializing the texture manager, required for everything else to work
 	 * Implemented at the end of the file to solve some bugs
 	 */
 	void Init();
-	
+
 	namespace Ship {
 		extern sf::Texture Atlas;
 		const std::string atlasFileLocation = "assets/textures/ships.png";
 
 		/*
-		 * Part of the Atlas for horizontal ships :
+		 * Part of the Atlas for intact ships :
 		 * _____________
 		 * \___________/
-		 * left|body|right
+		 * engine|body|weapon
 		 */
 
-		const sf::IntRect ShipHoriLeft(0, 32, 32, 32);
-		const sf::IntRect ShipHoriBody(0, 64, 32, 32);
-		const sf::IntRect ShipHoriRight(0, 96, 32, 32);
+		const sf::IntRect ShipLeft(0, 0, 32, 32);
+		const sf::IntRect ShipBody(0, 32, 32, 32);
+		const sf::IntRect ShipRight(0, 64, 32, 32);
 
 		/**
 		 * Part of the atlas for an empty square
 		 */
-		const sf::IntRect Empty(0,0,32,32);
+		const sf::IntRect Empty(0,96,32,32);
 
 		/*
-		 * Part of the atlas for vertical ships :
-		 * 
-		 * /| Up
-		 * || Body
-		 * \| Down
-		 *
+		 * Part of the Atlas for damaged ships :
+		 * _____________
+		 * \___________/
+		 * left|body|right
 		 */
-		const sf::IntRect ShipVertUp(32,0, 32,32);
-		const sf::IntRect ShipVertBody(64,0,32,32);
-		const sf::IntRect ShipVertDown(96, 0, 32, 32);
+		const sf::IntRect ShipDeadLeft(32,0, 32,32);
+		const sf::IntRect ShipDeadBody(32,32,32,32);
+		const sf::IntRect ShipDeadRight(32, 64, 32, 32);
 
 
 	}
@@ -53,6 +51,29 @@ namespace TextureManager {
 	namespace Plane {
 		extern sf::Texture Atlas;
 		const std::string atlasFileLocation = "assets/textures/planes.png";
+
+		/*
+		 * Part of the Atlas for intact planes :
+		 * ________________
+		 * \______________/
+		 * engine|body|wing|weapon
+		 */
+
+		const sf::IntRect PlaneLeft(0, 0, 32, 32);
+ 		const sf::IntRect PlaneBody(0, 32, 32, 32);
+		const sf::IntRect PlaneWing(0, 64, 32, 32);
+ 		const sf::IntRect PlaneRight(0, 96, 32, 32);
+
+		/**
+		 * Part of the atlas for an empty square
+		 */
+		const sf::IntRect Empty(64,0,32,32);
+
+		const sf::IntRect PlaneDeadLeft(32, 0, 32, 32);
+ 		const sf::IntRect PlaneDeadBody(32, 32, 32, 32);
+		const sf::IntRect PlaneDeadWing(32, 64, 32, 32);
+ 		const sf::IntRect PlaneDeadRight(32, 96, 32, 32);
+
 
 	}
 
@@ -69,7 +90,7 @@ namespace TextureManager {
 		 *  8 |0| 4
 		 *    \_/
 		 *   7   5
-		 *     6  
+		 *     6
 		 */
 		const sf::IntRect Water(32,32,32,32);//0
 
@@ -92,7 +113,7 @@ namespace TextureManager {
 		 *  8 |0| 4
 		 *    \_/
 		 *   7   5
-		 *     6  
+		 *     6
 		 */
 		const sf::IntRect DeepWater(32,160,32,32);//0
 
@@ -115,7 +136,7 @@ namespace TextureManager {
 		 *  8 |0| 4
 		 *    \_/
 		 *   7   5
-		 *     6  
+		 *     6
 		 */
 		const sf::IntRect Sand(32,288,32,32);//0
 
@@ -138,7 +159,7 @@ namespace TextureManager {
 		 *  8 |0| 4
 		 *    \_/
 		 *   7   5
-		 *     6  
+		 *     6
 		 */
 		const sf::IntRect Air(32,416,32,32);//0
 
@@ -161,7 +182,7 @@ namespace TextureManager {
 		 *  8 |0| 4
 		 *    \_/
 		 *   7   5
-		 *     6  
+		 *     6
 		 */
 		const sf::IntRect Cloud(32,544,32,32);//0
 
@@ -187,6 +208,9 @@ namespace TextureManager {
 		const sf::IntRect HighlightDownLeft(0, 656, 16,16);
 		const sf::IntRect HighlightDown(8,656,16,16);
 		const sf::IntRect HighlightDownRight(16,656,16,16);
+
+		// Shoot textures
+		const sf::IntRect ShootPoint(32,640,32,32);
 	}
 
 	namespace Other {
