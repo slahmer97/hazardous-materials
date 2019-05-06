@@ -7,6 +7,7 @@
 #include <ClientMessage.h>
 #include <ClientMessageSender.h>
 #include <ServerMessage.h>
+#include <Engine.h>
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 using namespace std;
@@ -63,14 +64,19 @@ int main(){
             ClientMessageSender::sendJoinGameRequest(tmp1);
         }
         else if(in == "add_engine"){
-            ENGINE_TYPE type = ENGINE_TYPE ::PORTE_AVION;
+            ENGINE_TYPE type;
             int horu = 0,x=0,y=0;
+            std::string e_type;
             std::cout<<"hori : ";
             std::cin>>horu;
             std::cout<<"x : ";
             std::cin>>x;
             std::cout<<"y : ";
             std::cin>>y;
+            std::cout<<"Engine type : ";
+            std::cin>>e_type;
+            type = Engine::engine_type_to_type(e_type);
+            std::cout<<"Final type : "<<Engine::engine_type_to_string(type)<<std::endl;
             ClientMessageSender::sendAddEngineRequest(type,horu,x,y);
         }
         else if(in == "move_engine"){
@@ -112,8 +118,6 @@ int main(){
 
             std::cout<<"y ? : ";
             std::cin>>y;
-
-
 
             ClientMessageSender::sendShotRequest(id,grid,h,x,y);
         }

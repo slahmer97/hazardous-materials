@@ -405,7 +405,8 @@ void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
         Grid* grid1 = engine->Skill_shot(grid,x,y,shotType);
         if(grid1 != nullptr){
             //TODO send new grid
-            std::string grid_str;//TODO=================
+            std::string grid_str  = grid1->to_pub();
+            std::cout<<"Grid :\n"<<grid_str<<std::endl;
             switch_turn();
             if(m_t1->get_first_player() == p || m_t1->get_second_player() == p){
                 m_t1->get_first_player()->send_message(grid_str);
