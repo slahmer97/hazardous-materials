@@ -171,7 +171,7 @@ Skill_bombardier::Skill_bombardier(ENGINE_TYPE engine_type) : Skill(engine_type)
 Skill_bombardier::Skill_bombardier() : Skill(ENGINE_TYPE::BOMBARDIER) {}
 int Skill_bombardier::use(Grid *grid, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill bombardier has to attack two grids in same time";
     // std::exit(1);
     return -1000;
 }
@@ -203,7 +203,7 @@ int Skill_croiseur::use(Grid *grid, int x, int y, bool horizontal)
 }
 int Skill_croiseur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill croiseur can't attack two grids in same time";
     //std::exit(1);
     return -1000;
 }
@@ -225,7 +225,7 @@ int Skill_contre_torpilleur::use(Grid *grid, int x, int y, bool horizontal)
 }
 int Skill_contre_torpilleur::use(Grid *grid1, Grid *grid2, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill contre torpilleur can't attack two grids in same time";
     //std::exit(1);
     return -1000;
 }
@@ -245,7 +245,7 @@ int Skill_cuirasse::use(Grid *grid, int x, int y, bool horizontal)
 }
 int Skill_cuirasse::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill cuirasse can't attack two grids in same time";
     //std::exit(1);
     return -1000;
 }
@@ -266,7 +266,7 @@ int Skill_torpilleur::use(Grid *grid, int x, int y, bool horizontal)
 }
 int Skill_torpilleur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill torpilleur can't attack two grids in same time";
     //std::exit(1);
     return -1000;
 }
@@ -279,7 +279,7 @@ Skill_intercepteur::Skill_intercepteur(ENGINE_TYPE engine_type) : Skill(engine_t
 }
 int Skill_intercepteur::use(Grid *grid, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill intercepteur has to attack two grids in same time";
     // std::exit(1);
     return -1000;
 }
@@ -310,7 +310,7 @@ int Skill_brouilleur::use(Grid *grid, int x, int y, bool horizontal)
 }
 int Skill_brouilleur::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill brouilleur can't attack two grids in same time";
     //std::exit(1);
     return -1000;
 }
@@ -323,7 +323,7 @@ Skill_patrouille::Skill_patrouille(ENGINE_TYPE engine_type) : Skill(engine_type)
 }
 int Skill_patrouille::use(Grid *grid, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill patrouille should not return an int ";
     //std::exit(1);
     return -1000;
 }
@@ -358,7 +358,7 @@ int Skill_reconnaissance::use(Grid *grid, int x, int y, bool horizontal)
 }
 int Skill_reconnaissance::use(Grid *grid, Grid *grid2, int x, int y, bool horizontal)
 {
-    std::cerr << "Skill porte avion can't attack two grids in same time";
+    std::cerr << "Skill reconnaissance can't attack two grids in same time";
     //std::exit(1);
     return -1000;
 }

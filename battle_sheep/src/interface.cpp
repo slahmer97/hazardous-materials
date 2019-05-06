@@ -119,10 +119,11 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
         case ServerMessage::GRIDS_ASSIGNEMENT:	//choisir grille
             {
 							//boite.push_back(new Box(220.f,133.f,480.f,270.f));
-							//boite[0]->compo.push_back(new Button("Select 1",300,195,140,35));
-							//boite[0]->compo.push_back(new Button("Select 2",300,315,140,35));
-							//boite[0]->compo.push_back(new Button("Select 3",490,195,140,35));
-							//boite[0]->compo.push_back(new Button("Select 4",490,315,140,35));
+							//boite.back()->compo.push_back(new Button("Select 1",300,195,140,35));
+							//boite.back()->compo.push_back(new Button("Select 2",300,315,140,35));
+							//boite.back()->compo.push_back(new Button("Select 3",490,195,140,35));
+							//boite.back()->compo.push_back(new Button("Select 4",490,315,140,35));
+
             }
             break;
         case ServerMessage::ERROR:

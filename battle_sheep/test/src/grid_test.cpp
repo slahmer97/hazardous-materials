@@ -143,10 +143,10 @@ TEST_F(GridTest, GRID_first_to_drawn_and_radar)
     ASSERT_EQ(grid_4->first_to_drawn(7, 9, false, false, 1.0), 0);
     ASSERT_EQ(grid_4->first_to_drawn(0, 3, true, false, 1.0), 1);
 
-    //radar_one_square
+    /*//radar_one_square
     ASSERT_EQ(grid_4->radar_one_square(1, 6), grid_4->get(1,6));
     ASSERT_EQ(grid_4->radar_one_square(0, 9), grid_4->get(0,9));
-    ASSERT_EQ(grid_4->radar_one_square(-1, -1), nullptr);
+    ASSERT_EQ(grid_4->radar_one_square(-1, -1), nullptr);*/
 }
 TEST_F(GridTest, GRID_move_rotate_Engine)
 {
