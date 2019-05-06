@@ -398,7 +398,8 @@ const std::string ServerMessage::get_username() const {
 void ServerMessage::set_username(const std::string &username) {
     ServerMessage::m_username = username;
 }
-const Score &ServerMessage::get_score() const {
+
+Score ServerMessage::get_score() const {
     return m_score;
 }
 void ServerMessage::set_score(const Score &score) {
