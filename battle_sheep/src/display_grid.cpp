@@ -43,6 +43,31 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 
 	}
 
+
+void DisplayGrid::rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vertical){
+	if(vertical){
+		sprite->setRotation(0);
+		sprite->setPosition(this->x+x*32, this->y+y*32);
+	} else {
+		sprite->setRotation(90.0f);
+		sprite->setPosition(this->x+(x+1)-32, this->y+y*32);
+	}
+}
+
+bool DisplayGrid::checkVerticality(std::vector<std::vector<GridCase>>* grid, int x, int y){
+	bool res = false;
+	
+	int this_id = (*grid)[x][y].id;
+
+	if(y-1 >= 0 && (*grid)[x][y-1].id == this_id){
+		res = true;
+	}
+	if(y+1 <= gridHeight && (*grid)[x][y+1].id == this_id){
+		res = true;
+	}
+	
+}
+
 void DisplayGrid::calculate_sprites(){
 
 	for(int i = 0; i < gridWidth; i++){
@@ -56,38 +81,59 @@ void DisplayGrid::calculate_sprites(){
 					spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
 					break;
 				case ENGINE_MOTOR:
-					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipHoriLeft);
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipLeft);
 					break;
 				case ENGINE_WEAPON:
-					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipHoriRight);
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipRight);
 					break;
 				case ENGINE_PART:
-					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipHoriBody);
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipBody);
+					break;
+				case ENGINE_MOTOR_DEAD:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipDeadLeft);
+					break;
+				case ENGINE_WEAPON_DEAD:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipDeadRight);
+					break;
+				case ENGINE_PART_DEAD:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipDeadBody);
 					break;
 				default:
-					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipVertBody);
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
 					break;
 			}
-			
+			//We rotate the sprite if needed
+			rotateSpriteCenter(&(spritesShip[i][j]), i, j, checkVerticality(&gridShip, i, j));
 			
 			switch(gridPlane[i][j].type){
 				case NONE:
-					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::Empty);
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::Empty);
 					break;
 				case ENGINE_MOTOR:
-					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipHoriLeft);
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneLeft);
 					break;
 				case ENGINE_WEAPON:
-					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipHoriRight);
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneRight);
 					break;
 				case ENGINE_PART:
-					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipHoriBody);
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneBody);
+					break;
+				case ENGINE_MOTOR_DEAD:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadLeft);
+					break;
+				case ENGINE_WEAPON_DEAD:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadRight);
+					break;
+				case ENGINE_PART_DEAD:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadBody);
 					break;
 				default:
-					spritesPlanes[i][j].setTextureRect(TextureManager::Ship::ShipVertBody);
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::Empty);
 					break;
 			}
-
+			
+			//We rotate the sprite if needed
+			rotateSpriteCenter(&(spritesPlanes[i][j]), i, j, checkVerticality(&gridPlane, i, j));
 
 		}
 	}
