@@ -42,7 +42,7 @@ class GameMenu : public Menu, public ClickListener, public GridActionListener
 		 */
 		B_Switch b1;
 		B_Switch b2;
-
+		sf::Text players_score[4];
 		DisplayGrid grid_self, grid_opponent;
 
 		TextArea textarea;

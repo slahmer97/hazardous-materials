@@ -50,7 +50,7 @@ ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
 }
 ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")
-        return SERVER_MESSAGE_TYPE ::KILL_PLAYER;
+        return KILL_PLAYER;
     else if(type == "grid_assignement")
         return GRIDS_ASSIGNEMENT;
     else if(type == "chat_s")
@@ -140,7 +140,26 @@ std::string ServerMessage::getKillPlayerMessage(int id_player_grid) {
 
     return buff.str();
 }
+std::string ServerMessage::getWonMessage(){
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(WON));
 
+
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
+std::string ServerMessage::getLostMessage(){
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(LOST));
+
+
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
 std::string ServerMessage::getShotSuccessMessage() {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(SHOT_SUCCESS));
@@ -379,7 +398,8 @@ const std::string ServerMessage::get_username() const {
 void ServerMessage::set_username(const std::string &username) {
     ServerMessage::m_username = username;
 }
-const Score &ServerMessage::get_score() const {
+
+Score ServerMessage::get_score() const {
     return m_score;
 }
 void ServerMessage::set_score(const Score &score) {

@@ -20,8 +20,12 @@ public:
     void set_first_player(Player*);
     void set_second_player(Player*);
     void forward_chat_message(Player*,const std::string& msg);
+    void set_lost();
+    void on_game_end();
 private:
     Player *m_player1,*m_player2;
+    bool winner = true;
+
 };
 
 

@@ -91,6 +91,7 @@ set (
 	src/main_menu.cpp
 	src/join_menu.cpp
 	src/choose_menu.cpp
+	src/end_menu.cpp
 	src/b_switch.cpp
 	src/textfield.cpp
 	src/display_grid.cpp
