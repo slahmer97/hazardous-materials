@@ -33,7 +33,7 @@ void Game::switch_turn(){
             break;
     }
     //update score
-
+    update_score();
     Player* p = get_player(get_current_turn_id());
     if(p->dead()){
         switch_turn();
@@ -45,7 +45,6 @@ void Game::switch_turn(){
 
 void Game::on_game_state_changed() {
 
-    update_score();
     //TODO Check if player is dead !
     std::string score = ServerMessage::getScoreBroadCastMessage(m_score);
     broadcast_message(score);
