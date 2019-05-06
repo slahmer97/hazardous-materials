@@ -109,6 +109,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
     ChooseMenu *cm= dynamic_cast<ChooseMenu*>(this->currentMenu);
 	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
 	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
+	EndMenu* em = dynamic_cast<EndMenu*>(this->currentMenu);
 	std::string tmp[4];
 	int i = 0;
 	switch(msg_type){
@@ -247,11 +248,19 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 			break;
 		case ServerMessage::WON:
 			{
+				this->change_current_menu(new EndMenu());
+				em = dynamic_cast<EndMenu*>(this->currentMenu);
+				if(em!=nullptr)
+					em->handle_server_message(m);
 
 			}
 			break;
 		case ServerMessage::LOST:
 			{
+				this->change_current_menu(new EndMenu());
+				em = dynamic_cast<EndMenu*>(this->currentMenu);
+				if(em!=nullptr)
+					em->handle_server_message(m);
 
 			}
 			break;
