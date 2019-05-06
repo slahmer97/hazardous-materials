@@ -54,7 +54,7 @@ bool ClientMessageSender::sendCreateGameRequest(const std::string &game_id) {
 
     return checkServerStatus();
 }
-bool ClientMessageSender::sendChooseGridRequest(int &grid_id) {
+bool ClientMessageSender::sendChooseGridRequest(int grid_id) {
     std::string msg = ClientMessage::getChoseGridMessage(grid_id);
     ClientMessageSender::server->send(msg);
     std::cout<<"Client Sent : "<<msg<<std::endl;

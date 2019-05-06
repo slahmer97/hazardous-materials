@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "../include/game_menu.h"
 #include "../include/main_menu.h"
+#include "../include/join_menu.h"
+#include "../include/choose_menu.h"
 #include "../include/menu.h"
 #include "../include/box.h"
 

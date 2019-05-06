@@ -104,7 +104,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
-
+    JoinMenu *joinmenu=new JoinMenu();
 	//We pre-cast into a gamemenu and a mainmenu for simplicity in the different cases
 	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
 	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
@@ -118,6 +118,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::GRIDS_ASSIGNEMENT:	//choisir grille
             {
+				//this->change_current_menu(new ChooseMenu());
 							//boite.push_back(new Box(220.f,133.f,480.f,270.f));
 							//boite.back()->compo.push_back(new Button("Select 1",300,195,140,35));
 							//boite.back()->compo.push_back(new Button("Select 2",300,315,140,35));
@@ -150,7 +151,6 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::LOGIN_SUCCESS:
             {
-
 				/*boite.push_back(new Box(220.f,133.f,480.f,270.f));
 				boite.back()->compo.push_back(new TextField("","Create>",250,163,200,50));
 				boite.back()->compo.push_back(new Button("Create",505,163,140,50));
@@ -160,8 +160,10 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 				if(mm != nullptr) {
 					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
 					this->player = mm->getLogin();
-					std::cout<<"Requestion to join 'default' game"<<std::endl;
-					ClientMessageSender::sendJoinGameRequest("default");
+					this->change_current_menu(joinmenu);
+
+					//std::cout<<"Requestion to join 'default' game"<<std::endl;
+					//ClientMessageSender::sendJoinGameRequest("default");
 				}
             }
             break;
@@ -169,14 +171,15 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             {
 				std::cout<<"Succefully created game 'default'"<<std::endl;
 				//TODO: Not sure if this is required -Alex
-				ClientMessageSender::sendJoinGameRequest("default");
+				std::string join=joinmenu->createtxt.text;
+				ClientMessageSender::sendJoinGameRequest(join);
 
             }
             break;
         case ServerMessage::JOIN_SUCCESS:
             {
 				std::cout<<"Succefully joined game 'default'"<<std::endl;
-				this->change_current_menu(new GameMenu());
+				this->change_current_menu(new ChooseMenu());
             }
             break;
         case ServerMessage::START:
@@ -206,6 +209,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
         case ServerMessage::GRID_ASSIGN_SUCCESS:
             {
 
+				this->change_current_menu(new GameMenu());
             }
             break;
 
