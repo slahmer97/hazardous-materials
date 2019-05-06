@@ -25,7 +25,7 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	for(int i = 0; i < 4; i++){
 		this->players[i] = players[i];
 		if(this->players[i] == "")
-			currentState = stateDisabled;
+			currentState = STATE_DISABLED;
 	}
 
 	for(int i = 0; i < 4; i++){
@@ -148,13 +148,13 @@ void GameMenu::handle_server_message(ServerMessage* m){
 			shipPlacementStep++;
 			waitingForAnswer = false;
 			break;
-		case SHOT_SUCCESS:
+		case ServerMessage::SHOT_SUCCESS:
 			currentState = STATE_TURN_OTHER;
 			break;
-		case MOVE_SUCCESS:
+		case ServerMessage::MOVE_SUCCESS:
 			currentState = STATE_TURN_OTHER;
 			break;
-		case ROTATE_SUCCESS:
+		case ServerMessage::ROTATE_SUCCESS:
 			currentState = STATE_TURN_OTHER;
 			break;
 		case ServerMessage::START:
