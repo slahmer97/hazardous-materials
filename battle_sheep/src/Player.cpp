@@ -7,7 +7,7 @@
 #include <Player.h>
 #include <boost/lexical_cast.hpp>
 #include <FactoryEngine.h>
-#define  MAX_ENGINE 2
+#define  MAX_ENGINE 1
 
 void Player::sendMessage(const std::string& msg) {
     auto out_message = std::make_shared<WssServer::OutMessage>();

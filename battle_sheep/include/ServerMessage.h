@@ -59,7 +59,7 @@ private:
 public:
     ServerMessage(Score m_score);
 
-    const Score &get_score() const;
+    Score get_score() const;
     void set_score(const Score &score);
 
     SERVER_MESSAGE_TYPE get_msg_type() const;

@@ -19,7 +19,9 @@ Interface::Interface(WssClient * connection, std::string username, std::string p
 
 	//We pass the method dedicated to receive messages via a lambda function
 	co->on_message = [this] (std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message) {
-		this->on_server_message_received(connection, in_message);
+
+        //Reiceved
+		this->on_server_message_received(connection,in_message);
 	};
 
 	//We pass the method dedicated to detect the connection opening via a lambda function
@@ -100,7 +102,11 @@ void Interface::change_current_menu(Menu* newMenu){
 
 
 void Interface::on_server_message_received( const std::shared_ptr<WssClient::Connection>& connection, std::shared_ptr<WssClient::InMessage> in_message  ){
-	ServerMessage *m = ServerMessage::getServerMessage(in_message->string());
+
+    std::string msg = in_message->string();
+    std::cout<<"Server Received : \n"<<msg<<std::endl;
+
+    ServerMessage *m = ServerMessage::getServerMessage(msg);
 
 	//Les messages normaux
 	ServerMessage::SERVER_MESSAGE_TYPE msg_type = m->get_msg_type();
@@ -109,6 +115,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
     ChooseMenu *cm= dynamic_cast<ChooseMenu*>(this->currentMenu);
 	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
 	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
+	EndMenu* em = dynamic_cast<EndMenu*>(this->currentMenu);
 	std::string tmp[4];
 	int i = 0;
 	switch(msg_type){
@@ -247,11 +254,19 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 			break;
 		case ServerMessage::WON:
 			{
+				this->change_current_menu(new EndMenu());
+				em = dynamic_cast<EndMenu*>(this->currentMenu);
+				if(em!=nullptr)
+					em->handle_server_message(m);
 
 			}
 			break;
 		case ServerMessage::LOST:
 			{
+				this->change_current_menu(new EndMenu());
+				em = dynamic_cast<EndMenu*>(this->currentMenu);
+				if(em!=nullptr)
+					em->handle_server_message(m);
 
 			}
 			break;
