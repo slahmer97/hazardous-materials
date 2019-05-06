@@ -128,7 +128,6 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::GRIDS_ASSIGNEMENT:	//choisir grille
             {
-				std::cout<<"la2"<<std::endl;
 				if(cm!=nullptr)
 					cm->handle_server_message(m);
 				if(gm != nullptr)
@@ -163,7 +162,6 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
         case ServerMessage::LOGIN_SUCCESS:
             {
 				if(mm != nullptr) {
-				std::cout<<"la1"<<std::endl;
 					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
 					this->player = mm->getLogin();
 					this->change_current_menu(new JoinMenu);
@@ -177,7 +175,6 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             {
 				if(jm!=nullptr)
 				{
-				std::cout<<"la3"<<std::endl;
 					jm->show=false;
 					std::cout<<"Succefully created game '"<<(std::string)jm->createtxt.text<<"'"<<std::endl;
 					//TODO: Not sure if this is required -Alex
@@ -192,11 +189,10 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 				
 				if(jm!=nullptr)
 				{
-				std::cout<<"la4"<<std::endl;
 					jm->show=false;
 					std::cout<<"Succefully joined game '"<<(std::string)jm->createtxt.text<<"'"<<std::endl;
-				}
 					this->change_current_menu(new ChooseMenu());
+				}
             }
             break;
         case ServerMessage::START:
