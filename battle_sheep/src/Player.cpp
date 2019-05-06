@@ -14,7 +14,7 @@ void Player::sendMessage(const std::string& msg) {
     *out_message <<msg;
     m_connection->send(out_message);
 }
-Player::Player(const std::shared_ptr<WssServer::Connection>& conx) {
+Player::Player(const std::shared_ptr<WssServer::Connection>& conx) : m_id(-1) {
     if(conx != nullptr)
         m_connection = conx.get();
     else

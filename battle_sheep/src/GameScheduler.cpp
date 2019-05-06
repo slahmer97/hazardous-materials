@@ -243,6 +243,12 @@ void GameScheduler::gameGridsAssignementRoutine(Player* p,Game* game,int id,cons
     else{
         std::string msg_grid_assign_success = ServerMessage::getGridAssignSuccess();
         p->send_message(msg_grid_assign_success);
+		for(int i = 0; i < 4; i++){
+			Player* current = game->get_player(i);
+			if(current != p && current != nullptr && current->get_id() != -1){
+				p->send_message(ServerMessage::getGridAssinementMessage(current->get_username(),current->get_id()));
+			}
+		}
         p->set_id(id);
         notify_all_except(id,player_id,game);
         std::cout<<"[+] grid has assigned to current player successfully"<<std::endl;
