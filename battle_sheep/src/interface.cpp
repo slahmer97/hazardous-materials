@@ -119,6 +119,8 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::GRIDS_ASSIGNEMENT:	//choisir grille
             {
+				if(cm!=nullptr)
+					cm->handle_server_message(m);
 				//this->change_current_menu(new ChooseMenu());
 							//boite.push_back(new Box(220.f,133.f,480.f,270.f));
 							//boite.back()->compo.push_back(new Button("Select 1",300,195,140,35));
@@ -227,6 +229,9 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 void Interface::handle_errror_message(ServerMessage* m){
     ServerMessage::ERRORS error = m->get_err_type();
 	JoinMenu *jm= dynamic_cast<JoinMenu*>(this->currentMenu);
+    ChooseMenu *cm= dynamic_cast<ChooseMenu*>(this->currentMenu);
+	GameMenu* gm = dynamic_cast<GameMenu*>(this->currentMenu);
+	MainMenu* mm = dynamic_cast<MainMenu*>(this->currentMenu);
 	switch(error){
 		case ServerMessage::GAME_DOES_NOT_EXIST:
 			{
@@ -253,6 +258,8 @@ void Interface::handle_errror_message(ServerMessage* m){
             break;
         case ServerMessage::ALREADY_CHOSEN:
             {
+				if(cm!=nullptr)
+					cm->handle_server_message(m);
 
             }
             break;
