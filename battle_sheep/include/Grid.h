@@ -163,6 +163,8 @@ public:
     int proximity_check(int x, int y, Engine *engine);
     void display(int player);
 
+    std::string to_priv();
+    std::string to_pub();
 
     Square* get(int,int);
 };

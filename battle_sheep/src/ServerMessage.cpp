@@ -8,21 +8,24 @@
 #include <vector>
 std::string ServerMessage::error_to_string(ERRORS e){
     if(e == LOGIN_REQUIRE)
-        return "login_required";
+        return std::string("login_required");
     else if(e == GAME_DOES_NOT_EXIST)
-        return "game_does_not_exist";
+        return std::string("game_does_not_exist");
     else if(e == ACTION_FAILED)
-        return "action_failed";
+        return std::string("action_failed");
     else if(e == CONNECTION_LOST)
-        return "connection_lost";
+        return std::string("connection_lost");
     else if(e == ALREADY_CHOSEN)
-        return "already_chosen";
+        return std::string("already_chosen");
     else if(e == ENGINE_ID_DOES_NOT_EXIST)
-        return "engine_id_does_not_exist";
+        return std::string("engine_id_does_not_exist");
     else if(e == GRID_ID_DOES_NOT_EXIST)
-        return "grid_id_does_not_exist";
+        return std::string("grid_id_does_not_exist");
     else if(e == GAME_ID_ALREADY_EXIST)
-        return "game_id_already_exist";
+        return std::string("game_id_already_exist");
+
+
+    return std::string("none");
 
 }
 ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
@@ -42,6 +45,8 @@ ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
         return GRID_ID_DOES_NOT_EXIST;
     else if(s == "game_id_already_exist")
         return GAME_ID_ALREADY_EXIST;
+
+    return ACTION_FAILED;
 }
 ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")

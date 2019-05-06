@@ -2,6 +2,7 @@
 // Created by stevlulz on 3/7/19.
 //
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 #include "../include/Grid.h"
 
 Grid::Grid()
@@ -516,3 +517,45 @@ void Grid::display(int player) {
 Square *Grid::get(int x,int y) {
     return grid[x][y];
 }
+
+std::string Grid::to_priv(){
+
+    std::string ret;
+    for (int i = 0; i < 10 ; ++i) {
+        for (int j = 0; j < 10; ++j){
+            int id = (get(i,j)->get_engine() != nullptr) ? get(i,j)->get_engine()->get_id() : 0;
+            float health = get(i,j)->get_health_pr();
+            SQUARE_TYPE  squareType = get(i,j)->get_square_type();
+            std::string square_str = std::to_string(id)+std::string(";")+std::to_string(health)+std::string(";")+Square::square_type_to_string(squareType);
+            ret +=square_str;
+            if(j != 9)
+                ret += std::string("\t");
+        }
+        ret += std::string("\n");
+
+    }
+
+    return ret;
+}
+
+std::string Grid::to_pub(){
+    std::string ret;
+    for (int i = 0; i < 10 ; ++i) {
+        for (int j = 0; j < 10; ++j){
+            SQUARE_TYPE  squareType;
+            if( get(i,j)->get_square_type() == ENGINE_WEAPON_DEAD ||  get(i,j)->get_square_type() == ENGINE_MOTOR_DEAD ||  get(i,j)->get_square_type()== ENGINE_PART_DEAD)
+                squareType =  get(i,j)->get_square_type();
+            else
+                squareType = NONE;
+
+
+            std::string square_str = std::to_string(0)+std::string(";")+std::to_string(0)+std::string(";")+Square::square_type_to_string(squareType);
+            ret +=square_str;
+            if(j != 9)
+                ret += std::string("\t");
+        }
+        ret += std::string("\n");
+
+    }
+
+    return ret;}

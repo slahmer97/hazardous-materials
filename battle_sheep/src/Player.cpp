@@ -69,18 +69,12 @@ Grid * Player::get_grid(){
 
 std::string Player::get_pub_grid(){
 
-    return "Pub grid";
+    return m_grid->to_pub();
 }
 
 std::string Player::get_priv_grid() {
-    std::string ret;
-    for (int line = 0; line < 10; ++line) {
-        for (int column = 0; column < 10 ; ++column) {
-            ret += m_grid->get(line,column)->to_pri_string()+std::string("\t\t");
-        }
-        ret +=std::string("\n");
-    }
-    return ret;
+
+    return m_grid->to_priv();
 }
 
 void Player::set_logged_in(){

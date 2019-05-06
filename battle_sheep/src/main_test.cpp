@@ -4,22 +4,18 @@
 #include <Player.h>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <FactoryEngine.h>
 
 
 int main(int argc,char**argv){
 
-    Player p(nullptr);
+    Engine*e = FactoryEngine::getBombardierSkill();
+    Grid g;
 
-    std::string s = "{\n"
-                    "    \"msg_type\": \"move\",\n"
-                    "    \"engine_id\": \"0\",\n"
-                    "    \"x\": \"1\",\n"
-                    "    \"y\": \"2\"\n"
-                    "}";
+    g.add_engine(e,0,1,1);
 
-
-    std::cout<<s;
-    ClientMessage *c = ClientMessage::getClientMessage(s);
+    g.normal_shot(1,1,1.0f);
+    std::cout<<g.to_pub();
 
 
 

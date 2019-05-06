@@ -166,8 +166,8 @@ set(
         #src/GameScheduler.cpp
 
 )
-enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include simple_web_socket/include )
-add_executable( runUnitTests test/mainTest.cpp ${TEST_SRC} ${SHARED_SOURCES} )
-target_link_libraries(runUnitTests gtest gtest_main simple-websocket-server pthread)
-add_test( runUnitTests runUnitTests )
+#enable_testing()
+#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} test/include simple_web_socket/include )
+#add_executable( runUnitTests test/mainTest.cpp ${TEST_SRC} ${SHARED_SOURCES} )
+#target_link_libraries(runUnitTests gtest gtest_main simple-websocket-server pthread)
+#add_test( runUnitTests runUnitTests )
