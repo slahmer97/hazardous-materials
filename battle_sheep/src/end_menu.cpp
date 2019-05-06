@@ -15,13 +15,13 @@ void EndMenu::handle_server_message(ServerMessage* m){
 	switch(m->get_msg_type()){
 		case ServerMessage::WON:
 		{
-			end_text.setColor(sf::Color::Blue);
+			end_text.setFillColor(sf::Color::Blue);
 			end_text.setString("YOU WON !");
 		}
 		break;
 		case ServerMessage::LOST:
 		{
-			end_text.setColor(sf::Color::Red);
+			end_text.setFillColor(sf::Color::Red);
 			end_text.setString("YOU LOSE!");
 		}
 		break;
