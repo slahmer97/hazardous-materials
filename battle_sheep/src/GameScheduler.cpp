@@ -35,19 +35,6 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
         return;
     }
 
-/*
-    int type;
-    if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::CREATE_GAME )
-        type = 2;
-    else if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::JOIN_GAME)
-        type = 2;
-    else if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::LOGIN)
-        type = 2;
-    else if(clientMessage->get_msg_type() == ClientMessage::CLIENT_MESSAGE_TYPE::CHOOSE_GRID)
-        type = 2;
-    else
-        type = 1;
-*/
 
     std::string player_id = boost::lexical_cast<std::string>(connection.get());
     std::cout<<"[+] new player has sent message with id : "<<player_id<<std::endl;
@@ -59,7 +46,7 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
 
     if(p == nullptr){
         //ERROR player doesn't exist
-        std::cout<<"[-] could not fetch player object, maybe your connection were lost, try to reconnect , id : "<<player_id<<std::endl;
+        std::cout<<"[!]---> could not fetch player object, maybe your connection were lost, try to reconnect , id : "<<player_id<<std::endl;
         std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::CONNECTION_LOST,clientMessage->get_msg_type());
         connection.get()->send(err);
         return;
@@ -78,7 +65,7 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
 
     //must be logged in to perform any other action
     if(!p->is_logged_in()){
-        std::cout<<"[-] player with id : "<<player_id<<"must be logged in order to perform any action"<<std::endl;
+        std::cout<<"[!]---> player with id : "<<player_id<<"must be logged in order to perform any action"<<std::endl;
         std::string msg_action_denied = ServerMessage::getErrorMessage(ServerMessage::ERRORS::LOGIN_REQUIRE,clientMessage->get_msg_type());
         p->send_message(msg_action_denied);
         return;
@@ -101,7 +88,7 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
     //at this point each player must have affected to him..
     game = p->get_game();
     if(game == nullptr){
-        std::cout<<"[-] unknnow game for player with id : "<<player_id<<" please try to reconnect"<<std::endl;
+        std::cerr<<"[-]---->unknnow game for player with id : "<<player_id<<" please try to reconnect"<<std::endl;
 
         return;
     }
@@ -128,7 +115,7 @@ void GameScheduler::onMessageReceived(const std::shared_ptr<WssServer::Connectio
             game->play(p,clientMessage);
         }
         else{
-            std::cout<<"[-] =======================it's not your turn now"<<std::endl;
+            std::cerr<<"[-]------------------->it's not your turn now"<<std::endl;
         }
 
     }
@@ -197,7 +184,7 @@ Game* GameScheduler::get_online_game(const std::string& id){
 void GameScheduler::notify_all_except(int id,const std::string& player_id ,Game *pGame){
     Player *pp = pGame->get_player(id);
     if(pp == nullptr){
-        std::cout<<"[-] notifying players failed .. game with id "<<pGame->get_game_id()<<" does not have player with id "<<player_id<<std::endl;
+        std::cout<<"[-]---> notifying players failed .. game with id "<<pGame->get_game_id()<<" does not have player with id "<<player_id<<std::endl;
         return;
     }
     std::string msg = ServerMessage::getGridAssinementMessage(pp->get_username(),id) ;
@@ -213,7 +200,7 @@ void GameScheduler::gameCreationRoutine(Player* p,const std::string& game_name) 
 
     for(Game* g : m_offline_games)
         if(g->get_game_id() == game_name){
-            std::cout<<"[-] Game already exist with that id !"<<std::endl;
+            std::cout<<"[-]---> Game already exist with that id !"<<std::endl;
             std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::GAME_ID_ALREADY_EXIST,ClientMessage::CREATE_GAME);
             p->send_message(err);
             return;
@@ -234,7 +221,7 @@ void GameScheduler::gameJoinRoutine(Player * p, const std::string& game_id,std::
     std::cout<<"[+] player with id "<<player_id<<" going performed join_game game_id : "<<game_id<<std::endl;
     Game *game = get_offline_game(game_id);
     if(game == nullptr){
-        std::cout<<"[-] game doesn't exist with this id";
+        std::cout<<"[-]---> game doesn't exist with this id";
         std::string game_n_exist = ServerMessage::getErrorMessage(ServerMessage::ERRORS::GAME_DOES_NOT_EXIST,ClientMessage::CLIENT_MESSAGE_TYPE::JOIN_GAME);
         p->send_message(game_n_exist);
         return;
@@ -248,7 +235,7 @@ void GameScheduler::gameJoinRoutine(Player * p, const std::string& game_id,std::
 void GameScheduler::gameGridsAssignementRoutine(Player* p,Game* game,int id,const std::string& player_id){
     int ret = game->assign_grid(p,id);
     if(ret <= 0){
-        std::cout<<"[-] player with id : "<<player_id<<" failed to get grid id : "<<id<<" on game :"<<game->get_game_id()<<std::endl;
+        std::cerr<<"[-]---> player with id : "<<player_id<<" failed to get grid id : "<<id<<" on game :"<<game->get_game_id()<<std::endl;
         std::string grid_is_already_chosen = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ALREADY_CHOSEN,ClientMessage::CLIENT_MESSAGE_TYPE::CHOOSE_GRID);
         p->send_message(grid_is_already_chosen);
         return;
@@ -258,29 +245,30 @@ void GameScheduler::gameGridsAssignementRoutine(Player* p,Game* game,int id,cons
         p->send_message(msg_grid_assign_success);
         p->set_id(id);
         notify_all_except(id,player_id,game);
+        std::cout<<"[+] grid has assigned to current player successfully"<<std::endl;
     }
 }
 
 void GameScheduler::gameChatRoutine(Player *p,Game*game,std::string msg,const std::string& player_id) {
 
-    std::cout<<"=================CHAT<< Player_id : "<<player_id<<" MGG : "<<msg<<std::endl;
+    std::cout<<"[+] chat_msg >> Player_id : "<<player_id<<" >> : "<<msg<<std::endl;
     if(p->is_ready()){
         std::string chatMsg = std::move(msg);
         game->forward_chat_message(p,chatMsg);
     }
     else{
-        std::cout<<"[-] player with id "<<player_id<<" can't send chat message unless he has grid assigned to him"<<std::endl;
+        std::cerr<<"[-] player with id "<<player_id<<" can't send chat message unless he has grid assigned to him"<<std::endl;
         return;
     }
 }
 
 void GameScheduler::gameEngineAddRoutine(Player *p, Game *game, const std::string& player_id,ClientMessage* clientMessage) {
-    if(!p->get_game()->is_all_grids_assigned()){
-        std::cout<<"[-] All grids must be assigned before adding an engine !!";
+    if(!game->is_all_grids_assigned()){
+        std::cerr<<"[-] All grids must be assigned before adding an engine !!";
         return;
     }
     if(p->is_ready() ) {
-        std::cout << "[-] Player with id : " << player_id << " has assinged all his engine on his grid " << std::endl;
+        std::cerr << "[-] Player with id : " << player_id << " has Max engine number allowed" << std::endl;
         return;
     }
     ENGINE_TYPE engineType = clientMessage->get_engine_type();
@@ -288,15 +276,12 @@ void GameScheduler::gameEngineAddRoutine(Player *p, Game *game, const std::strin
     Engine* engine = p->create_engine(engineType);
     //TODO check if engine is null..
     if(engine == nullptr){
-        std::cout<<"[-] player->create_engine() returned nullptr"<<std::endl;
+        std::cerr<<"[-]---> player->create_engine() returned nullptr"<<std::endl;
         return;
     }
 
-    if(engine->has_skill()){
-        std::cout<<"\t\t\t[+]^^^^^^^^^^^^^Engine has Skill^^^^^^^^^^^^^^^"<<std::endl;
-    }
-    else
-        std::cerr<<"\t\t\t^^^^^^^^^^^^^Engine Skill is Null^^^^^^^^^^^^^^^"<<std::endl;
+    if(!engine->has_skill())
+        std::cerr<<"[-]----> current player has added an engine without skill"<<std::endl;
 
 
     bool h = clientMessage->get_horizontal();
@@ -312,7 +297,7 @@ void GameScheduler::gameEngineAddRoutine(Player *p, Game *game, const std::strin
     else{
         std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::ADD_ENGINE);
         p->send_message(err);
-        std::cerr<<"[-] position has already a grid"<<std::endl;
+        std::cerr<<"[-]----> position has already a grid"<<std::endl;
         return;
     }
 

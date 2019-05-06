@@ -22,7 +22,7 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	}
 
 	for(int i = 0; i < 4; i++){
-		this->players_score[i].setColor(sf::Color::Blue);
+		this->players_score[i].setFillColor(sf::Color::Blue);
 		this->players_score[i].setCharacterSize(25);
 		sf::Vector2f vec;
 		vec.x=400;
