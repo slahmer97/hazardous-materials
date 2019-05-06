@@ -1,5 +1,7 @@
 #include "../include/display_grid.h"
 
+static const GridCase EMPTY_CASE = {0,0.0f,NONE};
+
 DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x, int y): 
 	x(x),
 	y(y),
@@ -9,14 +11,14 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 	spritesBackgroundAir(gridWidth, std::vector<sf::Sprite>(gridHeight) ),
 	spritesShip(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//Creating the 2d vector of sprites representing the ships (or lack)
 	spritesPlanes(gridWidth, std::vector<sf::Sprite>(gridHeight) ),
-	gridShip(gridWidth, std::vector<GridCase>(gridHeight, GridCase())),
-	gridPlane(gridWidth, std::vector<GridCase>(gridHeight, GridCase()))
-{
+	gridShip(gridWidth, std::vector<GridCase>(gridHeight, EMPTY_CASE) ),
+			gridPlane(gridWidth, std::vector<GridCase>(gridHeight, EMPTY_CASE))
+				{
 
 
-		//We fill the 2d arrays displaying everything
-		for(int i = 0; i < gridWidth; i++){
-			for(int j = 0; j < gridHeight; j++){
+				//We fill the 2d arrays displaying everything
+				for(int i = 0; i < gridWidth; i++){
+				for(int j = 0; j < gridHeight; j++){
 				//The background sprites
 				spritesBackground[i][j].setTexture(TextureManager::Background::Atlas);
 				spritesBackgroundAir[i][j].setTexture(TextureManager::Background::Atlas);
@@ -33,15 +35,15 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 				spritesPlanes[i][j].setPosition(x+i*32, y+j*32);
 				//We initialize with the empty square
 				spritesPlanes[i][j].setTextureRect(sf::IntRect(0,0,32,32));
-			}
-		}
+				}
+				}
 
 
-		//Then we call calculate_sprites to assign the right texture
+				//Then we call calculate_sprites to assign the right texture
 
-		calculate_sprites();
+				calculate_sprites();
 
-	}
+				}
 
 
 void DisplayGrid::rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vertical){
@@ -56,7 +58,7 @@ void DisplayGrid::rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vert
 
 bool DisplayGrid::checkVerticality(std::vector<std::vector<GridCase>>* grid, int x, int y){
 	bool res = false;
-	
+
 	int this_id = (*grid)[x][y].id;
 
 	if(y-1 >= 0 && (*grid)[x][y-1].id == this_id){
@@ -65,7 +67,7 @@ bool DisplayGrid::checkVerticality(std::vector<std::vector<GridCase>>* grid, int
 	if(y+1 <= gridHeight && (*grid)[x][y+1].id == this_id){
 		res = true;
 	}
-	
+
 }
 
 void DisplayGrid::calculate_sprites(){
@@ -75,7 +77,7 @@ void DisplayGrid::calculate_sprites(){
 			//We set the background texture
 			spritesBackground[i][j].setTextureRect(TextureManager::Background::Water);
 			spritesBackgroundAir[i][j].setTextureRect(TextureManager::Background::Air);
-			
+
 			switch(gridShip[i][j].type){
 				case NONE:
 					spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
@@ -104,7 +106,7 @@ void DisplayGrid::calculate_sprites(){
 			}
 			//We rotate the sprite if needed
 			rotateSpriteCenter(&(spritesShip[i][j]), i, j, checkVerticality(&gridShip, i, j));
-			
+
 			switch(gridPlane[i][j].type){
 				case NONE:
 					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::Empty);
@@ -131,7 +133,7 @@ void DisplayGrid::calculate_sprites(){
 					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::Empty);
 					break;
 			}
-			
+
 			//We rotate the sprite if needed
 			rotateSpriteCenter(&(spritesPlanes[i][j]), i, j, checkVerticality(&gridPlane, i, j));
 
@@ -160,7 +162,7 @@ std::vector<std::string> split(std::string str, char delim = ' '){
 }
 
 void DisplayGrid::set_grid_ship(std::string strGridShip){
-	
+
 	unsigned int i=0,j = 0;
 
 	//We parse everything needed
@@ -180,7 +182,7 @@ void DisplayGrid::set_grid_ship(std::string strGridShip){
 	// |
 	// i
 	// != from gridPlanes and Ship !
-	
+
 	for(i = 0; i < splittedGridShip.size(); i++){
 		for(j = 0; j < splittedGridShip[i].size(); j++){
 			//gridPlanes[j][i]
@@ -197,7 +199,7 @@ void DisplayGrid::set_grid_ship(std::string strGridShip){
 }
 
 void DisplayGrid::set_grid_planes(std::string strGridPlane){
-	
+
 	unsigned int i=0,j = 0;
 
 	//We parse everything needed
@@ -218,7 +220,7 @@ void DisplayGrid::set_grid_planes(std::string strGridPlane){
 	// i
 	// != from gridPlanes and Ship !
 	// We need to transpose the grid
-	
+
 	for(i = 0; i < splittedGridPlane.size(); i++){
 		for(j = 0; j < splittedGridPlane[i].size(); j++){
 			//gridPlanes[j][i]
@@ -270,21 +272,21 @@ void DisplayGrid::selectCase(int x, int y, bool force){
 		//No need to change anything
 		return;
 	}
-	
+
 	this->selectedX = x;
 	this->selectedY = y;
 
-	
+
 	//We create a new vector
 	std::vector<sf::Sprite> new_vect;
-	
+
 	if(x == -1 || y == -1){
 		highlight_sprites.swap(new_vect);
 		return;
 	}
 
 	//Check if there is a know ship at (x,y)
-	
+
 	//Else juste a simple highlight
 	int absX=this->x+x*32, absY=this->y+y*32;
 
@@ -294,7 +296,7 @@ void DisplayGrid::selectCase(int x, int y, bool force){
 	new_vect[1].setTexture(TextureManager::Background::Atlas);
 	new_vect[2].setTexture(TextureManager::Background::Atlas);
 	new_vect[3].setTexture(TextureManager::Background::Atlas);
-	
+
 	new_vect[0].setTextureRect(TextureManager::Background::HighlightUpLeft);
 	new_vect[1].setTextureRect(TextureManager::Background::HighlightUpRight);
 	new_vect[2].setTextureRect(TextureManager::Background::HighlightDownLeft);
@@ -304,7 +306,7 @@ void DisplayGrid::selectCase(int x, int y, bool force){
 	new_vect[1].setPosition(absX+16, absY);
 	new_vect[2].setPosition(absX, absY+16);
 	new_vect[3].setPosition(absX+16, absY+16);
-	
+
 	highlight_sprites.swap(new_vect);
 }
 
@@ -328,7 +330,7 @@ void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 		for(int i = 0; i < highlight_sprites.size(); i++){
 			drawingBoard->draw(this->highlight_sprites[i]);
 		}
-		
+
 		//And we finish with the planes
 		for(int i = 0; i < gridWidth; i++){
 			for(int j = 0; j < gridHeight; j++){
@@ -342,12 +344,12 @@ void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 				drawingBoard->draw(this->spritesBackground[i][j]);
 			}
 		}
-		
+
 		//We draw the highligh in-between
 		for(int i = 0; i < highlight_sprites.size(); i++){
 			drawingBoard->draw(this->highlight_sprites[i]);
 		}
-	
+
 		//We finish by drawing all the ships
 		for(int i = 0; i < gridWidth; i++){
 			for(int j = 0; j < gridHeight; j++){

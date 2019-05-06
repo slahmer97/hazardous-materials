@@ -105,11 +105,11 @@ class DisplayGrid : public Component {
 		std::vector<std::vector<GridCase>> gridShip;
 		std::vector<std::vector<GridCase>> gridPlane;
 
+
 		//TODO: create member to store successful shots on this grid
 	
 		void rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vertical);
 		bool checkVerticality(std::vector<std::vector<GridCase>>* grid, int x, int y);
-
 };
 
 
