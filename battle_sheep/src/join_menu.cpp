@@ -55,3 +55,4 @@ void JoinMenu::on_click(Component* button){
         }
 	}
 }
+JoinMenu::~JoinMenu(){delete this;}

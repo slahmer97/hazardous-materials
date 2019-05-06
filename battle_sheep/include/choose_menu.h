@@ -25,7 +25,7 @@ class ChooseMenu : public Menu, public ClickListener
 
 		virtual void on_click(Component* button);
 		
-		~ChooseMenu() {};
+		~ChooseMenu();
 
 		std::string players[4];
 		

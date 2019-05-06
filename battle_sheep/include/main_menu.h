@@ -27,7 +27,7 @@ class MainMenu : public Menu, public ClickListener
 		
 		std::string getLogin();
 
-		~MainMenu() {};
+		~MainMenu();
 
 	private:
 		/**

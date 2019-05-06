@@ -32,20 +32,6 @@ void ChooseMenu::handle_server_message(ServerMessage* m){
 				select_4.enabled=false;
 		}
 		break;
-		case ServerMessage::ALREADY_CHOSEN:
-		{
-			int player = m->get_id();
-			if(player==1)
-				select_1.enabled=false;
-			else if(player==2)
-				select_2.enabled=false;
-			else if(player==3)
-				select_3.enabled=false;
-			else if(player==4)
-				select_4.enabled=false;
-
-		}
-		break;
 		default:
 			break;
 	}
@@ -77,3 +63,4 @@ void ChooseMenu::on_click(Component* button){
 	}
     ClientMessageSender::sendChooseGridRequest(selected);
 }
+ChooseMenu::~ChooseMenu(){delete this;}

@@ -27,7 +27,7 @@ class EndMenu : public Menu, public ClickListener
 		
 		std::string getLogin();
 
-		~EndMenu() {};
+		~EndMenu();
 
 	private:
 		/**

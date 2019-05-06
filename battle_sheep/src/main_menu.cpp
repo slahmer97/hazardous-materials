@@ -52,3 +52,5 @@ void MainMenu::on_click(Component* button){
 		this->on_click(&confirm_lp);
 	}
 }
+
+MainMenu::~MainMenu(){delete this;}

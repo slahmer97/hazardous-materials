@@ -28,7 +28,7 @@ class JoinMenu : public Menu, public ClickListener
 
 		void show_error(bool show);
 
-		~JoinMenu() {};
+		~JoinMenu();
         TextField createtxt;
 		TextArea error;
 		bool show;

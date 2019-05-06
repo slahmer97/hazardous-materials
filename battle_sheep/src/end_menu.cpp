@@ -48,3 +48,4 @@ void EndMenu::on_click(Component* button){
 		
 	} 
 }
+EndMenu::~EndMenu(){delete this;}
