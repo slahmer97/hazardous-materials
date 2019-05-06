@@ -55,6 +55,15 @@ class GameMenu : public Menu, public ClickListener, public GridActionListener
 		int local_player;
 
 
+		std::vector<ENGINE_TYPE> ships_to_place;
+		void shipPlacementAt(int gridX, int gridY);
+		void shipMovementAt(int gridX, int gridY);
+		
+		int shipPlacementStep = 0;
+
+		bool vertical = false;
+
+		bool waitingForAnswer = false;
 };
 
 

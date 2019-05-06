@@ -33,25 +33,89 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	b1.set_on_click(this);
 	b2.set_on_click(this);
 	chatField.setListener(this);
+	
+	if(this->local_player%2 == 0) {
+		ships_to_place.push_back(PORTE_AVION);
+		ships_to_place.push_back(CROISEUR);
+		ships_to_place.push_back(CONTRE_TORPILLEUR);
+		ships_to_place.push_back(CUIRASSE);
+		ships_to_place.push_back(TORPILLEUR);
+	} else {
+		ships_to_place.push_back(BOMBARDIER);
+		ships_to_place.push_back(INTERCEPTEUR);
+		ships_to_place.push_back(BROUILLEUR);
+		ships_to_place.push_back(PATROUILE);
+		ships_to_place.push_back(RECONNAISSANCE);
+	}
+
 }
 
 
 void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX, int gridY, int options1, int options2){
+	
 	switch(this->currentState){
 		case STATE_PLACE:
-			//Place ship
+			if(button == sf::Mouse::Right)
+				vertical = !vertical;
+			else if(button == sf::Mouse::Left && !waitingForAnswer)
+				shipPlacementAt(gridX, gridY);
 			break;
 		case STATE_PLAY:
 			if(button == sf::Mouse::Left)
 				grid->selectCase(gridX, gridY);
-			else if(button == sf::Mouse::Left && (void*)grid == (void*)&grid_opponent)
+			else if(button == sf::Mouse::Right && (void*)grid == (void*)&grid_opponent)
 				grid->selectCase(-1, -1);
+
+			if(button == sf::Mouse::Right){
+				if((void*)grid == (void*)&grid_self)
+					shipMovementAt(gridX, gridY);
+			}
 			break;
 	}
 }
 
+void GameMenu::shipMovementAt(int gridX, int gridY){
+	int gsX = -1, gsY = -1;
+
+	grid_self.get_selected_cases(&gsX, &gsY);
+	
+	if(gsX == -1 || gsY == -1)
+		return;
+
+	bool air = this->local_player%2 == 1;
+
+	int shipID = grid_self.get_case_at(gsX, gsY, air).id;
+	
+	bool vertical = false;
+
+	if(gsY+1 <= 10 && grid_self.get_case_at(gsX, gsY+1, air).id == shipID)
+		vertical = true;
+	if(gsY-1 >= 0 && grid_self.get_case_at(gsX, gsY-1, air).id == shipID)
+		vertical = true;
+	
+	int dX = gridX - gsX;
+	int dY = gridY - gsY;
+	
+	ClientMessageSender::sendMoveEngineRequest(shipID, vertical ? 1 : 0, vertical ? dY : dX);
+
+}
+
+void GameMenu::shipPlacementAt(int gridX, int gridY){
+	ENGINE_TYPE ship_to_place = ships_to_place[shipPlacementStep];
+	
+	ClientMessageSender::sendAddEngineRequest(ship_to_place, this->local_player, gridX, gridY);
+
+	waitingForAnswer = true;
+}
+
+
+
 void GameMenu::handle_server_message(ServerMessage* m){
 	switch(m->get_msg_type()){
+		case ServerMessage::ENGINE_ADDED:
+			shipPlacementStep++;
+			waitingForAnswer = false;
+			break;
 		case ServerMessage::GRIDS_ASSIGNEMENT:
 			players[m->get_id()-1] = m->get_username();
 			break;
@@ -151,7 +215,7 @@ void GameMenu::on_click(Component* button){
 			targetGrid = (targetGrid + 2)%4; //Next we take the opposite team
 			targetGrid += (grid_opponent.displayAir ? 1 : 0);//Then if we choose to target the planes or the ships
 
-			ClientMessageSender::sendShotRequest(launcherCase.id, targetGrid+1, 0, other_grid_x, other_grid_y);
+			ClientMessageSender::sendShotRequest(launcherCase.id, targetGrid+1, 1, other_grid_x, other_grid_y);
 		}
 
 	} else if((void*)button == (void*)&chatField){
