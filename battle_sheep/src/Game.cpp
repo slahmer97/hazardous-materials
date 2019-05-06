@@ -315,6 +315,9 @@ int  Game::get_current_turn_id(){
         return 3;
     if(m_current_turn == TEAM2_PLAYER2)
         return 4;
+
+
+    return 1;
 }
 void Game::broadcast_message(const std::string & msg){
     m_t1->broadcast_message(msg);
@@ -428,9 +431,7 @@ void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
         }
         return;
     }
-    if(is_radare){
-        //TODO=========================================
-
+    else if(is_radare){
         Grid* grid1 = engine->Skill_shot(grid,x,y,shotType);
         if(grid1 != nullptr){
             //TODO send new grid
@@ -453,6 +454,42 @@ void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
             std::cerr<<"[-] player could not perform this shot============= "<<std::endl;
         }
 
+
+
+
+    }
+    else{
+
+        Grid *grid2 = nullptr;
+        if(grid == get_grid_by_id(1))
+            grid2 = get_grid_by_id(2);
+        else if(grid == get_grid_by_id(2))
+            grid2 = get_grid_by_id(1);
+        else if(grid == get_grid_by_id(3))
+            grid2 = get_grid_by_id(4);
+        else
+            grid2 = get_grid_by_id(3);
+
+
+        if(grid2 == nullptr){
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::SHOT);
+            p->send_message(err);
+            std::cerr<<"[-] player could not perform this shot============= "<<std::endl;
+            return;
+        }
+        int ret = engine->Skill_shot(grid,grid2,x,y,h,shotType);
+        if(ret >= 0){
+            std::string shot_suc_msg = ServerMessage::getShotSuccessMessage();
+            p->send_message(shot_suc_msg);
+            std::cout<<"[+]" <<shot_suc_msg<<std::endl;
+            switch_turn();
+        }
+        else{
+            std::string err = ServerMessage::getErrorMessage(ServerMessage::ERRORS::ACTION_FAILED,ClientMessage::CLIENT_MESSAGE_TYPE::SHOT);
+            p->send_message(err);
+            std::cerr<<"[-] player could not perform this shot============= "<<std::endl;
+        }
+        return;
 
 
 
