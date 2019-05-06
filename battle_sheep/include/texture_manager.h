@@ -67,7 +67,7 @@ namespace TextureManager {
 		/**
 		 * Part of the atlas for an empty square
 		 */
-		const sf::IntRect Empty(64,0,32,32);
+		const sf::IntRect Empty(0,64,32,32);
 
 		const sf::IntRect PlaneDeadLeft(32, 0, 32, 32);
  		const sf::IntRect PlaneDeadBody(32, 32, 32, 32);

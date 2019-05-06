@@ -417,3 +417,9 @@ SHOT_TYPE Engine::get_shot_type() {
 bool Engine::has_skill() {
     return m_skill != nullptr;
 }
+
+int Engine::get_remain_points(){
+    if(m_skill == nullptr)
+        return 0;
+    return m_skill->get_points();
+}

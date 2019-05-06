@@ -45,8 +45,11 @@ class GameMenu : public Menu, public ClickListener, public GridActionListener
 		sf::Text players_score[4];
 		DisplayGrid grid_self, grid_opponent;
 
+		sf::Text players_draw[4];
 		TextArea textarea;
 		TextField chatField;
+
+		sf::Font font;
 
 		sf::Texture grille;
 

@@ -15,7 +15,7 @@
 
 class Grid;
 class Skill;
-#define POINT_COST 50
+#define POINT_COST 20
 
 
 class Engine {
@@ -216,6 +216,8 @@ public:
     void set_id(int i);
     int get_id();
     bool has_skill();
+
+    int get_remain_points();
 
 private:
     int id;
