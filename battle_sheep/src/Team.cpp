@@ -3,6 +3,7 @@
 //
 
 #include <Team.h>
+#include <ServerMessage.h>
 
 #include "Team.h"
 
@@ -43,4 +44,20 @@ void Team::forward_chat_message(Player* player,const std::string& msg){
     }
     if(m_player2 != player && m_player2 != nullptr)
         m_player2->forward_chat_message(msg);
+}
+
+void Team::set_lost() {
+    winner = false;
+}
+
+void Team::on_game_end(){
+
+    std::string send_msg;
+    if(winner)
+        send_msg = ServerMessage::getWonMessage();
+    else
+        send_msg = ServerMessage::getLostMessage();
+
+    broadcast_message(send_msg);
+
 }

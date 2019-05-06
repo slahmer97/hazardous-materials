@@ -43,6 +43,7 @@ private:
     void switch_turn();
     void on_game_state_changed();
     void update_score();
+    void on_game_end();
 
 
 

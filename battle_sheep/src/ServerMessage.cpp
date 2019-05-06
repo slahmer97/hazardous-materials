@@ -140,7 +140,26 @@ std::string ServerMessage::getKillPlayerMessage(int id_player_grid) {
 
     return buff.str();
 }
+std::string ServerMessage::getWonMessage(){
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(WON));
 
+
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
+std::string ServerMessage::getLostMessage(){
+    boost::property_tree::ptree pt;
+    pt.put("msg_type",to_string(LOST));
+
+
+    std::ostringstream buff;
+    boost::property_tree::write_json(buff,pt);
+
+    return buff.str();
+}
 std::string ServerMessage::getShotSuccessMessage() {
     boost::property_tree::ptree pt;
     pt.put("msg_type",to_string(SHOT_SUCCESS));
