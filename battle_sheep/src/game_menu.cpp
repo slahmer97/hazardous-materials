@@ -21,7 +21,7 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 		std::cerr<<"Couldn't load assets/font/LiberationMono-Regular.ttf"<<std::endl;
 		std::abort();
 	}
-	
+
 	for(int i = 0; i < 4; i++){
 		this->players[i] = players[i];
 		if(this->players[i] == "")
@@ -65,7 +65,8 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	b1.set_on_click(this);
 	b2.set_on_click(this);
 	chatField.setListener(this);
-	
+	grid_self.setListener(this);
+
 	if(this->local_player%2 == 0) {
 		ships_to_place.push_back(PORTE_AVION);
 		ships_to_place.push_back(CROISEUR);
@@ -84,7 +85,7 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 
 
 void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX, int gridY, int options1, int options2){
-	
+
 	switch(this->currentState){
 		case STATE_PLACE:
 			if(button == sf::Mouse::Right)
@@ -110,31 +111,31 @@ void GameMenu::shipMovementAt(int gridX, int gridY){
 	int gsX = -1, gsY = -1;
 
 	grid_self.get_selected_cases(&gsX, &gsY);
-	
+
 	if(gsX == -1 || gsY == -1)
 		return;
 
 	bool air = this->local_player%2 == 1;
 
 	int shipID = grid_self.get_case_at(gsX, gsY, air).id;
-	
+
 	bool vertical = false;
 
 	if(gsY+1 <= 10 && grid_self.get_case_at(gsX, gsY+1, air).id == shipID)
 		vertical = true;
 	if(gsY-1 >= 0 && grid_self.get_case_at(gsX, gsY-1, air).id == shipID)
 		vertical = true;
-	
+
 	int dX = gridX - gsX;
 	int dY = gridY - gsY;
-	
+
 	ClientMessageSender::sendMoveEngineRequest(shipID, vertical ? 1 : 0, vertical ? dY : dX);
 
 }
 
 void GameMenu::shipPlacementAt(int gridX, int gridY){
 	ENGINE_TYPE ship_to_place = ships_to_place[shipPlacementStep];
-	
+
 	ClientMessageSender::sendAddEngineRequest(ship_to_place, this->local_player, gridX, gridY);
 
 	waitingForAnswer = true;
@@ -295,7 +296,7 @@ void GameMenu::draw(sf::RenderTarget* drawingBoard){
 			drawingBoard->draw(players_draw[1]);
 		}
 	}
-	
+
 }
 
 void GameMenu::on_click(Component* button){
@@ -303,14 +304,14 @@ void GameMenu::on_click(Component* button){
 		grid_self.displayAir = !b1.is_left();
 	} else if((void*)button == (void*)&b2){
 		grid_opponent.displayAir = !b2.is_left();
-		
+
 	} else if((void*)button == (void*)&confirm && this->currentState == STATE_PLAY){
 
 		int self_grid_x = 0, self_grid_y = 0, other_grid_x = 0, other_grid_y = 0;
 		//We get the selected cases coordinates
 		grid_self.get_selected_cases(&self_grid_x, &self_grid_y);
 		grid_opponent.get_selected_cases(&self_grid_x, &self_grid_y);
-		
+
 		if(other_grid_x != -1 && other_grid_y != -1 && self_grid_x != -1 && self_grid_y != -1){
 			//We get the cases that will be the launcher
 			GridCase launcherCase = grid_self.get_case_at(self_grid_x, self_grid_y, (this->local_player%2 == 1));

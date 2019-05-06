@@ -93,8 +93,8 @@ void Interface::start() {
 
 void Interface::change_current_menu(Menu* newMenu){
 	//If the previous menu is not null, delete it
-	if(this->currentMenu != nullptr)
-		delete this->currentMenu;
+	//if(this->currentMenu != nullptr)
+	//	delete this->currentMenu;
 	//Then set the new one
 	this->currentMenu = newMenu;
 }
@@ -186,7 +186,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::JOIN_SUCCESS:
             {
-				
+
 				if(jm!=nullptr)
 				{
 					jm->show=false;
