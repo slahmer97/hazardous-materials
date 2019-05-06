@@ -41,8 +41,23 @@ void GameMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::GRIDS_ASSIGNEMENT:
 			players[m->get_id()-1] = m->get_username();
 			break;
+		case ServerMessage::GRID:
+			switch(m->get_id()){
+				case 1:
+					grid_self.set_grid_ship(m->get_grid());
+					break;
+				case 2:
+					grid_self.set_grid_planes(m->get_grid());
+					break;
+				case 3:
+					grid_opponent.set_grid_ship(m->get_grid());
+					break;
+				case 4:
+					grid_opponent.set_grid_planes(m->get_grid());
+					break;
+			}
+			break;
 		case ServerMessage::CHAT_S:
-			//TODO add m->get_chat_msg()
 			this->textarea.addTextLine(players[m->get_id()-1]+m->get_chat_msg());
 			break;
 		default:

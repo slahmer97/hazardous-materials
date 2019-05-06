@@ -113,20 +113,17 @@ std::vector<std::string> split(std::string str, char delim = ' '){
 	return cont;
 }
 
-void DisplayGrid::set_grid(std::string strGridShip, std::string strGridPlane){
+void DisplayGrid::set_grid_ship(std::string strGridShip){
 	
 	unsigned int i=0,j = 0;
 
 	//We parse everything needed
 	std::vector<std::vector<std::string>> splittedGridShip;
-	std::vector<std::vector<std::string>> splittedGridPlane;
 
 	std::vector<std::string> partSplitGridShip = split(strGridShip, '\n');
-	std::vector<std::string> partSplitGridPlane = split(strGridPlane, '\n');
 
 	for(i = 0; i < partSplitGridShip.size(); i++){
 		splittedGridShip.push_back(split(partSplitGridShip[i], '\t'));
-		splittedGridPlane.push_back(split(partSplitGridPlane[i], '\t'));
 	}
 
 	//Format : grid[i][j]
@@ -143,12 +140,7 @@ void DisplayGrid::set_grid(std::string strGridShip, std::string strGridPlane){
 			//gridPlanes[j][i]
 			//splitted[i][j]
 			std::vector<std::string> dataShip = split(splittedGridShip[i][j]);
-			std::vector<std::string> dataPlane = split(splittedGridPlane[i][j]);
 
-			gridPlane[j][i].id = std::atoi(dataPlane[0].c_str());
-			gridPlane[j][i].health = std::atof(dataPlane[1].c_str());
-			gridPlane[j][i].type = Square::square_type_to_enum(dataPlane[2]);
-			
 			gridShip[j][i].id = std::atoi(dataShip[0].c_str());
 			gridShip[j][i].health = std::atof(dataShip[1].c_str());
 			gridShip[j][i].type = Square::square_type_to_enum(dataShip[2]);
@@ -158,6 +150,43 @@ void DisplayGrid::set_grid(std::string strGridShip, std::string strGridPlane){
 	calculate_sprites();
 }
 
+void DisplayGrid::set_grid_planes(std::string strGridPlane){
+	
+	unsigned int i=0,j = 0;
+
+	//We parse everything needed
+	std::vector<std::vector<std::string>> splittedGridPlane;
+
+	std::vector<std::string> partSplitGridPlane = split(strGridPlane, '\n');
+
+	for(i = 0; i < partSplitGridPlane.size(); i++){
+		splittedGridPlane.push_back(split(partSplitGridPlane[i], '\t'));
+	}
+
+	//Format : grid[i][j]
+	// \________ j
+	// |
+	// |
+	// |
+	// |
+	// i
+	// != from gridPlanes and Ship !
+	// We need to transpose the grid
+	
+	for(i = 0; i < splittedGridPlane.size(); i++){
+		for(j = 0; j < splittedGridPlane[i].size(); j++){
+			//gridPlanes[j][i]
+			//splitted[i][j]
+			std::vector<std::string> dataPlane = split(splittedGridPlane[i][j]);
+
+			gridPlane[j][i].id = std::atoi(dataPlane[0].c_str());
+			gridPlane[j][i].health = std::atof(dataPlane[1].c_str());
+			gridPlane[j][i].type = Square::square_type_to_enum(dataPlane[2]);
+		}
+	}
+
+	calculate_sprites();
+}
 
 void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 

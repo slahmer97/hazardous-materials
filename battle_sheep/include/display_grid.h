@@ -53,7 +53,9 @@ class DisplayGrid : public Component {
 
 		void calculate_sprites();
 
-		void set_grid(std::string gridShip, std::string gridPlanes);
+		void set_grid_ship(std::string strGridShip);
+
+		void set_grid_planes(std::string strGridPlane);
 		
 		~DisplayGrid();
 
