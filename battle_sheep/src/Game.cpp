@@ -415,6 +415,7 @@ void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
 
     if(is_shot){
         int ret = engine->Skill_shot(grid,x,y,h,shotType);
+        std::cout<<"[+] ==================================******Skill points : "<<engine->get_remain_points()<<std::endl;
         if(ret >= 0){
                 std::string shot_suc_msg = ServerMessage::getShotSuccessMessage();
                 p->send_message(shot_suc_msg);
