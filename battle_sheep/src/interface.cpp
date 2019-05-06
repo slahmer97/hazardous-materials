@@ -130,13 +130,8 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             {
 				if(cm!=nullptr)
 					cm->handle_server_message(m);
-				//this->change_current_menu(new ChooseMenu());
-							//boite.push_back(new Box(220.f,133.f,480.f,270.f));
-							//boite.back()->compo.push_back(new Button("Select 1",300,195,140,35));
-							//boite.back()->compo.push_back(new Button("Select 2",300,315,140,35));
-							//boite.back()->compo.push_back(new Button("Select 3",490,195,140,35));
-							//boite.back()->compo.push_back(new Button("Select 4",490,315,140,35));
-
+				if(gm != nullptr)
+					gm->handle_server_message(m);
             }
             break;
         case ServerMessage::ERROR:
@@ -166,12 +161,6 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::LOGIN_SUCCESS:
             {
-				/*boite.push_back(new Box(220.f,133.f,480.f,270.f));
-				boite.back()->compo.push_back(new TextField("","Create>",250,163,200,50));
-				boite.back()->compo.push_back(new Button("Create",505,163,140,50));
-				boite.back()->compo.push_back(new TextField("","Join>",250,323,200,50));
-				boite.back()->compo.push_back(new Button("Join",505,323,140,50));
-				*/
 				if(mm != nullptr) {
 					std::cout<<"Succefully logged in as "<<m->get_username()<<std::endl;
 					this->player = mm->getLogin();

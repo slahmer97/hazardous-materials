@@ -41,6 +41,12 @@ void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX,
 		case STATE_PLACE:
 			//Place ship
 			break;
+		case STATE_PLAY:
+			if(button == sf::Mouse::Left)
+				grid->selectCase(gridX, gridY);
+			else if(button == sf::Mouse::Left && (void*)grid == (void*)&grid_opponent)
+				grid->selectCase(-1, -1);
+			break;
 	}
 }
 
@@ -49,8 +55,23 @@ void GameMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::GRIDS_ASSIGNEMENT:
 			players[m->get_id()-1] = m->get_username();
 			break;
+		case ServerMessage::GRID:
+			switch(m->get_id()){
+				case 1:
+					grid_self.set_grid_ship(m->get_grid());
+					break;
+				case 2:
+					grid_self.set_grid_planes(m->get_grid());
+					break;
+				case 3:
+					grid_opponent.set_grid_ship(m->get_grid());
+					break;
+				case 4:
+					grid_opponent.set_grid_planes(m->get_grid());
+					break;
+			}
+			break;
 		case ServerMessage::CHAT_S:
-			//TODO add m->get_chat_msg()
 			this->textarea.addTextLine(players[m->get_id()-1]+m->get_chat_msg());
 			break;
 		case ServerMessage::SCORE_BROADCAST:
@@ -115,8 +136,24 @@ void GameMenu::on_click(Component* button){
 	} else if((void*)button == (void*)&b2){
 		grid_opponent.displayAir = !b2.is_left();
 		
-	} else if((void*)button == (void*)&confirm){
-		printf("Plouf\n");
+	} else if((void*)button == (void*)&confirm && this->currentState == STATE_PLAY){
+
+		int self_grid_x = 0, self_grid_y = 0, other_grid_x = 0, other_grid_y = 0;
+		//We get the selected cases coordinates
+		grid_self.get_selected_cases(&self_grid_x, &self_grid_y);
+		grid_opponent.get_selected_cases(&self_grid_x, &self_grid_y);
+		
+		if(other_grid_x != -1 && other_grid_y != -1 && self_grid_x != -1 && self_grid_y != -1){
+			//We get the cases that will be the launcher
+			GridCase launcherCase = grid_self.get_case_at(self_grid_x, self_grid_y, (this->local_player%2 == 1));
+			//We find the target grid
+			int targetGrid = this->local_player - (this->local_player%2);//First we get our team
+			targetGrid = (targetGrid + 2)%4; //Next we take the opposite team
+			targetGrid += (grid_opponent.displayAir ? 1 : 0);//Then if we choose to target the planes or the ships
+
+			ClientMessageSender::sendShotRequest(launcherCase.id, targetGrid+1, 0, other_grid_x, other_grid_y);
+		}
+
 	} else if((void*)button == (void*)&chatField){
 		ClientMessageSender::sendChatRequest(chatField.text);
 		this->textarea.addTextLine(this->chatField.text);

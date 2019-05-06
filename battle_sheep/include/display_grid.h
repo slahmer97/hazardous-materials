@@ -6,9 +6,18 @@
 class GridActionListener;
 #include "../include/click_callback.h"
 #include "../include/texture_manager.h"
+#include "../include/Square.h"
 
 #include <vector>
 #include <iostream>
+#include <sstream>
+
+
+struct GridCase {
+	int id;
+	float health;
+	SQUARE_TYPE type;
+};
 
 class DisplayGrid : public Component {
 
@@ -36,6 +45,10 @@ class DisplayGrid : public Component {
 		 * Will also highliht the ship if there is one there
 		 */
 		void selectCase(int x, int y, bool force = false);
+		
+		void get_selected_cases(int* x, int* y);
+
+		GridCase get_case_at(int x, int y, bool air);
 
 		/**
 		 * Set the listener for the return button
@@ -44,7 +57,10 @@ class DisplayGrid : public Component {
 
 		void calculate_sprites();
 
+		void set_grid_ship(std::string strGridShip);
 
+		void set_grid_planes(std::string strGridPlane);
+		
 		~DisplayGrid();
 
 	private:
@@ -79,13 +95,20 @@ class DisplayGrid : public Component {
 	
 		/**
 		 * All the sprites used for the ships
-		 * TODO: update it to work with data obtained from the network
 		 */
 		std::vector<std::vector<sf::Sprite>> spritesShip;
 		std::vector<std::vector<sf::Sprite>> spritesPlanes;
 	
-		//TODO: create member to contain the ships/planes received from the network
+		/**
+		 * The grids containing the logical parts of the ships
+		 */
+		std::vector<std::vector<GridCase>> gridShip;
+		std::vector<std::vector<GridCase>> gridPlane;
+
 		//TODO: create member to store successful shots on this grid
+	
+		void rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vertical);
+		bool checkVerticality(std::vector<std::vector<GridCase>>* grid, int x, int y);
 
 };
 
