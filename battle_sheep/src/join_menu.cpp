@@ -37,7 +37,8 @@ void JoinMenu::draw(sf::RenderTarget* drawingBoard){
 void JoinMenu::on_click(Component* button){
     
 	if((void*)button == (void*)&createbut){
-		std::string create1=createtxt.text;
+		std::string create1="";
+        create1=createtxt.text;
         if(create1!="")
         {
             ClientMessageSender::sendCreateGameRequest(create1);
@@ -46,7 +47,8 @@ void JoinMenu::on_click(Component* button){
 		//emulating button click
 		this->on_click(&createbut);
 	} else if((void*)button == (void*)&joinbut){
-		std::string join1=createtxt.text;
+		std::string join1="";
+        join1=createtxt.text;
         if(join1!="")
         {
             ClientMessageSender::sendJoinGameRequest(join1);

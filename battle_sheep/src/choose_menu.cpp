@@ -68,15 +68,12 @@ void ChooseMenu::on_click(Component* button){
     
 	if((void*)button == (void*)&select_1){
 		selected = 1;
-        ClientMessageSender::sendChooseGridRequest(1);
 	} else if((void*)button == (void*)&select_2){
 		selected = 2;
-        ClientMessageSender::sendChooseGridRequest(2);
 	} else if((void*)button == (void*)&select_3){
 		selected = 3;
-        ClientMessageSender::sendChooseGridRequest(3);
 	} else if((void*)button == (void*)&select_4){
 		selected = 4;
-        ClientMessageSender::sendChooseGridRequest(4);
 	}
+    ClientMessageSender::sendChooseGridRequest(selected);
 }
