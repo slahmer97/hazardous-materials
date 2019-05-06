@@ -137,7 +137,8 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::CHAT_S:
             {
-
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
             }
             break;
         case ServerMessage::CURRENT_TURN:
@@ -149,6 +150,8 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::SCORE_BROADCAST:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
 
             }
             break;
@@ -193,25 +196,34 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
             break;
         case ServerMessage::START:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
             }
             break;
         case ServerMessage::GRID:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
 
             }
             break;
         case ServerMessage::ENGINE_ADDED:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
 
             }
             break;
         case ServerMessage::MOVE_SUCCESS:
             {
-
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
             }
             break;
         case ServerMessage::ROTATE_SUCCESS:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
 
             }
             break;
@@ -221,6 +233,13 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 				this->change_current_menu(new GameMenu());
             }
             break;
+		case ServerMessage::SHOT_SUCCESS:
+			{
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
+
+			}
+			break;
 
 
 	}
@@ -265,16 +284,22 @@ void Interface::handle_errror_message(ServerMessage* m){
             break;
         case ServerMessage::ACTION_FAILED:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
 
             }
             break;
         case ServerMessage::ENGINE_ID_DOES_NOT_EXIST:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
 
             }
             break;
         case ServerMessage::GRID_ID_DOES_NOT_EXIST:
             {
+				if(gm!=nullptr)
+					gm->handle_server_message(m);
 
             }
             break;
