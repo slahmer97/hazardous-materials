@@ -14,8 +14,8 @@ int main(int argc,char**argv){
 
     g.add_engine(e,0,1,1);
 
-    g.normal_shot(1,1,1.0f);
-    std::cout<<g.to_pub();
+ //   g.normal_shot(1,1,1.0f);
+    std::cout<<g.to_priv();
 
 
 

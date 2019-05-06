@@ -34,7 +34,6 @@ void Game::switch_turn(){
     }
     //update score
 
-    //TODO may be check if some player is dead then send them END OF GAME
     on_game_state_changed();
     std::cout<<"[+]************************Switching turn ("<<get_current_turn_id()<<")************************************"<<std::endl;
 }
@@ -42,6 +41,7 @@ void Game::switch_turn(){
 void Game::on_game_state_changed() {
 
     update_score();
+    //TODO Check if player is dead !
     std::string score = ServerMessage::getScoreBroadCastMessage(m_score);
     broadcast_message(score);
 
@@ -436,7 +436,6 @@ void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
 
 
 }
-
 void Game::shot2routine(Player *p, Engine *engine, Grid *grid1, Grid *grid2,int hori,int x,int y){
 
     SHOT_TYPE  shotType = engine->get_shot_type();

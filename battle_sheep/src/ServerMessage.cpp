@@ -81,6 +81,10 @@ ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& typ
         return ERROR;
     else if(type == "shot_success")
         return SHOT_SUCCESS;
+    else if(type == "won")
+        return WON;
+    else if(type == "lost")
+        return LOST;
     //TODO
     return NONEE;
 }
@@ -118,6 +122,10 @@ std::string ServerMessage::to_string(ServerMessage::SERVER_MESSAGE_TYPE type){
         return std::string("error");
     else if(type == SHOT_SUCCESS)
         return std::string("shot_success");
+    else if(type == LOST)
+        return std::string("lost");
+    else if(type == WON)
+        return std::string("won");
 
     return std::string("none");//check later
 }
