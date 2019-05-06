@@ -210,6 +210,7 @@ void Game::start() {
 }
 void Game::update_score(){
     int score = 0;
+    if(m_t1->get_first_player())
     for(Engine* e : m_t1->get_first_player()->get_engines())
         score += static_cast<int>(e->get_current_health_point());
     m_score->set_s1(score);

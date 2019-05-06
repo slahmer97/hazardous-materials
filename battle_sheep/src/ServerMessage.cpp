@@ -50,7 +50,7 @@ ServerMessage::ERRORS ServerMessage::error_to_enum(const std::string& s){
 }
 ServerMessage::SERVER_MESSAGE_TYPE ServerMessage::to_enum(const std::string& type) {
     if(type == "kill_player")
-        return SERVER_MESSAGE_TYPE ::KILL_PLAYER;
+        return KILL_PLAYER;
     else if(type == "grid_assignement")
         return GRIDS_ASSIGNEMENT;
     else if(type == "chat_s")
