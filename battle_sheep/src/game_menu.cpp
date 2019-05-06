@@ -1,7 +1,7 @@
 #include "game_menu.h"
 
 GameMenu::GameMenu(std::string players[4], int local_player):
-	confirm("Confirm",430,420,100,50),
+	confirm("Confirm",410,420,140,50),
 	b1("",280,420,100,50),
 	b2("",580,420,100,50),
 	grid_self(nullptr, 10,10, 50,50),
