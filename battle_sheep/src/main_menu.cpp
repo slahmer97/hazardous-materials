@@ -35,8 +35,10 @@ std::string MainMenu::getLogin(){
 void MainMenu::on_click(Component* button){
     
 	if((void*)button == (void*)&confirm_lp){
-		std::string log1=login.text;
-		std::string pass1=password.text;
+		std::string log1="";
+		log1=login.text;
+		std::string pass1="";
+		pass1=password.text;
         if(pass1!="" && log1!="")
         {
             ClientMessageSender::sendLoginRequest(log1,pass1);
