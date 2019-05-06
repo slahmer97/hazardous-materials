@@ -7,8 +7,8 @@ GameMenu::GameMenu(std::string players[4], int local_player):
 	grid_self(nullptr, 10,10, 50,50),
 	grid_opponent(nullptr, 10,10,590,50),
 	currentState(STATE_DISABLED),
-	textarea(15, 400, 300, 160, 160),
-	chatField("", ">", 400, 460, 160, 25),
+	textarea(15, 400, 100, 160, 160),
+	chatField("", ">", 400, 260, 160, 25),
 	local_player(local_player)
 {
 	if (!grille.loadFromFile("assets/textures/grille_10x10.png"))
@@ -56,6 +56,8 @@ void GameMenu::handleEvent(sf::Window* window, sf::Event* event){
     b2.handleEvent(window,event);
 	grid_self.handleEvent(window, event);
 	grid_opponent.handleEvent(window, event);
+	textarea.handleEvent(window,event);
+	chatField.handleEvent(window,event);
 }
 
 void GameMenu::draw(sf::RenderTarget* drawingBoard){
@@ -74,8 +76,8 @@ void GameMenu::draw(sf::RenderTarget* drawingBoard){
     sp_grille2.setPosition(590,50);
     drawingBoard->draw(sp_grille2);
 
-
-
+		textarea.draw(drawingBoard);
+		chatField.draw(drawingBoard);
     confirm.draw(drawingBoard);
     b1.draw(drawingBoard);
     b2.draw(drawingBoard);
@@ -91,6 +93,7 @@ void GameMenu::on_click(Component* button){
 		printf("Plouf\n");
 	} else if((void*)button == (void*)&chatField){
 		ClientMessageSender::sendChatRequest(chatField.text);
+		this->textarea.addTextLine(this->chatField.text);
 		chatField.text = "";
 	}
 }
