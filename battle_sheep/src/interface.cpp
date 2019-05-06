@@ -234,8 +234,8 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
 				//cm->players[m->get_id()-1]=this->player;
 				for(i = 0; i < 4; i++)
 					tmp[i]=cm->players[i];
-				tmp[m->get_id()-1] = this->player;
-				this->change_current_menu(new GameMenu(tmp, m->get_id()-1));
+				tmp[cm->selected-1] = this->player;
+				this->change_current_menu(new GameMenu(tmp, cm->selected-1);
             }
             break;
 		case ServerMessage::SHOT_SUCCESS:

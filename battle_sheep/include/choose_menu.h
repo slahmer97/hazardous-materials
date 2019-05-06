@@ -28,6 +28,8 @@ class ChooseMenu : public Menu, public ClickListener
 		~ChooseMenu() {};
 
 		std::string players[4];
+		
+		int selected = -1;
 
 	private:
 		/**
