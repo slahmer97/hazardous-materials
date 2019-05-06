@@ -8,7 +8,10 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 	spritesBackground(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//creating the 2d vector of sprites representing the background
 	spritesBackgroundAir(gridWidth, std::vector<sf::Sprite>(gridHeight) ),
 	spritesShip(gridWidth, std::vector<sf::Sprite>(gridHeight) ),//Creating the 2d vector of sprites representing the ships (or lack)
-	spritesPlanes(gridWidth, std::vector<sf::Sprite>(gridHeight) ){
+	spritesPlanes(gridWidth, std::vector<sf::Sprite>(gridHeight) ),
+	gridShip(gridWidth, std::vector<GridCase>(gridHeight, GridCase())),
+	gridPlane(gridWidth, std::vector<GridCase>(gridHeight, GridCase()))
+{
 
 
 		//We fill the 2d arrays displaying everything
@@ -40,14 +43,98 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 
 	}
 
+
+void DisplayGrid::rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vertical){
+	if(vertical){
+		sprite->setRotation(0);
+		sprite->setPosition(this->x+x*32, this->y+y*32);
+	} else {
+		sprite->setRotation(90.0f);
+		sprite->setPosition(this->x+(x+1)-32, this->y+y*32);
+	}
+}
+
+bool DisplayGrid::checkVerticality(std::vector<std::vector<GridCase>>* grid, int x, int y){
+	bool res = false;
+	
+	int this_id = (*grid)[x][y].id;
+
+	if(y-1 >= 0 && (*grid)[x][y-1].id == this_id){
+		res = true;
+	}
+	if(y+1 <= gridHeight && (*grid)[x][y+1].id == this_id){
+		res = true;
+	}
+	
+}
+
 void DisplayGrid::calculate_sprites(){
-	//TODO: implement that when we know how are the client-side classes defined
-	//Meanwhile, we implement a default texture
+
 	for(int i = 0; i < gridWidth; i++){
 		for(int j = 0; j < gridHeight; j++){
-			//We use the center texture
+			//We set the background texture
 			spritesBackground[i][j].setTextureRect(TextureManager::Background::Water);
 			spritesBackgroundAir[i][j].setTextureRect(TextureManager::Background::Air);
+			
+			switch(gridShip[i][j].type){
+				case NONE:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
+					break;
+				case ENGINE_MOTOR:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipLeft);
+					break;
+				case ENGINE_WEAPON:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipRight);
+					break;
+				case ENGINE_PART:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipBody);
+					break;
+				case ENGINE_MOTOR_DEAD:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipDeadLeft);
+					break;
+				case ENGINE_WEAPON_DEAD:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipDeadRight);
+					break;
+				case ENGINE_PART_DEAD:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::ShipDeadBody);
+					break;
+				default:
+					spritesShip[i][j].setTextureRect(TextureManager::Ship::Empty);
+					break;
+			}
+			//We rotate the sprite if needed
+			rotateSpriteCenter(&(spritesShip[i][j]), i, j, checkVerticality(&gridShip, i, j));
+			
+			switch(gridPlane[i][j].type){
+				case NONE:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::Empty);
+					break;
+				case ENGINE_MOTOR:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneLeft);
+					break;
+				case ENGINE_WEAPON:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneRight);
+					break;
+				case ENGINE_PART:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneBody);
+					break;
+				case ENGINE_MOTOR_DEAD:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadLeft);
+					break;
+				case ENGINE_WEAPON_DEAD:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadRight);
+					break;
+				case ENGINE_PART_DEAD:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadBody);
+					break;
+				default:
+					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::Empty);
+					break;
+			}
+			
+			//We rotate the sprite if needed
+			rotateSpriteCenter(&(spritesPlanes[i][j]), i, j, checkVerticality(&gridPlane, i, j));
+
 		}
 	}
 }
@@ -58,6 +145,93 @@ void DisplayGrid::setListener(GridActionListener* listener){
 
 DisplayGrid::~DisplayGrid(){
 
+}
+
+std::vector<std::string> split(std::string str, char delim = ' '){
+	std::stringstream ss(str);
+	std::string token;
+	std::vector<std::string> cont;
+
+	while(std::getline(ss, token, delim)) {
+		cont.push_back(token);
+	}
+
+	return cont;
+}
+
+void DisplayGrid::set_grid_ship(std::string strGridShip){
+	
+	unsigned int i=0,j = 0;
+
+	//We parse everything needed
+	std::vector<std::vector<std::string>> splittedGridShip;
+
+	std::vector<std::string> partSplitGridShip = split(strGridShip, '\n');
+
+	for(i = 0; i < partSplitGridShip.size(); i++){
+		splittedGridShip.push_back(split(partSplitGridShip[i], '\t'));
+	}
+
+	//Format : grid[i][j]
+	// \________ j
+	// |
+	// |
+	// |
+	// |
+	// i
+	// != from gridPlanes and Ship !
+	
+	for(i = 0; i < splittedGridShip.size(); i++){
+		for(j = 0; j < splittedGridShip[i].size(); j++){
+			//gridPlanes[j][i]
+			//splitted[i][j]
+			std::vector<std::string> dataShip = split(splittedGridShip[i][j]);
+
+			gridShip[j][i].id = std::atoi(dataShip[0].c_str());
+			gridShip[j][i].health = std::atof(dataShip[1].c_str());
+			gridShip[j][i].type = Square::square_type_to_enum(dataShip[2]);
+		}
+	}
+
+	calculate_sprites();
+}
+
+void DisplayGrid::set_grid_planes(std::string strGridPlane){
+	
+	unsigned int i=0,j = 0;
+
+	//We parse everything needed
+	std::vector<std::vector<std::string>> splittedGridPlane;
+
+	std::vector<std::string> partSplitGridPlane = split(strGridPlane, '\n');
+
+	for(i = 0; i < partSplitGridPlane.size(); i++){
+		splittedGridPlane.push_back(split(partSplitGridPlane[i], '\t'));
+	}
+
+	//Format : grid[i][j]
+	// \________ j
+	// |
+	// |
+	// |
+	// |
+	// i
+	// != from gridPlanes and Ship !
+	// We need to transpose the grid
+	
+	for(i = 0; i < splittedGridPlane.size(); i++){
+		for(j = 0; j < splittedGridPlane[i].size(); j++){
+			//gridPlanes[j][i]
+			//splitted[i][j]
+			std::vector<std::string> dataPlane = split(splittedGridPlane[i][j]);
+
+			gridPlane[j][i].id = std::atoi(dataPlane[0].c_str());
+			gridPlane[j][i].health = std::atof(dataPlane[1].c_str());
+			gridPlane[j][i].type = Square::square_type_to_enum(dataPlane[2]);
+		}
+	}
+
+	calculate_sprites();
 }
 
 void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
@@ -85,6 +259,10 @@ void DisplayGrid::handleEvent(sf::Window* window,sf::Event* event){
 	}
 }
 
+void DisplayGrid::get_selected_cases(int* x, int* y){
+	(*x)=selectedX;
+	(*y)=selectedY;
+}
 
 void DisplayGrid::selectCase(int x, int y, bool force){
 	//We check if the value is different from before
@@ -92,9 +270,19 @@ void DisplayGrid::selectCase(int x, int y, bool force){
 		//No need to change anything
 		return;
 	}
+	
+	this->selectedX = x;
+	this->selectedY = y;
+
+	
 	//We create a new vector
 	std::vector<sf::Sprite> new_vect;
 	
+	if(x == -1 || y == -1){
+		highlight_sprites.swap(new_vect);
+		return;
+	}
+
 	//Check if there is a know ship at (x,y)
 	
 	//Else juste a simple highlight
@@ -121,6 +309,12 @@ void DisplayGrid::selectCase(int x, int y, bool force){
 }
 
 
+GridCase DisplayGrid::get_case_at(int x, int y, bool planes){
+	if(planes)
+		return gridPlane[x][y];
+	else
+		return gridShip[x][y];
+}
 
 void DisplayGrid::draw(sf::RenderTarget* drawingBoard){
 	if(this->displayAir) {
