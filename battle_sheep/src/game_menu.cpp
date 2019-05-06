@@ -71,10 +71,10 @@ void GameMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::SCORE_BROADCAST:
 		{
 				std::string s[4];
-				std::string s[0]=m->get_score().get_s1;
-				std::string s[1]=m->get_score().get_s2;
-				std::string s[2]=m->get_score().get_s3;
-				std::string s[3]=m->get_score().get_s4;
+				s[0]=m->get_score().get_s1;
+				s[1]=m->get_score().get_s2;
+				s[2]=m->get_score().get_s3;
+				s[3]=m->get_score().get_s4;
 
 				for(int i=0;i<4;i++)
 				{
