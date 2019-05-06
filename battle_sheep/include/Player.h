@@ -64,7 +64,7 @@ private:
     WssServer::Connection *m_connection;
     Grid* m_grid;
     bool m_logged_in = false;
-    bool dead = false;
+    bool m_dead = false;
 
 };
 

@@ -121,9 +121,9 @@ std::vector<Engine *> Player::get_engines() {
 }
 
 void Player::set_dead() {
-    this->dead = true;
+    this->m_dead = true;
 }
 
 bool Player::dead() {
-    return dead;
+    return m_dead;
 }
