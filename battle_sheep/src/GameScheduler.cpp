@@ -299,6 +299,7 @@ void GameScheduler::gameEngineAddRoutine(Player *p, Game *game, const std::strin
         std::string sent_msg = ServerMessage::getEngineAddedMessage();
         p->send_message(sent_msg);
 		std::string grid_msg = ServerMessge::getGridMessage(p->get_id(), p->get_priv_grid());
+		p->send_message(grid_msg);
 		//p->send_message(p->get_priv_grid());
     }
     else{
