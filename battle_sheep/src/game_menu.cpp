@@ -137,7 +137,7 @@ void GameMenu::shipMovementAt(int gridX, int gridY){
 void GameMenu::shipPlacementAt(int gridX, int gridY){
 	ENGINE_TYPE ship_to_place = ships_to_place[shipPlacementStep];
 
-	ClientMessageSender::sendAddEngineRequest(ship_to_place, this->local_player, gridY, gridX);
+	ClientMessageSender::sendAddEngineRequest(ship_to_place, this->vertical ? 1 : 0, gridY, gridX);
 
 	waitingForAnswer = true;
 }
@@ -343,7 +343,7 @@ void GameMenu::on_click(Component* button){
 			if(grid_opponent.displayAir)
 				targetGrid++;
 
-			ClientMessageSender::sendShotRequest(launcherCase.id, targetGrid+1, 1, other_grid_y, other_grid_x);
+			ClientMessageSender::sendShotRequest(launcherCase.id, targetGrid+1, this->vertical ? 1 : 0, other_grid_y, other_grid_x);
 		}
 
 	} else if((void*)button == (void*)&chatField){
