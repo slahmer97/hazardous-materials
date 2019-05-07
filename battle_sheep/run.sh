@@ -1,6 +1,11 @@
 #!/bin/sh
 
 
+clean () {
+	killall client server
+}
+
+trap clean 2
 
 cd $(dirname $( realpath "$0" ) )
 
