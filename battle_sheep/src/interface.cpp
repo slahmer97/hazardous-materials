@@ -148,7 +148,7 @@ void Interface::on_server_message_received( const std::shared_ptr<WssClient::Con
         case ServerMessage::CURRENT_TURN:
             {
 				if(gm != nullptr){
-					gm->currentState = STATE_PLAY;
+					gm->handle_server_message(m);
 				}
             }
             break;

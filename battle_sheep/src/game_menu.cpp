@@ -137,7 +137,7 @@ void GameMenu::shipMovementAt(int gridX, int gridY){
 void GameMenu::shipPlacementAt(int gridX, int gridY){
 	ENGINE_TYPE ship_to_place = ships_to_place[shipPlacementStep];
 
-	ClientMessageSender::sendAddEngineRequest(ship_to_place, this->local_player, gridX, gridY);
+	ClientMessageSender::sendAddEngineRequest(ship_to_place, this->local_player, gridY, gridX);
 
 	waitingForAnswer = true;
 }
@@ -149,6 +149,14 @@ void GameMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::ENGINE_ADDED:
 			shipPlacementStep++;
 			waitingForAnswer = false;
+			break;
+		case ServerMessage::CURRENT_TURN:
+			if(m->get_id()-1 == this->local_player){
+				this->currentState = STATE_PLAY;
+				this->textarea.addTextLine("It's your turn to play");
+			} else {
+				this->textarea.addTextLine("It's the turn of "+this->players[m->get_id()-1]);
+			}
 			break;
 		case ServerMessage::SHOT_SUCCESS:
 			currentState = STATE_TURN_OTHER;
@@ -211,7 +219,7 @@ void GameMenu::handle_server_message(ServerMessage* m){
 			}
 			break;
 		case ServerMessage::CHAT_S:
-			this->textarea.addTextLine(players[m->get_id()-1]+m->get_chat_msg());
+			this->textarea.addTextLine(players[m->get_id()-1]+"> "+m->get_chat_msg());
 			break;
 		case ServerMessage::SCORE_BROADCAST:
 		{
@@ -329,16 +337,18 @@ void GameMenu::on_click(Component* button){
 			//We get the cases that will be the launcher
 			GridCase launcherCase = grid_self.get_case_at(self_grid_x, self_grid_y, (this->local_player%2 == 1));
 			//We find the target grid
-			int targetGrid = this->local_player - (this->local_player%2);//First we get our team
-			targetGrid = (targetGrid + 2)%4; //Next we take the opposite team
-			targetGrid += (grid_opponent.displayAir ? 1 : 0);//Then if we choose to target the planes or the ships
+			int targetGrid = this->local_player % 2;//0 = ship, 1 = planes
+			targetGrid = this->local_player - targetGrid;//0=team1, 2=team2
+			targetGrid = (targetGrid + 2)%4;//select the other team
+			if(grid_opponent.displayAir)
+				targetGrid++;
 
-			ClientMessageSender::sendShotRequest(launcherCase.id, targetGrid+1, 1, other_grid_x, other_grid_y);
+			ClientMessageSender::sendShotRequest(launcherCase.id, targetGrid+1, 1, other_grid_y, other_grid_x);
 		}
 
 	} else if((void*)button == (void*)&chatField){
 		ClientMessageSender::sendChatRequest(chatField.text);
-		this->textarea.addTextLine(this->chatField.text);
+		this->textarea.addTextLine(this->players[this->local_player]+"> "+this->chatField.text);
 		chatField.text = "";
 	}
 }
