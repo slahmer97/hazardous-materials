@@ -105,7 +105,7 @@ void DisplayGrid::calculate_sprites(){
 					break;
 			}
 			//We rotate the sprite if needed
-			rotateSpriteCenter(&(spritesShip[i][j]), i, j, checkVerticality(&gridShip, i, j));
+			//rotateSpriteCenter(&(spritesShip[i][j]), i, j, checkVerticality(&gridShip, i, j));
 
 			switch(gridPlane[i][j].type){
 				case NONE:
@@ -141,7 +141,7 @@ void DisplayGrid::calculate_sprites(){
 			}
 
 			//We rotate the sprite if needed
-			rotateSpriteCenter(&(spritesPlanes[i][j]), i, j, checkVerticality(&gridPlane, i, j));
+			//rotateSpriteCenter(&(spritesPlanes[i][j]), i, j, checkVerticality(&gridPlane, i, j));
 
 		}
 	}

@@ -194,7 +194,7 @@ void GameMenu::handle_server_message(ServerMessage* m){
 					if(this->local_player < 2)
 						grid_self.set_grid_planes(m->get_grid());
 					else
-						grid_opponent.set_grid_plane(m->get_grid());
+						grid_opponent.set_grid_planes(m->get_grid());
 					break;
 				case 3:
 					if(this->local_player < 2)
