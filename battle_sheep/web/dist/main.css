@@ -14,15 +14,25 @@
   color: red;
   position: relative; }
 
+.enemygrids {
+  position: relative;
+  top: 0px;
+  margin-top: 50px;
+  margin-bottom: 50px; }
+
+.allygrids {
+  position: relative;
+  bottom: 0px; }
+
 .grid1 {
   position: relative;
   top: 0;
   left: 0;
-  width: 352px;
-  height: 372px; }
+  width: 320px;
+  height: 320px; }
   .grid1 .tile {
     border: 1px solid #CCC;
-    background-color: #FFF; }
+    background-color: #888; }
   .grid1 .tile:hover {
     border: 1px solid #CCC;
     background-color: #F00; }
@@ -31,12 +41,38 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 352px;
-  height: 372px; }
+  width: 320px;
+  height: 320px; }
   .grid2 .tile {
     border: 1px solid #CCC;
-    background-color: #FFF; }
+    background-color: #888; }
   .grid2 .tile:hover {
+    border: 1px solid #CCC;
+    background-color: #F00; }
+
+.grid3 {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 320px;
+  height: 320px; }
+  .grid3 .tile {
+    border: 1px solid #CCC;
+    background-color: #888; }
+  .grid3 .tile:hover {
+    border: 1px solid #CCC;
+    background-color: #0F0; }
+
+.grid4 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 320px;
+  height: 320px; }
+  .grid4 .tile {
+    border: 1px solid #CCC;
+    background-color: #888; }
+  .grid4 .tile:hover {
     border: 1px solid #CCC;
     background-color: #0F0; }
 
