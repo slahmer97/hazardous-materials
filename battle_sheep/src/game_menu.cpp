@@ -185,16 +185,28 @@ void GameMenu::handle_server_message(ServerMessage* m){
 		case ServerMessage::GRID:
 			switch(m->get_id()){
 				case 1:
-					grid_self.set_grid_ship(m->get_grid());
+					if(this->local_player < 2)
+						grid_self.set_grid_ship(m->get_grid());
+					else
+						grid_opponent.set_grid_ship(m->get_grid());
 					break;
 				case 2:
-					grid_self.set_grid_planes(m->get_grid());
+					if(this->local_player < 2)
+						grid_self.set_grid_planes(m->get_grid());
+					else
+						grid_opponent.set_grid_plane(m->get_grid());
 					break;
 				case 3:
-					grid_opponent.set_grid_ship(m->get_grid());
+					if(this->local_player < 2)
+						grid_opponent.set_grid_ship(m->get_grid());
+					else 
+						grid_self.set_grid_ship(m->get_grid());
 					break;
 				case 4:
-					grid_opponent.set_grid_planes(m->get_grid());
+					if(this->local_player < 2)
+						grid_opponent.set_grid_planes(m->get_grid());
+					else 
+						grid_self.set_grid_planes(m->get_grid());
 					break;
 			}
 			break;
