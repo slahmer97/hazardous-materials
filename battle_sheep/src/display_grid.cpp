@@ -48,11 +48,14 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 
 void DisplayGrid::rotateSpriteCenter(sf::Sprite* sprite, int x, int y, bool vertical){
 	if(!vertical){
-		sprite->setRotation(0);
+		sprite->setPosition(0.f,0.f); //reset
+		sprite->setRotation(0);       //reset
 		sprite->setPosition(this->x+x*32, this->y+y*32);
 	} else {
+		sprite->setPosition(0.f,0.f); //reset
+		sprite->setRotation(0);       //reset
+		sprite->setPosition(this->x+(x+1)*32, this->y+y*32);
 		sprite->setRotation(90.0f);
-		sprite->setPosition(this->x+(x+1)-32, this->y+y*32);
 	}
 }
 
@@ -67,6 +70,8 @@ bool DisplayGrid::checkVerticality(std::vector<std::vector<GridCase>>* grid, int
 	if(y+1 <= gridHeight && (*grid)[x][y+1].id == this_id){
 		res = true;
 	}
+
+	return res;
 
 }
 
@@ -105,7 +110,7 @@ void DisplayGrid::calculate_sprites(){
 					break;
 			}
 			//We rotate the sprite if needed
-			//rotateSpriteCenter(&(spritesShip[i][j]), i, j, checkVerticality(&gridShip, i, j));
+			rotateSpriteCenter(&(spritesShip[i][j]), i, j, checkVerticality(&gridShip, i, j));
 
 			switch(gridPlane[i][j].type){
 				case NONE:
@@ -141,7 +146,7 @@ void DisplayGrid::calculate_sprites(){
 			}
 
 			//We rotate the sprite if needed
-			//rotateSpriteCenter(&(spritesPlanes[i][j]), i, j, checkVerticality(&gridPlane, i, j));
+			rotateSpriteCenter(&(spritesPlanes[i][j]), i, j, checkVerticality(&gridPlane, i, j));
 
 		}
 	}
