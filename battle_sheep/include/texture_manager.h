@@ -27,13 +27,13 @@ namespace TextureManager {
 		 */
 
 		const sf::IntRect ShipLeft(0, 0, 32, 32);
-		const sf::IntRect ShipBody(0, 32, 32, 32);
-		const sf::IntRect ShipRight(0, 64, 32, 32);
+		const sf::IntRect ShipBody(32, 0, 32, 32);
+		const sf::IntRect ShipRight(64, 0, 32, 32);
 
 		/**
 		 * Part of the atlas for an empty square
 		 */
-		const sf::IntRect Empty(0,96,32,32);
+		const sf::IntRect Empty(96,0,32,32);
 
 		/*
 		 * Part of the Atlas for damaged ships :
@@ -41,9 +41,9 @@ namespace TextureManager {
 		 * \___________/
 		 * left|body|right
 		 */
-		const sf::IntRect ShipDeadLeft(32,0, 32,32);
+		const sf::IntRect ShipDeadLeft(0, 32, 32,32);
 		const sf::IntRect ShipDeadBody(32,32,32,32);
-		const sf::IntRect ShipDeadRight(32, 64, 32, 32);
+		const sf::IntRect ShipDeadRight(64, 32, 32, 32);
 
 
 	}
@@ -60,19 +60,19 @@ namespace TextureManager {
 		 */
 
 		const sf::IntRect PlaneLeft(0, 0, 32, 32);
- 		const sf::IntRect PlaneBody(0, 32, 32, 32);
-		const sf::IntRect PlaneWing(0, 64, 32, 32);
- 		const sf::IntRect PlaneRight(0, 96, 32, 32);
+ 		const sf::IntRect PlaneBody(32, 0, 32, 32);
+		const sf::IntRect PlaneWing(64, 0, 32, 32);
+ 		const sf::IntRect PlaneRight(96, 0, 32, 32);
 
 		/**
 		 * Part of the atlas for an empty square
 		 */
 		const sf::IntRect Empty(0,64,32,32);
 
-		const sf::IntRect PlaneDeadLeft(32, 0, 32, 32);
+		const sf::IntRect PlaneDeadLeft(0, 32, 32, 32);
  		const sf::IntRect PlaneDeadBody(32, 32, 32, 32);
-		const sf::IntRect PlaneDeadWing(32, 64, 32, 32);
- 		const sf::IntRect PlaneDeadRight(32, 96, 32, 32);
+		const sf::IntRect PlaneDeadWing(64, 32, 32, 32);
+ 		const sf::IntRect PlaneDeadRight(96, 32, 32, 32);
 
 
 	}

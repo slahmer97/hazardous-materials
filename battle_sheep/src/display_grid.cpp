@@ -34,7 +34,7 @@ DisplayGrid::DisplayGrid(void* placeHolder, int gridWidth, int gridHeight, int x
 				spritesPlanes[i][j].setTexture(TextureManager::Plane::Atlas);
 				spritesPlanes[i][j].setPosition(x+i*32, y+j*32);
 				//We initialize with the empty square
-				spritesPlanes[i][j].setTextureRect(sf::IntRect(0,0,32,32));
+				spritesPlanes[i][j].setTextureRect(sf::IntRect(TextureManager::Plane::Empty));
 				}
 				}
 
@@ -118,7 +118,10 @@ void DisplayGrid::calculate_sprites(){
 					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneRight);
 					break;
 				case ENGINE_PART:
-					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneBody);
+					if((i+j)%2 == 0)
+						spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneBody);
+					else
+						spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneWing);
 					break;
 				case ENGINE_MOTOR_DEAD:
 					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadLeft);
@@ -127,7 +130,10 @@ void DisplayGrid::calculate_sprites(){
 					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadRight);
 					break;
 				case ENGINE_PART_DEAD:
-					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadBody);
+					if((i+j)%2 == 0)
+						spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadBody);
+					else
+						spritesPlanes[i][j].setTextureRect(TextureManager::Plane::PlaneDeadWing);
 					break;
 				default:
 					spritesPlanes[i][j].setTextureRect(TextureManager::Plane::Empty);
