@@ -169,7 +169,7 @@ void Game::play(Player *player,ClientMessage * clientMessage){
             return;
         }
 
-        shot1routine(player,engine,grid,hori,x,y);
+        shot1routine(player,engine,grid, grid_id,hori,x,y);
 
     }
     else if(msg_type == ClientMessage::SHOT2){
@@ -405,7 +405,7 @@ Grid *Game::get_grid_by_id(int id) {
             return nullptr;
     }
 }
-void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
+void Game::shot1routine(Player* p,Engine *engine, Grid *grid, int gridId,int h,int x,int y){
 
 
     SHOT_TYPE  shotType = engine->get_shot_type();
@@ -435,7 +435,7 @@ void Game::shot1routine(Player* p,Engine *engine, Grid *grid,int h,int x,int y){
         Grid* grid1 = engine->Skill_shot(grid,x,y,shotType);
         if(grid1 != nullptr){
             //TODO send new grid
-            std::string grid_str  = grid1->to_pub();
+            std::string grid_str  = ServerMessage::getGridMessage(gridId,grid1->to_pub());
             std::cout<<"Grid :\n"<<grid_str<<std::endl;
             switch_turn();
             if(m_t1->get_first_player() == p || m_t1->get_second_player() == p){

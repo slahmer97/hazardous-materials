@@ -47,7 +47,7 @@ private:
 
 
 
-    void shot1routine(Player* p,Engine* engine,Grid*grid,int hori,int x,int y);
+    void shot1routine(Player* p,Engine* engine,Grid*grid, int gridId,int hori,int x,int y);
     void shot2routine(Player* p,Engine* engine,Grid*grid1,Grid*,int hori,int x,int y);
 };
 
