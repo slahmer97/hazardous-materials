@@ -103,6 +103,9 @@ void GameMenu::on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX,
 			if(button == sf::Mouse::Right){
 				if((void*)grid == (void*)&grid_self)
 					shipMovementAt(gridX, gridY);
+			} else if(button == sf::Mouse::Middle){
+				if((void*)grid == (void*)&grid_self)
+					shipRotationAt(gridX, gridY);
 			}
 			break;
 	}
@@ -138,6 +141,51 @@ void GameMenu::shipMovementAt(int gridX, int gridY){
 		ClientMessageSender::sendMoveEngineRequest(shipID, (dX < 0 ? 0 : 1), dX < 0 ? -dX : dX);
 	}
 
+
+}
+
+void GameMenu::shipRotationAt(int gridX, int gridY){
+	
+	int gsX = -1, gsY = -1;
+
+	grid_self.get_selected_cases(&gsX, &gsY);
+
+	if(gsX == -1 || gsY == -1)
+		return;
+
+	bool air = this->local_player%2 == 1;
+
+	int shipID = grid_self.get_case_at(gsX, gsY, air).id;
+
+	bool vertical = false;
+
+	if(gsY+1 <= 10 && grid_self.get_case_at(gsX, gsY+1, air).id == shipID)
+		vertical = true;
+	if(gsY-1 >= 0 && grid_self.get_case_at(gsX, gsY-1, air).id == shipID)
+		vertical = true;
+	
+	int node_dist = 0;
+	int nodeX, nodeY;
+
+	if(vertical){
+		nodeY = gsY;
+		nodeX = gsX;
+		while(nodeY >= 0 && grid_self.get_case_at(nodeX, nodeY, air).type != ENGINE_MOTOR){
+			nodeY--;
+		}
+
+		node_dist = gsY - nodeY;
+	} else {
+		nodeY = gsY;
+		nodeX = gsX;
+		while(nodeX >= 0 && grid_self.get_case_at(nodeX, nodeY, air).type != ENGINE_MOTOR){
+			nodeX--;
+		}
+		
+		node_dist = gsX - nodeX;
+	}
+
+	ClientMessageSender::sendRotateEngineRequest(shipID, 1, node_dist);
 
 }
 

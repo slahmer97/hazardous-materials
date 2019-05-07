@@ -61,6 +61,7 @@ class GameMenu : public Menu, public ClickListener, public GridActionListener
 		std::vector<ENGINE_TYPE> ships_to_place;
 		void shipPlacementAt(int gridX, int gridY);
 		void shipMovementAt(int gridX, int gridY);
+		void shipRotationAt(int gridX, int gridY);
 		
 		int shipPlacementStep = 0;
 
