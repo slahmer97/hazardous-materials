@@ -129,8 +129,15 @@ void GameMenu::shipMovementAt(int gridX, int gridY){
 
 	int dX = gridX - gsX;
 	int dY = gridY - gsY;
+	
+	//int direction = 0; //0 == forward, 1 == backward
 
-	ClientMessageSender::sendMoveEngineRequest(shipID, vertical ? 1 : 0, vertical ? dY : dX);
+	if(vertical){
+		ClientMessageSender::sendMoveEngineRequest(shipID, (dY < 0 ? 0 : 1), dY < 0 ? -dY : dY);
+	} else {
+		ClientMessageSender::sendMoveEngineRequest(shipID, (dX < 0 ? 0 : 1), dX < 0 ? -dX : dX);
+	}
+
 
 }
 
@@ -336,6 +343,10 @@ void GameMenu::on_click(Component* button){
 		if(other_grid_x != -1 && other_grid_y != -1 && self_grid_x != -1 && self_grid_y != -1){
 			//We get the cases that will be the launcher
 			GridCase launcherCase = grid_self.get_case_at(self_grid_x, self_grid_y, (this->local_player%2 == 1));
+			
+			if(launcherCase.id == 0)
+				return;
+
 			//We find the target grid
 			int targetGrid = this->local_player % 2;//0 = ship, 1 = planes
 			targetGrid = this->local_player - targetGrid;//0=team1, 2=team2
