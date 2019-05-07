@@ -328,10 +328,10 @@ void GameMenu::on_click(Component* button){
 
 	} else if((void*)button == (void*)&confirm && this->currentState == STATE_PLAY){
 
-		int self_grid_x = 0, self_grid_y = 0, other_grid_x = 0, other_grid_y = 0;
+		int self_grid_x = -1, self_grid_y = -1, other_grid_x = -1, other_grid_y = -1;
 		//We get the selected cases coordinates
 		grid_self.get_selected_cases(&self_grid_x, &self_grid_y);
-		grid_opponent.get_selected_cases(&self_grid_x, &self_grid_y);
+		grid_opponent.get_selected_cases(&other_grid_x, &other_grid_y);
 
 		if(other_grid_x != -1 && other_grid_y != -1 && self_grid_x != -1 && self_grid_y != -1){
 			//We get the cases that will be the launcher
