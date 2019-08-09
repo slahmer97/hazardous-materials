@@ -1,0 +1,76 @@
+#ifndef GAME_MENU_H
+#define GAME_MENU_H
+
+#include "../include/menu.h"
+#include "../include/button.h"
+#include "../include/b_switch.h"
+#include "../include/textfield.h"
+#include "../include/textarea.h"
+#include "../include/display_grid.h"
+#include "../include/click_callback.h"
+#include "../include/ServerMessage.h"
+#include "../include/ClientMessageSender.h"
+#include "../include/enum.h"
+
+//TODO: implement current selected ship/plane to be highlighted
+//TODO: implement ghost of the ship you have to place
+
+class GameMenu : public Menu, public ClickListener, public GridActionListener
+{
+	public:
+		GameMenu(std::string players[4], int local_player);
+
+		virtual void handleEvent(sf::Window* window, sf::Event* event);
+
+		void handle_server_message(ServerMessage* m);
+
+	 	virtual void draw(sf::RenderTarget* drawingBoard);
+
+		virtual void on_action(DisplayGrid* grid, sf::Mouse::Button button, int gridX, int gridY, int options1=0, int options2=0);
+		virtual void on_click(Component* button);
+
+		~GameMenu();
+
+		GameMenuState currentState;
+	private:
+		/**
+		 * Button to confirm the selected action and leave the
+		 */
+		Button confirm;
+		/**
+		 * Switch buttons to select the 2 grids that are displayed
+		 */
+		B_Switch b1;
+		B_Switch b2;
+		sf::Text players_score[4];
+		DisplayGrid grid_self, grid_opponent;
+
+		sf::Text players_draw[4];
+		TextArea textarea;
+		TextField chatField;
+
+		sf::Font font;
+
+		sf::Texture grille;
+
+		std::string players[4];
+
+		int local_player;
+
+
+		std::vector<ENGINE_TYPE> ships_to_place;
+		void shipPlacementAt(int gridX, int gridY);
+		void shipMovementAt(int gridX, int gridY);
+		void shipRotationAt(int gridX, int gridY);
+		
+		int shipPlacementStep = 0;
+
+		bool vertical = false;
+
+		bool waitingForAnswer = false;
+};
+
+
+
+
+#endif

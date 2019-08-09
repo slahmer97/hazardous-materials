@@ -21,7 +21,11 @@ private:
     //char hazard; //climate changes (c : cold, t : tempest, n : none ... ?)
 
 public:
+
+    std::string to_pri_string();
+    std::string to_pub_string();
     Square();
+
 
     void set_engine(Engine *m_engine);
 
@@ -35,6 +39,12 @@ public:
      */
     Engine *get_engine();
 
+
+    /* Input : 2 Squares
+     * return if 2 squares are equals
+     * Output : true they are equals, else false
+     */
+    bool squares_equals(Square *T);
 
     /**
      * @brief get_health_pr() is main function used to get the pourcetage of health of
@@ -75,7 +85,18 @@ public:
     */
     void activate_motor();
 
+    /**
+     * @brief burn_square() is main function used to burn the current square
+     * if the current square is already on fire it does nothing
+    */
+    //void burn_square();
 
+    /**
+     * @brief burn_square() is main function used to perforate the current square
+     * if the current square is already perforated it does nothing
+    */
+   //void perforate_square();
+    
 
     /**
      * @brief get_square_type() is main function used to get the state of current square or type of piece which is
@@ -111,6 +132,8 @@ public:
      *         - (TODO other cases)
      */
     int decrease_health(float dec);
+    
+    
     int increase_health(float inc);
 
     void set_health_pr(float pr);
@@ -124,6 +147,9 @@ public:
      */
     void set_square_type(SQUARE_TYPE square_type);
 
+public:
+    static std::string square_type_to_string(SQUARE_TYPE);
+    static SQUARE_TYPE square_type_to_enum(const std::string&);
 };
 
 
